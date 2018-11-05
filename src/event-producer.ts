@@ -1,3 +1,5 @@
+import { noop } from './noop';
+
 /**
  * Event producer.
  *
@@ -56,7 +58,7 @@ export namespace EventInterest {
    * This is handy to use e.g. to initialize the fields.
    */
   export const none: EventInterest = {
-    off: () => {},
+    off: noop,
   };
 
 }
