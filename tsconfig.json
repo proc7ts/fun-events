@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "module": "umd",
+    "target": "es5",
+    "strict": true,
+    "experimentalDecorators": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "forceConsistentCasingInFileNames": true,
+    "downlevelIteration": true,
+    "importHelpers": true,
+    "noEmitHelpers": true,
+    "lib": [
+      "es2015",
+      "esnext.array"
+    ],
+    "outDir": "target/js",
+    "sourceMap": true,
+    "newLine": "LF"
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

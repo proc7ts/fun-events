@@ -1,0 +1,21 @@
+# Node.js modules
+node_modules
+
+# IntelliJ IDEA files
+.idea
+*.iml
+
+# Logs
+*.log
+
+# Package archive
+*.tgz
+
+# Intermediate files
+/target
+
+# Distribution directory
+/dist
+
+# Type definitions
+/d.ts
