@@ -76,6 +76,33 @@ Once the consumer is no longer interested in receiving events, an `off()` method
 lost of interest.
 
 
+`EventEmitter`
+--------------
+
+Event emitter is a handy implementation of event producer along with methods for emitting events.
+
+It manages a list of registered event consumers, and removes them from the list once they lose their interest
+(i.e. the `off()` is called on the returned event interest instance).
+
+Implements `AIterable` interface by iterating over registered event consumers in order of their registration.
+
+```TypeScript
+import { EventEmitter } from 'fun-events';
+
+const emitter = new EventEmitter<(event: string) => string>(); // Consumers may return values
+
+// Register consumers
+emitter.on(event => `${event}-`);
+emitter.on(event => `-${event}`);
+
+// Notify consumers
+emitter.notify('listen');
+
+// The returned values can be used
+emitter.reduce((prev, consumer) => prev + consumer('o'), ''); // 'o--o` 
+```
+
+
 State Tracking
 --------------
 

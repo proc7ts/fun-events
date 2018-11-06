@@ -2,11 +2,10 @@ import { AIterable, itsIterator } from 'a-iterable';
 import { EventConsumer, EventInterest, EventProducer } from './event-producer';
 
 /**
- * Event emitter.
+ * Event emitter is a handy implementation of event producer along with methods for emitting events.
  *
- * This is a handy implementation of event producer along with methods for emitting events. It manages a list of
- * registered event consumers, and removes them from the list once they lose their interest (i.e. `EventInterest.off()`
- * method is called on returned event interest instance).
+ * It manages a list of registered event consumers, and removes them from the list once they lose their interest
+ * (i.e. the `off()` is called on the returned event interest instance).
  *
  * Implements `AIterable` interface by iterating over registered event consumers in order of their registration.
  *
