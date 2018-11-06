@@ -1,10 +1,9 @@
 import { noop } from './noop';
 
 /**
- * Event producer.
+ * Event producer is a function accepting an event consumer as its only argument.
  *
- * This is a function accepting an event consumer as its only argument. Once called, the consumer will be notified on
- * events, while the consumer is interested in receiving them.
+ * Once called, the consumer will be notified on events, while the consumer is interested in receiving them.
  *
  * Note that event producer is a function, not a method.
  *
@@ -28,7 +27,7 @@ export interface EventProducer<C extends EventConsumer<any[], any, any>> {
   (this: void, consumer: C): EventInterest;
 
   /**
-   * Registers event consumer the will be notified on the next event at most once.
+   * Registers an event consumer the will be notified on the next event at most once.
    *
    * @param consumer A consumer to notify on next event.
    */
@@ -37,10 +36,9 @@ export interface EventProducer<C extends EventConsumer<any[], any, any>> {
 }
 
 /**
- * Event consumer.
+ * Event consumer is a function that is called to notify on each event produced by `EventProducer` when registered.
  *
- * This is a function that is called to notify on each event produced by `EventProducer` after the latter is called
- * with this event consumer as argument.
+ * To register an event consumer in event producer just call the event producer with that event consumer as argument.
  *
  * @param <E> An event type. This is a list of event consumer parameter types.
  * @param <R> Event processing result. This is a type of event consumer result.
@@ -54,8 +52,10 @@ export type EventConsumer<E extends any[], R = void, T = any> = (this: T, ...eve
 /**
  * An interest for the events.
  *
- * This instance is returned by `EventProducer` when registering an event consumer. Once the consumer is no longer
- * interested in receiving events, an `off()` method should be called, indicated the lost of interest.
+ * This is what returned returned from `EventProducer` when registering an event consumer.
+ *
+ * Once the consumer is no longer interested in receiving events, an `off()` method should be called, indicated the
+ * lost of interest.
  */
 export interface EventInterest {
 
