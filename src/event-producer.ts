@@ -8,13 +8,33 @@ import { noop } from './noop';
  *
  * Note that event producer is a function, not a method.
  *
- * @param <C> A type of event consumer.
- * @param consumer A consumer to notify on events. The call has no effect if the same consumer is passed again.
+ * An event producer also has a set of handy methods. More could be added at later time.
  *
- * @return An event interest. The event producer will notify the consumer on events, until the `off()` method
- * of returned event interest instance is called.
+ * To convert a plain function into `EventProducer` an `EventProducer.of()` function can be used.
+ *
+ * @param <C> A type of event consumer.
  */
-export type EventProducer<C extends EventConsumer<any[], any, any>> = (this: void, consumer: C) => EventInterest;
+export interface EventProducer<C extends EventConsumer<any[], any, any>> {
+
+  /**
+   * Registers event consumer that will be notified on events.
+   *
+   * @param consumer A consumer to notify on events. The call has no effect if the same consumer is passed again.
+   *
+   * @return An event interest. The event producer will notify the consumer on events, until the `off()` method
+   * of returned event interest instance is called. If the same consumer is passed to event producer again,
+   * the `EventInterest.none` will be returned.
+   */
+  (this: void, consumer: C): EventInterest;
+
+  /**
+   * Registers event consumer the will be notified on the next event at most once.
+   *
+   * @param consumer A consumer to notify on next event.
+   */
+  once(consumer: C): EventInterest;
+
+}
 
 /**
  * Event consumer.
@@ -66,8 +86,45 @@ export namespace EventInterest {
 export namespace EventProducer {
 
   /**
+   * Converts an event consumer registration function to event producer.
+   *
+   * @param register An event consumer registration function returning an event interest.
+   *
+   * @returns An event producer instance registering consumers with `register` function.
+   */
+  export function of<C extends EventConsumer<any[], any, any>>(
+      register: (this: void, consumer: C) => EventInterest): EventProducer<C> {
+
+    const producer = (consumer => register(consumer)) as EventProducer<C>;
+
+    producer.once = function (this: EventProducer<C>, consumer: C) {
+
+      let interest = EventInterest.none;
+      let off = false;
+
+      const wrapper = ((...args: Parameters<C>) => {
+        interest.off();
+        off = true;
+        return consumer(...args) as ReturnType<C>;
+      }) as C;
+
+      interest = this(wrapper);
+
+      if (off) {
+        // The consumer is notified immediately during registration.
+        // Unregister event interest right away.
+        interest.off();
+      }
+
+      return interest;
+    };
+
+    return producer;
+  }
+
+  /**
    * An event producer that never produces any events.
    */
-  export const never: EventProducer<(...event: any[]) => any> = () => EventInterest.none;
+  export const never: EventProducer<(...event: any[]) => any> = of(() => EventInterest.none);
 
 }

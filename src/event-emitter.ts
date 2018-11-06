@@ -25,7 +25,7 @@ export class EventEmitter<C extends EventConsumer<any[], any>> extends AIterable
    *
    * This is an `EventProducer` implementation. Consumers registered with it will be notified on emitted events.
    */
-  readonly on: EventProducer<C> = (consumer => {
+  readonly on = EventProducer.of<C>(consumer => {
     if (this._consumers.has(consumer)) {
       return EventInterest.none;
     }

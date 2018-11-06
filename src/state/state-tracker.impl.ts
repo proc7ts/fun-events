@@ -97,7 +97,7 @@ export class StateTracker implements StateTracker_ {
     this._trackers.notify([...this._path, ...StatePath.of(path)], newValue, oldValue);
   });
 
-  readonly onUpdate: EventProducer<StateUpdater> = consumer => this._trackers.on(this._path, consumer);
+  readonly onUpdate = EventProducer.of<StateUpdater>(consumer => this._trackers.on(this._path, consumer));
 
   constructor(
       private readonly _trackers: Trackers = new Trackers(),
