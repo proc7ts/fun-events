@@ -88,10 +88,7 @@ class Trackers {
 
 }
 
-/**
- * @internal
- */
-export class StateTracker implements StateTracker_ {
+class SubStateTracker implements StateTracker_ {
 
   readonly update: StateUpdater = (<V>(path: StatePath, newValue: V, oldValue: V) => {
     this._trackers.notify([...this._path, ...StatePath.of(path)], newValue, oldValue);
@@ -104,12 +101,21 @@ export class StateTracker implements StateTracker_ {
       private readonly _path: StatePath.Normalized = []) {
   }
 
-  track(path: StatePath): StateTracker {
+  track(path: StatePath): SubStateTracker {
     path = StatePath.of(path);
     if (!path.length) {
       return this; // Path to itself.
     }
-    return new StateTracker(this._trackers, [...this._path, ...path]);
+    return new SubStateTracker(this._trackers, [...this._path, ...path]);
   }
 
+}
+
+/**
+ * @internal
+ */
+export class StateTracker extends SubStateTracker {
+  constructor() {
+    super();
+  }
 }
