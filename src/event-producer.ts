@@ -21,8 +21,7 @@ export interface EventProducer<C extends EventConsumer<any[], any, any>> {
    * @param consumer A consumer to notify on events. The call has no effect if the same consumer is passed again.
    *
    * @return An event interest. The event producer will notify the consumer on events, until the `off()` method
-   * of returned event interest instance is called. If the same consumer is passed to event producer again,
-   * the `EventInterest.none` will be returned.
+   * of returned event interest instance is called.
    */
   (this: void, consumer: C): EventInterest;
 

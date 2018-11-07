@@ -17,7 +17,12 @@ export class EventEmitter<C extends EventConsumer<any[], any>> extends AIterable
   /**
    * @internal
    */
-  private readonly _consumers = new Set<C>();
+  private readonly _consumers = new Map<number, C>();
+
+  /**
+   * @internal
+   */
+  private _seq = 0;
 
   /**
    * Call this method to start event consumption.
@@ -25,13 +30,13 @@ export class EventEmitter<C extends EventConsumer<any[], any>> extends AIterable
    * This is an `EventProducer` implementation. Consumers registered with it will be notified on emitted events.
    */
   readonly on = EventProducer.of<C>(consumer => {
-    if (this._consumers.has(consumer)) {
-      return EventInterest.none;
-    }
-    this._consumers.add(consumer);
+
+    const id = ++this._seq;
+
+    this._consumers.set(id, consumer);
     return {
       off: () => {
-        this._consumers.delete(consumer);
+        this._consumers.delete(id);
       },
     };
   });
@@ -44,7 +49,7 @@ export class EventEmitter<C extends EventConsumer<any[], any>> extends AIterable
   }
 
   [Symbol.iterator](): Iterator<C> {
-    return itsIterator(this._consumers);
+    return itsIterator(this._consumers.values());
   }
 
   /**

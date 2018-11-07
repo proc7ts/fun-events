@@ -38,15 +38,6 @@ describe('EventEmitter', () => {
       expect(consumerSpy).toHaveBeenCalledWith('event');
       expect(consumer2Spy).toHaveBeenCalledWith('event');
     });
-    it('does not register event consumer', () => {
-      expect(emitter.on(consumerSpy)).toBe(EventInterest.none);
-      expect(emitter.consumers).toBe(1);
-
-      emitter.notify('event');
-
-      expect(consumerSpy).toHaveBeenCalledWith('event');
-      expect(consumerSpy).toHaveBeenCalledTimes(1);
-    });
     it('unregisters consumer when its interest is lost', () => {
       emitter.on(consumer2Spy);
       interest.off();
@@ -55,6 +46,27 @@ describe('EventEmitter', () => {
 
       expect(consumerSpy).not.toHaveBeenCalled();
       expect(consumer2Spy).toHaveBeenCalledWith('event');
+    });
+    it('registers event consumer again', () => {
+
+      const interest2 = emitter.on(consumerSpy);
+
+      expect(emitter.consumers).toBe(2);
+
+      emitter.notify('event');
+
+      expect(consumerSpy).toHaveBeenCalledWith('event');
+      expect(consumerSpy).toHaveBeenCalledTimes(2);
+
+      consumerSpy.calls.reset();
+      interest2.off();
+
+      expect(emitter.consumers).toBe(1);
+
+      emitter.notify('event2');
+
+      expect(consumerSpy).toHaveBeenCalledWith('event2');
+      expect(consumerSpy).toHaveBeenCalledTimes(1);
     });
   });
   describe('clear', () => {
