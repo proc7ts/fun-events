@@ -1,6 +1,6 @@
 {
   "name": "fun-events",
-  "version": "1.2.2",
+  "version": "2.0.0",
   "description": "Functional event producer/consumer API",
   "keywords": [
     "event-producer",
@@ -20,7 +20,6 @@
   "main": "dist/fun-events.umd.js",
   "module": "dist/fun-events.esm5.js",
   "es2015": "dist/fun-events.esm2015.js",
-  "jsnext:main": "dist/fun-events.esm2015.js",
   "typings": "index.d.ts",
   "dependencies": {
     "tslib": "^1.9.0"
@@ -30,33 +29,28 @@
   },
   "devDependencies": {
     "@types/fs-extra": "^5.0.4",
-    "@types/jasmine": "^2.8.11",
+    "@types/jest": "^23.3.10",
     "a-iterable": "^1.2.0",
     "codecov": "^3.1.0",
     "fs-extra": "^7.0.1",
     "jasmine": "^3.3.0",
-    "karma": "3.1.1",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-jasmine": "^2.0.0",
-    "karma-jasmine-html-reporter": "^1.4.0",
-    "karma-junit-reporter": "^1.2.0",
-    "karma-typescript": "^3.0.13",
-    "puppeteer": "^1.9.0",
-    "rollup": "^0.67.1",
+    "jest": "^23.6.0",
+    "jest-junit": "^5.2.0",
+    "rollup": "^0.67.4",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^3.4.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
     "rollup-plugin-terser": "^3.0.0",
     "rollup-plugin-typescript2": "^0.18.0",
     "rollup-plugin-uglify": "^6.0.0",
+    "ts-jest": "^23.10.5",
     "tslint": "^5.11.0",
-    "typescript": "^3.1.5"
+    "typescript": "^3.2.1"
   },
   "scripts": {
     "build": "rollup --config ./rollup.config.js",
     "clean": "node ./build/clean",
     "lint": "tslint --project .",
-    "test": "karma start",
-    "test-once": "karma start --single-run"
+    "test": "jest"
   }
 }
