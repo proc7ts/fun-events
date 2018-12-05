@@ -25,12 +25,13 @@
     "tslib": "^1.9.0"
   },
   "peerDependencies": {
-    "a-iterable": "^1.2.0"
+    "a-iterable": "^2.0.1"
   },
   "devDependencies": {
     "@types/fs-extra": "^5.0.4",
     "@types/jest": "^23.3.10",
-    "a-iterable": "^1.2.0",
+    "a-iterable": "^2.0.1",
+    "call-thru": "^2.0.0",
     "codecov": "^3.1.0",
     "fs-extra": "^7.0.1",
     "jasmine": "^3.3.0",
