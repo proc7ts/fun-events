@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-    - image: circleci/node:10-jessie-browsers
+    - image: circleci/node:10-jessie
 
     working_directory: ~/repo
 
@@ -21,7 +21,7 @@ jobs:
         - v2-dependencies-
 
     - run:
-        name: Install Dependencies
+        name: Install dependencies
         command: yarn install
 
     - save_cache:
@@ -36,7 +36,7 @@ jobs:
 
     - run:
         name: Run tests
-        command: yarn test-once
+        command: yarn test --ci
 
     - store_artifacts:
         name: Store test results

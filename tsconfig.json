@@ -1,14 +1,13 @@
 {
   "compilerOptions": {
     "moduleResolution": "node",
-    "module": "umd",
-    "target": "es5",
+    "module": "es2015",
+    "target": "es2015",
     "strict": true,
     "experimentalDecorators": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "forceConsistentCasingInFileNames": true,
-    "downlevelIteration": true,
     "importHelpers": true,
     "noEmitHelpers": true,
     "lib": [

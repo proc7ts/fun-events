@@ -1,19 +1,20 @@
 import { EventEmitter } from './event-emitter';
 import { EventInterest } from './event-producer';
-import Spy = jasmine.Spy;
+import { StateUpdater } from './state';
+import Mock = jest.Mock;
 
 describe('EventEmitter', () => {
 
   let emitter: EventEmitter<(event: string) => string>;
-  let consumerSpy: Spy;
-  let consumer2Spy: Spy;
+  let consumerSpy: Mock<StateUpdater>;
+  let consumer2Spy: Mock<StateUpdater>;
 
   beforeEach(() => {
     emitter = new EventEmitter();
   });
   beforeEach(() => {
-    consumerSpy = jasmine.createSpy('consumer');
-    consumer2Spy = jasmine.createSpy('consumer2');
+    consumerSpy = jest.fn();
+    consumer2Spy = jest.fn();
   });
 
   it('has no consumers initially', () => {
@@ -58,7 +59,7 @@ describe('EventEmitter', () => {
       expect(consumerSpy).toHaveBeenCalledWith('event');
       expect(consumerSpy).toHaveBeenCalledTimes(2);
 
-      consumerSpy.calls.reset();
+      consumerSpy.mockClear();
       interest2.off();
 
       expect(emitter.consumers).toBe(1);

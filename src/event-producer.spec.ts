@@ -1,18 +1,19 @@
 import { EventInterest, EventProducer } from './event-producer';
 import { noop } from './noop';
-import Spy = jasmine.Spy;
-import SpyObj = jasmine.SpyObj;
+import { StateUpdater } from './state';
+import Mock = jest.Mock;
+import Mocked = jest.Mocked;
 
 describe('EventProducer', () => {
   describe('never', () => {
 
     let producer: EventProducer<(value: string) => number>;
-    let consumerSpy: Spy;
+    let consumerSpy: Mock<StateUpdater>;
     let interest: EventInterest;
 
     beforeEach(() => {
       producer = EventProducer.never;
-      consumerSpy = jasmine.createSpy('consumer');
+      consumerSpy = jest.fn();
       interest = producer(consumerSpy);
     });
 
@@ -23,20 +24,22 @@ describe('EventProducer', () => {
 
   describe('once', () => {
 
-    let registerSpy: Spy;
+    let registerSpy: Mock;
     let producer: EventProducer<(value: string) => string>;
-    let interestSpy: SpyObj<EventInterest>;
+    let interestSpy: Mocked<EventInterest>;
     let registeredConsumer: (event: string) => string;
-    let consumerSpy: Spy;
+    let consumerSpy: Mock<StateUpdater>;
 
     beforeEach(() => {
-      interestSpy = jasmine.createSpyObj('interest', ['off']);
-      registerSpy = jasmine.createSpy('register').and.callFake((c: (event: string) => string) => {
+      interestSpy = {
+        off: jest.fn()
+      };
+      registerSpy = jest.fn((c: (event: string) => string) => {
         registeredConsumer = c;
         return interestSpy;
       });
       producer = EventProducer.of(c => registerSpy(c));
-      consumerSpy = jasmine.createSpy('consumer');
+      consumerSpy = jest.fn();
     });
 
     it('registers event consumer', () => {
@@ -44,7 +47,7 @@ describe('EventProducer', () => {
       expect(registerSpy).toHaveBeenCalled();
     });
     it('unregisters notified event consumer', () => {
-      consumerSpy.and.returnValue('result');
+      consumerSpy.mockReturnValue('result');
 
       producer.once(consumerSpy);
 
@@ -55,9 +58,9 @@ describe('EventProducer', () => {
       expect(interestSpy.off).toHaveBeenCalled();
     });
     it('unregisters immediately notified event consumer', () => {
-      consumerSpy.and.returnValue('result');
+      consumerSpy.mockReturnValue('result');
 
-      registerSpy = jasmine.createSpy('register').and.callFake((c: (event: string) => string) => {
+      registerSpy = jest.fn((c: (event: string) => string) => {
         registeredConsumer = c;
         c('event');
         return interestSpy;

@@ -63,7 +63,7 @@ function baseConfig(tsconfig) {
     output: {
       format: 'umd',
       sourcemap: true,
-      name: 'aIterable',
+      name: 'funEvents',
       globals: {
         'a-iterable': 'aIterable',
         'tslib': 'tslib',
@@ -85,7 +85,7 @@ const esm5Config = makeConfig(
     baseConfig("tsconfig.esm5.json"),
     {
       output: {
-        format: "es",
+        format: "esm",
         file: "./dist/fun-events.esm5.js",
       },
     },
@@ -95,7 +95,7 @@ const esm2015Config = makeConfig(
     baseConfig("tsconfig.esm2015.json"),
     {
       output: {
-        format: "es",
+        format: "esm",
         file: "./dist/fun-events.esm2015.js",
       },
     },

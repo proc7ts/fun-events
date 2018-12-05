@@ -1,14 +1,15 @@
+import { StateUpdater } from './state-events';
 import { StateTracker } from './state-tracker';
-import Spy = jasmine.Spy;
+import Mock = jest.Mock;
 
 describe('StateTracker', () => {
 
   let tracker: StateTracker;
-  let consumerSpy: Spy;
+  let consumerSpy: Mock<StateUpdater>;
 
   beforeEach(() => {
     tracker = new StateTracker();
-    consumerSpy = jasmine.createSpy('consumer');
+    consumerSpy = jest.fn();
   });
 
   it('notifies on state update', () => {
@@ -22,7 +23,7 @@ describe('StateTracker', () => {
     tracker.update(path, newValue, oldValue);
     expect(consumerSpy).toHaveBeenCalledWith(path, newValue, oldValue);
 
-    consumerSpy.calls.reset();
+    consumerSpy.mockClear();
     interest.off();
 
     tracker.update(path, newValue, oldValue);
@@ -32,11 +33,11 @@ describe('StateTracker', () => {
 
     const partPath = ['path', 2, 'part'];
     let part: StateTracker;
-    let partSpy: Spy;
+    let partSpy: Mock<StateUpdater>;
 
     beforeEach(() => {
       part = tracker.track(partPath);
-      partSpy = jasmine.createSpy('partConsumer');
+      partSpy = jest.fn();
     });
 
     it('returns the tracker itself for empty path', () => {
@@ -57,8 +58,8 @@ describe('StateTracker', () => {
       expect(consumerSpy).toHaveBeenCalledWith(fullPath, newValue, oldValue);
       expect(partSpy).toHaveBeenCalledWith(path, newValue, oldValue);
 
-      consumerSpy.calls.reset();
-      partSpy.calls.reset();
+      consumerSpy.mockClear();
+      partSpy.mockClear();
       interest.off();
 
       part.update(path, newValue, oldValue);
@@ -79,8 +80,8 @@ describe('StateTracker', () => {
       expect(consumerSpy).toHaveBeenCalledWith(path, newValue, oldValue);
       expect(partSpy).toHaveBeenCalledWith(subPath, newValue, oldValue);
 
-      consumerSpy.calls.reset();
-      partSpy.calls.reset();
+      consumerSpy.mockClear();
+      partSpy.mockClear();
       interest.off();
 
       tracker.update(path, newValue, oldValue);
@@ -104,7 +105,7 @@ describe('StateTracker', () => {
       part.onUpdate(partSpy);
 
       const parent = tracker.track(partPath[0]);
-      const parentSpy = jasmine.createSpy('parentConsumer');
+      const parentSpy = jest.fn();
 
       const parentInterest = parent.onUpdate(parentSpy);
 
@@ -119,9 +120,9 @@ describe('StateTracker', () => {
       expect(parentSpy).toHaveBeenCalledWith(parentPath, newValue, oldValue);
       expect(partSpy).toHaveBeenCalledWith(subPath, newValue, oldValue);
 
-      consumerSpy.calls.reset();
-      parentSpy.calls.reset();
-      partSpy.calls.reset();
+      consumerSpy.mockClear();
+      parentSpy.mockClear();
+      partSpy.mockClear();
       parentInterest.off();
 
       parent.update(parentPath, newValue, oldValue);
