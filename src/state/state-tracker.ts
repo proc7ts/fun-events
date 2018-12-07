@@ -87,9 +87,8 @@ class Trackers {
 
 }
 
-/* tslint:disable:no-use-before-declare */
+// tslint:disable-next-line:no-use-before-declare
 class SubStateTracker implements StateTracker {
-  /* tslint:enable:no-use-before-declare */
 
   readonly update: StateUpdater = (<V>(path: StatePath, newValue: V, oldValue: V) => {
     this._trackers.notify([...this._path, ...StatePath.of(path)], newValue, oldValue);
