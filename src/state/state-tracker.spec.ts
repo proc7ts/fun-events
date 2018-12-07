@@ -40,6 +40,9 @@ describe('StateTracker', () => {
       partSpy = jest.fn();
     });
 
+    it('refers itself', () => {
+      expect(part._tracker).toBe(part);
+    });
     it('returns the tracker itself for empty path', () => {
       expect(tracker.track([])).toBe(tracker);
       expect(part.track([])).toBe(part);
