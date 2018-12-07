@@ -1,13 +1,13 @@
+import { nextArgs, passIf } from 'call-thru';
 import { EventEmitter } from './event-emitter';
 import { EventInterest } from './event-producer';
-import { StateUpdater } from './state';
 import Mock = jest.Mock;
 
 describe('EventEmitter', () => {
 
   let emitter: EventEmitter<(event: string) => string>;
-  let consumerSpy: Mock<StateUpdater>;
-  let consumer2Spy: Mock<StateUpdater>;
+  let consumerSpy: Mock<(event: string) => string>;
+  let consumer2Spy: Mock<(event: string) => string>;
 
   beforeEach(() => {
     emitter = new EventEmitter();

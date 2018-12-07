@@ -1,5 +1,6 @@
 import { AIterable, itsIterator } from 'a-iterable';
-import { EventConsumer, EventInterest, EventProducer } from './event-producer';
+import { EventConsumer } from './event-consumer';
+import { EventProducer } from './event-producer';
 
 /**
  * Event emitter is a handy implementation of event producer along with methods for emitting events.
