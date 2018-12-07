@@ -58,6 +58,7 @@ function baseConfig(tsconfig) {
     input: './src/index.ts',
     external: [
       'a-iterable',
+      'call-thru',
       'tslib',
     ],
     output: {
@@ -66,6 +67,7 @@ function baseConfig(tsconfig) {
       name: 'funEvents',
       globals: {
         'a-iterable': 'aIterable',
+        'call-thru': 'callThru',
         'tslib': 'tslib',
       },
     },

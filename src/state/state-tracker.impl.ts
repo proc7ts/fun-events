@@ -1,6 +1,6 @@
+import { noop } from 'call-thru';
 import { EventEmitter } from '../event-emitter';
 import { EventInterest, EventProducer } from '../event-producer';
-import { noop } from '../noop';
 import { StatePath, StateUpdater } from './state-events';
 import { StateTracker as StateTracker_ } from './state-tracker';
 

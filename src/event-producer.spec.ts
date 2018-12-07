@@ -1,6 +1,5 @@
+import { noop } from 'call-thru';
 import { EventInterest, EventProducer } from './event-producer';
-import { noop } from './noop';
-import { StateUpdater } from './state';
 import Mock = jest.Mock;
 import Mocked = jest.Mocked;
 
@@ -8,7 +7,7 @@ describe('EventProducer', () => {
   describe('never', () => {
 
     let producer: EventProducer<(value: string) => number>;
-    let consumerSpy: Mock<StateUpdater>;
+    let consumerSpy: Mock<(event: string) => number>;
     let interest: EventInterest;
 
     beforeEach(() => {
@@ -28,7 +27,7 @@ describe('EventProducer', () => {
     let producer: EventProducer<(value: string) => string>;
     let interestSpy: Mocked<EventInterest>;
     let registeredConsumer: (event: string) => string;
-    let consumerSpy: Mock<StateUpdater>;
+    let consumerSpy: Mock<(event: string) => string>;
 
     beforeEach(() => {
       interestSpy = {
@@ -70,6 +69,45 @@ describe('EventProducer', () => {
 
       expect(interestSpy.off).toHaveBeenCalled();
       expect(consumerSpy).toHaveBeenCalledWith('event');
+    });
+  });
+
+  describe('thru', () => {
+
+    let registerSpy: Mock;
+    let interestSpy: Mocked<EventInterest>;
+    let registeredConsumer: (event1: string, event2: string) => number;
+    let producer: EventProducer<(event1: string, event2: string) => number>;
+    let consumerSpy: Mock<number>;
+
+    beforeEach(() => {
+      interestSpy = {
+        off: jest.fn()
+      };
+      registerSpy = jest.fn((c: (event1: string, event2: string) => number) => {
+        registeredConsumer = c;
+        return interestSpy;
+      });
+      producer = EventProducer.of(c => registerSpy(c));
+      consumerSpy = jest.fn((event: string) => event.length);
+    });
+
+    it('registers event consumer', () => {
+      expect(
+          producer.thru(
+              (event1: string, event2: string) => `${event1}, ${event2}`
+          )(consumerSpy)
+      ).toBe(interestSpy);
+      expect(registerSpy).toHaveBeenCalled();
+    });
+    it('transforms original event', () => {
+      producer.thru(
+          (event1: string, event2: string) => `${event1}, ${event2}`
+      )(consumerSpy);
+
+      registeredConsumer('a', 'bb');
+
+      expect(consumerSpy).toHaveBeenCalledWith(`a, bb`);
     });
   });
 });
