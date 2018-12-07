@@ -87,7 +87,9 @@ class Trackers {
 
 }
 
+/* tslint:disable:no-use-before-declare */
 class SubStateTracker implements StateTracker {
+  /* tslint:enable:no-use-before-declare */
 
   readonly update: StateUpdater = (<V>(path: StatePath, newValue: V, oldValue: V) => {
     this._trackers.notify([...this._path, ...StatePath.of(path)], newValue, oldValue);
@@ -98,6 +100,7 @@ class SubStateTracker implements StateTracker {
   constructor(private readonly _trackers: Trackers, private readonly _path: StatePath.Normalized) {
   }
 
+  // noinspection JSUnusedGlobalSymbols
   get _tracker() {
     return this;
   }
@@ -127,6 +130,7 @@ export class StateTracker {
    */
   readonly _tracker: SubStateTracker = new SubStateTracker(new Trackers(), []);
 
+  // noinspection JSCommentMatchesSignature
   /**
    * Registers component state updates listener.
    *
@@ -140,6 +144,7 @@ export class StateTracker {
     return this._tracker.onUpdate;
   }
 
+  // noinspection JSCommentMatchesSignature
   /**
    * Updates the component state.
    *
