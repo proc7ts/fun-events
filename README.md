@@ -8,7 +8,7 @@ Functional event producer/consumer API
 The API implements a simple protocol of registering event consumers in event producers for the latter to be able
 to notify the former on events:
 
-```TypeScript
+```typescript
 import { EventIterest, EventProducer } from 'fun-events';
 
 // API supports arbitrary event consumer signatures
@@ -86,7 +86,7 @@ It manages a list of registered event consumers, and removes them from the list 
 
 Implements `AIterable` interface by iterating over registered event consumers in order of their registration.
 
-```TypeScript
+```typescript
 import { EventEmitter } from 'fun-events';
 
 const emitter = new EventEmitter<(event: string) => string>(); // Consumers may return values
@@ -111,7 +111,7 @@ A state is a tree-like structure of sub-states (nodes) available under `StatePat
 A `StateTracker` can be used to notify on state changes of particular nodes. Then the registered state update consumers
 will be notified on these changes.
 
-```TypeScript
+```typescript
 import { StatePath, StateTracker } from 'fun-events';
 
 const tracker = new StateTracker();
