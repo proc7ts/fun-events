@@ -5,6 +5,40 @@ import Args = NextCall.Callee.Args;
 import Out = NextCall.Outcome;
 
 /**
+ * An interest for the events.
+ *
+ * This is what returned returned from `EventProducer` when registering an event consumer.
+ *
+ * Once the consumer is no longer interested in receiving events, an `off()` method should be called, indicated the
+ * lost of interest.
+ */
+export interface EventInterest {
+
+  /**
+   * A method to call to indicate the lost of interest in receiving events.
+   *
+   * Once called, the corresponding event consumer would no longer be called.
+   *
+   * Calling this method for the second time has no effect.
+   */
+  off(): void;
+
+}
+
+export namespace EventInterest {
+
+  /**
+   * No-op event interest.
+   *
+   * This is handy to use e.g. to initialize the fields.
+   */
+  export const none: EventInterest = {
+    off: noop,
+  };
+
+}
+
+/**
  * Event producer is a function accepting an event consumer as its only argument.
  *
  * Once called, the consumer will be notified on events, while the consumer is interested in receiving them.
@@ -376,39 +410,5 @@ export interface EventProducer<C extends EventConsumer<any, any, any>> {
    */
   // tslint:disable-next-line:callable-types
   (this: void, consumer: C): EventInterest;
-
-}
-
-/**
- * An interest for the events.
- *
- * This is what returned returned from `EventProducer` when registering an event consumer.
- *
- * Once the consumer is no longer interested in receiving events, an `off()` method should be called, indicated the
- * lost of interest.
- */
-export interface EventInterest {
-
-  /**
-   * A method to call to indicate the lost of interest in receiving events.
-   *
-   * Once called, the corresponding event consumer would no longer be called.
-   *
-   * Calling this method for the second time has no effect.
-   */
-  off(): void;
-
-}
-
-export namespace EventInterest {
-
-  /**
-   * No-op event interest.
-   *
-   * This is handy to use e.g. to initialize the fields.
-   */
-  export const none: EventInterest = {
-    off: noop,
-  };
 
 }
