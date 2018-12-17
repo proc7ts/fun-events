@@ -1,7 +1,8 @@
 import { noop } from 'call-thru';
 import { EventEmitter } from '../event-emitter';
-import { EventInterest, EventProducer } from '../event-producer';
+import { EventProducer } from '../event-producer';
 import { StatePath, StateUpdater } from './state-events';
+import { EventInterest } from '../event-interest';
 
 class PathEntry {
 

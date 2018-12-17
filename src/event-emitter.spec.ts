@@ -1,6 +1,5 @@
-import { nextArgs, passIf } from 'call-thru';
 import { EventEmitter } from './event-emitter';
-import { EventInterest } from './event-producer';
+import { EventInterest } from './event-interest';
 import Mock = jest.Mock;
 
 describe('EventEmitter', () => {

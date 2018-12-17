@@ -1,5 +1,5 @@
-import { noop } from 'call-thru';
-import { EventInterest, EventProducer } from './event-producer';
+import { EventProducer } from './event-producer';
+import { EventInterest } from './event-interest';
 import Mock = jest.Mock;
 import Mocked = jest.Mocked;
 
@@ -108,14 +108,6 @@ describe('EventProducer', () => {
       registeredConsumer('a', 'bb');
 
       expect(consumerSpy).toHaveBeenCalledWith(`a, bb`);
-    });
-  });
-});
-
-describe('EventInterest', () => {
-  describe('none', () => {
-    it('is no-op', () => {
-      expect(EventInterest.none.off).toBe(noop);
     });
   });
 });
