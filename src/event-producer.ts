@@ -5,6 +5,40 @@ import Args = NextCall.Callee.Args;
 import Out = NextCall.Outcome;
 
 /**
+ * An interest for the events.
+ *
+ * This is what returned returned from `EventProducer` when registering an event consumer.
+ *
+ * Once the consumer is no longer interested in receiving events, an `off()` method should be called, indicated the
+ * lost of interest.
+ */
+export interface EventInterest {
+
+  /**
+   * A method to call to indicate the lost of interest in receiving events.
+   *
+   * Once called, the corresponding event consumer would no longer be called.
+   *
+   * Calling this method for the second time has no effect.
+   */
+  off(): void;
+
+}
+
+export namespace EventInterest {
+
+  /**
+   * No-op event interest.
+   *
+   * This is handy to use e.g. to initialize the fields.
+   */
+  export const none: EventInterest = {
+    off: noop,
+  };
+
+}
+
+/**
  * Event producer is a function accepting an event consumer as its only argument.
  *
  * Once called, the consumer will be notified on events, while the consumer is interested in receiving them.
@@ -17,24 +51,60 @@ import Out = NextCall.Outcome;
  *
  * @param <C> A type of event consumer.
  */
-export interface EventProducer<C extends EventConsumer<any, any, any>> {
+export abstract class EventProducer<C extends EventConsumer<any, any, any>> extends Function {
 
   /**
-   * Registers event consumer that will be notified on events.
-   *
-   * @param consumer A consumer to notify on events. The call has no effect if the same consumer is passed again.
-   *
-   * @return An event interest. The event producer will notify the consumer on events, until the `off()` method
-   * of returned event interest instance is called.
+   * An event producer that never produces any events.
    */
-  (this: void, consumer: C): EventInterest;
+  static readonly never: EventProducer<(...event: any[]) => any> = EventProducer.of(() => EventInterest.none);
+
+  /**
+   * Converts an event consumer registration function to event producer.
+   *
+   * @param register An event consumer registration function returning an event interest.
+   *
+   * @returns An event producer instance registering consumers with `register` function.
+   */
+  static of<C extends EventConsumer<any[], any, any>>(
+      register: (this: void, consumer: C) => EventInterest): EventProducer<C> {
+
+    const producer = (consumer => register(consumer)) as EventProducer<C>;
+
+    Object.getOwnPropertyNames(EventProducer.prototype).forEach(n => {
+      if (n !== 'constructor') {
+        (producer as any)[n] = (EventProducer.prototype as any)[n];
+      }
+    });
+
+    return producer;
+  }
 
   /**
    * Registers an event consumer the will be notified on the next event at most once.
    *
    * @param consumer A consumer to notify on next event.
    */
-  once(consumer: C): EventInterest;
+  once(consumer: C): EventInterest {
+
+    let interest = EventInterest.none;
+    let off = false;
+
+    const wrapper = ((...args: EventConsumer.Event<C>) => {
+      interest.off();
+      off = true;
+      return consumer(...args as any[]) as EventConsumer.Result<C>;
+    }) as C;
+
+    interest = this(wrapper);
+
+    if (off) {
+      // The consumer is notified immediately during registration.
+      // Unregister event interest right away.
+      interest.off();
+    }
+
+    return interest;
+  }
 
   thru<R1>(
       fn1: (this: void, ...args: EventConsumer.Event<C>) => R1):
@@ -312,99 +382,33 @@ export interface EventProducer<C extends EventConsumer<any, any, any>> {
                   Out<R11, Out<R12, EventArgs<Args<R13>>>>>>>>>>>>>>>>) =>
           EventConsumer.Result<C>>;*/
 
-}
-
-/**
- * An interest for the events.
- *
- * This is what returned returned from `EventProducer` when registering an event consumer.
- *
- * Once the consumer is no longer interested in receiving events, an `off()` method should be called, indicated the
- * lost of interest.
- */
-export interface EventInterest {
-
-  /**
-   * A method to call to indicate the lost of interest in receiving events.
-   *
-   * Once called, the corresponding event consumer would no longer be called.
-   *
-   * Calling this method for the second time has no effect.
-   */
-  off(): void;
-
-}
-
-export namespace EventInterest {
-
-  /**
-   * No-op event interest.
-   *
-   * This is handy to use e.g. to initialize the fields.
-   */
-  export const none: EventInterest = {
-    off: noop,
-  };
-
-}
-
-export namespace EventProducer {
-
-  /**
-   * Converts an event consumer registration function to event producer.
-   *
-   * @param register An event consumer registration function returning an event interest.
-   *
-   * @returns An event producer instance registering consumers with `register` function.
-   */
-  export function of<C extends EventConsumer<any[], any, any>>(
-      register: (this: void, consumer: C) => EventInterest): EventProducer<C> {
-
-    const producer = (consumer => register(consumer)) as EventProducer<C>;
-
-    producer.once = function (this: EventProducer<C>, consumer: C) {
-
-      let interest = EventInterest.none;
-      let off = false;
-
-      const wrapper = ((...args: EventConsumer.Event<C>) => {
-        interest.off();
-        off = true;
-        return consumer(...args) as EventConsumer.Result<C>;
-      }) as C;
-
-      interest = this(wrapper);
-
-      if (off) {
-        // The consumer is notified immediately during registration.
-        // Unregister event interest right away.
-        interest.off();
-      }
-
-      return interest;
-    };
+  thru(...fns: any[]) {
 
     const thru = callThru as any;
+    const transform = thru(...fns, captureEventArgs);
 
-    producer.thru = function (this: EventProducer<C>, ...fns: any[]) {
-
-      const transform = thru(...fns, captureEventArgs);
-
-      return of((consumer: any) => this(function (...args: EventConsumer.Event<C>) {
-        return consumer.apply(this, EventArgs.of(transform(...args)));
-      } as C));
-    };
-
-    return producer;
+    return EventProducer.of((consumer: any) => this(function (...args: EventConsumer.Event<C>) {
+      return consumer.apply(this, EventArgs.of(transform(...args as any[])));
+    } as C));
   }
-
-  /**
-   * An event producer that never produces any events.
-   */
-  export const never: EventProducer<(...event: any[]) => any> = of(() => EventInterest.none);
 
 }
 
 function captureEventArgs<P extends any[]>(...args: P): EventArgs<P> {
   return { [EventArgs.args]: args };
+}
+
+export interface EventProducer<C extends EventConsumer<any, any, any>> {
+
+  /**
+   * Registers event consumer that will be notified on events.
+   *
+   * @param consumer A consumer to notify on events. The call has no effect if the same consumer is passed again.
+   *
+   * @return An event interest. The event producer will notify the consumer on events, until the `off()` method
+   * of returned event interest instance is called.
+   */
+  // tslint:disable-next-line:callable-types
+  (this: void, consumer: C): EventInterest;
+
 }
