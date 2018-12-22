@@ -55,11 +55,15 @@ export abstract class ValueTracker<T = any, N extends T = T>
   abstract set it(value: T);
 
   /**
-   * Bind the tracked value to the `source`.
+   * Binds the tracked value to the `source`.
    *
    * Updates the value when the `source` changes.
    *
    * If the value is already bound to another source, then unbinds from the old source first.
+   *
+   * Call the `off()` method to unbind the tracked value from the source.
+   *
+   * Note that explicitly updating the value would override the value received from the source.
    *
    * @param source The cached event source used as a value source.
    */
