@@ -37,11 +37,7 @@ export abstract class EventProducer<C extends EventConsumer<any, any, any>> exte
 
     const producer = (consumer => register(consumer)) as EventProducer<C>;
 
-    Object.getOwnPropertyNames(EventProducer.prototype).forEach(n => {
-      if (n !== 'constructor') {
-        (producer as any)[n] = (EventProducer.prototype as any)[n];
-      }
-    });
+    Object.setPrototypeOf(producer, EventProducer.prototype);
 
     return producer;
   }
