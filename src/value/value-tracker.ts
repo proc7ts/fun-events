@@ -63,9 +63,10 @@ export abstract class ValueTracker<T = any, N extends T = T>
    *
    * @param source The cached event source used as a value source.
    */
-  by(source: CachedEventSource<(this: void, value: T) => void>) {
+  by(source: CachedEventSource<(this: void, value: T) => void>): this {
     this.off();
     this._by = source[CachedEventSource.each](value => this.it = value);
+    return this;
   }
 
   /**
