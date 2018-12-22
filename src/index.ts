@@ -4,3 +4,4 @@ export * from './event-emitter';
 export * from './event-interest';
 export * from './event-producer';
 export * from './state';
+export * from './value';
