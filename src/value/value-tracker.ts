@@ -1,11 +1,14 @@
 import { EventInterest } from '../event-interest';
 import { EventProducer } from '../event-producer';
-import { EventEmitter } from '../event-emitter';
+import { EventSource } from '../event-source';
+import { CachedEventSource } from '../cached-event-source';
 
 /**
  * Value accessor and changes tracker.
  */
-export abstract class ValueTracker<T = any, N extends T = T> {
+export abstract class ValueTracker<T = any, N extends T = T>
+    implements EventSource<(this: void, newValue: N, oldValue: T) => void>,
+        CachedEventSource<(this: void, value: T) => void> {
 
   /**
    * @internal
@@ -29,6 +32,14 @@ export abstract class ValueTracker<T = any, N extends T = T> {
     return this.on(value => consumer(value));
   });
 
+  get [EventSource.on](): EventProducer<(this: void, newValue: N, oldValue: T) => void> {
+    return this.on;
+  }
+
+  get [CachedEventSource.each](): EventProducer<(this: void, value: T) => void> {
+    return this.each;
+  }
+
   /**
    * Reads the tracked value.
    *
@@ -50,11 +61,11 @@ export abstract class ValueTracker<T = any, N extends T = T> {
    *
    * If the value is already bound to another source, then unbinds from the old source first.
    *
-   * @param source The value source.
+   * @param source The cached event source used as a value source.
    */
-  by(source: ValueTracker<T>) {
+  by(source: CachedEventSource<(this: void, value: T) => void>) {
     this.off();
-    this._by = source.each(value => this.it = value);
+    this._by = source[CachedEventSource.each](value => this.it = value);
   }
 
   /**
@@ -69,54 +80,4 @@ export abstract class ValueTracker<T = any, N extends T = T> {
     this._by = EventInterest.none;
   }
 
-}
-
-class TrackedValue<T> extends ValueTracker<T> {
-
-  private readonly _on = new EventEmitter<(this: void, newValue: T, oldValue: T) => void>();
-
-  constructor(private _it: T) {
-    super();
-  }
-
-  get on() {
-    return this._on.on;
-  }
-
-  get it(): T {
-    return this._it;
-  }
-
-  set it(value: T) {
-
-    const oldValue = this._it;
-
-    if (oldValue !== value) {
-      this._it = value;
-      this._on.notify(value, oldValue);
-    }
-  }
-
-}
-
-/**
- * Constructs a value which changes can be tracked.
- *
- * @param initial Initial value.
- *
- * @returns Value tracker instance.
- */
-export function trackValue<T>(initial: T): ValueTracker<T>;
-
-/**
- * Constructs an optional value which changes can be tracked.
- *
- * @param initial Initial value.
- *
- * @returns Value tracker instance.
- */
-export function trackValue<T>(initial?: T): ValueTracker<T | undefined>;
-
-export function trackValue<T>(initial: T): ValueTracker<T> {
-  return new TrackedValue<T>(initial);
 }
