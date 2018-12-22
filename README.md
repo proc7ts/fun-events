@@ -143,3 +143,58 @@ tracker.update('property2', 1, 2);
 // State path changed: ['property1']
 // Property 2 changed from 2 to 1
 ```
+
+
+Value Tracking
+--------------
+
+A `ValueTracker` class represents an accessor to some value which changes can be tracked.
+
+A simple `ValueTracker` can be constructed using a `trackValue()` function:
+
+```typescript
+import { trackValue } from 'fun-events';
+
+const value = trackValue(1);
+
+value.on((newValue, oldValue) => console.log('Value changed from', oldValue, 'to', newValue));
+
+console.log(value.it); // 1
+value.it = 2; // Value changed from 1 to 2
+console.log(value.it); // 2 
+```
+
+It is also possible to bind one value to another:
+```typescript
+import { trackValue } from 'fun-events';
+
+const value1 = trackValue(1);
+const value2 = trackValue(0).by(value1);
+
+console.log(value2.it); // 1
+value1.it = 2;
+console.log(value2.it); // 2
+```
+
+To synchronize multiple values with each other a `ValueSync` can be used:
+```typescript
+import { trackValue, ValueSync } from 'fun-events';
+
+const v1 = trackValue(1);
+const v2 = trackValue(2);
+const v3 = trackValue(3);
+
+const sync = new ValueSync(0);
+
+sync.sync(v1);
+sync.sync(v2);
+sync.sync(v3);
+
+console.log(sync.it, v1.it === v2.it, v2.it === v3.it, v3.it === sync.it); // 0 true true true
+
+v2.it = 11;
+console.log(sync.it, v1.it === v2.it, v2.it === v3.it, v3.it === sync.it); // 11 true true true
+
+sync.it = 22;
+console.log(sync.it, v1.it === v2.it, v2.it === v3.it, v3.it === sync.it); // 22 true true true
+```

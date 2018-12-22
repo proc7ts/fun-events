@@ -1,6 +1,7 @@
 import { AIterable, itsIterator } from 'a-iterable';
 import { EventConsumer } from './event-consumer';
 import { EventProducer } from './event-producer';
+import { EventSource } from './event-source';
 
 /**
  * Event emitter is a handy implementation of event producer along with methods for emitting events.
@@ -13,7 +14,7 @@ import { EventProducer } from './event-producer';
  * @param <E> An event type. This is a list of event consumer parameter types.
  * @param <R> Event processing result. This is a type of event consumer result.
  */
-export class EventEmitter<C extends EventConsumer<any[], any>> extends AIterable<C> {
+export class EventEmitter<C extends EventConsumer<any, any, any>> extends AIterable<C> implements EventSource<C> {
 
   /**
    * @internal
@@ -49,6 +50,10 @@ export class EventEmitter<C extends EventConsumer<any[], any>> extends AIterable
     return this._consumers.size;
   }
 
+  get [EventSource.on](): EventProducer<C> {
+    return this.on;
+  }
+
   [Symbol.iterator](): Iterator<C> {
     return itsIterator(this._consumers.values());
   }
@@ -60,8 +65,8 @@ export class EventEmitter<C extends EventConsumer<any[], any>> extends AIterable
    *
    * @param event An event represented by function call arguments.
    */
-  notify(...event: Parameters<C>): void {
-    this.forEach(consumer => consumer(...event));
+  notify(...event: EventConsumer.Event<C>): void {
+    this.forEach(consumer => consumer(...event as any[]));
   }
 
   /**

@@ -1,5 +1,6 @@
 import { EventProducer } from './event-producer';
 import { EventInterest } from './event-interest';
+import { EventSource } from './event-source';
 import Mock = jest.Mock;
 import Mocked = jest.Mocked;
 
@@ -18,6 +19,15 @@ describe('EventProducer', () => {
 
     it('returns no event interest', () => {
       expect(interest).toBe(EventInterest.none);
+    });
+  });
+
+  describe('[EventSource.on]', () => {
+    it('refers itself', () => {
+
+      const producer = EventProducer.of(() => EventInterest.none);
+
+      expect(producer[EventSource.on]).toBe(producer);
     });
   });
 

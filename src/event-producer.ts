@@ -2,6 +2,7 @@ import { callThru, NextCall, PassedThru } from 'call-thru';
 import { EventArgs } from './event-args';
 import { EventConsumer } from './event-consumer';
 import { EventInterest } from './event-interest';
+import { EventSource } from './event-source';
 import Args = NextCall.Callee.Args;
 import Out = NextCall.Outcome;
 
@@ -18,7 +19,9 @@ import Out = NextCall.Outcome;
  *
  * @param <C> A type of event consumer.
  */
-export abstract class EventProducer<C extends EventConsumer<any, any, any>> extends Function {
+export abstract class EventProducer<C extends EventConsumer<any, any, any>>
+    extends Function
+    implements EventSource<C> {
 
   /**
    * An event producer that never produces any events.
@@ -40,6 +43,10 @@ export abstract class EventProducer<C extends EventConsumer<any, any, any>> exte
     Object.setPrototypeOf(producer, EventProducer.prototype);
 
     return producer;
+  }
+
+  get [EventSource.on](): this {
+    return this;
   }
 
   /**

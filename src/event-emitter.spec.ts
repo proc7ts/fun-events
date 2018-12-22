@@ -1,6 +1,7 @@
 import { EventEmitter } from './event-emitter';
 import { EventInterest } from './event-interest';
 import Mock = jest.Mock;
+import { EventSource } from './event-source';
 
 describe('EventEmitter', () => {
 
@@ -18,6 +19,12 @@ describe('EventEmitter', () => {
 
   it('has no consumers initially', () => {
     expect(emitter.consumers).toBe(0);
+  });
+
+  describe('[EventSource.on]', () => {
+    it('refers to `on`', () => {
+      expect(emitter[EventSource.on]).toBe(emitter.on);
+    });
   });
 
   describe('on', () => {

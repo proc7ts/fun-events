@@ -3,6 +3,7 @@ import { EventEmitter } from '../event-emitter';
 import { EventProducer } from '../event-producer';
 import { StatePath, StateUpdater } from './state-events';
 import { EventInterest } from '../event-interest';
+import { EventSource } from '../event-source';
 
 class PathEntry {
 
@@ -105,6 +106,10 @@ class SubStateTracker implements StateTracker {
     return this;
   }
 
+  get [EventSource.on](): EventProducer<StateUpdater> {
+    return this.onUpdate;
+  }
+
   track(path: StatePath): SubStateTracker {
     path = StatePath.of(path);
     if (!path.length) {
@@ -123,7 +128,7 @@ class SubStateTracker implements StateTracker {
  * When node modified an `update` function should be called. Then all update event consumers registered in `onUpdate`
  * event producer will receive a notification.
  */
-export class StateTracker {
+export class StateTracker implements EventSource<StateUpdater> {
 
   /**
    * @internal
@@ -142,6 +147,10 @@ export class StateTracker {
    */
   get onUpdate(): EventProducer<StateUpdater> {
     return this._tracker.onUpdate;
+  }
+
+  get [EventSource.on](): EventProducer<StateUpdater> {
+    return this.onUpdate;
   }
 
   // noinspection JSCommentMatchesSignature
