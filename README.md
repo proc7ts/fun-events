@@ -176,7 +176,7 @@ value1.it = 2;
 console.log(value2.it); // 2
 ```
 
-To synchronize multiple values between each other a `ValueSync` can be used:
+To synchronize multiple values with each other a `ValueSync` can be used:
 ```typescript
 import { trackValue, ValueSync } from 'fun-events';
 
