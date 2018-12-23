@@ -1,11 +1,7 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "./tsconfig.main.json",
   "compilerOptions": {
     "target": "es5",
     "downlevelIteration": true
-  },
-  "exclude": [
-    "src/**/*.spec.ts",
-    "src/spec/**/*"
-  ]
+  }
 }

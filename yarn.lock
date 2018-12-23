@@ -40,10 +40,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.18.tgz#1d3ca764718915584fcd9f6344621b7672665c67"
   integrity sha512-fh+pAqt4xRzPfqA6eh3Z2y6fyZavRIumvjhaCL753+TVkGKGhpPeyrJG2JftD0T9q4GF00KjefsQ+PQNDdWQaQ==
 
-a-iterable@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/a-iterable/-/a-iterable-2.0.1.tgz#5ad626c9c2b0dfb6d4133e3a9ce64183f99dd07f"
-  integrity sha512-b1oEc0/KFX9u1ODUv0bMQvtcDVgx4CeC+hFZ+nTOkMFWXyldeYcC24bOWtq/X/SmvBrDDh9Z3SqPgpFtGOx5Tg==
+a-iterable@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/a-iterable/-/a-iterable-2.1.0.tgz#5d8e52533f812ffd9cb1eba50a403133dd1bbff2"
+  integrity sha512-2GAbjvyuUdD3diXZyvwflizMpXiHFKJocrhNnHeQ0786EiBY4srEf37K4vJ7UMVNA5qj1Xooif3ZMxW56NN/Fg==
   dependencies:
     tslib "^1.9.0"
 
@@ -528,10 +528,10 @@ cache-base@^1.0.1:
     union-value "^1.0.0"
     unset-value "^1.0.0"
 
-call-thru@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/call-thru/-/call-thru-2.0.0.tgz#ca6e8d2a9c0f4d6bb49d359b281004c25db557d2"
-  integrity sha512-JfKFlbzgDlYFA8Js1X+U+GLBSb66Tyq8DTJZbQREM+L8RfvopvnzTZpCEeOgXSJ4UhqUFHYVgeNZQ1iHA20UxA==
+call-thru@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/call-thru/-/call-thru-2.1.0.tgz#76f202f1ff6345fda3d6dfbca60653c42c5eaa77"
+  integrity sha512-rnIGN6Y4mHaseqzwGttILa1OYXfuSTMlfh2G6CLyeBKU5Coy2XLVllIuih/7RWZMKWZvYnaBzU1GJliIaPDxtg==
   dependencies:
     tslib "^1.9.0"
 
