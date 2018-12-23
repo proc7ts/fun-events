@@ -1,12 +1,8 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "./tsconfig.main.json",
   "compilerOptions": {
     "declaration": true,
     "declarationDir": "d.ts",
     "stripInternal": true
-  },
-  "exclude": [
-    "src/**/*.spec.ts",
-    "src/spec/**/*"
-  ]
+  }
 }
