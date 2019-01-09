@@ -5,7 +5,6 @@ import { EventInterest } from './event-interest';
 import { EventSource } from './event-source';
 import Args = NextCall.Callee.Args;
 import Out = NextCall.Outcome;
-import { DomEventListener, DomEventProducer } from './dom';
 
 /**
  * Event producer is a function accepting an event consumer as its only argument.
