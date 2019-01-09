@@ -88,7 +88,6 @@ export interface DomEventProducer<E extends Event> {
 
 }
 
-
 interface  DomEventProducerFactory {
 
   of<E extends Event>(
