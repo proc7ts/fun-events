@@ -53,7 +53,7 @@ describe('EventProducer', () => {
 
     it('registers event consumer', () => {
       expect(producer.once(consumerSpy)).toBe(interestSpy);
-      expect(registerSpy).toHaveBeenCalled();
+      expect(registerSpy).toHaveBeenCalledWith(registeredConsumer);
     });
     it('unregisters notified event consumer', () => {
       consumerSpy.mockReturnValue('result');
