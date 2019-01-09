@@ -5,6 +5,7 @@ import { EventInterest } from './event-interest';
 import { EventSource } from './event-source';
 import Args = NextCall.Callee.Args;
 import Out = NextCall.Outcome;
+import { DomEventListener, DomEventProducer } from './dom';
 
 /**
  * Event producer is a function accepting an event consumer as its only argument.
@@ -188,10 +189,11 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
 
   thru(...fns: any[]): EventProducer<any[], R> {
 
+    const constructor: EventProducerFactory = this.constructor as any;
     const thru = callThru as any;
     const transform = thru(...fns, captureEventArgs);
 
-    return EventProducer.of((consumer: EventConsumer<any[], R>) => this((...args: E) => {
+    return constructor.of((consumer: EventConsumer<any[], R>) => this((...args: E) => {
       return consumer(...EventArgs.of(transform(...args)));
     }));
   }
@@ -207,12 +209,19 @@ export interface EventProducer<E extends any[], R = void> {
   /**
    * Registers event consumer that will be notified on events.
    *
-   * @param consumer A consumer to notify on events. The call has no effect if the same consumer is passed again.
+   * @param consumer A consumer to notify on events.
    *
    * @return An event interest. The event producer will notify the consumer on events, until the `off()` method
    * of returned event interest instance is called.
    */
   // tslint:disable-next-line:callable-types
   (this: void, consumer: EventConsumer<E, R>): EventInterest;
+
+}
+
+interface  EventProducerFactory {
+
+  of<E extends any[], R = void>(
+      register: (this: void, consumer: EventConsumer<E, R>) => EventInterest): EventProducer<E, R>;
 
 }
