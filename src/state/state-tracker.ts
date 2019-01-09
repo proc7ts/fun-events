@@ -5,9 +5,20 @@ import { StatePath, StateUpdater } from './state-events';
 import { EventInterest } from '../event-interest';
 import { EventSource } from '../event-source';
 
+/**
+ * A producer of state update events.
+ */
+export interface StateUpdateProducer extends EventProducer<[StatePath, any, any]> {
+
+  (consumer: StateUpdater): EventInterest;
+
+  once(consumer: StateUpdater): EventInterest;
+
+}
+
 class PathEntry {
 
-  readonly emitter = new EventEmitter<StateUpdater>();
+  readonly emitter = new EventEmitter<[StatePath, any, any]>();
   private readonly _nested = new Map<PropertyKey, PathEntry>();
 
   constructor(private readonly _drop: () => void) {
@@ -96,7 +107,8 @@ class SubStateTracker implements StateTracker {
     this._trackers.notify([...this._path, ...StatePath.of(path)], newValue, oldValue);
   });
 
-  readonly onUpdate = EventProducer.of<StateUpdater>(consumer => this._trackers.on(this._path, consumer));
+  readonly onUpdate: StateUpdateProducer =
+      EventProducer.of<[StatePath, any, any]>(consumer => this._trackers.on(this._path, consumer));
 
   constructor(private readonly _trackers: Trackers, private readonly _path: StatePath.Normalized) {
   }
@@ -106,7 +118,7 @@ class SubStateTracker implements StateTracker {
     return this;
   }
 
-  get [EventSource.on](): EventProducer<StateUpdater> {
+  get [EventSource.on](): StateUpdateProducer {
     return this.onUpdate;
   }
 
@@ -128,7 +140,7 @@ class SubStateTracker implements StateTracker {
  * When node modified an `update` function should be called. Then all update event consumers registered in `onUpdate`
  * event producer will receive a notification.
  */
-export class StateTracker implements EventSource<StateUpdater> {
+export class StateTracker implements EventSource<[StatePath, any, any]> {
 
   /**
    * @internal
@@ -145,11 +157,11 @@ export class StateTracker implements EventSource<StateUpdater> {
    *
    * @return An event interest instance.
    */
-  get onUpdate(): EventProducer<StateUpdater> {
+  get onUpdate(): StateUpdateProducer {
     return this._tracker.onUpdate;
   }
 
-  get [EventSource.on](): EventProducer<StateUpdater> {
+  get [EventSource.on](): StateUpdateProducer {
     return this.onUpdate;
   }
 

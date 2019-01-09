@@ -4,12 +4,12 @@
  * Constructed by the last pass of `EventProducer.thru()`. The extracted event arguments then passed to the event
  * consumers registered in the resulting event producer.
  */
-export interface EventArgs<P extends any[]> {
+export interface EventArgs<E extends any[]> {
 
   /**
    * Captured event consumer arguments.
    */
-  [EventArgs.args]: P;
+  [EventArgs.args]: E;
 
 }
 
@@ -18,7 +18,7 @@ export namespace EventArgs {
   /**
    * A type of event consumer arguments tuple extracted from the given value type.
    */
-  export type Of<T> = T extends EventArgs<infer P> ? P : [T];
+  export type Of<T> = T extends EventArgs<infer E> ? E : [T];
 
   /**
    * A key of `EventArgs` property holding captured event consumer arguments.

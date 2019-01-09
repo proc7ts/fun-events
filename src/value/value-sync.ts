@@ -13,7 +13,7 @@ export class ValueSync<T> extends ValueTracker<T> {
   /**
    * @internal
    */
-  private readonly _on = new EventEmitter<(this: void, newValue: T, oldValue: T) => void>();
+  private readonly _on = new EventEmitter<[T, T]>();
 
   /**
    * @internal
@@ -25,7 +25,7 @@ export class ValueSync<T> extends ValueTracker<T> {
     this._it = initial;
   }
 
-  get on(): EventProducer<(this: void, newValue: T, oldValue: T) => void> {
+  get on(): EventProducer<[T, T]> {
     return this._on.on;
   }
 

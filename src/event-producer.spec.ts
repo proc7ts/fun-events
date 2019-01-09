@@ -7,7 +7,7 @@ import Mocked = jest.Mocked;
 describe('EventProducer', () => {
   describe('never', () => {
 
-    let producer: EventProducer<(value: string) => number>;
+    let producer: EventProducer<[string], number>;
     let consumerSpy: Mock<(event: string) => number>;
     let interest: EventInterest;
 
@@ -34,7 +34,7 @@ describe('EventProducer', () => {
   describe('once', () => {
 
     let registerSpy: Mock;
-    let producer: EventProducer<(value: string) => string>;
+    let producer: EventProducer<[string], string>;
     let interestSpy: Mocked<EventInterest>;
     let registeredConsumer: (event: string) => string;
     let consumerSpy: Mock<(event: string) => string>;
@@ -87,7 +87,7 @@ describe('EventProducer', () => {
     let registerSpy: Mock;
     let interestSpy: Mocked<EventInterest>;
     let registeredConsumer: (event1: string, event2: string) => number;
-    let producer: EventProducer<(event1: string, event2: string) => number>;
+    let producer: EventProducer<[string, string], number>;
     let consumerSpy: Mock<number>;
 
     beforeEach(() => {

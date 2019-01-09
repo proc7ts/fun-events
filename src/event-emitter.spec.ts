@@ -5,7 +5,7 @@ import { EventSource } from './event-source';
 
 describe('EventEmitter', () => {
 
-  let emitter: EventEmitter<(event: string) => string>;
+  let emitter: EventEmitter<[string], string>;
   let consumerSpy: Mock<(event: string) => string>;
   let consumer2Spy: Mock<(event: string) => string>;
 
