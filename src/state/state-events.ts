@@ -1,7 +1,5 @@
 import { noop as _noop } from 'call-thru';
 
-export type StateUpdater = <V>(this: void, path: StatePath, newValue: V, oldValue: V) => void;
-
 /**
  * A state updates consumer function.
  *
@@ -12,6 +10,8 @@ export type StateUpdater = <V>(this: void, path: StatePath, newValue: V, oldValu
  * @param newValue New value.
  * @param oldValue Previous value.
  */
+export type StateUpdater = <V>(this: void, path: StatePath, newValue: V, oldValue: V) => void;
+
 export namespace StateUpdater {
 
   /**

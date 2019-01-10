@@ -3,7 +3,7 @@ import { ValueTracker } from './value-tracker';
 
 class TrackedValue<T> extends ValueTracker<T> {
 
-  private readonly _on = new EventEmitter<(this: void, newValue: T, oldValue: T) => void>();
+  private readonly _on = new EventEmitter<[T, T]>();
 
   constructor(private _it: T) {
     super();

@@ -6,9 +6,7 @@ import { CachedEventSource } from '../cached-event-source';
 /**
  * Value accessor and changes tracker.
  */
-export abstract class ValueTracker<T = any, N extends T = T>
-    implements EventSource<(this: void, newValue: N, oldValue: T) => void>,
-        CachedEventSource<(this: void, value: T) => void> {
+export abstract class ValueTracker<T = any, N extends T = T> implements EventSource<[N, T]>, CachedEventSource<[T]> {
 
   /**
    * @internal
@@ -20,23 +18,23 @@ export abstract class ValueTracker<T = any, N extends T = T>
    *
    * The registered event consumers receive new and old values as arguments.
    */
-  abstract readonly on: EventProducer<(this: void, newValue: N, oldValue: T) => void>;
+  abstract readonly on: EventProducer<[N, T]>;
 
   /**
    * An event producer notifying on each value, including initial one.
    *
    * The registered event consumer will be notified an original value immediately on registration.
    */
-  readonly each: EventProducer<(this: void, value: T) => void> = EventProducer.of(consumer => {
+  readonly each: EventProducer<[T]> = EventProducer.of(consumer => {
     consumer(this.it);
     return this.on(value => consumer(value));
   });
 
-  get [EventSource.on](): EventProducer<(this: void, newValue: N, oldValue: T) => void> {
+  get [EventSource.on](): EventProducer<[N, T]> {
     return this.on;
   }
 
-  get [CachedEventSource.each](): EventProducer<(this: void, value: T) => void> {
+  get [CachedEventSource.each](): EventProducer<[T]> {
     return this.each;
   }
 
@@ -67,7 +65,7 @@ export abstract class ValueTracker<T = any, N extends T = T>
    *
    * @param source The cached event source used as a value source.
    */
-  by(source: CachedEventSource<(this: void, value: T) => void>): this {
+  by(source: CachedEventSource<[T]>): this {
     this.off();
     this._by = source[CachedEventSource.each](value => this.it = value);
     return this;

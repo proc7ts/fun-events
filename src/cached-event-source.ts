@@ -1,4 +1,3 @@
-import { EventConsumer } from './event-consumer';
 import { EventProducer } from './event-producer';
 
 /**
@@ -6,14 +5,15 @@ import { EventProducer } from './event-producer';
  *
  * Contains an event producer that notifies the consumer on the cached event immediately upon registration.
  *
- * @param <C> A type of event consumer.
+ * @param <E> An event type. This is a list of event consumer parameter types.
+ * @param <R> Event processing result. This is a type of event consumer result.
  */
-export interface CachedEventSource<C extends EventConsumer<any, any, any>> {
+export interface CachedEventSource<E extends any[], R = void> {
 
   /**
    * A reference to event producer.
    */
-  readonly [CachedEventSource.each]: EventProducer<C>;
+  readonly [CachedEventSource.each]: EventProducer<E, R>;
 
 }
 

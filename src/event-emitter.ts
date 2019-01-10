@@ -14,12 +14,13 @@ import { EventSource } from './event-source';
  * @param <E> An event type. This is a list of event consumer parameter types.
  * @param <R> Event processing result. This is a type of event consumer result.
  */
-export class EventEmitter<C extends EventConsumer<any, any, any>> extends AIterable<C> implements EventSource<C> {
+export class EventEmitter<E extends any[], R = void> extends AIterable<EventConsumer<E, R>>
+    implements EventSource<E, R> {
 
   /**
    * @internal
    */
-  private readonly _consumers = new Map<number, C>();
+  private readonly _consumers = new Map<number, EventConsumer<E, R>>();
 
   /**
    * @internal
@@ -31,7 +32,7 @@ export class EventEmitter<C extends EventConsumer<any, any, any>> extends AItera
    *
    * This is an `EventProducer` implementation. Consumers registered with it will be notified on emitted events.
    */
-  readonly on = EventProducer.of<C>(consumer => {
+  readonly on = EventProducer.of<E, R>(consumer => {
 
     const id = ++this._seq;
 
@@ -50,11 +51,11 @@ export class EventEmitter<C extends EventConsumer<any, any, any>> extends AItera
     return this._consumers.size;
   }
 
-  get [EventSource.on](): EventProducer<C> {
+  get [EventSource.on](): EventProducer<E, R> {
     return this.on;
   }
 
-  [Symbol.iterator](): Iterator<C> {
+  [Symbol.iterator](): Iterator<EventConsumer<E, R>> {
     return itsIterator(this._consumers.values());
   }
 
@@ -65,8 +66,8 @@ export class EventEmitter<C extends EventConsumer<any, any, any>> extends AItera
    *
    * @param event An event represented by function call arguments.
    */
-  notify(...event: EventConsumer.Event<C>): void {
-    this.forEach(consumer => consumer(...event as any[]));
+  notify(...event: E): void {
+    this.forEach(consumer => consumer(...event));
   }
 
   /**
