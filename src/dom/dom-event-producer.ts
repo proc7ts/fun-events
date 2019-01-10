@@ -124,6 +124,28 @@ export abstract class DomEventProducer<E extends Event> extends EventProducer<[E
   }
 
   /**
+   * An event producer derived from this one that registers listeners preventing further propagation of the current
+   * event in the capturing and bubbling phases.
+   *
+   * It invokes an `Event.stopPropagation()` method prior to calling the registered listeners.
+   */
+  get just(): DomEventProducer<E> {
+
+    const constructor: DomEventProducerFactory = this.constructor as any;
+
+    return constructor.of((
+        listener: DomEventListener<E>,
+        opts?: AddEventListenerOptions | boolean) => {
+      return this(
+          event => {
+            event.stopPropagation();
+            listener(event);
+          },
+          opts);
+    });
+  }
+
+  /**
    * An event producer derived from this one that registers the last event listener.
    *
    * It invokes an `Event.stopImmediatePropagation()` method prior to calling the registered listeners.
