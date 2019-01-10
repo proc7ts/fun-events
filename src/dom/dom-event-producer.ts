@@ -103,11 +103,11 @@ export abstract class DomEventProducer<E extends Event> extends EventProducer<[E
   }
 
   /**
-   * An event producer derived from this one that prevents the default action.
+   * An event producer derived from this one that registers listeners to invoke instead of default action.
    *
    * It invokes an `Event.preventDefault()` method prior to calling the registered listeners.
    */
-  get just(): DomEventProducer<E> {
+  get instead(): DomEventProducer<E> {
 
     const constructor: DomEventProducerFactory = this.constructor as any;
 

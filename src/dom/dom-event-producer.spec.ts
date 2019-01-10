@@ -103,16 +103,16 @@ describe('DomEventProducer', () => {
     });
   });
 
-  describe('just', () => {
+  describe('instead', () => {
     it('builds `DomEventProducer`', () => {
-      expect(producer.just).toBeInstanceOf(DomEventProducer);
+      expect(producer.instead).toBeInstanceOf(DomEventProducer);
     });
     it('registers event listener', () => {
-      expect(producer.just(listenerSpy)).toBe(interestSpy);
+      expect(producer.instead(listenerSpy)).toBe(interestSpy);
       expect(registerSpy).toHaveBeenCalled();
     });
     it('prevents default', () => {
-      producer.just(listenerSpy);
+      producer.instead(listenerSpy);
 
       const event = new KeyboardEvent('click');
       const preventDefaultSpy = jest.spyOn(event, 'preventDefault');
