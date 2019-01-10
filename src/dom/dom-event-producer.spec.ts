@@ -49,7 +49,7 @@ describe('DomEventProducer', () => {
       producer.capture(listenerSpy, opts);
       expect(registerSpy).toHaveBeenCalledWith(registeredListener, { ...opts, capture: true });
     });
-    it('captures non-capturing options', () => {
+    it('respects non-capturing options', () => {
 
       const opts: AddEventListenerOptions = {
         once: true,
@@ -58,6 +58,47 @@ describe('DomEventProducer', () => {
 
       producer.capture(listenerSpy, opts);
       expect(registerSpy).toHaveBeenCalledWith(registeredListener, opts);
+    });
+  });
+  describe('passive', () => {
+    it('builds `DomEventProducer`', () => {
+      expect(producer.passive).toBeInstanceOf(DomEventProducer);
+    });
+    it('registers event listener', () => {
+      expect(producer.passive(listenerSpy)).toBe(interestSpy);
+      expect(registerSpy).toHaveBeenCalled();
+    });
+    it('passivates event listener by default', () => {
+      producer.passive(listenerSpy);
+      expect(registerSpy).toHaveBeenCalledWith(registeredListener, { passive: true });
+    });
+    it('respects capturing registration', () => {
+      producer.passive(listenerSpy, false);
+      expect(registerSpy).toHaveBeenCalledWith(registeredListener, { passive: true, capture: false });
+    });
+    it('passivates event listener by default when options passed', () => {
+
+      const opts: AddEventListenerOptions = {
+        once: true,
+        capture: true,
+      };
+
+      producer.passive(listenerSpy, opts);
+      expect(registerSpy).toHaveBeenCalledWith(registeredListener, { ...opts, passive: true });
+    });
+    it('respects non-passive options', () => {
+
+      const opts: AddEventListenerOptions = {
+        once: true,
+        passive: false,
+      };
+
+      producer.passive(listenerSpy, opts);
+      expect(registerSpy).toHaveBeenCalledWith(registeredListener, opts);
+    });
+    it('combines with `capture`', () => {
+      producer.capture.passive(listenerSpy);
+      expect(registerSpy).toHaveBeenCalledWith(registeredListener, { capture: true, passive: true });
     });
   });
 });
