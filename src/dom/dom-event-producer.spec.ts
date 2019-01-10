@@ -123,4 +123,25 @@ describe('DomEventProducer', () => {
       expect(listenerSpy).toHaveBeenCalledWith(event);
     });
   });
+
+  describe('last', () => {
+    it('builds `DomEventProducer`', () => {
+      expect(producer.last).toBeInstanceOf(DomEventProducer);
+    });
+    it('registers event listener', () => {
+      expect(producer.last(listenerSpy)).toBe(interestSpy);
+      expect(registerSpy).toHaveBeenCalled();
+    });
+    it('prevents default', () => {
+      producer.last(listenerSpy);
+
+      const event = new KeyboardEvent('click');
+      const stopImmediatePropagationSpy = jest.spyOn(event, 'stopImmediatePropagation');
+
+      registeredListener(event);
+
+      expect(stopImmediatePropagationSpy).toHaveBeenCalledWith();
+      expect(listenerSpy).toHaveBeenCalledWith(event);
+    });
+  });
 });

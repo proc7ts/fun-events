@@ -123,6 +123,27 @@ export abstract class DomEventProducer<E extends Event> extends EventProducer<[E
     });
   }
 
+  /**
+   * An event producer derived from this one that registers the last event listener.
+   *
+   * It invokes an `Event.stopImmediatePropagation()` method prior to calling the registered listeners.
+   */
+  get last(): DomEventProducer<E> {
+
+    const constructor: DomEventProducerFactory = this.constructor as any;
+
+    return constructor.of((
+        listener: DomEventListener<E>,
+        opts?: AddEventListenerOptions | boolean) => {
+      return this(
+          event => {
+            event.stopImmediatePropagation();
+            listener(event);
+          },
+          opts);
+    });
+  }
+
 }
 
 export interface DomEventProducer<E extends Event> {
