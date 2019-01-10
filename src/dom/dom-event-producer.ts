@@ -55,7 +55,7 @@ export abstract class DomEventProducer<E extends Event> extends EventProducer<[E
   }
 
   /**
-   * Constructs new event producer out of this one, that enables event capturing by default.
+   * An event producer derived from this one that enables event capturing by default.
    *
    * This corresponds to specifying `false` or `{ capture: true }` as a second argument to
    * `EventTarget.addEventListener()`.
@@ -78,7 +78,7 @@ export abstract class DomEventProducer<E extends Event> extends EventProducer<[E
   }
 
   /**
-   * Constructs new event producer out of this one, that accepts listeners that never call `Event.preventDefault()`.
+   * An event producer derived from this one that accepts listeners that never call `Event.preventDefault()`.
    *
    * This corresponds to specifying `{ passive: true }` as a second argument to `EventTarget.addEventListener()`.
    */
@@ -100,7 +100,27 @@ export abstract class DomEventProducer<E extends Event> extends EventProducer<[E
       }
       return this(listener, opts);
     });
+  }
 
+  /**
+   * An event producer derived from this one that prevents the default action.
+   *
+   * It invokes an `Event.preventDefault()` method prior to calling the registered listeners.
+   */
+  get just(): DomEventProducer<E> {
+
+    const constructor: DomEventProducerFactory = this.constructor as any;
+
+    return constructor.of((
+        listener: DomEventListener<E>,
+        opts?: AddEventListenerOptions | boolean) => {
+      return this(
+          event => {
+            event.preventDefault();
+            listener(event);
+          },
+          opts);
+    });
   }
 
 }

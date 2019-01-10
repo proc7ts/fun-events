@@ -65,7 +65,7 @@ export class DomEventDispatcher {
   on<E extends Event>(type: string): DomEventProducer<E> {
     return DomEventProducer.of<E>((listener, opts) => {
 
-          const _listener = (event: Event) => listener(event as E);
+          const _listener: EventListener = event => listener(event as E);
 
           this._target.addEventListener(type, _listener, opts);
 

@@ -60,6 +60,7 @@ describe('DomEventProducer', () => {
       expect(registerSpy).toHaveBeenCalledWith(registeredListener, opts);
     });
   });
+
   describe('passive', () => {
     it('builds `DomEventProducer`', () => {
       expect(producer.passive).toBeInstanceOf(DomEventProducer);
@@ -99,6 +100,27 @@ describe('DomEventProducer', () => {
     it('combines with `capture`', () => {
       producer.capture.passive(listenerSpy);
       expect(registerSpy).toHaveBeenCalledWith(registeredListener, { capture: true, passive: true });
+    });
+  });
+
+  describe('just', () => {
+    it('builds `DomEventProducer`', () => {
+      expect(producer.just).toBeInstanceOf(DomEventProducer);
+    });
+    it('registers event listener', () => {
+      expect(producer.just(listenerSpy)).toBe(interestSpy);
+      expect(registerSpy).toHaveBeenCalled();
+    });
+    it('prevents default', () => {
+      producer.just(listenerSpy);
+
+      const event = new KeyboardEvent('click');
+      const preventDefaultSpy = jest.spyOn(event, 'preventDefault');
+
+      registeredListener(event);
+
+      expect(preventDefaultSpy).toHaveBeenCalledWith();
+      expect(listenerSpy).toHaveBeenCalledWith(event);
     });
   });
 });
