@@ -4,11 +4,15 @@ import { EventConsumer } from '../event-consumer';
 
 /**
  * DOM event listener.
+ *
+ * @param <E> Supported DOM event type.
  */
 export type DomEventListener<E extends Event> = EventConsumer<[E]>;
 
 /**
  * DOM event producer is an `EventProducer` accepting DOM event listener and its registration options as arguments.
+ *
+ * @param <E> Supported DOM event type.
  */
 export abstract class DomEventProducer<E extends Event> extends EventProducer<[E]> {
 
