@@ -198,3 +198,110 @@ console.log(sync.it, v1.it === v2.it, v2.it === v3.it, v3.it === sync.it); // 11
 sync.it = 22;
 console.log(sync.it, v1.it === v2.it, v2.it === v3.it, v3.it === sync.it); // 22 true true true
 ```
+
+
+DOM Events
+----------
+
+DOM events are supported by `DomEventProducer` and `DomEventDispatcher`. The former extends an `EventProducer` with
+DOM-specific functionality. The latter can be attached to arbitrary `EventTarget` and provide a `DomEventProducer`s for
+its events and to dispatch DOM events.
+
+```typescript
+import { DomEventDispatcher } from 'fun-events';
+
+const dispatcher = new DomEventDispatcher(document.getElementById('my-button'));
+
+dispatcher.on('click')(submit);
+dispatcher.dispatch(new KeyboardEvent('click'));
+```
+
+### `DomEventProducer`
+
+Extends `EventProducer` with the following properties:
+
+
+#### `capture`
+
+An event producer derived from this one that enables event capturing by default.
+
+This corresponds to specifying `false` or `{ capture: true }` as a second argument to
+`EventTarget.addEventListener()`.
+
+```typescript
+import { DomEventDispatcher } from 'fun-events';
+
+const container = document.getElementById('my-container');
+
+// Clicking on the inner elements would be handled by container first.
+new DomEventDispatcher(container).on('click').capture(handleContainerClick);
+
+// The above is the same as
+container.addEventListener('click', handleContainerClick, true);
+```
+
+
+#### `instead`
+
+An event producer derived from this one that registers listeners to invoke instead of default action.
+
+It invokes an `Event.preventDefault()` method prior to calling the registered listeners. 
+
+```typescript
+import { DomEventDispatcher } from 'fun-events';
+
+// Clicking on the link won't lead to navigation.
+new DomEventDispatcher(document.getElementById('my-href')).on('click').instead(doSomethingElse); 
+```
+
+
+#### `just`
+
+An event producer derived from this one that registers listeners preventing further propagation of the current
+event in the capturing and bubbling phases.
+
+It invokes an `Event.stopPropagation()` method prior to calling the registered listeners.
+
+```typescript
+import { DomEventDispatcher } from 'fun-events';
+
+// The ascendants won't receive a click the div.
+new DomEventDispatcher(document.getElementById('my-div')).on('click').just(handleClick); 
+```
+
+
+#### `last`
+
+An event producer derived from this one that registers the last event listener.
+
+It invokes an `Event.stopImmediatePropagation()` method prior to calling the registered listeners.
+
+```typescript
+import { DomEventDispatcher } from 'fun-events';
+
+const dispatcher = new DomEventDispatcher(document.getElementById('my-div'))
+const onClick = dispatcher.on('click');
+
+// The ascendants won't receive a click the div.
+onClick.last(() => console.log('1')); // This is the last handler 
+onClick(() => console.log('2'));      // This one won't be called
+
+dispatcher.dispatch(new KeyboardEvent('click')); // console: 1 
+```
+
+
+#### `passive`
+
+An event producer derived from this one that accepts listeners that never call `Event.preventDefault()`.
+   
+This corresponds to specifying `{ passive: true }` as a second argument to `EventTarget.addEventListener()`.
+
+```typescript
+import { DomEventDispatcher } from 'fun-events';
+
+// Scrolling events won't be prevented.
+new DomEventDispatcher(document.body).on('scroll').passive(handleScroll);
+
+// The above is the same as
+document.body.addEventListener('scroll', handleScroll, { passive: true });
+```
