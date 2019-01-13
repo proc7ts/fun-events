@@ -20,36 +20,6 @@ export class DomEventDispatcher {
   }
 
   /**
-   * Returns a DOM event producer for the given HTML body element event type.
-   */
-  on<K extends keyof HTMLBodyElementEventMap>(type: K): DomEventProducer<HTMLBodyElementEventMap[K]>;
-
-  /**
-   * Returns a DOM event producer for the given HTML marquee element event type.
-   */
-  on<K extends keyof HTMLMarqueeElementEventMap>(type: K): DomEventProducer<HTMLMarqueeElementEventMap[K]>;
-
-  /**
-   * Returns a DOM event producer for the given HTML media element event type.
-   */
-  on<K extends keyof HTMLMediaElementEventMap>(type: K): DomEventProducer<HTMLMediaElementEventMap[K]>;
-
-  /**
-   * Returns a DOM event producer for the given HTML video element event type.
-   */
-  on<K extends keyof HTMLVideoElementEventMap>(type: K): DomEventProducer<HTMLVideoElementEventMap[K]>;
-
-  /**
-   * Returns a DOM event producer for the given HTML element event type.
-   */
-  on<K extends keyof HTMLElementEventMap>(type: K): DomEventProducer<HTMLElementEventMap[K]>;
-
-  /**
-   * Returns a DOM event producer for the given window event type.
-   */
-  on<K extends keyof WindowEventHandlersEventMap>(type: K): DomEventProducer<WindowEventHandlersEventMap[K]>;
-
-  /**
    * Returns a DOM event producer for the given event type.
    *
    * The listeners registered with returned event producer will be notified on DOM events.
@@ -60,8 +30,6 @@ export class DomEventDispatcher {
    * The `EventInterest` returned upon event listener registration, unregisters the given event listener with
    * `EventTarget.removeEventListener()` when its `off()` method is called.
    */
-  on<E extends Event>(type: string): DomEventProducer<E>;
-
   on<E extends Event>(type: string): DomEventProducer<E> {
     return DomEventProducer.of<E>((listener, opts) => {
 
