@@ -18,7 +18,7 @@ function eventConsumer(type: string, event: Event) {
 }
 
 // Event producer accepts consumers with predefined interface 
-const eventProducer: EventProducer<(type: string, event: Event) => void>; // Some event producer;
+const eventProducer: EventProducer<[string, Event]>; // Event producer with the same signature
 
 // Call event producer to register consumer
 // An event interest returned can be used to unregister
@@ -51,9 +51,9 @@ To register an event consumer in event producer just call the event producer wit
 
 Event producer is a function accepting an event consumer as its only argument.
 
-Once called, the consumer will be notified on events, while the consumer is interested in receiving them.
+Once called, the consumer will be notified on events while the consumer is interested in receiving them.
 
-Note that event producer is a function, not a method.
+Note that the event producer is a function, not a method.
 
 An event producer also has a set of handy methods. More could be added at later time.
 
@@ -62,7 +62,7 @@ To convert a plain function into `EventProducer` an `EventProducer.of()` functio
 
 ### `once()`
 
-Registers an event consumer the will be notified on the next event at most once.
+Registers an event consumer that will be notified on the next event at most once.
 
 
 `EventIterest`
@@ -70,9 +70,9 @@ Registers an event consumer the will be notified on the next event at most once.
 
 An interest for the events.
 
-This is what returned returned from `EventProducer` when registering an event consumer.
+This is what returned from `EventProducer` when registering an event consumer.
 
-Once the consumer is no longer interested in receiving events, an `off()` method should be called, indicated the
+Once the consumer is no longer interested in receiving events, an `off()` method should be called, indicating the
 lost of interest.
 
 
@@ -89,7 +89,7 @@ Implements `AIterable` interface by iterating over registered event consumers in
 ```typescript
 import { EventEmitter } from 'fun-events';
 
-const emitter = new EventEmitter<(event: string) => string>(); // Consumers may return values
+const emitter = new EventEmitter<[string], string>(); // Consumers may return values
 
 // Register consumers
 emitter.on(event => `${event}-`);
