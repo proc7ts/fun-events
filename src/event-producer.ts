@@ -2,7 +2,7 @@ import { callThru, NextCall } from 'call-thru';
 import { EventConsumer } from './event-consumer';
 import { EventInterest } from './event-interest';
 import { EventSource } from './event-source';
-import { EventEmitter } from './event-emitter';
+import { EventNotifier } from './event-notifier';
 import Args = NextCall.Callee.Args;
 
 /**
@@ -160,10 +160,10 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
   /**
    * Constructs an event producer that passes the original event trough a chain of transformation passes.
    *
-   * The passes are preformed by `callThru()` function.
+   * The passes are preformed by `callThru()` function. The consumers registered with resulting producer are called
+   * as a last pass in chain. Thus they can be e.g. filtered out or called multiple times.
    *
-   * The consumers registered with resulting producer are called as a last pass in chain. Only the last registered
-   * consumer call result is respected.
+   * The event processing result is the one of the last registered consumer.
    *
    * @returns A producer of event transformed with provided passes.
    */
@@ -190,11 +190,11 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
   thru(...fns: any[]): EventProducer<any[], R> {
 
     const factory: EventProducerFactory = this.constructor as any;
-    let shared: [EventEmitter<any[], R>, EventInterest] | undefined;
+    let shared: [EventNotifier<any[], R>, EventInterest] | undefined;
 
     return factory.of((consumer: EventConsumer<any[], R>) => {
 
-      const emitter = shared || (shared = thruEmitter<R>(this, fns));
+      const emitter = shared || (shared = thruNotifier<R>(this, fns));
       const interest = shared[0].on(consumer);
 
       return {
@@ -211,9 +211,9 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
 
 }
 
-function thruEmitter<R>(producer: EventProducer<any[], R>, fns: any[]): [EventEmitter<any[], R>, EventInterest] {
+function thruNotifier<R>(producer: EventProducer<any[], R>, fns: any[]): [EventNotifier<any[], R>, EventInterest] {
 
-  const shared = new EventEmitter<any[], R>();
+  const shared = new EventNotifier<any[], R>();
   const thru = callThru as any;
   const transform = thru(...fns, (...event: any[]) => {
 
