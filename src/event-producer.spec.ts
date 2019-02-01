@@ -1,8 +1,10 @@
 import { EventProducer } from './event-producer';
 import { EventInterest } from './event-interest';
 import { EventSource } from './event-source';
+import { passIf } from 'call-thru';
 import Mock = jest.Mock;
 import Mocked = jest.Mocked;
+import { EventConsumer } from './event-consumer';
 
 describe('EventProducer', () => {
   describe('never', () => {
@@ -92,8 +94,9 @@ describe('EventProducer', () => {
 
     beforeEach(() => {
       interestSpy = {
-        off: jest.fn()
+        off: jest.fn(),
       };
+      interestSpy.off.mockName('interest.off()');
       registerSpy = jest.fn((c: (event1: string, event2: string) => number) => {
         registeredConsumer = c;
         return interestSpy;
@@ -103,12 +106,24 @@ describe('EventProducer', () => {
     });
 
     it('registers event consumer', () => {
-      expect(
-          producer.thru(
-              (event1: string, event2: string) => `${event1}, ${event2}`
-          )(consumerSpy)
-      ).toBe(interestSpy);
+      producer.thru(
+          (event1: string, event2: string) => `${event1}, ${event2}`
+      )(consumerSpy);
       expect(registerSpy).toHaveBeenCalled();
+    });
+    it('unregisters event consumer when interest lost', () => {
+
+      const thru = producer.thru(
+          (event1: string, event2: string) => `${event1}, ${event2}`
+      );
+
+      const interest1 = thru(consumerSpy);
+      const interest2 = thru(jest.fn());
+
+      interest1.off();
+      expect(interestSpy.off).not.toHaveBeenCalled();
+      interest2.off();
+      expect(interestSpy.off).toHaveBeenCalled();
     });
     it('transforms original event', () => {
       producer.thru(
@@ -118,6 +133,37 @@ describe('EventProducer', () => {
       registeredConsumer('a', 'bb');
 
       expect(consumerSpy).toHaveBeenCalledWith(`a, bb`);
+    });
+    it('skips original event', () => {
+      producer.thru(
+          passIf((event1: string, event2: string) => event1 < event2),
+          (event1: string, event2: string) => `${event1}, ${event2}`,
+      )(consumerSpy);
+
+      registeredConsumer('a', 'bb');
+      expect(consumerSpy).toHaveBeenCalledWith(`a, bb`);
+
+      consumerSpy.mockClear();
+      registeredConsumer('b', 'a');
+      expect(consumerSpy).not.toHaveBeenCalled();
+    });
+    it('respects the last consumer result', () => {
+
+      const thru: EventProducer<[string], number> = producer.thru(
+          (event1: string, event2: string) => `${event1}, ${event2}`
+      );
+
+      const consumer1Spy = jest.fn(() => 1);
+      const consumer2Spy = jest.fn(() => 2);
+
+      thru(consumer1Spy);
+
+      const interest2 = thru(consumer2Spy);
+
+      expect(registeredConsumer('a', 'bb')).toBe(2);
+
+      interest2.off();
+      expect(registeredConsumer('a', 'bb')).toBe(1);
     });
   });
 });
