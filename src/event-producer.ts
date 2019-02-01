@@ -1,10 +1,9 @@
-import { callThru, NextCall, PassedThru } from 'call-thru';
-import { EventArgs } from './event-args';
+import { callThru, NextCall } from 'call-thru';
 import { EventConsumer } from './event-consumer';
 import { EventInterest } from './event-interest';
 import { EventSource } from './event-source';
+import { EventNotifier } from './event-notifier';
 import Args = NextCall.Callee.Args;
-import Out = NextCall.Outcome;
 
 /**
  * Event producer is a function accepting an event consumer as its only argument.
@@ -75,49 +74,40 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
     return interest;
   }
 
-  thru<R1>(
+  thru<R1,
+      TE extends Args<R1>>(
       fn1: (this: void, ...args: E) => R1):
-      EventProducer<EventArgs.Of<PassedThru.Value<EventArgs<Args<R1>>>>, R>;
-
-  thru<
-      R1,
-      P2 extends Args<R1>, R2>(
-      fn1: (this: void, ...args: E) => R1,
-      fn2: (this: void, ...args: P2) => R2):
-      EventProducer<EventArgs.Of<PassedThru.Value<Out<R1, EventArgs<Args<R2>>>>>, R>;
+      EventProducer<TE, R>;
 
   thru<
       R1,
       P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3>(
+      TE extends Args<R2>>(
       fn1: (this: void, ...args: E) => R1,
-      fn2: (this: void, ...args: P2) => R2,
-      fn3: (this: void, ...args: P3) => R3):
-      EventProducer<EventArgs.Of<PassedThru.Value<Out<R1, Out<R2, EventArgs<Args<R3>>>>>>, R>;
+      fn2: (this: void, ...args: P2) => R2):
+      EventProducer<TE, R>;
 
   thru<
       R1,
       P2 extends Args<R1>, R2,
       P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4>(
+      TE extends Args<R3>>(
       fn1: (this: void, ...args: E) => R1,
       fn2: (this: void, ...args: P2) => R2,
-      fn3: (this: void, ...args: P3) => R3,
-      fn4: (this: void, ...args: P4) => R4):
-      EventProducer<EventArgs.Of<PassedThru.Value<Out<R1, Out<R2, Out<R3, EventArgs<Args<R4>>>>>>>, R>;
+      fn3: (this: void, ...args: P3) => R3):
+      EventProducer<TE, R>;
 
   thru<
       R1,
       P2 extends Args<R1>, R2,
       P3 extends Args<R2>, R3,
       P4 extends Args<R3>, R4,
-      P5 extends Args<R4>, R5>(
+      TE extends Args<R4>>(
       fn1: (this: void, ...args: E) => R1,
       fn2: (this: void, ...args: P2) => R2,
       fn3: (this: void, ...args: P3) => R3,
-      fn4: (this: void, ...args: P4) => R4,
-      fn5: (this: void, ...args: P5) => R5):
-      EventProducer<EventArgs.Of<PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4, EventArgs<Args<R5>>>>>>>>, R>;
+      fn4: (this: void, ...args: P4) => R4):
+      EventProducer<TE, R>;
 
   thru<
       R1,
@@ -125,17 +115,13 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
       P3 extends Args<R2>, R3,
       P4 extends Args<R3>, R4,
       P5 extends Args<R4>, R5,
-      P6 extends Args<R5>, R6>(
+      TE extends Args<R5>>(
       fn1: (this: void, ...args: E) => R1,
       fn2: (this: void, ...args: P2) => R2,
       fn3: (this: void, ...args: P3) => R3,
       fn4: (this: void, ...args: P4) => R4,
-      fn5: (this: void, ...args: P5) => R5,
-      fn6: (this: void, ...args: P6) => R6):
-      EventProducer<
-          EventArgs.Of<PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
-              EventArgs<Args<R6>>>>>>>>>,
-          R>;
+      fn5: (this: void, ...args: P5) => R5):
+      EventProducer<TE, R>;
 
   thru<
       R1,
@@ -144,7 +130,24 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
       P4 extends Args<R3>, R4,
       P5 extends Args<R4>, R5,
       P6 extends Args<R5>, R6,
-      P7 extends Args<R6>, R7>(
+      TE extends Args<R6>>(
+      fn1: (this: void, ...args: E) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6):
+      EventProducer<TE, R>;
+
+  thru<
+      R1,
+      P2 extends Args<R1>, R2,
+      P3 extends Args<R2>, R3,
+      P4 extends Args<R3>, R4,
+      P5 extends Args<R4>, R5,
+      P6 extends Args<R5>, R6,
+      P7 extends Args<R6>, R7,
+      TE extends Args<R7>>(
       fn1: (this: void, ...args: E) => R1,
       fn2: (this: void, ...args: P2) => R2,
       fn3: (this: void, ...args: P3) => R3,
@@ -152,15 +155,15 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
       fn5: (this: void, ...args: P5) => R5,
       fn6: (this: void, ...args: P6) => R6,
       fn7: (this: void, ...args: P7) => R7):
-      EventProducer<
-          EventArgs.Of<PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
-              Out<R6, EventArgs<Args<R7>>>>>>>>>>,
-          R>;
+      EventProducer<TE, R>;
 
   /**
    * Constructs an event producer that passes the original event trough a chain of transformation passes.
    *
-   * The passes are preformed by `callThru()` function.
+   * The passes are preformed by `callThru()` function. The consumers registered with resulting producer are called
+   * as a last pass in chain. Thus they can be e.g. filtered out or called multiple times.
+   *
+   * The event processing result is the one of the last registered consumer.
    *
    * @returns A producer of event transformed with provided passes.
    */
@@ -172,7 +175,8 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
       P5 extends Args<R4>, R5,
       P6 extends Args<R5>, R6,
       P7 extends Args<R6>, R7,
-      P8 extends Args<R7>, R8>(
+      P8 extends Args<R7>, R8,
+      TE extends Args<R8>>(
       fn1: (this: void, ...args: E) => R1,
       fn2: (this: void, ...args: P2) => R2,
       fn3: (this: void, ...args: P3) => R3,
@@ -181,26 +185,50 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
       fn6: (this: void, ...args: P6) => R6,
       fn7: (this: void, ...args: P7) => R7,
       fn8: (this: void, ...args: P8) => R8):
-      EventProducer<
-          EventArgs.Of<PassedThru.Value<Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
-              Out<R6, Out<R7, EventArgs<Args<R8>>>>>>>>>>>,
-          R>;
+      EventProducer<TE, R>;
 
   thru(...fns: any[]): EventProducer<any[], R> {
 
-    const constructor: EventProducerFactory = this.constructor as any;
-    const thru = callThru as any;
-    const transform = thru(...fns, captureEventArgs);
+    const factory: EventProducerFactory = this.constructor as any;
+    let shared: [EventNotifier<any[], R>, EventInterest] | undefined;
 
-    return constructor.of((consumer: EventConsumer<any[], R>) => this((...args: E) => {
-      return consumer(...EventArgs.of(transform(...args)));
-    }));
+    return factory.of((consumer: EventConsumer<any[], R>) => {
+
+      const emitter = shared || (shared = thruNotifier<R>(this, fns));
+      const interest = shared[0].on(consumer);
+
+      return {
+        off() {
+          interest.off();
+          if (!emitter[0].consumers) {
+            emitter[1].off();
+            shared = undefined;
+          }
+        }
+      };
+    });
   }
 
 }
 
-function captureEventArgs<P extends any[]>(...args: P): EventArgs<P> {
-  return { [EventArgs.args]: args };
+function thruNotifier<R>(producer: EventProducer<any[], R>, fns: any[]): [EventNotifier<any[], R>, EventInterest] {
+
+  const shared = new EventNotifier<any[], R>();
+  const thru = callThru as any;
+  const transform = thru(...fns, (...event: any[]) => {
+
+    let result: R = undefined!;
+
+    shared.forEach(c => {
+      result = c(...event);
+    });
+
+    return result;
+  });
+
+  const interest = producer(transform);
+
+  return [shared, interest];
 }
 
 export interface EventProducer<E extends any[], R = void> {
