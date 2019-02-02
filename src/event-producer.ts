@@ -157,6 +157,126 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
       fn7: (this: void, ...args: P7) => R7):
       EventProducer<TE, R>;
 
+  thru<
+      R1,
+      P2 extends Args<R1>, R2,
+      P3 extends Args<R2>, R3,
+      P4 extends Args<R3>, R4,
+      P5 extends Args<R4>, R5,
+      P6 extends Args<R5>, R6,
+      P7 extends Args<R6>, R7,
+      P8 extends Args<R7>, R8,
+      TE extends Args<R8>>(
+      fn1: (this: void, ...args: E) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6,
+      fn7: (this: void, ...args: P7) => R7,
+      fn8: (this: void, ...args: P8) => R8):
+      EventProducer<TE, R>;
+
+  thru<
+      R1,
+      P2 extends Args<R1>, R2,
+      P3 extends Args<R2>, R3,
+      P4 extends Args<R3>, R4,
+      P5 extends Args<R4>, R5,
+      P6 extends Args<R5>, R6,
+      P7 extends Args<R6>, R7,
+      P8 extends Args<R7>, R8,
+      P9 extends Args<R8>, R9,
+      TE extends Args<R9>>(
+      fn1: (this: void, ...args: E) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6,
+      fn7: (this: void, ...args: P7) => R7,
+      fn8: (this: void, ...args: P8) => R8,
+      fn9: (this: void, ...args: P9) => R9):
+      EventProducer<TE, R>;
+
+  thru<
+      R1,
+      P2 extends Args<R1>, R2,
+      P3 extends Args<R2>, R3,
+      P4 extends Args<R3>, R4,
+      P5 extends Args<R4>, R5,
+      P6 extends Args<R5>, R6,
+      P7 extends Args<R6>, R7,
+      P8 extends Args<R7>, R8,
+      P9 extends Args<R8>, R9,
+      P10 extends Args<R9>, R10,
+      TE extends Args<R10>>(
+      fn1: (this: void, ...args: E) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6,
+      fn7: (this: void, ...args: P7) => R7,
+      fn8: (this: void, ...args: P8) => R8,
+      fn9: (this: void, ...args: P9) => R9,
+      fn10: (this: void, ...args: P10) => R10):
+      EventProducer<TE, R>;
+
+  thru<
+      R1,
+      P2 extends Args<R1>, R2,
+      P3 extends Args<R2>, R3,
+      P4 extends Args<R3>, R4,
+      P5 extends Args<R4>, R5,
+      P6 extends Args<R5>, R6,
+      P7 extends Args<R6>, R7,
+      P8 extends Args<R7>, R8,
+      P9 extends Args<R8>, R9,
+      P10 extends Args<R9>, R10,
+      P11 extends Args<R10>, R11,
+      TE extends Args<R11>>(
+      fn1: (this: void, ...args: E) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6,
+      fn7: (this: void, ...args: P7) => R7,
+      fn8: (this: void, ...args: P8) => R8,
+      fn9: (this: void, ...args: P9) => R9,
+      fn10: (this: void, ...args: P10) => R10,
+      fn11: (this: void, ...args: P11) => R11):
+      EventProducer<TE, R>;
+
+  thru<
+      R1,
+      P2 extends Args<R1>, R2,
+      P3 extends Args<R2>, R3,
+      P4 extends Args<R3>, R4,
+      P5 extends Args<R4>, R5,
+      P6 extends Args<R5>, R6,
+      P7 extends Args<R6>, R7,
+      P8 extends Args<R7>, R8,
+      P9 extends Args<R8>, R9,
+      P10 extends Args<R9>, R10,
+      P11 extends Args<R10>, R11,
+      P12 extends Args<R11>, R12,
+      TE extends Args<R12>>(
+      fn1: (this: void, ...args: E) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6,
+      fn7: (this: void, ...args: P7) => R7,
+      fn8: (this: void, ...args: P8) => R8,
+      fn9: (this: void, ...args: P9) => R9,
+      fn10: (this: void, ...args: P10) => R10,
+      fn11: (this: void, ...args: P11) => R11,
+      fn12: (this: void, ...args: P12) => R12):
+      EventProducer<TE, R>;
+
   /**
    * Constructs an event producer that passes the original event trough a chain of transformation passes.
    *
@@ -176,7 +296,12 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
       P6 extends Args<R5>, R6,
       P7 extends Args<R6>, R7,
       P8 extends Args<R7>, R8,
-      TE extends Args<R8>>(
+      P9 extends Args<R8>, R9,
+      P10 extends Args<R9>, R10,
+      P11 extends Args<R10>, R11,
+      P12 extends Args<R11>, R12,
+      P13 extends Args<R12>, R13,
+      TE extends Args<R13>>(
       fn1: (this: void, ...args: E) => R1,
       fn2: (this: void, ...args: P2) => R2,
       fn3: (this: void, ...args: P3) => R3,
@@ -184,7 +309,12 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
       fn5: (this: void, ...args: P5) => R5,
       fn6: (this: void, ...args: P6) => R6,
       fn7: (this: void, ...args: P7) => R7,
-      fn8: (this: void, ...args: P8) => R8):
+      fn8: (this: void, ...args: P8) => R8,
+      fn9: (this: void, ...args: P9) => R9,
+      fn10: (this: void, ...args: P10) => R10,
+      fn11: (this: void, ...args: P11) => R11,
+      fn12: (this: void, ...args: P12) => R12,
+      fn13: (this: void, ...args: P13) => R13):
       EventProducer<TE, R>;
 
   thru(...fns: any[]): EventProducer<any[], R> {

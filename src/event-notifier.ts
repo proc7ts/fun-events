@@ -1,6 +1,7 @@
 import { AIterable, itsIterator } from 'a-iterable';
 import { EventConsumer } from './event-consumer';
 import { EventInterest } from './event-interest';
+import { EventSource } from './event-source';
 
 /**
  * Event notifier can be used to register event consumers and notify them on events.
@@ -12,10 +13,14 @@ import { EventInterest } from './event-interest';
  *
  * Implements `AIterable` interface by iterating over registered event consumers in order of their registration.
  *
+ * Can be used as `EventSource`.
+ *
  * @param <E> An event type. This is a list of event consumer parameter types.
  * @param <R> Event processing result. This is a type of event consumer result.
  */
-export class EventNotifier<E extends any[], R = void> extends AIterable<EventConsumer<E, R>> {
+export class EventNotifier<E extends any[], R = void>
+    extends AIterable<EventConsumer<E, R>>
+    implements EventSource<E, R> {
 
   /**
    * @internal
@@ -32,6 +37,10 @@ export class EventNotifier<E extends any[], R = void> extends AIterable<EventCon
    */
   get consumers(): number {
     return this._consumers.size;
+  }
+
+  [EventSource.on](consumer: EventConsumer<E, R>): EventInterest {
+    return this.on(consumer);
   }
 
   [Symbol.iterator](): Iterator<EventConsumer<E, R>> {

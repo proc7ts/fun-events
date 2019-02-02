@@ -7,8 +7,6 @@ import { EventNotifier } from './event-notifier';
  *
  * Extends `EventNotifier` by making its `on()` method implement an `EventProducer` interface.
  *
- * Can be used as `EventSource`.
- *
  * @param <E> An event type. This is a list of event consumer parameter types.
  * @param <R> Event processing result. This is a type of event consumer result.
  */

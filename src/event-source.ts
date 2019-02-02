@@ -1,9 +1,10 @@
-import { EventProducer } from './event-producer';
+import { EventConsumer } from './event-consumer';
+import { EventInterest } from './event-interest';
 
 /**
  * A source of events.
  *
- * Contains an event producer.
+ * It is able to register event consumers for receiving events.
  *
  * @param <E> An event type. This is a list of event consumer parameter types.
  * @param <R> Event processing result. This is a type of event consumer result.
@@ -11,16 +12,21 @@ import { EventProducer } from './event-producer';
 export interface EventSource<E extends any[], R = void> {
 
   /**
-   * A reference to event producer.
+   * Registers event consumer that will be notified on events.
+   *
+   * @param consumer A consumer to notify on events.
+   *
+   * @return An event interest. The event source will notify the consumer on events, until the `off()` method
+   * of returned event interest instance is called.
    */
-  readonly [EventSource.on]: EventProducer<E, R>;
+  [EventSource.on](consumer: EventConsumer<E, R>): EventInterest;
 
 }
 
 export namespace EventSource {
 
   /**
-   * A key of `EventSource` property containing an event producer.
+   * A key of `EventSource` event consumer registration method.
    */
   export const on = Symbol('on-event');
 
