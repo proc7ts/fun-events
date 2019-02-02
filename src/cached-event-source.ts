@@ -1,9 +1,8 @@
-import { EventProducer } from './event-producer';
+import { EventConsumer } from './event-consumer';
+import { EventInterest } from './event-interest';
 
 /**
  * A source of events that caches the last emitted event.
- *
- * Contains an event producer that notifies the consumer on the cached event immediately upon registration.
  *
  * @param <E> An event type. This is a list of event consumer parameter types.
  * @param <R> Event processing result. This is a type of event consumer result.
@@ -11,16 +10,22 @@ import { EventProducer } from './event-producer';
 export interface CachedEventSource<E extends any[], R = void> {
 
   /**
-   * A reference to event producer.
+   * Registers event consumer that will be notified on cached event immediately upon registration, and on every
+   * upcoming event.
+   *
+   * @param consumer A consumer to notify on events.
+   *
+   * @return An event interest. The event source will notify the consumer on events, until the `off()` method
+   * of returned event interest instance is called.
    */
-  readonly [CachedEventSource.each]: EventProducer<E, R>;
+  [CachedEventSource.each](consumer: EventConsumer<E, R>): EventInterest;
 
 }
 
 export namespace CachedEventSource {
 
   /**
-   * A key of `CachedEventSource` property containing an event producer.
+   * A key of `CachedEventSource` event consumer registration method.
    */
   export const each = Symbol('each-event');
 
