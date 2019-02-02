@@ -1,6 +1,6 @@
 {
   "name": "fun-events",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Functional event producer/consumer API",
   "keywords": [
     "event-producer",
