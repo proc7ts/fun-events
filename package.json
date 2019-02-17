@@ -29,14 +29,13 @@
     "a-iterable": "^2.1.0"
   },
   "devDependencies": {
-    "@types/fs-extra": "^5.0.4",
-    "@types/jest": "^23.3.13",
+    "@types/jest": "^23.3.14",
     "a-iterable": "^2.1.0",
     "call-thru": "^2.1.0",
     "codecov": "^3.1.0",
     "fs-extra": "^7.0.1",
     "jest": "^23.6.0",
-    "jest-junit": "^6.2.1",
+    "jest-junit": "^6.3.0",
     "rollup": "^1.1.2",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^4.0.0",

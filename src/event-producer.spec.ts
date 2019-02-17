@@ -4,13 +4,12 @@ import { EventSource } from './event-source';
 import { passIf } from 'call-thru';
 import Mock = jest.Mock;
 import Mocked = jest.Mocked;
-import { EventConsumer } from './event-consumer';
 
 describe('EventProducer', () => {
   describe('never', () => {
 
     let producer: EventProducer<[string], number>;
-    let consumerSpy: Mock<(event: string) => number>;
+    let consumerSpy: Mock<number, [string]>;
     let interest: EventInterest;
 
     beforeEach(() => {
@@ -39,7 +38,7 @@ describe('EventProducer', () => {
     let producer: EventProducer<[string], string>;
     let interestSpy: Mocked<EventInterest>;
     let registeredConsumer: (event: string) => string;
-    let consumerSpy: Mock<(event: string) => string>;
+    let consumerSpy: Mock<string, [string]>;
 
     beforeEach(() => {
       interestSpy = {

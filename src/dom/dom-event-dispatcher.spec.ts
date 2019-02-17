@@ -1,10 +1,13 @@
 import { DomEventDispatcher } from './dom-event-dispatcher';
-import Mocked = jest.Mocked;
 import Mock = jest.Mock;
 
 describe('DomEventDispatcher', () => {
 
-  let targetSpy: Mocked<EventTarget>;
+  let targetSpy: {
+    addEventListener: Mock<void, [string, EventListener]> & EventTarget['addEventListener'];
+    removeEventListener: Mock<void, [EventListener]> & EventTarget['removeEventListener'];
+    dispatchEvent: Mock<void, [Event]> & EventTarget['dispatchEvent'];
+  };
   let registeredListener: EventListener;
 
   beforeEach(() => {

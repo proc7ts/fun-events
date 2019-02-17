@@ -6,8 +6,8 @@ import { EventSource } from './event-source';
 describe('EventEmitter', () => {
 
   let emitter: EventEmitter<[string], string>;
-  let consumerSpy: Mock<(event: string) => string>;
-  let consumer2Spy: Mock<(event: string) => string>;
+  let consumerSpy: Mock<string, [string]>;
+  let consumer2Spy: Mock<string, [string]>;
 
   beforeEach(() => {
     emitter = new EventEmitter();
