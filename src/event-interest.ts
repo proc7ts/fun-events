@@ -13,11 +13,6 @@ import { noop } from 'call-thru';
 export abstract class EventInterest {
 
   /**
-   * Whether event interest is lost already.
-   */
-  abstract readonly lost: boolean;
-
-  /**
    * A method to call to indicate the lost of interest in receiving events.
    *
    * Once called, the corresponding event consumer would no longer be called.
@@ -28,33 +23,23 @@ export abstract class EventInterest {
 
 }
 
+class Interest extends EventInterest {
+  constructor(readonly off: (this: EventInterest) => void) {
+    super();
+  }
+}
+
 /**
  * Constructs new `EventInterest` instance.
  *
  * @param off A function to call to indicate the lost of interest in receiving events.
  */
 export function eventInterest(off: (this: EventInterest) => void): EventInterest {
-
-  let lost = false;
-
-  return new class Interest extends EventInterest {
-    get lost() {
-      return lost;
-    }
-    off() {
-      if (!lost) {
-        lost = true;
-        off.call(this);
-      }
-    }
-  };
+  return new Interest(off);
 }
 
 class NoEventInterest extends EventInterest {
   off = noop;
-  get lost() {
-    return true;
-  }
 }
 
 const NONE = /*#__PURE__*/ new NoEventInterest();
