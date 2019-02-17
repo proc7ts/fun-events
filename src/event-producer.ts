@@ -24,7 +24,9 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
   /**
    * An event producer that never produces any events.
    */
-  static readonly never: EventProducer<any, any> = EventProducer.of(() => noEventInterest());
+  static get never(): EventProducer<any, any> {
+    return NEVER; // tslint:disable-line:no-use-before-declare
+  }
 
   /**
    * Converts an event consumer registration function to event producer.
@@ -340,6 +342,8 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
   }
 
 }
+
+const NEVER: EventProducer<any, any> = /*#__PURE__*/ EventProducer.of(() => noEventInterest());
 
 function thruNotifier<R>(producer: EventProducer<any[], R>, fns: any[]): [EventNotifier<any[], R>, EventInterest] {
 
