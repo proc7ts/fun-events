@@ -1,5 +1,4 @@
-import { noop } from 'call-thru';
-import { StatePath, StateUpdater } from './state-events';
+import { StatePath } from './state-events';
 
 describe('StatePath', () => {
   describe('of', () => {
@@ -19,8 +18,5 @@ describe('StatePath', () => {
       expect(StatePath.of(path1)).toEqual(path1);
       expect(StatePath.of(path2)).toEqual(path2);
     });
-  });
-  describe('noop', () => {
-    expect(StateUpdater.noop).toBe(noop);
   });
 });

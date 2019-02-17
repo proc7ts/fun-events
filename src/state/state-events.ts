@@ -1,5 +1,3 @@
-import { noop as _noop } from 'call-thru';
-
 /**
  * A state updates consumer function.
  *
@@ -10,16 +8,7 @@ import { noop as _noop } from 'call-thru';
  * @param newValue New value.
  * @param oldValue Previous value.
  */
-export type StateUpdater = <V>(this: void, path: StatePath, newValue: V, oldValue: V) => void;
-
-export namespace StateUpdater {
-
-  /**
-   * No-op state updater.
-   */
-  export const noop: StateUpdater = _noop;
-
-}
+export type StateConsumer = <V>(this: void, path: StatePath, newValue: V, oldValue: V) => void;
 
 /**
  * A path to state or its part. E.g. property value.

@@ -1,4 +1,4 @@
-import { StateUpdater } from './state-events';
+import { StateConsumer } from './state-events';
 import { StateTracker } from './state-tracker';
 import { onEventKey } from '../event-source';
 import Mock = jest.Mock;
@@ -6,7 +6,7 @@ import Mock = jest.Mock;
 describe('StateTracker', () => {
 
   let tracker: StateTracker;
-  let consumerSpy: Mock<StateUpdater>;
+  let consumerSpy: Mock<StateConsumer>;
 
   beforeEach(() => {
     tracker = new StateTracker();
@@ -39,7 +39,7 @@ describe('StateTracker', () => {
 
     const partPath = ['path', 2, 'part'];
     let part: StateTracker;
-    let partSpy: Mock<StateUpdater>;
+    let partSpy: Mock<StateConsumer>;
 
     beforeEach(() => {
       part = tracker.track(partPath);
