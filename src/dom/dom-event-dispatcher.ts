@@ -1,4 +1,5 @@
 import { DomEventProducer } from './dom-event-producer';
+import { eventInterest } from '../event-interest';
 
 /**
  * DOM events dispatcher is a DOM event producer along with event dispatching method.
@@ -37,9 +38,7 @@ export class DomEventDispatcher {
 
           this._target.addEventListener(type, _listener, opts);
 
-          return {
-            off: () => this._target.removeEventListener(type, _listener),
-          };
+          return eventInterest(() => this._target.removeEventListener(type, _listener));
         }
     );
   }

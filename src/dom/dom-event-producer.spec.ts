@@ -1,20 +1,21 @@
 import { EventInterest } from '../event-interest';
 import { DomEventProducer } from './dom-event-producer';
 import Mock = jest.Mock;
-import Mocked = jest.Mocked;
 
 describe('DomEventProducer', () => {
 
   let registerSpy: Mock;
   let producer: DomEventProducer<Event>;
   let listenerSpy: Mock<(event: Event) => void>;
-  let interestSpy: Mocked<EventInterest>;
+  let interestSpy: {
+    off: Mock<void, []> & EventInterest['off'],
+  } & EventInterest;
   let registeredListener: (event: Event) => void;
 
   beforeEach(() => {
     interestSpy = {
       off: jest.fn()
-    };
+    } as any;
     registerSpy = jest.fn((c: (event: Event) => void) => {
       registeredListener = c;
       return interestSpy;

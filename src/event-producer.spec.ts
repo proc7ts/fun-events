@@ -3,7 +3,6 @@ import { EventInterest, noEventInterest } from './event-interest';
 import { onEventKey } from './event-source';
 import { passIf } from 'call-thru';
 import Mock = jest.Mock;
-import Mocked = jest.Mocked;
 
 describe('EventProducer', () => {
   describe('never', () => {
@@ -36,14 +35,16 @@ describe('EventProducer', () => {
 
     let registerSpy: Mock;
     let producer: EventProducer<[string], string>;
-    let interestSpy: Mocked<EventInterest>;
+    let interestSpy: {
+      off: Mock<void, []> & EventInterest['off'],
+    } & EventInterest;
     let registeredConsumer: (event: string) => string;
     let consumerSpy: Mock<string, [string]>;
 
     beforeEach(() => {
       interestSpy = {
         off: jest.fn()
-      };
+      } as any;
       registerSpy = jest.fn((c: (event: string) => string) => {
         registeredConsumer = c;
         return interestSpy;
@@ -86,7 +87,9 @@ describe('EventProducer', () => {
   describe('thru', () => {
 
     let registerSpy: Mock;
-    let interestSpy: Mocked<EventInterest>;
+    let interestSpy: {
+      off: Mock<void, []> & EventInterest['off'],
+    } & EventInterest;;
     let registeredConsumer: (event1: string, event2: string) => number;
     let producer: EventProducer<[string, string], number>;
     let consumerSpy: Mock<number>;
@@ -94,7 +97,7 @@ describe('EventProducer', () => {
     beforeEach(() => {
       interestSpy = {
         off: jest.fn(),
-      };
+      } as any;
       interestSpy.off.mockName('interest.off()');
       registerSpy = jest.fn((c: (event1: string, event2: string) => number) => {
         registeredConsumer = c;
