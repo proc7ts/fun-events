@@ -18,7 +18,6 @@
     "url": "https://github.com/surol/fun-events/issues"
   },
   "main": "dist/fun-events.js",
-  "browser": "dist/fun-events.umd.js",
   "module": "dist/fun-events.mjs",
   "esm5": "dist/fun-events.esm5.js",
   "typings": "index.d.ts",
