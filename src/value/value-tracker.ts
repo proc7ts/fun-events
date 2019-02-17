@@ -1,4 +1,4 @@
-import { EventInterest } from '../event-interest';
+import { noEventInterest } from '../event-interest';
 import { EventProducer } from '../event-producer';
 import { EventSource } from '../event-source';
 import { CachedEventSource } from '../cached-event-source';
@@ -11,7 +11,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSou
   /**
    * @internal
    */
-  private _by = EventInterest.none;
+  private _by = noEventInterest();
 
   /**
    * Value changes event producer.
@@ -80,7 +80,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSou
    */
   off() {
     this._by.off();
-    this._by = EventInterest.none;
+    this._by = noEventInterest();
   }
 
 }

@@ -1,5 +1,5 @@
 import { EventProducer } from './event-producer';
-import { EventInterest } from './event-interest';
+import { EventInterest, noEventInterest } from './event-interest';
 import { EventSource } from './event-source';
 import { passIf } from 'call-thru';
 import Mock = jest.Mock;
@@ -19,14 +19,14 @@ describe('EventProducer', () => {
     });
 
     it('returns no event interest', () => {
-      expect(interest).toBe(EventInterest.none);
+      expect(interest).toBeInstanceOf(noEventInterest().constructor);
     });
   });
 
   describe('[EventSource.on]', () => {
     it('refers itself', () => {
 
-      const producer = EventProducer.of(() => EventInterest.none);
+      const producer = EventProducer.of(() => noEventInterest());
 
       expect(producer[EventSource.on]).toBe(producer);
     });
