@@ -1,7 +1,7 @@
 import { StateUpdater } from './state-events';
 import { StateTracker } from './state-tracker';
+import { onEventKey } from '../event-source';
 import Mock = jest.Mock;
-import { EventSource } from '../event-source';
 
 describe('StateTracker', () => {
 
@@ -13,9 +13,9 @@ describe('StateTracker', () => {
     consumerSpy = jest.fn();
   });
 
-  describe('[EventSource.on]', () => {
+  describe('[onEventKey]', () => {
     it('refers `onUpdate`', () => {
-      expect(tracker[EventSource.on]).toBe(tracker.onUpdate);
+      expect(tracker[onEventKey]).toBe(tracker.onUpdate);
     });
   });
   it('notifies on state update', () => {
@@ -46,9 +46,9 @@ describe('StateTracker', () => {
       partSpy = jest.fn();
     });
 
-    describe('[EventSource.on]', () => {
+    describe('[onEventKey]', () => {
       it('refers `onUpdate`', () => {
-        expect(part[EventSource.on]).toBe(part.onUpdate);
+        expect(part[onEventKey]).toBe(part.onUpdate);
       });
     });
     it('refers itself', () => {

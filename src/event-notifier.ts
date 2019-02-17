@@ -1,7 +1,7 @@
 import { AIterable, itsIterator } from 'a-iterable';
 import { EventConsumer } from './event-consumer';
 import { EventInterest } from './event-interest';
-import { EventSource } from './event-source';
+import { EventSource, onEventKey } from './event-source';
 
 /**
  * Event notifier can be used to register event consumers and notify them on events.
@@ -39,7 +39,7 @@ export class EventNotifier<E extends any[], R = void>
     return this._consumers.size;
   }
 
-  [EventSource.on](consumer: EventConsumer<E, R>): EventInterest {
+  [onEventKey](consumer: EventConsumer<E, R>): EventInterest {
     return this.on(consumer);
   }
 

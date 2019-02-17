@@ -3,7 +3,7 @@ import { EventEmitter } from '../event-emitter';
 import { EventProducer } from '../event-producer';
 import { StatePath, StateUpdater } from './state-events';
 import { EventInterest } from '../event-interest';
-import { EventSource } from '../event-source';
+import { EventSource, onEventKey } from '../event-source';
 
 /**
  * A producer of state update events.
@@ -118,7 +118,7 @@ class SubStateTracker implements StateTracker {
     return this;
   }
 
-  get [EventSource.on](): StateUpdateProducer {
+  get [onEventKey](): StateUpdateProducer {
     return this.onUpdate;
   }
 
@@ -161,7 +161,7 @@ export class StateTracker implements EventSource<[StatePath, any, any]> {
     return this._tracker.onUpdate;
   }
 
-  get [EventSource.on](): StateUpdateProducer {
+  get [onEventKey](): StateUpdateProducer {
     return this.onUpdate;
   }
 

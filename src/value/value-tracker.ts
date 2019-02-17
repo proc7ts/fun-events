@@ -1,6 +1,6 @@
 import { noEventInterest } from '../event-interest';
 import { EventProducer } from '../event-producer';
-import { EventSource } from '../event-source';
+import { EventSource, onEventKey } from '../event-source';
 import { CachedEventSource } from '../cached-event-source';
 
 /**
@@ -30,7 +30,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSou
     return this.on(value => consumer(value));
   });
 
-  get [EventSource.on](): EventProducer<[N, T]> {
+  get [onEventKey](): EventProducer<[N, T]> {
     return this.on;
   }
 

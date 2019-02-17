@@ -1,7 +1,7 @@
 import { callThru, NextCall } from 'call-thru';
 import { EventConsumer } from './event-consumer';
 import { EventInterest, noEventInterest } from './event-interest';
-import { EventSource } from './event-source';
+import { EventSource, onEventKey } from './event-source';
 import { EventNotifier } from './event-notifier';
 import Args = NextCall.Callee.Args;
 
@@ -43,7 +43,7 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
     return producer;
   }
 
-  get [EventSource.on](): this {
+  get [onEventKey](): this {
     return this;
   }
 
