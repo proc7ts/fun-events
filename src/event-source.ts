@@ -4,7 +4,7 @@ import { EventInterest } from './event-interest';
 /**
  * A key of `EventSource` event consumer registration method.
  */
-export const onEventKey = Symbol('on-event');
+export const onEventKey = /*#__PURE__*/ Symbol('on-event');
 
 /**
  * A source of events.
