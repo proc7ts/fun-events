@@ -1,5 +1,5 @@
 import { EventEmitter } from '../event-emitter';
-import { EventInterest } from '../event-interest';
+import { eventInterest, EventInterest } from '../event-interest';
 import { ValueTracker } from './value-tracker';
 import { EventProducer } from '../event-producer';
 
@@ -55,12 +55,10 @@ export class ValueSync<T> extends ValueTracker<T> {
     const interest1 = tracker.on(value => this.it = value);
     const interest2 = this.each(value => tracker.it = value);
 
-    return {
-      off() {
-        interest2.off();
-        interest1.off();
-      }
-    };
+    return eventInterest(() => {
+      interest2.off();
+      interest1.off();
+    });
   }
 
 }

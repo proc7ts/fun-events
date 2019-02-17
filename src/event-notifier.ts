@@ -1,6 +1,6 @@
 import { AIterable, itsIterator } from 'a-iterable';
 import { EventConsumer } from './event-consumer';
-import { EventInterest } from './event-interest';
+import { eventInterest, EventInterest } from './event-interest';
 import { EventSource, onEventKey } from './event-source';
 
 /**
@@ -57,11 +57,7 @@ export class EventNotifier<E extends any[], R = void>
     const id = ++this._seq;
 
     this._consumers.set(id, consumer);
-    return {
-      off: () => {
-        this._consumers.delete(id);
-      },
-    };
+    return eventInterest(() => this._consumers.delete(id));
   }
 
   /**

@@ -1,6 +1,6 @@
 import { callThru, NextCall } from 'call-thru';
 import { EventConsumer } from './event-consumer';
-import { EventInterest, noEventInterest } from './event-interest';
+import { eventInterest, EventInterest, noEventInterest } from './event-interest';
 import { EventSource, onEventKey } from './event-source';
 import { EventNotifier } from './event-notifier';
 import Args = NextCall.Callee.Args;
@@ -329,15 +329,13 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
       const emitter = shared || (shared = thruNotifier<R>(this, fns));
       const interest = shared[0].on(consumer);
 
-      return {
-        off() {
-          interest.off();
-          if (!emitter[0].consumers) {
-            emitter[1].off();
-            shared = undefined;
-          }
+      return eventInterest(() => {
+        interest.off();
+        if (!emitter[0].consumers) {
+          emitter[1].off();
+          shared = undefined;
         }
-      };
+      });
     });
   }
 

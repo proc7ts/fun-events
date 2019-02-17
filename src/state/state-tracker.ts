@@ -2,7 +2,7 @@ import { noop } from 'call-thru';
 import { EventEmitter } from '../event-emitter';
 import { EventProducer } from '../event-producer';
 import { StateConsumer, StatePath, statePath } from './state-events';
-import { EventInterest } from '../event-interest';
+import { eventInterest, EventInterest } from '../event-interest';
 import { EventSource, onEventKey } from '../event-source';
 
 /**
@@ -39,12 +39,10 @@ class PathEntry {
     const entry = this;
     const interest = this.emitter.on(consumer);
 
-    return {
-      off() {
-        interest.off();
-        entry._dropIfEmpty();
-      },
-    };
+    return eventInterest(() => {
+      interest.off();
+      entry._dropIfEmpty();
+    });
   }
 
   nest(key: PropertyKey): PathEntry {

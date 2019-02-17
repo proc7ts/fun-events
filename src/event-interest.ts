@@ -23,15 +23,19 @@ export abstract class EventInterest {
 
 }
 
+class Interest extends EventInterest {
+  constructor(readonly off: (this: EventInterest) => void) {
+    super();
+  }
+}
+
 /**
  * Constructs new `EventInterest` instance.
  *
  * @param off A function to call to indicate the lost of interest in receiving events.
  */
 export function eventInterest(off: (this: EventInterest) => void): EventInterest {
-  return new class Interest extends EventInterest {
-    off = off;
-  };
+  return new Interest(off);
 }
 
 class NoEventInterest extends EventInterest {
