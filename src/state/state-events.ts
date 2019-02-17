@@ -30,26 +30,26 @@ export namespace StatePath {
    */
   export type Normalized = PropertyKey[];
 
-  /**
-   * Normalizes a state path consisting of single key.
-   *
-   * @param key A path key.
-   *
-   * @return Normalized state path.
-   */
-  export function of<K extends PropertyKey>(key: K): [K];
+}
 
-  /**
-   * Normalizes arbitrary state path. I.e. converts it to array.
-   *
-   * @param path Arbitrary state path.
-   *
-   * @return Normalized state path.
-   */
-  export function of(path: StatePath): Normalized;
+/**
+ * Normalizes a state path consisting of single key.
+ *
+ * @param key A path key.
+ *
+ * @return Normalized state path.
+ */
+export function statePath<K extends PropertyKey>(key: K): [K];
 
-  export function of(path: StatePath): Normalized {
-    return Array.isArray(path) ? path : [path];
-  }
+/**
+ * Normalizes arbitrary state path. I.e. converts it to array.
+ *
+ * @param path Arbitrary state path.
+ *
+ * @return Normalized state path.
+ */
+export function statePath(path: StatePath): StatePath.Normalized;
 
+export function statePath(path: StatePath): StatePath.Normalized {
+  return Array.isArray(path) ? path : [path];
 }
