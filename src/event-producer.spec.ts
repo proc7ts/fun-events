@@ -89,7 +89,7 @@ describe('EventProducer', () => {
     let registerSpy: Mock;
     let interestSpy: {
       off: Mock<void, []> & EventInterest['off'],
-    } & EventInterest;;
+    } & EventInterest;
     let registeredConsumer: (event1: string, event2: string) => number;
     let producer: EventProducer<[string, string], number>;
     let consumerSpy: Mock<number>;
