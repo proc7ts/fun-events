@@ -1,9 +1,9 @@
 import { ValueTracker } from './value-tracker';
 import { EventInterest } from '../event-interest';
 import { trackValue } from './tracked-value';
+import { onEventKey } from '../event-source';
+import { afterEventKey } from '../cached-event-source';
 import Mock = jest.Mock;
-import { EventSource } from '../event-source';
-import { CachedEventSource } from '../cached-event-source';
 
 describe('ValueTracker', () => {
 
@@ -28,14 +28,14 @@ describe('ValueTracker', () => {
 
     expect(listener).not.toHaveBeenCalled();
   });
-  describe('[EventSource.on]', () => {
+  describe('[onEventKey]', () => {
     it('refers to `on`', () => {
-      expect(v1[EventSource.on]).toBe(v1.on);
+      expect(v1[onEventKey]).toBe(v1.on);
     });
   });
-  describe('[CachedEventSource.each]', () => {
+  describe('[afterEventKey]', () => {
     it('refers to `each`', () => {
-      expect(v1[CachedEventSource.each]).toBe(v1.each);
+      expect(v1[afterEventKey]).toBe(v1.each);
     });
   });
   describe('each', () => {

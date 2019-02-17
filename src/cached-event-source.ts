@@ -2,6 +2,11 @@ import { EventConsumer } from './event-consumer';
 import { EventInterest } from './event-interest';
 
 /**
+ * A key of `CachedEventSource` event consumer registration method.
+ */
+export const afterEventKey = /*#__PURE__*/ Symbol('after-event');
+
+/**
  * A source of events that caches the last emitted event.
  *
  * @param <E> An event type. This is a list of event consumer parameter types.
@@ -18,15 +23,6 @@ export interface CachedEventSource<E extends any[], R = void> {
    * @return An event interest. The event source will notify the consumer on events, until the `off()` method
    * of returned event interest instance is called.
    */
-  [CachedEventSource.each](consumer: EventConsumer<E, R>): EventInterest;
-
-}
-
-export namespace CachedEventSource {
-
-  /**
-   * A key of `CachedEventSource` event consumer registration method.
-   */
-  export const each = Symbol('each-event');
+  [afterEventKey](consumer: EventConsumer<E, R>): EventInterest;
 
 }

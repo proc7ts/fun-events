@@ -1,16 +1,15 @@
 import { EventProducer } from './event-producer';
-import { EventInterest } from './event-interest';
-import { EventSource } from './event-source';
+import { EventInterest, noEventInterest } from './event-interest';
+import { onEventKey } from './event-source';
 import { passIf } from 'call-thru';
 import Mock = jest.Mock;
 import Mocked = jest.Mocked;
-import { EventConsumer } from './event-consumer';
 
 describe('EventProducer', () => {
   describe('never', () => {
 
     let producer: EventProducer<[string], number>;
-    let consumerSpy: Mock<(event: string) => number>;
+    let consumerSpy: Mock<number, [string]>;
     let interest: EventInterest;
 
     beforeEach(() => {
@@ -20,16 +19,16 @@ describe('EventProducer', () => {
     });
 
     it('returns no event interest', () => {
-      expect(interest).toBe(EventInterest.none);
+      expect(interest).toBeInstanceOf(noEventInterest().constructor);
     });
   });
 
-  describe('[EventSource.on]', () => {
+  describe('[onEventKey]', () => {
     it('refers itself', () => {
 
-      const producer = EventProducer.of(() => EventInterest.none);
+      const producer = EventProducer.of(() => noEventInterest());
 
-      expect(producer[EventSource.on]).toBe(producer);
+      expect(producer[onEventKey]).toBe(producer);
     });
   });
 
@@ -39,7 +38,7 @@ describe('EventProducer', () => {
     let producer: EventProducer<[string], string>;
     let interestSpy: Mocked<EventInterest>;
     let registeredConsumer: (event: string) => string;
-    let consumerSpy: Mock<(event: string) => string>;
+    let consumerSpy: Mock<string, [string]>;
 
     beforeEach(() => {
       interestSpy = {

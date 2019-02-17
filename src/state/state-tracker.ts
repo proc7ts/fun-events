@@ -1,18 +1,18 @@
 import { noop } from 'call-thru';
 import { EventEmitter } from '../event-emitter';
 import { EventProducer } from '../event-producer';
-import { StatePath, StateUpdater } from './state-events';
+import { StateConsumer, StatePath, statePath } from './state-events';
 import { EventInterest } from '../event-interest';
-import { EventSource } from '../event-source';
+import { EventSource, onEventKey } from '../event-source';
 
 /**
  * A producer of state update events.
  */
 export interface StateUpdateProducer extends EventProducer<[StatePath, any, any]> {
 
-  (consumer: StateUpdater): EventInterest;
+  (consumer: StateConsumer): EventInterest;
 
-  once(consumer: StateUpdater): EventInterest;
+  once(consumer: StateConsumer): EventInterest;
 
 }
 
@@ -23,7 +23,7 @@ class PathEntry {
 
   constructor(private readonly _drop: () => void) {
     this.emitter.on((path, newValue, oldValue) => {
-      path = StatePath.of(path);
+      path = statePath(path);
 
       const key = path[0];
       const nested = this._nested.get(key);
@@ -34,7 +34,7 @@ class PathEntry {
     });
   }
 
-  on(consumer: StateUpdater): EventInterest {
+  on(consumer: StateConsumer): EventInterest {
 
     const entry = this;
     const interest = this.emitter.on(consumer);
@@ -79,7 +79,7 @@ class Trackers {
 
   private readonly _root = new PathEntry(noop);
 
-  on(path: StatePath.Normalized, consumer: StateUpdater): EventInterest {
+  on(path: StatePath.Normalized, consumer: StateConsumer): EventInterest {
     return this._entry(path).on(consumer);
   }
 
@@ -103,8 +103,8 @@ class Trackers {
 // tslint:disable-next-line:no-use-before-declare
 class SubStateTracker implements StateTracker {
 
-  readonly update: StateUpdater = (<V>(path: StatePath, newValue: V, oldValue: V) => {
-    this._trackers.notify([...this._path, ...StatePath.of(path)], newValue, oldValue);
+  readonly update: StateConsumer = (<V>(path: StatePath, newValue: V, oldValue: V) => {
+    this._trackers.notify([...this._path, ...statePath(path)], newValue, oldValue);
   });
 
   readonly onUpdate: StateUpdateProducer =
@@ -118,12 +118,12 @@ class SubStateTracker implements StateTracker {
     return this;
   }
 
-  get [EventSource.on](): StateUpdateProducer {
+  get [onEventKey](): StateUpdateProducer {
     return this.onUpdate;
   }
 
   track(path: StatePath): SubStateTracker {
-    path = StatePath.of(path);
+    path = statePath(path);
     if (!path.length) {
       return this; // Path to itself.
     }
@@ -161,7 +161,7 @@ export class StateTracker implements EventSource<[StatePath, any, any]> {
     return this._tracker.onUpdate;
   }
 
-  get [EventSource.on](): StateUpdateProducer {
+  get [onEventKey](): StateUpdateProducer {
     return this.onUpdate;
   }
 
@@ -179,7 +179,7 @@ export class StateTracker implements EventSource<[StatePath, any, any]> {
    * @param newValue New value.
    * @param oldValue Previous value.
    */
-  get update(): StateUpdater {
+  get update(): StateConsumer {
     return this._tracker.update;
   }
 

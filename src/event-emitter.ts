@@ -1,5 +1,5 @@
 import { EventProducer } from './event-producer';
-import { EventSource } from './event-source';
+import { EventSource, onEventKey } from './event-source';
 import { EventNotifier } from './event-notifier';
 
 /**
@@ -19,7 +19,7 @@ export class EventEmitter<E extends any[], R = void> extends EventNotifier<E, R>
    */
   readonly on = EventProducer.of<E, R>(consumer => super.on(consumer));
 
-  get [EventSource.on](): EventProducer<E, R> {
+  get [onEventKey](): EventProducer<E, R> {
     return this.on;
   }
 

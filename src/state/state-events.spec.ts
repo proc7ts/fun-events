@@ -1,26 +1,20 @@
-import { noop } from 'call-thru';
-import { StatePath, StateUpdater } from './state-events';
+import { statePath } from './state-events';
 
-describe('StatePath', () => {
-  describe('of', () => {
-    it('normalizes non-compound state value key', () => {
-      expect(StatePath.of('key')).toEqual(['key']);
-      expect(StatePath.of(0)).toEqual([0]);
+describe('statePath', () => {
+  it('normalizes non-compound state value key', () => {
+    expect(statePath('key')).toEqual(['key']);
+    expect(statePath(0)).toEqual([0]);
 
-      const key = Symbol('key');
+    const key = Symbol('key');
 
-      expect(StatePath.of(key)).toEqual([key]);
-    });
-    it('does not alter normalized value keys', () => {
-
-      const path1 = ['key'];
-      const path2 = ['key', 2];
-
-      expect(StatePath.of(path1)).toEqual(path1);
-      expect(StatePath.of(path2)).toEqual(path2);
-    });
+    expect(statePath(key)).toEqual([key]);
   });
-  describe('noop', () => {
-    expect(StateUpdater.noop).toBe(noop);
+  it('does not alter normalized value keys', () => {
+
+    const path1 = ['key'];
+    const path2 = ['key', 2];
+
+    expect(statePath(path1)).toEqual(path1);
+    expect(statePath(path2)).toEqual(path2);
   });
 });

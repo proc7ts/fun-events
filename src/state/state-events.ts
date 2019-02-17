@@ -1,5 +1,3 @@
-import { noop as _noop } from 'call-thru';
-
 /**
  * A state updates consumer function.
  *
@@ -10,16 +8,7 @@ import { noop as _noop } from 'call-thru';
  * @param newValue New value.
  * @param oldValue Previous value.
  */
-export type StateUpdater = <V>(this: void, path: StatePath, newValue: V, oldValue: V) => void;
-
-export namespace StateUpdater {
-
-  /**
-   * No-op state updater.
-   */
-  export const noop: StateUpdater = _noop;
-
-}
+export type StateConsumer = <V>(this: void, path: StatePath, newValue: V, oldValue: V) => void;
 
 /**
  * A path to state or its part. E.g. property value.
@@ -41,26 +30,26 @@ export namespace StatePath {
    */
   export type Normalized = PropertyKey[];
 
-  /**
-   * Normalizes a state path consisting of single key.
-   *
-   * @param key A path key.
-   *
-   * @return Normalized state path.
-   */
-  export function of<K extends PropertyKey>(key: K): [K];
+}
 
-  /**
-   * Normalizes arbitrary state path. I.e. converts it to array.
-   *
-   * @param path Arbitrary state path.
-   *
-   * @return Normalized state path.
-   */
-  export function of(path: StatePath): Normalized;
+/**
+ * Normalizes a state path consisting of single key.
+ *
+ * @param key A path key.
+ *
+ * @return Normalized state path.
+ */
+export function statePath<K extends PropertyKey>(key: K): [K];
 
-  export function of(path: StatePath): Normalized {
-    return Array.isArray(path) ? path : [path];
-  }
+/**
+ * Normalizes arbitrary state path. I.e. converts it to array.
+ *
+ * @param path Arbitrary state path.
+ *
+ * @return Normalized state path.
+ */
+export function statePath(path: StatePath): StatePath.Normalized;
 
+export function statePath(path: StatePath): StatePath.Normalized {
+  return Array.isArray(path) ? path : [path];
 }

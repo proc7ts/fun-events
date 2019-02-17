@@ -1,21 +1,21 @@
-import { StateUpdater } from './state-events';
+import { StateConsumer } from './state-events';
 import { StateTracker } from './state-tracker';
+import { onEventKey } from '../event-source';
 import Mock = jest.Mock;
-import { EventSource } from '../event-source';
 
 describe('StateTracker', () => {
 
   let tracker: StateTracker;
-  let consumerSpy: Mock<StateUpdater>;
+  let consumerSpy: Mock<StateConsumer>;
 
   beforeEach(() => {
     tracker = new StateTracker();
     consumerSpy = jest.fn();
   });
 
-  describe('[EventSource.on]', () => {
+  describe('[onEventKey]', () => {
     it('refers `onUpdate`', () => {
-      expect(tracker[EventSource.on]).toBe(tracker.onUpdate);
+      expect(tracker[onEventKey]).toBe(tracker.onUpdate);
     });
   });
   it('notifies on state update', () => {
@@ -39,16 +39,16 @@ describe('StateTracker', () => {
 
     const partPath = ['path', 2, 'part'];
     let part: StateTracker;
-    let partSpy: Mock<StateUpdater>;
+    let partSpy: Mock<StateConsumer>;
 
     beforeEach(() => {
       part = tracker.track(partPath);
       partSpy = jest.fn();
     });
 
-    describe('[EventSource.on]', () => {
+    describe('[onEventKey]', () => {
       it('refers `onUpdate`', () => {
-        expect(part[EventSource.on]).toBe(part.onUpdate);
+        expect(part[onEventKey]).toBe(part.onUpdate);
       });
     });
     it('refers itself', () => {

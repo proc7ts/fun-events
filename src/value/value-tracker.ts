@@ -1,7 +1,7 @@
-import { EventInterest } from '../event-interest';
+import { noEventInterest } from '../event-interest';
 import { EventProducer } from '../event-producer';
-import { EventSource } from '../event-source';
-import { CachedEventSource } from '../cached-event-source';
+import { EventSource, onEventKey } from '../event-source';
+import { afterEventKey, CachedEventSource } from '../cached-event-source';
 
 /**
  * Value accessor and changes tracker.
@@ -11,7 +11,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSou
   /**
    * @internal
    */
-  private _by = EventInterest.none;
+  private _by = noEventInterest();
 
   /**
    * Value changes event producer.
@@ -30,11 +30,11 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSou
     return this.on(value => consumer(value));
   });
 
-  get [EventSource.on](): EventProducer<[N, T]> {
+  get [onEventKey](): EventProducer<[N, T]> {
     return this.on;
   }
 
-  get [CachedEventSource.each](): EventProducer<[T]> {
+  get [afterEventKey](): EventProducer<[T]> {
     return this.each;
   }
 
@@ -67,7 +67,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSou
    */
   by(source: CachedEventSource<[T]>): this {
     this.off();
-    this._by = source[CachedEventSource.each](value => this.it = value);
+    this._by = source[afterEventKey](value => this.it = value);
     return this;
   }
 
@@ -80,7 +80,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSou
    */
   off() {
     this._by.off();
-    this._by = EventInterest.none;
+    this._by = noEventInterest();
   }
 
 }

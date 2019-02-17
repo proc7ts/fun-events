@@ -1,7 +1,7 @@
 import { callThru, NextCall } from 'call-thru';
 import { EventConsumer } from './event-consumer';
-import { EventInterest } from './event-interest';
-import { EventSource } from './event-source';
+import { EventInterest, noEventInterest } from './event-interest';
+import { EventSource, onEventKey } from './event-source';
 import { EventNotifier } from './event-notifier';
 import Args = NextCall.Callee.Args;
 
@@ -24,7 +24,9 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
   /**
    * An event producer that never produces any events.
    */
-  static readonly never: EventProducer<any, any> = EventProducer.of(() => EventInterest.none);
+  static get never(): EventProducer<any, any> {
+    return NEVER; // tslint:disable-line:no-use-before-declare
+  }
 
   /**
    * Converts an event consumer registration function to event producer.
@@ -43,7 +45,7 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
     return producer;
   }
 
-  get [EventSource.on](): this {
+  get [onEventKey](): this {
     return this;
   }
 
@@ -54,7 +56,7 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
    */
   once(consumer: EventConsumer<E, R>): EventInterest {
 
-    let interest = EventInterest.none;
+    let interest = noEventInterest();
     let off = false;
 
     const wrapper: EventConsumer<E, R> = (...args: E) => {
@@ -340,6 +342,8 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
   }
 
 }
+
+const NEVER: EventProducer<any, any> = /*#__PURE__*/ EventProducer.of(() => noEventInterest());
 
 function thruNotifier<R>(producer: EventProducer<any[], R>, fns: any[]): [EventNotifier<any[], R>, EventInterest] {
 

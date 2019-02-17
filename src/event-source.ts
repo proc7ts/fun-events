@@ -2,6 +2,11 @@ import { EventConsumer } from './event-consumer';
 import { EventInterest } from './event-interest';
 
 /**
+ * A key of `EventSource` event consumer registration method.
+ */
+export const onEventKey = /*#__PURE__*/ Symbol('on-event');
+
+/**
  * A source of events.
  *
  * It is able to register event consumers for receiving events.
@@ -19,15 +24,6 @@ export interface EventSource<E extends any[], R = void> {
    * @return An event interest. The event source will notify the consumer on events, until the `off()` method
    * of returned event interest instance is called.
    */
-  [EventSource.on](consumer: EventConsumer<E, R>): EventInterest;
-
-}
-
-export namespace EventSource {
-
-  /**
-   * A key of `EventSource` event consumer registration method.
-   */
-  export const on = Symbol('on-event');
+  [onEventKey](consumer: EventConsumer<E, R>): EventInterest;
 
 }

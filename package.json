@@ -18,7 +18,6 @@
     "url": "https://github.com/surol/fun-events/issues"
   },
   "main": "dist/fun-events.js",
-  "browser": "dist/fun-events.umd.js",
   "module": "dist/fun-events.mjs",
   "esm5": "dist/fun-events.esm5.js",
   "typings": "index.d.ts",
@@ -29,21 +28,18 @@
     "a-iterable": "^2.1.0"
   },
   "devDependencies": {
-    "@types/fs-extra": "^5.0.4",
-    "@types/jest": "^23.3.13",
+    "@types/jest": "^23.3.14",
     "a-iterable": "^2.1.0",
     "call-thru": "^2.1.0",
     "codecov": "^3.1.0",
     "fs-extra": "^7.0.1",
     "jest": "^23.6.0",
-    "jest-junit": "^6.2.1",
+    "jest-junit": "^6.3.0",
     "rollup": "^1.1.2",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
-    "rollup-plugin-terser": "^4.0.3",
     "rollup-plugin-typescript2": "^0.19.2",
-    "rollup-plugin-uglify": "^6.0.2",
     "ts-jest": "^23.10.5",
     "tslint": "^5.12.1",
     "typescript": "^3.3.1"
