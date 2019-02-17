@@ -1,7 +1,7 @@
 import { noEventInterest } from '../event-interest';
 import { EventProducer } from '../event-producer';
 import { EventSource, onEventKey } from '../event-source';
-import { CachedEventSource } from '../cached-event-source';
+import { afterEventKey, CachedEventSource } from '../cached-event-source';
 
 /**
  * Value accessor and changes tracker.
@@ -34,7 +34,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSou
     return this.on;
   }
 
-  get [CachedEventSource.each](): EventProducer<[T]> {
+  get [afterEventKey](): EventProducer<[T]> {
     return this.each;
   }
 
@@ -67,7 +67,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSou
    */
   by(source: CachedEventSource<[T]>): this {
     this.off();
-    this._by = source[CachedEventSource.each](value => this.it = value);
+    this._by = source[afterEventKey](value => this.it = value);
     return this;
   }
 
