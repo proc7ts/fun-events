@@ -6,5 +6,6 @@ export * from './event-interest';
 export * from './event-notifier';
 export * from './event-producer';
 export * from './event-source';
+export * from './produce-events';
 export * from './state';
 export * from './value';
