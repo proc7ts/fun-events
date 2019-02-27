@@ -5,6 +5,7 @@ import { EventConsumer } from './event-consumer';
 import { EventInterest } from './event-interest';
 import { trackValue, ValueTracker } from './value';
 import Mock = jest.Mock;
+import { afterEventKey, CachedEventSource } from './cached-event-source';
 
 describe('eventsFrom', () => {
 
@@ -38,8 +39,8 @@ describe('eventsFrom', () => {
 describe('latestEventsFrom', () => {
 
   let source: ValueTracker<string>;
-  let producer: EventProducer<[string]>;
-  let consumer: Mock & EventConsumer<[string]>;
+  let producer: EventProducer<[string]> & CachedEventSource<[string]>;
+  let consumer: EventConsumer<[string]>;
   let interest: EventInterest;
 
   beforeEach(() => {
@@ -65,5 +66,11 @@ describe('latestEventsFrom', () => {
     source.it = 'other';
     expect(consumer).not.toHaveBeenCalledWith('other');
   });
+  it('returns cached event producer', () => {
 
+    const cachedConsumer: EventConsumer<[string]> = jest.fn();
+
+    producer[afterEventKey](cachedConsumer);
+    expect(cachedConsumer).toHaveBeenCalledWith('initial');
+  });
 });

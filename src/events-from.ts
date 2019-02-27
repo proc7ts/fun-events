@@ -18,8 +18,15 @@ export function eventsFrom<E extends any[], R>(source: EventSource<E, R>): Event
  *
  * @param source A cached source of events to produce.
  *
- * @returns Event producer instance.
+ * @returns Cached event producer instance.
  */
-export function latestEventsFrom<E extends any[], R>(source: CachedEventSource<E, R>): EventProducer<E, R> {
-  return EventProducer.of(consumer => source[afterEventKey](consumer));
+export function latestEventsFrom<E extends any[], R>(source: CachedEventSource<E, R>):
+    EventProducer<E, R> & CachedEventSource<E, R> {
+
+  const eventProducer =
+      EventProducer.of(consumer => source[afterEventKey](consumer)) as EventProducer<E, R> & CachedEventSource<E, R>;
+
+  eventProducer[afterEventKey] = eventProducer;
+
+  return eventProducer;
 }
