@@ -1,5 +1,5 @@
 import { EventEmitter } from './event-emitter';
-import { produceEvents } from './produce-events';
+import { eventsFrom } from './events-from';
 import { EventProducer } from './event-producer';
 import { EventConsumer } from './event-consumer';
 import { EventInterest } from './event-interest';
@@ -13,7 +13,7 @@ describe('produceEvents', () => {
 
   beforeEach(() => {
     source = new EventEmitter();
-    producer = produceEvents(source);
+    producer = eventsFrom(source);
     consumer = jest.fn();
     interest = producer(consumer);
   });
