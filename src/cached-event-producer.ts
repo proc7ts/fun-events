@@ -80,7 +80,7 @@ export abstract class CachedEventProducer<E extends any[], R = void>
    *
    * @returns Cached event producer.
    */
-  static from<E extends any[], R>(source: CachedEventSource<E, R>): CachedEventProducer<E, R>;
+  static from<E extends any[], R = void>(source: CachedEventSource<E, R>): CachedEventProducer<E, R>;
 
   /**
    * Caches events from arbitrary event `source`.
@@ -94,7 +94,7 @@ export abstract class CachedEventProducer<E extends any[], R = void>
    *
    * @returns Cached event producer.
    */
-  static from<E extends any[], R>(
+  static from<E extends any[], R = void>(
       source: EventSource<E, R>,
       initial?: ((this: void) => E) | E):
       CachedEventProducer<E, R>;

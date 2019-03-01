@@ -52,7 +52,7 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
    *
    * @returns Event producer instance.
    */
-  static from<E extends any[], R>(source: EventSource<E, R>): EventProducer<E, R> {
+  static from<E extends any[], R = void>(source: EventSource<E, R>): EventProducer<E, R> {
     return EventProducer.of(consumer => source[onEventKey](consumer));
   }
 
