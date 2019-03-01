@@ -9,6 +9,8 @@ export const afterEventKey = /*#__PURE__*/ Symbol('after-event');
 /**
  * A source of events that caches the last emitted event.
  *
+ * It is guaranteed that event consumer registered in this source will receive an event immediately upon registration.
+ *
  * @param <E> An event type. This is a list of event consumer parameter types.
  * @param <R> Event processing result. This is a type of event consumer result.
  */

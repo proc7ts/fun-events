@@ -45,6 +45,17 @@ export abstract class EventProducer<E extends any[], R = void> extends Function 
     return producer;
   }
 
+  /**
+   * Builds a producer of events originated from the given event `source`.
+   *
+   * @param source A source of events to produce.
+   *
+   * @returns Event producer instance.
+   */
+  static from<E extends any[], R = void>(source: EventSource<E, R>): EventProducer<E, R> {
+    return EventProducer.of(consumer => source[onEventKey](consumer));
+  }
+
   get [onEventKey](): this {
     return this;
   }
