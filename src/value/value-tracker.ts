@@ -2,6 +2,7 @@ import { noEventInterest } from '../event-interest';
 import { EventProducer } from '../event-producer';
 import { EventSource, onEventKey } from '../event-source';
 import { afterEventKey, CachedEventSource } from '../cached-event-source';
+import { CachedEventProducer } from '../cached-event-producer';
 
 /**
  * Value accessor and changes tracker.
@@ -25,16 +26,14 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSou
    *
    * The registered event consumer will be notified an original value immediately on registration.
    */
-  readonly each: EventProducer<[T]> = EventProducer.of(consumer => {
-    consumer(this.it);
-    return this.on(value => consumer(value));
-  });
+  readonly each: CachedEventProducer<[T]> =
+      CachedEventProducer.of<[T]>(consumer => this.on(value => consumer(value)), () => [this.it]);
 
   get [onEventKey](): EventProducer<[N, T]> {
     return this.on;
   }
 
-  get [afterEventKey](): EventProducer<[T]> {
+  get [afterEventKey](): CachedEventProducer<[T]> {
     return this.each;
   }
 
