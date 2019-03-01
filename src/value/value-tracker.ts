@@ -81,7 +81,8 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSou
    * Note that explicitly updating the value would override the value received from the source.
    *
    * @param source The event source to extract cached event source one from.
-   * @param extract A function extracting cached event source from original one.
+   * @param extract A function extracting cached event source from event received from `source`. May return `undefined`
+   * to suspend receiving values.
    *
    * @returns `this` instance.
    */
@@ -90,13 +91,13 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSou
       extract: (this: void, ...event: U) => CachedEventSource<[T]> | undefined): this;
 
   by<U extends any[]>(
-      source: EventSource<U> | CachedEventSource<U>,
+      source: EventSource<U> | CachedEventSource<[T]>,
       extract?: (this: void, ...event: U) => CachedEventSource<[T]> | undefined): this {
     this.off();
 
     if (!extract) {
 
-      const src: CachedEventSource<[T]> = source as CachedEventSource<any>;
+      const src = source as CachedEventSource<[T]>;
 
       this._by = src[afterEventKey](value => this.it = value);
     } else {
