@@ -2,6 +2,8 @@ import { EventProducer } from './event-producer';
 import { EventInterest, noEventInterest } from './event-interest';
 import { onEventKey } from './event-source';
 import { passIf } from 'call-thru';
+import { EventEmitter } from './event-emitter';
+import { EventConsumer } from './event-consumer';
 import Mock = jest.Mock;
 
 describe('EventProducer', () => {
@@ -22,8 +24,37 @@ describe('EventProducer', () => {
     });
   });
 
+  describe('from', () => {
+
+    let source: EventEmitter<[string]>;
+    let producer: EventProducer<[string]>;
+    let consumer: EventConsumer<[string]>;
+    let interest: EventInterest;
+
+    beforeEach(() => {
+      source = new EventEmitter();
+      producer = EventProducer.from(source);
+      consumer = jest.fn();
+      interest = producer(consumer);
+    });
+
+    it('produces events from the given source', () => {
+
+      const event = 'event';
+
+      source.notify(event);
+      expect(consumer).toHaveBeenCalledWith(event);
+    });
+    it('does not produce events once interest lost', () => {
+      interest.off();
+
+      source.notify('event');
+      expect(consumer).not.toHaveBeenCalled();
+    });
+  });
+
   describe('[onEventKey]', () => {
-    it('refers itself', () => {
+    it('refers to itself', () => {
 
       const producer = EventProducer.of(() => noEventInterest());
 

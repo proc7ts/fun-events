@@ -1,3 +1,4 @@
+export * from './cached-event-producer';
 export * from './cached-event-source';
 export * from './dom';
 export * from './event-consumer';
