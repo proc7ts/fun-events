@@ -4,6 +4,7 @@ import { trackValue } from './tracked-value';
 import { onEventKey } from '../event-source';
 import { afterEventKey } from '../cached-event-source';
 import Mock = jest.Mock;
+import { EventEmitter } from '../event-emitter';
 
 describe('ValueTracker', () => {
 
@@ -28,16 +29,19 @@ describe('ValueTracker', () => {
 
     expect(listener).not.toHaveBeenCalled();
   });
+
   describe('[onEventKey]', () => {
     it('refers to `on`', () => {
       expect(v1[onEventKey]).toBe(v1.on);
     });
   });
+
   describe('[afterEventKey]', () => {
     it('refers to `each`', () => {
       expect(v1[afterEventKey]).toBe(v1.each);
     });
   });
+
   describe('each', () => {
 
     let consumer: Mock;
@@ -62,7 +66,8 @@ describe('ValueTracker', () => {
       expect(consumer).not.toHaveBeenCalled();
     });
   });
-  describe('by', () => {
+
+  describe('by cached event source', () => {
 
     let consumer: Mock;
 
@@ -97,14 +102,7 @@ describe('ValueTracker', () => {
       v1.it = 'value';
       expect(v2.it).toBe(v3.it);
     });
-  });
-  describe('off', () => {
-    beforeEach(() => {
-
-      v2.by(v1);
-    });
-
-    it('unbinds from the source', () => {
+    it('is unbound with `off()`', () => {
       v2.off();
 
       const listener = jest.fn();
@@ -112,7 +110,56 @@ describe('ValueTracker', () => {
       v2.on(listener);
       v1.it = 'new';
       expect(v2.it).toBe('old');
-      expect(listener).not.toBeUndefined();
+      expect(listener).not.toBeCalled();
+    });
+  });
+
+  describe('by nested event source', () => {
+
+    let consumer: Mock;
+    let source: EventEmitter<[ValueTracker<string>]>;
+
+    beforeEach(() => {
+      consumer = jest.fn();
+      v1.on(consumer);
+      source = new EventEmitter();
+      v1.by(source, src => src);
+    });
+
+    it('binds to emitted value', () => {
+
+      const v3 = trackValue('3');
+
+      source.notify(v3);
+      expect(v1.it).toBe('3');
+
+      v3.it = '4';
+      expect(v1.it).toBe('4');
+    });
+    it('rebinds to emitted value', () => {
+
+      const v3 = trackValue('3');
+      const v4 = trackValue('4');
+
+      source.notify(v3);
+      expect(v1.it).toBe('3');
+
+      source.notify(v4);
+      v3.it = '5';
+      expect(v1.it).toBe('4');
+    });
+    it('is unbound with `off()`', () => {
+
+      const v3 = trackValue('3');
+
+      v1.off();
+
+      const listener = jest.fn();
+
+      v1.on(listener);
+      source.notify(v3);
+      expect(v1.it).toBe('old');
+      expect(listener).not.toBeCalled();
     });
   });
 });
