@@ -65,10 +65,10 @@ describe('ValueSync', () => {
   it('synchronizes with nested values', () => {
 
     const v4 = trackValue(4);
-    const source = new EventEmitter<[ValueTracker<number>]>();
+    const sender = new EventEmitter<[ValueTracker<number>]>();
 
-    sync.sync(source, tracker => tracker);
-    source.notify(v4);
+    sync.sync(sender, tracker => tracker);
+    sender.send(v4);
     expect(sync.it).toBe(v4.it);
   });
 });

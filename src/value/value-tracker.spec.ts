@@ -1,10 +1,10 @@
 import { ValueTracker } from './value-tracker';
 import { EventInterest } from '../event-interest';
 import { trackValue } from './tracked-value';
-import { onEventKey } from '../event-source';
-import { afterEventKey } from '../cached-event-source';
-import Mock = jest.Mock;
+import { OnEvent__symbol } from '../event-sender';
+import { AfterEvent__symbol } from '../event-keeper';
 import { EventEmitter } from '../event-emitter';
+import Mock = jest.Mock;
 
 describe('ValueTracker', () => {
 
@@ -30,71 +30,71 @@ describe('ValueTracker', () => {
     expect(listener).not.toHaveBeenCalled();
   });
 
-  describe('[onEventKey]', () => {
+  describe('[OnEvent__symbol]', () => {
     it('refers to `on`', () => {
-      expect(v1[onEventKey]).toBe(v1.on);
+      expect(v1[OnEvent__symbol]).toBe(v1.on);
     });
   });
 
-  describe('[afterEventKey]', () => {
-    it('refers to `each`', () => {
-      expect(v1[afterEventKey]).toBe(v1.each);
+  describe('[AfterEvent__symbol]', () => {
+    it('refers to `read`', () => {
+      expect(v1[AfterEvent__symbol]).toBe(v1.read);
     });
   });
 
-  describe('each', () => {
+  describe('read', () => {
 
-    let consumer: Mock;
+    let mockReceiver: Mock<void, [string]>;
     let interest: EventInterest;
 
     beforeEach(() => {
-      consumer = jest.fn();
-      interest = v1.each(consumer);
+      mockReceiver = jest.fn();
+      interest = v1.read(mockReceiver);
     });
 
-    it('notifies on initial value', () => {
-      expect(consumer).toHaveBeenCalledWith('old');
+    it('sends initial value', () => {
+      expect(mockReceiver).toHaveBeenCalledWith('old');
     });
-    it('notifies on updated value', () => {
+    it('sends an updated value', () => {
       v1.it = 'new';
-      expect(consumer).toHaveBeenCalledWith('new');
+      expect(mockReceiver).toHaveBeenCalledWith('new');
     });
-    it('does not notify after interest is off', () => {
-      consumer.mockReset();
+    it('does not send values after interest is off', () => {
+      mockReceiver.mockReset();
       interest.off();
       v1.it = 'new';
-      expect(consumer).not.toHaveBeenCalled();
+      expect(mockReceiver).not.toHaveBeenCalled();
     });
   });
 
-  describe('by cached event source', () => {
+  describe('by value keeper', () => {
 
-    let consumer: Mock;
+    let mockReceiver: Mock<void, [string | undefined, string | undefined]>;
 
     beforeEach(() => {
-      consumer = jest.fn();
-      v2.on(consumer);
+      mockReceiver = jest.fn();
+      v2.on(mockReceiver);
       v2.by(v1);
     });
 
     it('mirrors another value', () => {
       expect(v2.it).toBe('old');
-      expect(consumer).toHaveBeenCalledWith('old', undefined);
+      expect(mockReceiver).toHaveBeenCalledWith('old', undefined);
     });
     it('reflects changes of another value', () => {
       v1.it = 'new';
       expect(v2.it).toBe('new');
-      expect(consumer).toHaveBeenCalledWith('new', 'old');
+      expect(mockReceiver).toHaveBeenCalledWith('new', 'old');
     });
-    it('rebinds to another source', () => {
+    it('rebinds to another tracker', () => {
 
       const v3 = trackValue('another');
 
       v2.by(v3);
       expect(v2.it).toBe(v3.it);
-      expect(consumer).toHaveBeenCalledWith(v3.it, 'old');
+      expect(mockReceiver).toHaveBeenCalledWith(v3.it, 'old');
     });
-    it('ignores changes in previous source', () => {
+    it('ignores changes in previous tracker', () => {
 
       const v3 = trackValue('another');
 
@@ -114,37 +114,34 @@ describe('ValueTracker', () => {
     });
   });
 
-  describe('by nested event source', () => {
+  describe('by nested value keeper', () => {
 
-    let consumer: Mock;
-    let source: EventEmitter<[ValueTracker<string>]>;
+    let sender: EventEmitter<[ValueTracker<string>]>;
 
     beforeEach(() => {
-      consumer = jest.fn();
-      v1.on(consumer);
-      source = new EventEmitter();
-      v1.by(source, src => src);
+      sender = new EventEmitter();
+      v1.by(sender, src => src);
     });
 
-    it('binds to emitted value', () => {
+    it('binds to sent value', () => {
 
       const v3 = trackValue('3');
 
-      source.notify(v3);
+      sender.send(v3);
       expect(v1.it).toBe('3');
 
       v3.it = '4';
       expect(v1.it).toBe('4');
     });
-    it('rebinds to emitted value', () => {
+    it('rebinds to sent value', () => {
 
       const v3 = trackValue('3');
       const v4 = trackValue('4');
 
-      source.notify(v3);
+      sender.send(v3);
       expect(v1.it).toBe('3');
 
-      source.notify(v4);
+      sender.send(v4);
       v3.it = '5';
       expect(v1.it).toBe('4');
     });
@@ -157,7 +154,7 @@ describe('ValueTracker', () => {
       const listener = jest.fn();
 
       v1.on(listener);
-      source.notify(v3);
+      sender.send(v3);
       expect(v1.it).toBe('old');
       expect(listener).not.toBeCalled();
     });

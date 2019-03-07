@@ -1,8 +1,8 @@
 import { EventEmitter } from '../event-emitter';
 import { eventInterest, EventInterest } from '../event-interest';
 import { ValueTracker } from './value-tracker';
-import { EventProducer } from '../event-producer';
-import { EventSource } from '../event-source';
+import { OnEvent } from '../on-event';
+import { EventSender } from '../event-sender';
 import { consumeNestedEvents } from '../nested-events';
 
 /**
@@ -27,7 +27,7 @@ export class ValueSync<T> extends ValueTracker<T> {
     this._it = initial;
   }
 
-  get on(): EventProducer<[T, T]> {
+  get on(): OnEvent<[T, T]> {
     return this._on.on;
   }
 
@@ -41,7 +41,7 @@ export class ValueSync<T> extends ValueTracker<T> {
 
     if (old !== value) {
       this._it = value;
-      this._on.notify(value, old);
+      this._on.send(value, old);
     }
   }
 
@@ -68,69 +68,70 @@ export class ValueSync<T> extends ValueTracker<T> {
   sync(direction: 'in' | 'out', tracker: ValueTracker<T, any>): EventInterest;
 
   /**
-   * Synchronizes the tracked value with the ones nested inside the given `source`.
+   * Synchronizes the tracked value with the ones extracted from the events sent by the given `sender`.
    *
    * Once next value tracker extracted the previous one becomes out of sync.
    *
    * Applies the value from this sync to extracted trackers.
    *
-   * @param source The event source to extract value trackers from.
-   * @param extract A function extracting the value tracker to keep in sync from the event received from `source`.
+   * @param sender The event sender to extract value trackers from.
+   * @param extract A function extracting the value tracker to keep in sync from the event received from `sender`.
    * May return `undefined` to just break the sync with previous tracker.
    *
    * @returns An event interest instance. Call its `off()` method to break the tracked value synchronization.
    */
   sync<U extends any[]>(
-      source: EventSource<U>,
+      sender: EventSender<U>,
       extract: (this: void, ...event: U) => ValueTracker<T, any> | undefined): EventInterest;
 
   /**
-   * Synchronizes the tracked value with the ones nested inside the given `source`.
+   * Synchronizes the tracked value with the ones extracted from the events sent by the given `sender` in the given
+   * direction.
    *
    * Once next value tracker extracted the previous one becomes out of sync.
    *
    * @param direction If set to `"in"` the value from extracted trackers takes precedence over the one in `ValueSync`.
    * Otherwise the value from the sync is applied to extracted trackers first.
-   * @param source The event source to extract value trackers from.
-   * @param extract A function extracting the value tracker to keep in sync from the event received from `source`.
+   * @param sender The event sender to extract value trackers from.
+   * @param extract A function extracting the value tracker to keep in sync from the event received from `sender`.
    * May return `undefined` to just break the sync with previous tracker.
    *
    * @returns An event interest instance. Call its `off()` method to break the tracked value synchronization.
    */
   sync<U extends any[]>(
       direction: 'in' | 'out',
-      source: EventSource<U>,
+      sender: EventSender<U>,
       extract: (this: void, ...event: U) => ValueTracker<T, any> | undefined): EventInterest;
 
   sync<U extends any[]>(
-      first: 'in' | 'out' | ValueTracker<T, any> | EventSource<U>,
-      second?: ValueTracker<T, any> | EventSource<U> | ((this: void, ...event: U) => ValueTracker<T, any> | undefined),
+      first: 'in' | 'out' | ValueTracker<T, any> | EventSender<U>,
+      second?: ValueTracker<T, any> | EventSender<U> | ((this: void, ...event: U) => ValueTracker<T, any> | undefined),
       third?: (this: void, ...event: U) => ValueTracker<T, any> | undefined): EventInterest {
 
     let syncWithTracker = (tracker: ValueTracker<T, any>) => syncTrackers(this, tracker);
-    let sourceOrTracker: ValueTracker<T, any> | EventSource<U>;
+    let senderOrTracker: ValueTracker<T, any> | EventSender<U>;
     let extract: ((this: void, ...event: U) => ValueTracker<T, any> | undefined) | undefined;
 
     if (typeof first === 'string') {
       if (first === 'in') {
         syncWithTracker = tracker => syncTrackers(tracker, this);
       }
-      sourceOrTracker = second as ValueTracker<T, any> | EventSource<U>;
+      senderOrTracker = second as ValueTracker<T, any> | EventSender<U>;
       extract = third;
     } else {
-      sourceOrTracker = first;
+      senderOrTracker = first;
       extract = second as (this: void, ...event: U) => ValueTracker<T, any> | undefined;
     }
 
     const extractTracker = extract;
 
     if (!extractTracker) {
-      return syncWithTracker(sourceOrTracker as ValueTracker<T, any>);
+      return syncWithTracker(senderOrTracker as ValueTracker<T, any>);
     }
 
-    const source = sourceOrTracker as EventSource<U>;
+    const sender = senderOrTracker as EventSender<U>;
 
-    return consumeNestedEvents(source)((...event) => {
+    return consumeNestedEvents(sender)((...event) => {
 
       const tracker = extractTracker(...event);
 
@@ -139,7 +140,7 @@ export class ValueSync<T> extends ValueTracker<T> {
 
     function syncTrackers(tracker1: ValueTracker<T, any>, tracker2: ValueTracker<T, any>) {
 
-      const interest1 = tracker1.each(value => tracker2.it = value);
+      const interest1 = tracker1.read(value => tracker2.it = value);
       const interest2 = tracker2.on(value => tracker1.it = value);
 
       return eventInterest(() => {

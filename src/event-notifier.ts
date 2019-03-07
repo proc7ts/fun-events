@@ -1,31 +1,26 @@
-import { AIterable, itsIterator } from 'a-iterable';
-import { EventConsumer } from './event-consumer';
+import { EventReceiver } from './event-receiver';
 import { eventInterest, EventInterest } from './event-interest';
-import { EventSource, onEventKey } from './event-source';
+import { EventSender, OnEvent__symbol } from './event-sender';
 
 /**
- * Event notifier can be used to register event consumers and notify them on events.
+ * Event notifier can be used to register event receivers and send events to them.
  *
- * It does not implement an `EventProducer` interface though. Use `EventEmitter` if you need one.
+ * It does not implement an `OnEvent` interface though. Use an `EventEmitter` if you need one.
  *
- * Manages a list of registered event consumers, and removes them from the list once they lose their interest
+ * Manages a list of registered event receivers, and removes them from the list once they lose their interest
  * (i.e. the `off()` is called on the returned event interest instance).
  *
- * Implements `AIterable` interface by iterating over registered event consumers in order of their registration.
- *
- * Can be used as `EventSource`.
+ * Can be used as `EventSender`.
  *
  * @param <E> An event type. This is a list of event consumer parameter types.
  * @param <R> Event processing result. This is a type of event consumer result.
  */
-export class EventNotifier<E extends any[], R = void>
-    extends AIterable<EventConsumer<E, R>>
-    implements EventSource<E, R> {
+export class EventNotifier<E extends any[], R = void> implements EventSender<E> {
 
   /**
    * @internal
    */
-  private readonly _consumers = new Map<number, EventConsumer<E, R>>();
+  private readonly _size = new Map<number, EventReceiver<E>>();
 
   /**
    * @internal
@@ -33,51 +28,52 @@ export class EventNotifier<E extends any[], R = void>
   private _seq = 0;
 
   /**
-   * The number of registered event consumers.
+   * The number of registered event receivers.
    */
-  get consumers(): number {
-    return this._consumers.size;
+  get size(): number {
+    return this._size.size;
   }
 
-  [onEventKey](consumer: EventConsumer<E, R>): EventInterest {
-    return this.on(consumer);
-  }
-
-  [Symbol.iterator](): Iterator<EventConsumer<E, R>> {
-    return itsIterator(this._consumers.values());
+  [OnEvent__symbol](receiver: EventReceiver<E>): EventInterest {
+    return this.on(receiver);
   }
 
   /**
-   * Registers event consumer.
+   * Registers an event receiver.
    *
-   * Consumers registered with this method will be notified on emitted events.
+   * Receivers registered with this method will receive the emitted events.
+   *
+   * An `[OnEvent__symbol]` method is an alias of this one.
+   *
+   * @param receiver A receiver of events.
+   *
+   * @returns An event interest. The events will be sent to `receiver` until the `off()` method of returned event
+   * interest is called.
    */
-  on(consumer: EventConsumer<E, R>): EventInterest {
+  on(receiver: EventReceiver<E>): EventInterest {
 
     const id = ++this._seq;
 
-    this._consumers.set(id, consumer);
-    return eventInterest(() => this._consumers.delete(id));
+    this._size.set(id, receiver);
+    return eventInterest(() => this._size.delete(id));
   }
 
   /**
-   * Notifies all consumers on the given event.
+   * Sends the given `event` to all registered receivers.
    *
-   * The event processing results are ignored by this method.
-   *
-   * @param event An event represented by function call arguments.
+   * @param event An event to send represented by function call arguments.
    */
-  notify(...event: E): void {
-    this.forEach(consumer => consumer(...event));
+  send(...event: E): void {
+    this._size.forEach(consumer => consumer(...event));
   }
 
   /**
-   * Removes all registered event consumers.
+   * Removes all registered event receivers.
    *
-   * After this method call they won't be notified on events any more.
+   * After this method call they won't receive events any more.
    */
   clear() {
-    this._consumers.clear();
+    this._size.clear();
   }
 
 }

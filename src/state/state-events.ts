@@ -1,5 +1,5 @@
 /**
- * A state updates consumer function.
+ * A state updates receiver function.
  *
  * It is called when the value with the given `key` changes.
  *
@@ -8,7 +8,7 @@
  * @param newValue New value.
  * @param oldValue Previous value.
  */
-export type StateConsumer = <V>(this: void, path: StatePath, newValue: V, oldValue: V) => void;
+export type StateUpdateReceiver = <V>(this: void, path: StatePath, newValue: V, oldValue: V) => void;
 
 /**
  * A path to state or its part. E.g. property value.

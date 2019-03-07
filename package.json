@@ -1,10 +1,10 @@
 {
   "name": "fun-events",
-  "version": "3.3.0",
-  "description": "Functional event producer/consumer API",
+  "version": "4.0.0-dev",
+  "description": "Functional event sender/receiver API",
   "keywords": [
-    "event-producer",
-    "event-consumer",
+    "event-sender",
+    "event-receiver",
     "typescript"
   ],
   "homepage": "https://github.com/surol/fun-events",
