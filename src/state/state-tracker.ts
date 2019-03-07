@@ -1,18 +1,18 @@
 import { noop } from 'call-thru';
 import { EventEmitter } from '../event-emitter';
-import { EventProducer } from '../event-producer';
-import { StateConsumer, StatePath, statePath } from './state-events';
+import { OnEvent } from '../on-event';
+import { StateUpdateReceiver, StatePath, statePath } from './state-events';
 import { eventInterest, EventInterest } from '../event-interest';
-import { EventSource, onEventKey } from '../event-source';
+import { EventSender, OnEvent__symbol } from '../event-sender';
 
 /**
- * A producer of state update events.
+ * A state update receivers registration function interface.
  */
-export interface StateUpdateProducer extends EventProducer<[StatePath, any, any]> {
+export interface OnStateUpdate extends OnEvent<[StatePath, any, any]> {
 
-  (consumer: StateConsumer): EventInterest;
+  (receiver: StateUpdateReceiver): EventInterest;
 
-  once(consumer: StateConsumer): EventInterest;
+  once(receiver: StateUpdateReceiver): EventInterest;
 
 }
 
@@ -29,15 +29,15 @@ class PathEntry {
       const nested = this._nested.get(key);
 
       if (nested) {
-        nested.emitter.notify(path.slice(1), newValue, oldValue);
+        nested.emitter.send(path.slice(1), newValue, oldValue);
       }
     });
   }
 
-  on(consumer: StateConsumer): EventInterest {
+  on(receiver: StateUpdateReceiver): EventInterest {
 
     const entry = this;
-    const interest = this.emitter.on(consumer);
+    const interest = this.emitter.on(receiver);
 
     return eventInterest(() => {
       interest.off();
@@ -66,7 +66,7 @@ class PathEntry {
   }
 
   private _dropIfEmpty() {
-    if (!this._nested.size && this.emitter.consumers <= 1) {
+    if (!this._nested.size && this.emitter.size <= 1) {
       this._drop();
     }
   }
@@ -77,12 +77,12 @@ class Trackers {
 
   private readonly _root = new PathEntry(noop);
 
-  on(path: StatePath.Normalized, consumer: StateConsumer): EventInterest {
-    return this._entry(path).on(consumer);
+  on(path: StatePath.Normalized, receiver: StateUpdateReceiver): EventInterest {
+    return this._entry(path).on(receiver);
   }
 
-  notify<V>(path: StatePath.Normalized, newValue: V, oldValue: V) {
-    this._root.emitter.notify(path, newValue, oldValue);
+  send<V>(path: StatePath.Normalized, newValue: V, oldValue: V) {
+    this._root.emitter.send(path, newValue, oldValue);
   }
 
   private _entry(path: StatePath.Normalized): PathEntry {
@@ -101,12 +101,12 @@ class Trackers {
 // tslint:disable-next-line:no-use-before-declare
 class SubStateTracker implements StateTracker {
 
-  readonly update: StateConsumer = (<V>(path: StatePath, newValue: V, oldValue: V) => {
-    this._trackers.notify([...this._path, ...statePath(path)], newValue, oldValue);
+  readonly update: StateUpdateReceiver = (<V>(path: StatePath, newValue: V, oldValue: V) => {
+    this._trackers.send([...this._path, ...statePath(path)], newValue, oldValue);
   });
 
-  readonly onUpdate: StateUpdateProducer =
-      EventProducer.of<[StatePath, any, any]>(consumer => this._trackers.on(this._path, consumer));
+  readonly onUpdate: OnStateUpdate =
+      OnEvent.by<[StatePath, any, any]>(receiver => this._trackers.on(this._path, receiver));
 
   constructor(private readonly _trackers: Trackers, private readonly _path: StatePath.Normalized) {
   }
@@ -116,7 +116,7 @@ class SubStateTracker implements StateTracker {
     return this;
   }
 
-  get [onEventKey](): StateUpdateProducer {
+  get [OnEvent__symbol](): OnStateUpdate {
     return this.onUpdate;
   }
 
@@ -135,10 +135,10 @@ class SubStateTracker implements StateTracker {
  *
  * A state is a tree-like structure of sub-states (nodes) available under `StatePath`.
  *
- * When node modified an `update` function should be called. Then all update event consumers registered in `onUpdate`
- * event producer will receive a notification.
+ * When node modified an `update` function should be called. Then all state update receivers registered by `onUpdate`
+ * registrar will receive a notification.
  */
-export class StateTracker implements EventSource<[StatePath, any, any]> {
+export class StateTracker implements EventSender<[StatePath, any, any]> {
 
   /**
    * @internal
@@ -149,17 +149,17 @@ export class StateTracker implements EventSource<[StatePath, any, any]> {
   /**
    * Registers component state updates listener.
    *
-   * This listener will be notified when `update()` is called.
+   * A state update will be sent to it whenever an `update()` function is called.
    *
-   * @param listener A listener to notify on state updates.
+   * @param listener A state updates receiver to register.
    *
    * @return An event interest instance.
    */
-  get onUpdate(): StateUpdateProducer {
+  get onUpdate(): OnStateUpdate {
     return this._tracker.onUpdate;
   }
 
-  get [onEventKey](): StateUpdateProducer {
+  get [OnEvent__symbol](): OnStateUpdate {
     return this.onUpdate;
   }
 
@@ -167,17 +167,14 @@ export class StateTracker implements EventSource<[StatePath, any, any]> {
   /**
    * Updates the component state.
    *
-   * All listeners registered with `onUpdate()` will be notified on this update.
-   *
-   * This method is also called by the function available under `[StateUpdater.key]` key.
-   * The latter is preferred way to call it, as the caller won't depend on `StateSupport` feature then.
+   * All receivers registered with `onUpdate()` will receive this update.
    *
    * @param <V> A type of changed value.
    * @param key Changed value key.
    * @param newValue New value.
    * @param oldValue Previous value.
    */
-  get update(): StateConsumer {
+  get update(): StateUpdateReceiver {
     return this._tracker.update;
   }
 

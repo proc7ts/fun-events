@@ -1,26 +1,25 @@
-import { EventProducer } from './event-producer';
 import { eventInterest, EventInterest, noEventInterest } from './event-interest';
-import { EventSource, onEventKey } from './event-source';
+import { EventSender, OnEvent__symbol } from './event-sender';
 
 /**
- * Created an event producer consuming events originated from event source nested inside original events.
+ * Creates a nested events consumer registration function.
  *
- * The event consumer registered in the returned producer is expected to register in nested event producer and return
- * corresponding event interest. This interest will be lost on new event. An `undefined` may be returned instead to
- * indicate that no nested events expected.
+ * The event consumer registered by the returned function is expected to register an event receiver in nested event
+ * sender and return corresponding event interest. This interest will be lost on new event. An `undefined` may be
+ * returned instead to indicate that no nested events expected.
  *
- * @param source Original event source.
+ * @param sender Original event sender.
  *
- * @returns An event producer that allows to consume nested events.
+ * @returns A nested events consumer registrar.
  */
 export function consumeNestedEvents<E extends any[]>(
-    source: EventSource<E>):
-    EventProducer<E, EventInterest | undefined> {
-  return EventProducer.of(consumer => {
+    sender: EventSender<E>):
+    (consumer: (...event: E) => EventInterest | undefined) => EventInterest {
+  return consumer => {
 
     let consumerInterest = noEventInterest();
 
-    const result = source[onEventKey]((...event: E) => {
+    const result = sender[OnEvent__symbol]((...event: E) => {
       consumerInterest.off();
       consumerInterest = consumer(...event) || noEventInterest();
     });
@@ -29,5 +28,5 @@ export function consumeNestedEvents<E extends any[]>(
       consumerInterest.off();
       result.off();
     });
-  });
+  };
 }

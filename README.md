@@ -1,32 +1,31 @@
-Functional event producer/consumer API
+Functional event sender/receiver API
 ======================================
 
 [![NPM][npm-image]][npm-url]
 [![CircleCI][ci-image]][ci-url]
 [![codecov][codecov-image]][codecov-url]
 
-The API implements a simple protocol of registering event consumers in event producers for the latter to be able
-to notify the former on events:
+The API implements a simple protocol for registering event receivers in event senders for event receiving:
 
 ```typescript
-import { EventIterest, EventProducer } from 'fun-events';
+import { EventIterest, OnEvent } from 'fun-events';
 
-// API supports arbitrary event consumer signatures
-// An event is a set of arguments passed to consumers
-function eventConsumer(type: string, event: Event) { 
+// API supports arbitrary event receiver signatures
+// An event is a tuple of event receiver arguments
+function eventReceiver(type: string, event: Event) { 
   console.log('Event of type ', type, event);
 }
 
-// Event producer accepts consumers with predefined interface 
-const eventProducer: EventProducer<[string, Event]>; // Event producer with the same signature
+// An `OnEvent` registrar function accepts event receivers with event interface 
+const onEvent: OnEvent<[string, Event]>;
 
-// Call event producer to register consumer
+// Call an `OnEvent` registrar to register receiver
 // An event interest returned can be used to unregister
-const interest: EventIterest = eventProducer(eventConsumer);
+const interest: EventIterest = onEvent(eventReceiver);
 
 // Generate some events
 
-interest.off(); // The eventConsumer will no longer recive events.
+interest.off(); // The eventReceiver will no longer receive events after this call
 ```
 
 
@@ -38,68 +37,64 @@ interest.off(); // The eventConsumer will no longer recive events.
 [codecov-url]: https://codecov.io/gh/surol/fun-events
 
 
-`EventConsumer`
+`EventReceiver`
 ---------------
 
-Event consumer is a function that is called to notify on each event produced by `EventProducer` when registered.
+Event receiver is a function that is called on each event sent by event sender when registered.
 
-To register an event consumer in event producer just call the event producer with that event consumer as argument.
-
-
-`EventProducer`
----------------
-
-Event producer is a function accepting an event consumer as its only argument.
-
-Once called, the consumer will be notified on events while the consumer is interested in receiving them.
-
-Note that the event producer is a function, not a method.
-
-An event producer also has a set of handy methods. More could be added at later time.
-
-To convert a plain function into `EventProducer` an `EventProducer.of()` function can be used.
+To register an event receiver in event receiver just call the registration function with this receiver as argument.
 
 
-### `once()`
+`EventSender`
+-------------
 
-Registers an event consumer that will be notified on the next event at most once.
+An event sender interface has only one method accepting an event receiver to register. Once this method called, the
+receiver will start receiving the events while still interested.
+
+The event receiver registrar method is typically implements an `OnEvent` interface - a function augmented with handy
+methods. To convert a plain event receiver registration function to `OnEvent` an `OnEvent.by()` static method can be
+used.
+
+
+### `OnEvent.once()`
+
+Registers the next event receiver. It won't receive any events after receiving the first one.
 
 
 `EventIterest`
 --------------
 
-An interest for the events.
+An interest for receiving the events.
 
-This is what returned from `EventProducer` when registering an event consumer.
+This is what returned when registering an event receiver.
 
-Once the consumer is no longer interested in receiving events, an `off()` method should be called, indicating the
-lost of interest.
+Once the receiver is no longer interested in receiving events, an `off()` method should be called to indicate the
+lost of interest in receiving events.
+
+By convenience, `EventInterest` instances should be constructed using `eventInterest()` function.
 
 
 `EventEmitter`
 --------------
 
-Event emitter is a handy implementation of event producer along with methods for emitting events.
+Event emitter is a handy implementation of `OnEvent` registrar along with methods for sending events.
 
-It manages a list of registered event consumers, and removes them from the list once they lose their interest
+Manages a list of registered event receivers, and removes them from the list once they lose their interest
 (i.e. the `off()` is called on the returned event interest instance).
 
-Implements `AIterable` interface by iterating over registered event consumers in order of their registration.
+Can be used as `EventSender`.
 
 ```typescript
 import { EventEmitter } from 'fun-events';
 
-const emitter = new EventEmitter<[string], string>(); // Consumers may return values
+const emitter = new EventEmitter<[string]>();
 
-// Register consumers
+// Register receivers
 emitter.on(event => `${event}-`);
 emitter.on(event => `-${event}`);
 
-// Notify consumers
-emitter.notify('listen');
-
-// The returned values can be used
-emitter.reduce((prev, consumer) => prev + consumer('o'), ''); // 'o--o` 
+// Send an event
+emitter.send('listen');
 ```
 
 
@@ -108,8 +103,8 @@ State Tracking
 
 A state is a tree-like structure of sub-states (nodes) available under `StatePath`.
 
-A `StateTracker` can be used to notify on state changes of particular nodes. Then the registered state update consumers
-will be notified on these changes.
+A `StateTracker` can be used to notify on state changes of particular nodes. Then the registered receivers will receive
+an update.
 
 ```typescript
 import { StatePath, StateTracker } from 'fun-events';
@@ -203,9 +198,9 @@ console.log(sync.it, v1.it === v2.it, v2.it === v3.it, v3.it === sync.it); // 22
 DOM Events
 ----------
 
-DOM events are supported by `DomEventProducer` and `DomEventDispatcher`. The former extends an `EventProducer` with
-DOM-specific functionality. The latter can be attached to arbitrary `EventTarget` and provide a `DomEventProducer`s for
-its events and to dispatch DOM events.
+DOM events are supported by `OnDomEvent` and `DomEventDispatcher`. The former extends an `OnEvent` event receiver
+registrar interface with DOM-specific functionality. The latter can be attached to arbitrary `EventTarget`. It provides
+a `OnDomEvent` registrars for each event type and dispatches DOM events.
 
 ```typescript
 import { DomEventDispatcher } from 'fun-events';
@@ -216,17 +211,16 @@ dispatcher.on('click')(submit);
 dispatcher.dispatch(new KeyboardEvent('click'));
 ```
 
-### `DomEventProducer`
+### `OnDomEvent`
 
-Extends `EventProducer` with the following properties:
+A DOM event listener registration function interface. It extends `OnEvent` interface with the following properties:
 
 
 #### `capture`
 
-An event producer derived from this one that enables event capturing by default.
+A DOM event listener registrar derived from this one that enables event capturing by default.
 
-This corresponds to specifying `false` or `{ capture: true }` as a second argument to
-`EventTarget.addEventListener()`.
+This corresponds to specifying `true` or `{ capture: true }` as a second argument to `EventTarget.addEventListener()`.
 
 ```typescript
 import { DomEventDispatcher } from 'fun-events';
@@ -243,7 +237,7 @@ container.addEventListener('click', handleContainerClick, true);
 
 #### `instead`
 
-An event producer derived from this one that registers listeners to invoke instead of default action.
+A DOM event listener registrar derived from this one that registers listeners to invoke instead of default action.
 
 It invokes an `Event.preventDefault()` method prior to calling the registered listeners. 
 
@@ -257,8 +251,8 @@ new DomEventDispatcher(document.getElementById('my-href')).on('click').instead(d
 
 #### `just`
 
-An event producer derived from this one that registers listeners preventing further propagation of the current
-event in the capturing and bubbling phases.
+A DOM event listener registrar derived from this one that registers listeners preventing further propagation of
+current event in the capturing and bubbling phases.
 
 It invokes an `Event.stopPropagation()` method prior to calling the registered listeners.
 
@@ -272,7 +266,7 @@ new DomEventDispatcher(document.getElementById('my-div')).on('click').just(handl
 
 #### `last`
 
-An event producer derived from this one that registers the last event listener.
+A DOM event listener registrar derived from this one that registers the last event listener.
 
 It invokes an `Event.stopImmediatePropagation()` method prior to calling the registered listeners.
 
@@ -292,8 +286,8 @@ dispatcher.dispatch(new KeyboardEvent('click')); // console: 1
 
 #### `passive`
 
-An event producer derived from this one that accepts listeners that never call `Event.preventDefault()`.
-   
+A DOM event listener registrar derived from this one that accepts listeners never calling `Event.preventDefault()`.
+
 This corresponds to specifying `{ passive: true }` as a second argument to `EventTarget.addEventListener()`.
 
 ```typescript

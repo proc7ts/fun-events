@@ -1,14 +1,14 @@
 import { noEventInterest } from '../event-interest';
-import { EventProducer } from '../event-producer';
-import { EventSource, onEventKey } from '../event-source';
-import { afterEventKey, CachedEventSource } from '../cached-event-source';
-import { CachedEventProducer } from '../cached-event-producer';
+import { OnEvent } from '../on-event';
+import { EventSender, OnEvent__symbol } from '../event-sender';
+import { AfterEvent__symbol, EventKeeper } from '../event-keeper';
+import { AfterEvent } from '../after-event';
 import { consumeNestedEvents } from '../nested-events';
 
 /**
  * Value accessor and changes tracker.
  */
-export abstract class ValueTracker<T = any, N extends T = T> implements EventSource<[N, T]>, CachedEventSource<[T]> {
+export abstract class ValueTracker<T = any, N extends T = T> implements EventSender<[N, T]>, EventKeeper<[T]> {
 
   /**
    * @internal
@@ -16,99 +16,86 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSou
   private _by = noEventInterest();
 
   /**
-   * Value changes event producer.
-   *
-   * The registered event consumers receive new and old values as arguments.
+   * Registers value changes receiver. The new value is sent as first argument, and the old value as a second one.
    */
-  abstract readonly on: EventProducer<[N, T]>;
+  abstract readonly on: OnEvent<[N, T]>;
 
   /**
-   * An event producer notifying on each value, including initial one.
-   *
-   * The registered event consumer will be notified an original value immediately on registration.
+   * Registers current and updated values receiver.
    */
-  readonly each: CachedEventProducer<[T]> =
-      CachedEventProducer.of<[T]>(consumer => this.on(value => consumer(value)), () => [this.it]);
+  readonly read: AfterEvent<[T]> =
+      AfterEvent.by<[T]>(receiver => this.on(value => receiver(value)), () => [this.it]);
 
-  get [onEventKey](): EventProducer<[N, T]> {
+  get [OnEvent__symbol](): OnEvent<[N, T]> {
     return this.on;
   }
 
-  get [afterEventKey](): CachedEventProducer<[T]> {
-    return this.each;
+  get [AfterEvent__symbol](): AfterEvent<[T]> {
+    return this.read;
   }
 
   /**
-   * Reads the tracked value.
-   *
-   * @returns The value.
+   * The tracked value.
    */
-  abstract get it(): T;
+  abstract it: T;
 
   /**
-   * Updates the tracked value.
+   * Binds the tracked value to the given value `keeper`.
    *
-   * @param value New value.
-   */
-  abstract set it(value: T);
-
-  /**
-   * Binds the tracked value to the `source`.
+   * Updates the value when the `keeper` sends another value.
    *
-   * Updates the value when the `source` emits another value.
+   * If the value is already bound to another value sender ot keeper, then unbinds from the old one first.
    *
-   * If the value is already bound to another source, then unbinds from the old source first.
+   * Call the `off()` method to unbind the tracked value from the `keeper`.
    *
-   * Call the `off()` method to unbind the tracked value from the source.
+   * Note that explicitly updating the value would override the value received from the `keeper`.
    *
-   * Note that explicitly updating the value would override the value received from the source.
-   *
-   * @param source The originating cached event source.
+   * @param keeper The originating value keeper.
    *
    * @returns `this` instance.
    */
-  by(source: CachedEventSource<[T]>): this;
+  by(keeper: EventKeeper<[T]>): this;
 
   /**
-   * Binds the tracked value to the cached event source extracted from the given `source`.
+   * Binds the tracked value to the value keeper extracted from the events sent by the given `sender`.
    *
-   * Updates the value when extracted source emits another value.
+   * Updates the value when extracted keeper sends another value.
    *
-   * If the value is already bound to another source, then unbinds from the old source first.
+   * If the value is already bound to another value sender or keeper, then unbinds from the old one first.
    *
-   * Call the `off()` method to unbind the tracked value from the source.
+   * Call the `off()` method to unbind the tracked value from the `sender`.
    *
-   * Note that explicitly updating the value would override the value received from the source.
+   * Note that explicitly updating the value would override the value received from the `sender`.
    *
-   * @param source The event source to extract cached event source one from.
-   * @param extract A function extracting cached event source from event received from `source`. May return `undefined`
+   * @param sender The event sender to extract value keepers from.
+   * @param extract A function extracting value keepers from events received from the `sender`. May return `undefined`
    * to suspend receiving values.
    *
    * @returns `this` instance.
    */
   by<U extends any[]>(
-      source: EventSource<U>,
-      extract: (this: void, ...event: U) => CachedEventSource<[T]> | undefined): this;
+      sender: EventSender<U>,
+      extract: (this: void, ...event: U) => EventKeeper<[T]> | undefined): this;
 
   by<U extends any[]>(
-      source: EventSource<U> | CachedEventSource<[T]>,
-      extract?: (this: void, ...event: U) => CachedEventSource<[T]> | undefined): this {
+      senderOrKeeper: EventSender<U> | EventKeeper<[T]>,
+      extract?: (this: void, ...event: U) => EventKeeper<[T]> | undefined): this {
     this.off();
 
     if (!extract) {
 
-      const src = source as CachedEventSource<[T]>;
+      const keeper = senderOrKeeper as EventKeeper<[T]>;
 
-      this._by = src[afterEventKey](value => this.it = value);
+      this._by = keeper[AfterEvent__symbol](value => this.it = value);
     } else {
 
-      const src = source as EventSource<U>;
+      const sender = senderOrKeeper as EventSender<U>;
 
-      this._by = consumeNestedEvents(src)((...event: U) => {
+      this._by = consumeNestedEvents(sender)((...event: U) => {
 
         const extracted = extract(...event);
 
-        return extracted && extracted[afterEventKey](value => this.it = value);
+        return extracted && extracted[AfterEvent__symbol](value => this.it = value);
       });
     }
 
@@ -116,11 +103,9 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSou
   }
 
   /**
-   * Unbinds the tracked value from the source.
+   * Unbinds the tracked value from the value sender or keeper this tracker is bound to with `by()` method.
    *
-   * After this call the tracked value won't be updated on the source modification.
-   *
-   * If the value is not bound then doe nothing.
+   * If the tracker is not bound then does nothing.
    */
   off() {
     this._by.off();

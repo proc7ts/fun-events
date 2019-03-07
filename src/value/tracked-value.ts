@@ -23,7 +23,7 @@ class TrackedValue<T> extends ValueTracker<T> {
 
     if (oldValue !== value) {
       this._it = value;
-      this._on.notify(value, oldValue);
+      this._on.send(value, oldValue);
     }
   }
 

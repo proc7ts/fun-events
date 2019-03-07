@@ -1,25 +1,29 @@
-import { EventProducer } from './event-producer';
-import { EventSource, onEventKey } from './event-source';
+import { OnEvent } from './on-event';
+import { EventSender, OnEvent__symbol } from './event-sender';
 import { EventNotifier } from './event-notifier';
 
 /**
- * Event emitter is a handy implementation of event producer along with methods for emitting events.
+ * Event emitter is a handy implementation of `OnEvent` registrar along with methods for sending events.
  *
- * Extends `EventNotifier` by making its `on()` method implement an `EventProducer` interface.
+ * Extends `EventNotifier` by making its `on()` method implement an `OnEvent` interface.
  *
- * @param <E> An event type. This is a list of event consumer parameter types.
- * @param <R> Event processing result. This is a type of event consumer result.
+ * @param <E> An event type. This is a list of event receiver parameter types.
  */
-export class EventEmitter<E extends any[], R = void> extends EventNotifier<E, R> implements EventSource<E, R> {
+export class EventEmitter<E extends any[]> extends EventNotifier<E> implements EventSender<E> {
 
   /**
-   * Call this method to start event consumption.
+   * An `OnEvent` registrar of events sent by this sender.
    *
-   * This is an `EventProducer` implementation. Consumers registered with it will be notified on emitted events.
+   * An `[OnEvent__symbol]` property is an alias of this one.
+   *
+   * @param receiver A receiver of events.
+   *
+   * @returns An event interest. The events will be sent to `receiver` until the `off()` method of returned event
+   * interest is called.
    */
-  readonly on = EventProducer.of<E, R>(consumer => super.on(consumer));
+  readonly on = OnEvent.by<E>(receiver => super.on(receiver));
 
-  get [onEventKey](): EventProducer<E, R> {
+  get [OnEvent__symbol](): OnEvent<E> {
     return this.on;
   }
 

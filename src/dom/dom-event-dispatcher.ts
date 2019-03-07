@@ -1,8 +1,8 @@
-import { DomEventProducer } from './dom-event-producer';
+import { OnDomEvent } from './on-dom-event';
 import { eventInterest } from '../event-interest';
 
 /**
- * DOM events dispatcher is a DOM event producer along with event dispatching method.
+ * DOM event dispatcher can be used to register event listeners and dispatch events.
  */
 export class DomEventDispatcher {
 
@@ -21,18 +21,16 @@ export class DomEventDispatcher {
   }
 
   /**
-   * Returns a DOM event producer for the given event type.
+   * Returns a DOM event listener registrar for the given event type.
    *
-   * The listeners registered with returned event producer will be notified on DOM events.
-   *
-   * The returned DOM event producer calls an `EventTarget.addEventListener()` to register listeners. But, in contrast,
-   * it allows to register the same listener multiple times.
+   * The returned DOM event listener registrar calls an `EventTarget.addEventListener()` to register listeners.
+   * But, in contrast, it allows to register the same listener many times.
    *
    * The `EventInterest` returned upon event listener registration, unregisters the given event listener with
    * `EventTarget.removeEventListener()` when its `off()` method is called.
    */
-  on<E extends Event>(type: string): DomEventProducer<E> {
-    return DomEventProducer.of<E>((listener, opts) => {
+  on<E extends Event>(type: string): OnDomEvent<E> {
+    return OnDomEvent.by<E>((listener, opts) => {
 
           const _listener: EventListener = event => listener(event as E);
 

@@ -1,2 +1,2 @@
 export * from './dom-event-dispatcher';
-export * from './dom-event-producer';
+export * from './on-dom-event';

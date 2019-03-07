@@ -1,4 +1,4 @@
-import { onEventKey } from './event-source';
+import { OnEvent__symbol } from './event-sender';
 import { EventNotifier } from './event-notifier';
 import Mock = jest.Mock;
 
@@ -19,7 +19,7 @@ describe('EventNotifier', () => {
 
       const spy = jest.spyOn(notifier, 'on');
 
-      notifier[onEventKey](consumerSpy);
+      notifier[OnEvent__symbol](consumerSpy);
       expect(spy).toHaveBeenCalledWith(consumerSpy);
       expect(spy.mock.instances[0]).toBe(notifier);
     });

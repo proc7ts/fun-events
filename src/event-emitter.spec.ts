@@ -1,29 +1,29 @@
 import { EventEmitter } from './event-emitter';
 import { EventInterest } from './event-interest';
-import { onEventKey } from './event-source';
+import { OnEvent__symbol } from './event-sender';
 import Mock = jest.Mock;
 
 describe('EventEmitter', () => {
 
-  let emitter: EventEmitter<[string], string>;
-  let consumerSpy: Mock<string, [string]>;
-  let consumer2Spy: Mock<string, [string]>;
+  let emitter: EventEmitter<[string]>;
+  let mockReceiver: Mock<string, [string]>;
+  let mockReceiver2: Mock<string, [string]>;
 
   beforeEach(() => {
     emitter = new EventEmitter();
   });
   beforeEach(() => {
-    consumerSpy = jest.fn();
-    consumer2Spy = jest.fn();
+    mockReceiver = jest.fn();
+    mockReceiver2 = jest.fn();
   });
 
-  it('has no consumers initially', () => {
-    expect(emitter.consumers).toBe(0);
+  it('has no receiver initially', () => {
+    expect(emitter.size).toBe(0);
   });
 
-  describe('[onEventKey]', () => {
+  describe('[OnEvent__symbol]', () => {
     it('refers to `on`', () => {
-      expect(emitter[onEventKey]).toBe(emitter.on);
+      expect(emitter[OnEvent__symbol]).toBe(emitter.on);
     });
   });
 
@@ -32,62 +32,62 @@ describe('EventEmitter', () => {
     let interest: EventInterest;
 
     beforeEach(() => {
-      interest = emitter.on(consumerSpy);
+      interest = emitter.on(mockReceiver);
     });
 
-    it('registers event consumer', () => {
-      expect(emitter.consumers).toBe(1);
+    it('registers event receiver', () => {
+      expect(emitter.size).toBe(1);
 
-      emitter.on(consumer2Spy);
+      emitter.on(mockReceiver2);
 
-      emitter.notify('event');
+      emitter.send('event');
 
-      expect(consumerSpy).toHaveBeenCalledWith('event');
-      expect(consumer2Spy).toHaveBeenCalledWith('event');
+      expect(mockReceiver).toHaveBeenCalledWith('event');
+      expect(mockReceiver2).toHaveBeenCalledWith('event');
     });
-    it('unregisters consumer when its interest is lost', () => {
-      emitter.on(consumer2Spy);
+    it('unregisters receiver when its interest is lost', () => {
+      emitter.on(mockReceiver2);
       interest.off();
 
-      emitter.notify('event');
+      emitter.send('event');
 
-      expect(consumerSpy).not.toHaveBeenCalled();
-      expect(consumer2Spy).toHaveBeenCalledWith('event');
+      expect(mockReceiver).not.toHaveBeenCalled();
+      expect(mockReceiver2).toHaveBeenCalledWith('event');
     });
-    it('registers event consumer again', () => {
+    it('registers event receiver again', () => {
 
-      const interest2 = emitter.on(consumerSpy);
+      const interest2 = emitter.on(mockReceiver);
 
-      expect(emitter.consumers).toBe(2);
+      expect(emitter.size).toBe(2);
 
-      emitter.notify('event');
+      emitter.send('event');
 
-      expect(consumerSpy).toHaveBeenCalledWith('event');
-      expect(consumerSpy).toHaveBeenCalledTimes(2);
+      expect(mockReceiver).toHaveBeenCalledWith('event');
+      expect(mockReceiver).toHaveBeenCalledTimes(2);
 
-      consumerSpy.mockClear();
+      mockReceiver.mockClear();
       interest2.off();
 
-      expect(emitter.consumers).toBe(1);
+      expect(emitter.size).toBe(1);
 
-      emitter.notify('event2');
+      emitter.send('event2');
 
-      expect(consumerSpy).toHaveBeenCalledWith('event2');
-      expect(consumerSpy).toHaveBeenCalledTimes(1);
+      expect(mockReceiver).toHaveBeenCalledWith('event2');
+      expect(mockReceiver).toHaveBeenCalledTimes(1);
     });
   });
   describe('clear', () => {
-    it('removes all event consumers', () => {
-      emitter.on(consumerSpy);
-      emitter.on(consumer2Spy);
+    it('removes all event receivers', () => {
+      emitter.on(mockReceiver);
+      emitter.on(mockReceiver2);
       emitter.clear();
 
-      expect(emitter.consumers).toBe(0);
+      expect(emitter.size).toBe(0);
 
-      emitter.notify('event');
+      emitter.send('event');
 
-      expect(consumerSpy).not.toHaveBeenCalled();
-      expect(consumer2Spy).not.toHaveBeenCalled();
+      expect(mockReceiver).not.toHaveBeenCalled();
+      expect(mockReceiver2).not.toHaveBeenCalled();
     });
   });
 });
