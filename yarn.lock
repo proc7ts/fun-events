@@ -153,13 +153,6 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.9.5.tgz#011eece9d3f839a806b63973e228f85967b79ed3"
   integrity sha512-vVjM0SVzgaOUpflq4GYBvCpozes8OgIIS5gVXVka+OfK3hvnkC1i93U8WiY2OtNE4XUWyyy/86Kf6e0IHTQw1Q==
 
-a-iterable@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/a-iterable/-/a-iterable-2.2.0.tgz#1f901a5f51d875edc270c9ae855173e9d903d56c"
-  integrity sha512-Zdm7zR4hiBb8DmnHQhn15vP+gCYuEtTaIM8MoWJhYZTmA4Dj0VRybDsmQNNr3Cp5QjefeM58tEDPF/SGj9H2eg==
-  dependencies:
-    tslib "^1.9.0"
-
 abab@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.0.tgz#aba0ab4c5eee2d4c79d3487d85450fb2376ebb0f"
