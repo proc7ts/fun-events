@@ -44,17 +44,32 @@ export abstract class EventInterest {
    */
   abstract whenDone(callback: (reason?: any) => void): this;
 
+  /**
+   * Declares this event interest depends on another one.
+   *
+   * Once the events received with the `other` event interest are exhausted, this event interest would be lost.
+   *
+   * @param other An event interes this one depends on.
+   *
+   * @return `this` instance.
+   */
+  needs(other: EventInterest): this {
+    other.whenDone(reason => this.off(reason));
+    return this;
+  }
+
 }
 
 /**
  * Constructs new `EventInterest` instance.
  *
- * @param off A function to call to indicate the lost of interest in receiving events.
+ * @param off A function to call to indicate the lost of interest in receiving events. Accepts a single parameter
+ * indicating the reason of losing interest that will be passed to `whenDone()` callbacks.
  * @param whenDone A function to call to register events exhaust callback. The `off()` method would call the callbacks
  * registered by `whenDone()` method in any case.
  */
 export function eventInterest(
-    off: (this: EventInterest) => void,
+    off: (this: EventInterest, reason?: any) => void,
     {
       whenDone = noop,
     }: {
@@ -86,7 +101,7 @@ export function eventInterest(
     }
 
     off(reason?: any): void {
-      off.call(this);
+      off.call(this, reason);
       doWhenDone(reason);
     }
 

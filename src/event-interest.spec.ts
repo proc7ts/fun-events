@@ -18,6 +18,7 @@ describe('EventInterest', () => {
       expect(mockWhenDone).toHaveBeenCalledWith();
     });
   });
+
   describe('eventInterest', () => {
 
     let mockOff: Mock<void, []>;
@@ -32,8 +33,11 @@ describe('EventInterest', () => {
     });
 
     it('calls `off` function', () => {
-      interest.off();
-      expect(mockOff).toHaveBeenCalledWith();
+
+      const reason = 'some reason';
+
+      interest.off(reason);
+      expect(mockOff).toHaveBeenCalledWith(reason);
       expect(mockOff.mock.instances[0]).toBe(interest);
     });
     it('registers `whenDone` function', () => {
@@ -106,6 +110,23 @@ describe('EventInterest', () => {
 
         interest.whenDone(mockCallback);
         expect(mockCallback).toHaveBeenCalledWith(undefined);
+      });
+    });
+
+    describe('needs', () => {
+      it('is lost when events from another sender are exhausted', () => {
+
+        const mockCallback = jest.fn();
+        const mockOtherOff = jest.fn();
+        const otherInterest = eventInterest(mockOtherOff);
+
+        interest.needs(otherInterest);
+        interest.whenDone(mockCallback);
+
+        const reason = 'some reason';
+
+        otherInterest.off(reason);
+        expect(mockCallback).toHaveBeenCalledWith(reason);
       });
     });
   });
