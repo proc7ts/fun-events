@@ -6,11 +6,11 @@ import Mock = jest.Mock;
 describe('StateTracker', () => {
 
   let tracker: StateTracker;
-  let consumerSpy: Mock<StateUpdateReceiver>;
+  let mockReceiver: Mock<StateUpdateReceiver>;
 
   beforeEach(() => {
     tracker = new StateTracker();
-    consumerSpy = jest.fn();
+    mockReceiver = jest.fn();
   });
 
   describe('[onEventKey]', () => {
@@ -20,20 +20,20 @@ describe('StateTracker', () => {
   });
   it('notifies on state update', () => {
 
-    const interest = tracker.onUpdate(consumerSpy);
+    const interest = tracker.onUpdate(mockReceiver);
 
     const path = ['some', 'path'];
     const newValue = 'new';
     const oldValue = 'old';
 
     tracker.update(path, newValue, oldValue);
-    expect(consumerSpy).toHaveBeenCalledWith(path, newValue, oldValue);
+    expect(mockReceiver).toHaveBeenCalledWith(path, newValue, oldValue);
 
-    consumerSpy.mockClear();
+    mockReceiver.mockClear();
     interest.off();
 
     tracker.update(path, newValue, oldValue);
-    expect(consumerSpy).not.toHaveBeenCalled();
+    expect(mockReceiver).not.toHaveBeenCalled();
   });
   describe('part', () => {
 
@@ -59,7 +59,7 @@ describe('StateTracker', () => {
       expect(part.track([])).toBe(part);
     });
     it('notifies on partial state update', () => {
-      tracker.onUpdate(consumerSpy);
+      tracker.onUpdate(mockReceiver);
 
       const interest = part.onUpdate(partSpy);
 
@@ -69,19 +69,19 @@ describe('StateTracker', () => {
       const oldValue = 'old';
 
       part.update(path, newValue, oldValue);
-      expect(consumerSpy).toHaveBeenCalledWith(fullPath, newValue, oldValue);
+      expect(mockReceiver).toHaveBeenCalledWith(fullPath, newValue, oldValue);
       expect(partSpy).toHaveBeenCalledWith(path, newValue, oldValue);
 
-      consumerSpy.mockClear();
+      mockReceiver.mockClear();
       partSpy.mockClear();
       interest.off();
 
       part.update(path, newValue, oldValue);
-      expect(consumerSpy).toHaveBeenCalledWith(fullPath, newValue, oldValue);
+      expect(mockReceiver).toHaveBeenCalledWith(fullPath, newValue, oldValue);
       expect(partSpy).not.toHaveBeenCalled();
     });
     it('is notified on partial state update', () => {
-      tracker.onUpdate(consumerSpy);
+      tracker.onUpdate(mockReceiver);
 
       const interest = part.onUpdate(partSpy);
 
@@ -91,19 +91,19 @@ describe('StateTracker', () => {
       const oldValue = 'old';
 
       tracker.update(path, newValue, oldValue);
-      expect(consumerSpy).toHaveBeenCalledWith(path, newValue, oldValue);
+      expect(mockReceiver).toHaveBeenCalledWith(path, newValue, oldValue);
       expect(partSpy).toHaveBeenCalledWith(subPath, newValue, oldValue);
 
-      consumerSpy.mockClear();
+      mockReceiver.mockClear();
       partSpy.mockClear();
       interest.off();
 
       tracker.update(path, newValue, oldValue);
-      expect(consumerSpy).toHaveBeenCalledWith(path, newValue, oldValue);
+      expect(mockReceiver).toHaveBeenCalledWith(path, newValue, oldValue);
       expect(partSpy).not.toHaveBeenCalled();
     });
     it('is not notified on other state update', () => {
-      tracker.onUpdate(consumerSpy);
+      tracker.onUpdate(mockReceiver);
       part.onUpdate(partSpy);
 
       const path = [...partPath.slice(0, partPath.length - 1), 'other'];
@@ -111,11 +111,11 @@ describe('StateTracker', () => {
       const oldValue = 'old';
 
       tracker.update(path, newValue, oldValue);
-      expect(consumerSpy).toHaveBeenCalledWith(path, newValue, oldValue);
+      expect(mockReceiver).toHaveBeenCalledWith(path, newValue, oldValue);
       expect(partSpy).not.toHaveBeenCalled();
     });
     it('is notified on parent state update', () => {
-      tracker.onUpdate(consumerSpy);
+      tracker.onUpdate(mockReceiver);
       part.onUpdate(partSpy);
 
       const parent = tracker.track(partPath[0]);
@@ -130,17 +130,17 @@ describe('StateTracker', () => {
       const oldValue = 'old';
 
       parent.update(parentPath, newValue, oldValue);
-      expect(consumerSpy).toHaveBeenCalledWith(fullPath, newValue, oldValue);
+      expect(mockReceiver).toHaveBeenCalledWith(fullPath, newValue, oldValue);
       expect(parentSpy).toHaveBeenCalledWith(parentPath, newValue, oldValue);
       expect(partSpy).toHaveBeenCalledWith(subPath, newValue, oldValue);
 
-      consumerSpy.mockClear();
+      mockReceiver.mockClear();
       parentSpy.mockClear();
       partSpy.mockClear();
       parentInterest.off();
 
       parent.update(parentPath, newValue, oldValue);
-      expect(consumerSpy).toHaveBeenCalledWith(fullPath, newValue, oldValue);
+      expect(mockReceiver).toHaveBeenCalledWith(fullPath, newValue, oldValue);
       expect(parentSpy).not.toHaveBeenCalled();
       expect(partSpy).toHaveBeenCalledWith(subPath, newValue, oldValue);
     });

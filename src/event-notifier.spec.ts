@@ -5,22 +5,22 @@ import Mock = jest.Mock;
 describe('EventNotifier', () => {
 
   let notifier: EventNotifier<[string], string>;
-  let consumerSpy: Mock<string, [string]>;
+  let mockReceiver: Mock<string, [string]>;
 
   beforeEach(() => {
     notifier = new EventNotifier();
   });
   beforeEach(() => {
-    consumerSpy = jest.fn();
+    mockReceiver = jest.fn();
   });
 
   describe('[onEventKey]', () => {
-    it('registers event consumers using `on()`', () => {
+    it('registers event receivers using `on()`', () => {
 
       const spy = jest.spyOn(notifier, 'on');
 
-      notifier[OnEvent__symbol](consumerSpy);
-      expect(spy).toHaveBeenCalledWith(consumerSpy);
+      notifier[OnEvent__symbol](mockReceiver);
+      expect(spy).toHaveBeenCalledWith(mockReceiver);
       expect(spy.mock.instances[0]).toBe(notifier);
     });
   });

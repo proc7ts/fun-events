@@ -85,7 +85,7 @@ export abstract class AfterEvent<E extends any[]> extends OnEvent<E> implements 
    * Builds an `AfterEvent` registrar of receivers of events sent by the given `sender`.
    *
    * The `initial` event will be kept until the `sender` send more events. After that the latest event sent will be
-   * kept. If the `sender` sends an event immediately upon consumer registration, the `initial` event won't be created
+   * kept. If the `sender` sends an event immediately upon receiver registration, the `initial` event won't be created
    * or used.
    *
    * @param sender An event sender.

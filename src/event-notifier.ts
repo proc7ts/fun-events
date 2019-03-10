@@ -12,8 +12,7 @@ import { EventSender, OnEvent__symbol } from './event-sender';
  *
  * Can be used as `EventSender`.
  *
- * @param <E> An event type. This is a list of event consumer parameter types.
- * @param <R> Event processing result. This is a type of event consumer result.
+ * @param <E> An event type. This is a list of event receiver parameter types.
  */
 export class EventNotifier<E extends any[], R = void> implements EventSender<E> {
 
@@ -64,7 +63,7 @@ export class EventNotifier<E extends any[], R = void> implements EventSender<E> 
    * @param event An event to send represented by function call arguments.
    */
   send(...event: E): void {
-    this._size.forEach(consumer => consumer(...event));
+    this._size.forEach(receiver => receiver(...event));
   }
 
   /**

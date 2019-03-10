@@ -79,7 +79,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
     interest = this(wrapper);
 
     if (off) {
-      // The consumer is notified immediately during registration.
+      // The receiver is notified immediately during registration.
       // Unregister event interest right away.
       interest.off();
     }
@@ -332,10 +332,10 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
 
     let shared: [EventNotifier<any[]>, EventInterest] | undefined;
 
-    return OnEvent.by((consumer: EventReceiver<any[]>) => {
+    return OnEvent.by((receiver: EventReceiver<any[]>) => {
 
       const emitter = shared || (shared = thruNotifier(this, fns));
-      const interest = shared[0].on(consumer);
+      const interest = shared[0].on(receiver);
 
       return eventInterest(() => {
         interest.off();
