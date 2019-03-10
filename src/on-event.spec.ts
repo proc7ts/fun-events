@@ -111,6 +111,7 @@ describe('OnEvent', () => {
     let mockRegister: Mock;
     let mockInterest: {
       off: Mock<void, []> & EventInterest['off'],
+      whenDone: Mock<void, [(reason?: any) => void]>,
     } & EventInterest;
     let registeredReceiver: (event1: string, event2: string) => void;
     let onEvent: OnEvent<[string, string]>;
@@ -171,6 +172,19 @@ describe('OnEvent', () => {
       mockReceiver.mockClear();
       registeredReceiver('b', 'a');
       expect(mockReceiver).not.toHaveBeenCalled();
+    });
+    it('exhausts when original sender exhausts', () => {
+
+      const mockDone = jest.fn();
+
+      onEvent.thru(
+          (event1: string, event2: string) => `${event1}, ${event2}`
+      )(mockReceiver).whenDone(mockDone);
+
+      const reason = 'some reason';
+
+      mockInterest.whenDone.mock.calls[0][0](reason);
+      expect(mockDone).toHaveBeenCalledWith(reason);
     });
   });
 });

@@ -21,8 +21,8 @@ export function consumeNestedEvents<E extends any[]>(
     consumerInterest = consume(...event) || noEventInterest();
   });
 
-  return eventInterest(() => {
-    consumerInterest.off();
-    senderInterest.off();
+  return eventInterest(reason => {
+    consumerInterest.off(reason);
+    senderInterest.off(reason);
   }).needs(senderInterest);
 }
