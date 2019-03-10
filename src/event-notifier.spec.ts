@@ -4,7 +4,7 @@ import Mock = jest.Mock;
 
 describe('EventNotifier', () => {
 
-  let notifier: EventNotifier<[string], string>;
+  let notifier: EventNotifier<[string]>;
   let mockReceiver: Mock<string, [string]>;
 
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('EventNotifier', () => {
     mockReceiver = jest.fn();
   });
 
-  describe('[onEventKey]', () => {
+  describe('[OnEvent__symbol]', () => {
     it('registers event receivers using `on()`', () => {
 
       const spy = jest.spyOn(notifier, 'on');

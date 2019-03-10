@@ -337,13 +337,13 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
       const emitter = shared || (shared = thruNotifier(this, fns));
       const interest = shared[0].on(receiver);
 
-      return eventInterest(() => {
-        interest.off();
+      return eventInterest(reason => {
+        interest.off(reason);
         if (!emitter[0].size) {
-          emitter[1].off();
+          emitter[1].off(reason);
           shared = undefined;
         }
-      });
+      }).needs(interest).needs(emitter[1]);
     });
   }
 

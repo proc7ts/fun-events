@@ -51,12 +51,51 @@ describe('consumeNestedEvents', () => {
     nested1.send('value');
     expect(receiver).not.toHaveBeenCalled();
   });
-  it('does not receive events after interest is lost', () => {
+  it('does not receive events when interest is lost', () => {
     interest.off();
 
     sender.send(nested1);
     nested1.send('value');
     expect(receiver).not.toHaveBeenCalled();
     expect(consume).not.toHaveBeenCalled();
+  });
+  it('stops consumption when sender events exhausted', () => {
+
+    const mockDone = jest.fn();
+
+    interest.whenDone(mockDone);
+
+    const reason = 'some reason';
+
+    sender.clear(reason);
+
+    expect(mockDone).toHaveBeenCalledWith(reason);
+
+    sender.send(nested1);
+    nested1.send('value');
+    expect(receiver).not.toHaveBeenCalled();
+    expect(consume).not.toHaveBeenCalled();
+  });
+  it('does not stop consumption when nested events exhausted', () => {
+
+    const mockDone = jest.fn();
+
+    interest.whenDone(mockDone);
+
+    const reason = 'some reason';
+
+    sender.send(nested1);
+    nested1.send('value1');
+    nested1.clear(reason);
+    nested1.send('value2');
+
+    expect(mockDone).not.toHaveBeenCalledWith(reason);
+
+    sender.send(nested2);
+    nested2.send('value3');
+
+    expect(receiver).toHaveBeenCalledWith('value1');
+    expect(receiver).not.toHaveBeenCalledWith('value2');
+    expect(receiver).toHaveBeenCalledWith('value3');
   });
 });

@@ -13,9 +13,9 @@ describe('AfterEvent', () => {
     it('builds an `AfterEvent` registrar by arbitrary function', () => {
 
       let registeredReceiver: EventReceiver<[string]> = noop;
-      const mockInterest = {
+      const mockInterest: EventInterest = {
         off: jest.fn(),
-      } as EventInterest;
+      } as any;
       const mockRegister = jest.fn<EventInterest, [EventReceiver<[string]>]>(rcv => {
         registeredReceiver = rcv;
         return mockInterest;

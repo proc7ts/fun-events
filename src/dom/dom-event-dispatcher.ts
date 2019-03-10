@@ -32,13 +32,12 @@ export class DomEventDispatcher {
   on<E extends Event>(type: string): OnDomEvent<E> {
     return OnDomEvent.by<E>((listener, opts) => {
 
-          const _listener: EventListener = event => listener(event as E);
+      const _listener: EventListener = event => listener(event as E); // Create unique listener instance
 
-          this._target.addEventListener(type, _listener, opts);
+      this._target.addEventListener(type, _listener, opts);
 
-          return eventInterest(() => this._target.removeEventListener(type, _listener));
-        }
-    );
+      return eventInterest(() => this._target.removeEventListener(type, _listener));
+    });
   }
 
   /**

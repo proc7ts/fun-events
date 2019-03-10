@@ -7,6 +7,8 @@ import { consumeNestedEvents } from '../nested-events';
 
 /**
  * Value accessor and changes tracker.
+ *
+ * Can be used as `EventSender` and `EventKeeper`. Events originated from them never exhaust.
  */
 export abstract class ValueTracker<T = any, N extends T = T> implements EventSender<[N, T]>, EventKeeper<[T]> {
 

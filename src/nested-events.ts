@@ -16,14 +16,13 @@ export function consumeNestedEvents<E extends any[]>(
     consume: (...event: E) => EventInterest | undefined): EventInterest {
 
   let consumerInterest = noEventInterest();
-
-  const result = sender[OnEvent__symbol]((...event: E) => {
+  const senderInterest = sender[OnEvent__symbol]((...event: E) => {
     consumerInterest.off();
     consumerInterest = consume(...event) || noEventInterest();
   });
 
-  return eventInterest(() => {
-    consumerInterest.off();
-    result.off();
-  });
+  return eventInterest(reason => {
+    consumerInterest.off(reason);
+    senderInterest.off(reason);
+  }).needs(senderInterest);
 }
