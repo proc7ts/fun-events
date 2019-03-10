@@ -13,7 +13,7 @@ import { noop } from 'call-thru';
 export abstract class EventInterest {
 
   /**
-   * Whether event sending is completed.
+   * Whether events targeted corresponding receiver are exhausted.
    *
    * `true` indicates that no events will be sent to the registered receiver.
    */
@@ -24,13 +24,15 @@ export abstract class EventInterest {
    *
    * Once called, the corresponding event receiver will no longer receive events.
    *
-   * Calling this method for the second time has no effect.
+   * Calling this method for the second time, or when the events exhausted, has no effect.
+   *
+   * @param reason An optional reason why interest is lost. This will be reported to `whenDone()` callback.
    */
-  abstract off(): void;
+  abstract off(reason?: any): void;
 
   /**
-   * Registers a callback function that will be called when there no more events will be sent to the receiver.
-   * This callback will be called immediately when `done` is `true`.
+   * Registers a callback function that will be called when events exhausted and will more events will be sent to the
+   * receiver. This callback will be called immediately when `done` is `true`.
    *
    * Not every event sender informs on that, but it is guaranteed that this callback will be called when `off()` method
    * is called.
@@ -48,8 +50,8 @@ export abstract class EventInterest {
  * Constructs new `EventInterest` instance.
  *
  * @param off A function to call to indicate the lost of interest in receiving events.
- * @param whenDone A function to call to register event sending completion callback. The `off()` method would call
- * the callbacks registered by `whenDone()` method in any case.
+ * @param whenDone A function to call to register events exhaust callback. The `off()` method would call the callbacks
+ * registered by `whenDone()` method in any case.
  */
 export function eventInterest(
     off: (this: EventInterest) => void,
@@ -83,9 +85,9 @@ export function eventInterest(
       return _done;
     }
 
-    off(): void {
+    off(reason?: any): void {
       off.call(this);
-      doWhenDone();
+      doWhenDone(reason);
     }
 
     whenDone(callback: (reason?: any) => void): this {
@@ -109,7 +111,7 @@ export function eventInterest(
   return new Interest();
 }
 
-class NoEventInterest extends EventInterest {
+class NoInterest extends EventInterest {
 
   get done() {
     return true;
@@ -126,13 +128,13 @@ class NoEventInterest extends EventInterest {
 
 }
 
-const NONE = /*#__PURE__*/ new NoEventInterest();
+const NO_INTEREST = /*#__PURE__*/ new NoInterest();
 
 /**
- * Returns a no-op event interest.
+ * Returns a missing event interest.
  *
  * This is handy e.g. when initializing fields.
  */
 export function noEventInterest(): EventInterest {
-  return NONE;
+  return NO_INTEREST;
 }
