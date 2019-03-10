@@ -65,8 +65,8 @@ export abstract class EventInterest {
  *
  * @param off A function to call to indicate the lost of interest in receiving events. Accepts a single parameter
  * indicating the reason of losing interest that will be passed to `whenDone()` callbacks.
- * @param whenDone A function to call to register events exhaust callback. The `off()` method would call the callbacks
- * registered by `whenDone()` method in any case.
+ * @param whenDone A function that will be called to register events exhaust callback. This function will be called
+ * at most once. The `off()` method would call the registered callbacks in any case.
  */
 export function eventInterest(
     off: (this: EventInterest, reason?: any) => void,

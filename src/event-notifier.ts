@@ -12,18 +12,8 @@ class ReceiverInfo<E extends any[]> {
 
   interest(): EventInterest {
     return eventInterest(noop, {
-      whenDone: callback => this.whenDone(callback),
+      whenDone: callback => this._whenDone = callback,
     });
-  }
-
-  whenDone(callback: (reason?: any) => void) {
-
-    const prev = this._whenDone;
-
-    this._whenDone = reason => {
-      prev(reason);
-      callback(reason);
-    };
   }
 
   done(reason?: any) {
