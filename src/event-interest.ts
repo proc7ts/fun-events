@@ -13,6 +13,13 @@ import { noop } from 'call-thru';
 export abstract class EventInterest {
 
   /**
+   * Whether event sending is completed.
+   *
+   * `true` indicates that no events will be sent to the registered receiver.
+   */
+  abstract readonly done: boolean;
+
+  /**
    * A method to call to indicate the lost of interest in receiving events.
    *
    * Once called, the corresponding event receiver will no longer receive events.
@@ -21,25 +28,102 @@ export abstract class EventInterest {
    */
   abstract off(): void;
 
-}
+  /**
+   * Registers a callback function that will be called when there no more events will be sent to the receiver.
+   * This callback will be called immediately when `done` is `true`.
+   *
+   * Not every event sender informs on that, but it is guaranteed that this callback will be called when `off()` method
+   * is called.
+   *
+   * @param callback A callback function that receives an optional event completion reason as its only parameter.
+   * By convenience an `undefined` reason means normal completion.
+   *
+   * @returns `this` instance.
+   */
+  abstract whenDone(callback: (reason?: any) => void): this;
 
-class Interest extends EventInterest {
-  constructor(readonly off: (this: EventInterest) => void) {
-    super();
-  }
 }
 
 /**
  * Constructs new `EventInterest` instance.
  *
  * @param off A function to call to indicate the lost of interest in receiving events.
+ * @param whenDone A function to call to register event sending completion callback. The `off()` method would call
+ * the callbacks registered by `whenDone()` method in any case.
  */
-export function eventInterest(off: (this: EventInterest) => void): EventInterest {
-  return new Interest(off);
+export function eventInterest(
+    off: (this: EventInterest) => void,
+    {
+      whenDone = noop,
+    }: {
+      whenDone?: (callback: (this: EventInterest, reason?: any) => void) => void;
+    } = {}): EventInterest {
+
+  let _done = false;
+  let _reason: any | undefined;
+  let _whenDone: (reason?: any) => void = noop;
+
+  function doWhenDone(reason?: any) {
+    if (!_done) {
+
+      const callback = _whenDone;
+
+      _done = true;
+      _reason = reason;
+      _whenDone = noop;
+      callback(reason);
+    }
+  }
+
+  whenDone(doWhenDone);
+
+  class Interest extends EventInterest {
+
+    get done() {
+      return _done;
+    }
+
+    off(): void {
+      off.call(this);
+      doWhenDone();
+    }
+
+    whenDone(callback: (reason?: any) => void): this {
+      if (_done) {
+        callback(_reason);
+      } else {
+
+        const prev = _whenDone;
+
+        _whenDone = reason => {
+          prev(reason);
+          callback(reason);
+        };
+      }
+
+      return this;
+    }
+
+  }
+
+  return new Interest();
 }
 
 class NoEventInterest extends EventInterest {
-  off = noop;
+
+  get done() {
+    return true;
+  }
+
+  get off() {
+    return noop;
+  }
+
+  whenDone(callback: (reason?: any) => void): this {
+    callback();
+    return this;
+  }
+
 }
 
 const NONE = /*#__PURE__*/ new NoEventInterest();

@@ -19,7 +19,7 @@ export class EventNotifier<E extends any[], R = void> implements EventSender<E> 
   /**
    * @internal
    */
-  private readonly _size = new Map<number, EventReceiver<E>>();
+  private readonly _receivers = new Map<number, EventReceiver<E>>();
 
   /**
    * @internal
@@ -30,7 +30,7 @@ export class EventNotifier<E extends any[], R = void> implements EventSender<E> 
    * The number of registered event receivers.
    */
   get size(): number {
-    return this._size.size;
+    return this._receivers.size;
   }
 
   [OnEvent__symbol](receiver: EventReceiver<E>): EventInterest {
@@ -53,8 +53,8 @@ export class EventNotifier<E extends any[], R = void> implements EventSender<E> 
 
     const id = ++this._seq;
 
-    this._size.set(id, receiver);
-    return eventInterest(() => this._size.delete(id));
+    this._receivers.set(id, receiver);
+    return eventInterest(() => this._receivers.delete(id));
   }
 
   /**
@@ -63,7 +63,7 @@ export class EventNotifier<E extends any[], R = void> implements EventSender<E> 
    * @param event An event to send represented by function call arguments.
    */
   send(...event: E): void {
-    this._size.forEach(receiver => receiver(...event));
+    this._receivers.forEach(receiver => receiver(...event));
   }
 
   /**
@@ -72,7 +72,7 @@ export class EventNotifier<E extends any[], R = void> implements EventSender<E> 
    * After this method call they won't receive events any more.
    */
   clear() {
-    this._size.clear();
+    this._receivers.clear();
   }
 
 }
