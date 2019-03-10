@@ -91,7 +91,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
 
       const sender = senderOrKeeper as EventSender<U>;
 
-      this._by = consumeNestedEvents(sender)((...event: U) => {
+      this._by = consumeNestedEvents(sender, (...event: U) => {
 
         const extracted = extract(...event);
 

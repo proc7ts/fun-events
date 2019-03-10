@@ -8,7 +8,7 @@ describe('consumeNestedEvents', () => {
   let sender: EventEmitter<[EventEmitter<[string]>?]>;
   let nested1: EventEmitter<[string]>;
   let nested2: EventEmitter<[string]>;
-  let consumer: Mock<EventInterest | undefined, [EventEmitter<[string]>?]>;
+  let consume: Mock<EventInterest | undefined, [EventEmitter<[string]>?]>;
   let receiver: Mock<void, [string]>;
   let interest: EventInterest;
 
@@ -17,8 +17,8 @@ describe('consumeNestedEvents', () => {
     nested1 = new EventEmitter();
     nested2 = new EventEmitter();
     receiver = jest.fn();
-    consumer = jest.fn(nested => nested && nested.on(receiver));
-    interest = consumeNestedEvents(sender)(consumer);
+    consume = jest.fn(nested => nested && nested.on(receiver));
+    interest = consumeNestedEvents(sender, consume);
   });
 
   it('receives nested event', () => {
@@ -57,6 +57,6 @@ describe('consumeNestedEvents', () => {
     sender.send(nested1);
     nested1.send('value');
     expect(receiver).not.toHaveBeenCalled();
-    expect(consumer).not.toHaveBeenCalled();
+    expect(consume).not.toHaveBeenCalled();
   });
 });

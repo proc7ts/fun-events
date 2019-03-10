@@ -131,7 +131,7 @@ export class ValueSync<T> extends ValueTracker<T> {
 
     const sender = senderOrTracker as EventSender<U>;
 
-    return consumeNestedEvents(sender)((...event) => {
+    return consumeNestedEvents(sender, (...event) => {
 
       const tracker = extractTracker(...event);
 
