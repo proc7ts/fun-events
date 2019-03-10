@@ -293,7 +293,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   /**
    * Constructs an event receiver registrar that passes the original event trough the chain of transformation passes.
    *
-   * The passes are preformed by `callThru()` function. The event receivers registered by resulting `OnEvent` function
+   * The passes are preformed by `callThru()` function. The event receivers registered by resulting `OnEvent` registrar
    * are called by the last pass in chain. Thus they can be e.g. filtered out or called multiple times.
    *
    * @returns An `OnEvent` registrar of receivers of events transformed with provided passes.
@@ -330,10 +330,9 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
 
   thru(...fns: any[]): OnEvent<any[]> {
 
-    const factory: OnEventFactory = this.constructor as any;
     let shared: [EventNotifier<any[]>, EventInterest] | undefined;
 
-    return factory.by((consumer: EventReceiver<any[]>) => {
+    return OnEvent.by((consumer: EventReceiver<any[]>) => {
 
       const emitter = shared || (shared = thruNotifier(this, fns));
       const interest = shared[0].on(consumer);
@@ -376,11 +375,5 @@ export interface OnEvent<E extends any[]> {
    * interest is called.
    */
   (this: void, receiver: EventReceiver<E>): EventInterest; // tslint:disable-line:callable-types
-
-}
-
-interface OnEventFactory {
-
-  by<E extends any[]>(register: (this: void, receiver: EventReceiver<E>) => EventInterest): OnEvent<E>;
 
 }

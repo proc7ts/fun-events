@@ -5,9 +5,6 @@ import { passIf } from 'call-thru';
 import { EventEmitter } from './event-emitter';
 import { EventReceiver } from './event-receiver';
 import Mock = jest.Mock;
-import { trackValue } from './value';
-import { AfterEvent } from './after-event';
-import { AfterEvent__symbol } from './event-keeper';
 
 describe('OnEvent', () => {
   describe('from event sender', () => {
@@ -115,7 +112,7 @@ describe('OnEvent', () => {
     let mockInterest: {
       off: Mock<void, []> & EventInterest['off'],
     } & EventInterest;
-    let registeredConsumer: (event1: string, event2: string) => void;
+    let registeredReceiver: (event1: string, event2: string) => void;
     let onEvent: OnEvent<[string, string]>;
     let mockReceiver: Mock<void, [string]>;
 
@@ -125,7 +122,7 @@ describe('OnEvent', () => {
       } as any;
       mockInterest.off.mockName('interest.off()');
       mockRegister = jest.fn((c: (event1: string, event2: string) => number) => {
-        registeredConsumer = c;
+        registeredReceiver = c;
         return mockInterest;
       });
       onEvent = OnEvent.by(mockRegister);
@@ -157,7 +154,7 @@ describe('OnEvent', () => {
           (event1: string, event2: string) => `${event1}, ${event2}`
       )(mockReceiver);
 
-      registeredConsumer('a', 'bb');
+      registeredReceiver('a', 'bb');
 
       expect(mockReceiver).toHaveBeenCalledWith(`a, bb`);
     });
@@ -167,11 +164,11 @@ describe('OnEvent', () => {
           (event1: string, event2: string) => `${event1}, ${event2}`,
       )(mockReceiver);
 
-      registeredConsumer('a', 'bb');
+      registeredReceiver('a', 'bb');
       expect(mockReceiver).toHaveBeenCalledWith(`a, bb`);
 
       mockReceiver.mockClear();
-      registeredConsumer('b', 'a');
+      registeredReceiver('b', 'a');
       expect(mockReceiver).not.toHaveBeenCalled();
     });
   });
