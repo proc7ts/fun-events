@@ -76,6 +76,7 @@ describe('EventEmitter', () => {
       expect(mockReceiver).toHaveBeenCalledTimes(1);
     });
   });
+
   describe('clear', () => {
     it('removes all event receivers', () => {
       emitter.on(mockReceiver);
@@ -88,6 +89,19 @@ describe('EventEmitter', () => {
 
       expect(mockReceiver).not.toHaveBeenCalled();
       expect(mockReceiver2).not.toHaveBeenCalled();
+    });
+    it('notifies `whenDone` callbacks', () => {
+
+      const reason = 'some reason';
+      const whenDone1 = jest.fn();
+      const whenDone2 = jest.fn();
+
+      emitter.on(mockReceiver).whenDone(whenDone1);
+      emitter.on(mockReceiver2).whenDone(whenDone2);
+      emitter.clear(reason);
+
+      expect(whenDone1).toHaveBeenCalledWith(reason);
+      expect(whenDone2).toHaveBeenCalledWith(reason);
     });
   });
 });

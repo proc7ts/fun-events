@@ -1,6 +1,36 @@
 import { EventReceiver } from './event-receiver';
 import { eventInterest, EventInterest } from './event-interest';
 import { EventSender, OnEvent__symbol } from './event-sender';
+import { noop } from 'call-thru';
+
+class ReceiverInfo<E extends any[]> {
+
+  private _whenDone: (reason?: any) => void = noop;
+
+  constructor(readonly recv: EventReceiver<E>) {
+  }
+
+  interest(): EventInterest {
+    return eventInterest(noop, {
+      whenDone: callback => this.whenDone(callback),
+    });
+  }
+
+  whenDone(callback: (reason?: any) => void) {
+
+    const prev = this._whenDone;
+
+    this._whenDone = reason => {
+      prev(reason);
+      callback(reason);
+    };
+  }
+
+  done(reason?: any) {
+    this._whenDone(reason);
+  }
+
+}
 
 /**
  * Event notifier can be used to register event receivers and send events to them.
@@ -14,12 +44,12 @@ import { EventSender, OnEvent__symbol } from './event-sender';
  *
  * @param <E> An event type. This is a list of event receiver parameter types.
  */
-export class EventNotifier<E extends any[], R = void> implements EventSender<E> {
+export class EventNotifier<E extends any[]> implements EventSender<E> {
 
   /**
    * @internal
    */
-  private readonly _receivers = new Map<number, EventReceiver<E>>();
+  private readonly _rcvs = new Map<number, ReceiverInfo<E>>();
 
   /**
    * @internal
@@ -30,7 +60,7 @@ export class EventNotifier<E extends any[], R = void> implements EventSender<E> 
    * The number of registered event receivers.
    */
   get size(): number {
-    return this._receivers.size;
+    return this._rcvs.size;
   }
 
   [OnEvent__symbol](receiver: EventReceiver<E>): EventInterest {
@@ -53,8 +83,10 @@ export class EventNotifier<E extends any[], R = void> implements EventSender<E> 
 
     const id = ++this._seq;
 
-    this._receivers.set(id, receiver);
-    return eventInterest(() => this._receivers.delete(id));
+    const rcv = new ReceiverInfo(receiver);
+    this._rcvs.set(id, rcv);
+
+    return rcv.interest().whenDone(() => this._rcvs.delete(id));
   }
 
   /**
@@ -63,16 +95,20 @@ export class EventNotifier<E extends any[], R = void> implements EventSender<E> 
    * @param event An event to send represented by function call arguments.
    */
   send(...event: E): void {
-    this._receivers.forEach(receiver => receiver(...event));
+    this._rcvs.forEach(receiver => receiver.recv(...event));
   }
 
   /**
    * Removes all registered event receivers.
    *
-   * After this method call they won't receive events any more.
+   * After this method call they won't receive events. Informs all corresponding event interests on that by calling
+   * the callbacks registered with `whenDone()`.
+   *
+   * @param reason A reason to stop sending events to receivers.
    */
-  clear() {
-    this._receivers.clear();
+  clear(reason?: any) {
+    this._rcvs.forEach(recv => recv.done(reason));
+    this._rcvs.clear();
   }
 
 }
