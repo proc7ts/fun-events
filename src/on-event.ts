@@ -343,7 +343,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
           emitter[1].off();
           shared = undefined;
         }
-      });
+      }).needs(interest).needs(emitter[1]);
     });
   }
 

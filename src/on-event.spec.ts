@@ -119,6 +119,7 @@ describe('OnEvent', () => {
     beforeEach(() => {
       mockInterest = {
         off: jest.fn(),
+        whenDone: jest.fn(),
       } as any;
       mockInterest.off.mockName('interest.off()');
       mockRegister = jest.fn((c: (event1: string, event2: string) => number) => {
