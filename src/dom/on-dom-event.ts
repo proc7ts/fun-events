@@ -60,10 +60,7 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
    * `EventTarget.addEventListener()`.
    */
   get capture(): OnDomEvent<E> {
-
-    const factory: OnDomEventFactory = this.constructor as any;
-
-    return factory.by((
+    return OnDomEvent.by((
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean) => {
       if (opts == null) {
@@ -82,10 +79,7 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
    * It invokes an `Event.preventDefault()` method prior to calling the registered listeners.
    */
   get instead(): OnDomEvent<E> {
-
-    const factory: OnDomEventFactory = this.constructor as any;
-
-    return factory.by((
+    return OnDomEvent.by((
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean) => {
       return this(
@@ -104,10 +98,7 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
    * It invokes an `Event.stopPropagation()` method prior to calling the registered listeners.
    */
   get just(): OnDomEvent<E> {
-
-    const factory: OnDomEventFactory = this.constructor as any;
-
-    return factory.by((
+    return OnDomEvent.by((
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean) => {
       return this(
@@ -125,10 +116,7 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
    * It invokes an `Event.stopImmediatePropagation()` method prior to calling the registered listeners.
    */
   get last(): OnDomEvent<E> {
-
-    const factory: OnDomEventFactory = this.constructor as any;
-
-    return factory.by((
+    return OnDomEvent.by((
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean) => {
       return this(
@@ -146,10 +134,7 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
    * This corresponds to specifying `{ passive: true }` as a second argument to `EventTarget.addEventListener()`.
    */
   get passive(): OnDomEvent<E> {
-
-    const factory: OnDomEventFactory = this.constructor as any;
-
-    return factory.by((
+    return OnDomEvent.by((
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean) => {
       if (opts == null) {
@@ -180,16 +165,5 @@ export interface OnDomEvent<E extends Event> {
    */
   // tslint:disable-next-line:callable-types
   (this: void, listener: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): EventInterest;
-
-}
-
-interface OnDomEventFactory {
-
-  by<E extends Event>(
-      register: (
-          this: void,
-          listener: DomEventListener<E>,
-          opts?: AddEventListenerOptions | boolean) => EventInterest):
-      OnDomEvent<E>;
 
 }
