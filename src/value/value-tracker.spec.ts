@@ -1,6 +1,6 @@
 import { ValueTracker } from './value-tracker';
 import { EventInterest } from '../event-interest';
-import { trackValue } from './tracked-value';
+import { trackValue } from './track-value';
 import { OnEvent__symbol } from '../event-sender';
 import { AfterEvent__symbol } from '../event-keeper';
 import { EventEmitter } from '../event-emitter';
