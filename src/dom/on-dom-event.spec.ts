@@ -1,5 +1,5 @@
 import { EventInterest } from '../event-interest';
-import { OnDomEvent } from './on-dom-event';
+import { OnDomEvent, onDomEventBy } from './on-dom-event';
 import Mock = jest.Mock;
 
 describe('OnDomEvent', () => {
@@ -20,7 +20,7 @@ describe('OnDomEvent', () => {
       registeredListener = c;
       return mockInterest;
     });
-    onDomEvent = OnDomEvent.by<Event>((c, opts) => mockRegister(c, opts));
+    onDomEvent = onDomEventBy<Event>((c, opts) => mockRegister(c, opts));
     mockListener = jest.fn();
   });
 
