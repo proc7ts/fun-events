@@ -17,50 +17,13 @@ export type DomEventListener<E extends Event> = EventReceiver<[E]>;
 export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
 
   /**
-   * Converts a plain event receiver registration function to `OnEvent` registrar.
-   *
-   * This is a signature to work around type safety restrictions.
-   */
-  static by<E extends any[]>(register: (this: void, receiver: EventReceiver<E>) => EventInterest): OnEvent<E>;
-
-  /**
-   * Converts a plain DOM event listener registration function to `OnDomEvent` registrar.
-   *
-   * @param register A DOM event listener registration function returning an event interest.
-   *
-   * @returns An `OnDomEvent` registrar instance registering event listeners with the given `register` function.
-   */
-  static by<E extends Event>(
-      register: (
-          this: void,
-          listener: DomEventListener<E>,
-          opts?: AddEventListenerOptions | boolean) => EventInterest):
-      OnDomEvent<E>;
-
-  static by<E extends Event>(
-      register: (
-          this: void,
-          listener: DomEventListener<E>,
-          opts?: AddEventListenerOptions | boolean) => EventInterest):
-      OnDomEvent<E> {
-
-    const onDomEvent = ((
-        listener: (this: void, event: E) => void,
-        opts?: AddEventListenerOptions | boolean) => register(listener, opts)) as OnDomEvent<E>;
-
-    Object.setPrototypeOf(onDomEvent, OnDomEvent.prototype);
-
-    return onDomEvent;
-  }
-
-  /**
    * A DOM event listener registrar derived from this one that enables event capturing by default.
    *
    * This corresponds to specifying `true` or `{ capture: true }` as a second argument to
    * `EventTarget.addEventListener()`.
    */
   get capture(): OnDomEvent<E> {
-    return OnDomEvent.by((
+    return onDomEventBy((
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean) => {
       if (opts == null) {
@@ -79,7 +42,7 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
    * It invokes an `Event.preventDefault()` method prior to calling the registered listeners.
    */
   get instead(): OnDomEvent<E> {
-    return OnDomEvent.by((
+    return onDomEventBy((
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean) => {
       return this(
@@ -98,7 +61,7 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
    * It invokes an `Event.stopPropagation()` method prior to calling the registered listeners.
    */
   get just(): OnDomEvent<E> {
-    return OnDomEvent.by((
+    return onDomEventBy((
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean) => {
       return this(
@@ -116,7 +79,7 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
    * It invokes an `Event.stopImmediatePropagation()` method prior to calling the registered listeners.
    */
   get last(): OnDomEvent<E> {
-    return OnDomEvent.by((
+    return onDomEventBy((
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean) => {
       return this(
@@ -134,7 +97,7 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
    * This corresponds to specifying `{ passive: true }` as a second argument to `EventTarget.addEventListener()`.
    */
   get passive(): OnDomEvent<E> {
-    return OnDomEvent.by((
+    return onDomEventBy((
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean) => {
       if (opts == null) {
@@ -166,4 +129,27 @@ export interface OnDomEvent<E extends Event> {
   // tslint:disable-next-line:callable-types
   (this: void, listener: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): EventInterest;
 
+}
+
+/**
+ * Converts a plain DOM event listener registration function to `OnDomEvent` registrar.
+ *
+ * @param register A DOM event listener registration function returning an event interest.
+ *
+ * @returns An `OnDomEvent` registrar instance registering event listeners with the given `register` function.
+ */
+export function onDomEventBy<E extends Event>(
+    register: (
+        this: void,
+        listener: DomEventListener<E>,
+        opts?: AddEventListenerOptions | boolean) => EventInterest):
+    OnDomEvent<E> {
+
+  const onDomEvent = ((
+      listener: (this: void, event: E) => void,
+      opts?: AddEventListenerOptions | boolean) => register(listener, opts)) as OnDomEvent<E>;
+
+  Object.setPrototypeOf(onDomEvent, OnDomEvent.prototype);
+
+  return onDomEvent;
 }

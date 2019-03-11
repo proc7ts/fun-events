@@ -1,4 +1,4 @@
-import { OnEvent } from './on-event';
+import { OnEvent, onEventBy } from './on-event';
 import { EventSender, OnEvent__symbol } from './event-sender';
 import { EventNotifier } from './event-notifier';
 
@@ -21,7 +21,7 @@ export class EventEmitter<E extends any[]> extends EventNotifier<E> implements E
    * @returns An event interest. The events will be sent to `receiver` until the `off()` method of returned event
    * interest is called.
    */
-  readonly on = OnEvent.by<E>(receiver => super.on(receiver));
+  readonly on = onEventBy<E>(receiver => super.on(receiver));
 
   get [OnEvent__symbol](): OnEvent<E> {
     return this.on;

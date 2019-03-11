@@ -1,4 +1,4 @@
-import { OnEvent, onNever } from './on-event';
+import { OnEvent, onEventBy, onEventFrom, onNever } from './on-event';
 import { EventInterest, noEventInterest } from './event-interest';
 import { OnEvent__symbol } from './event-sender';
 import { passIf } from 'call-thru';
@@ -16,7 +16,7 @@ describe('OnEvent', () => {
 
     beforeEach(() => {
       sender = new EventEmitter();
-      onEvent = OnEvent.from({
+      onEvent = onEventFrom({
         [OnEvent__symbol](receiver) {
           return sender.on(receiver);
         }
@@ -45,14 +45,14 @@ describe('OnEvent', () => {
 
       const sender = new EventEmitter<[string]>();
 
-      expect(OnEvent.from(sender)).toBe(sender[OnEvent__symbol]);
+      expect(onEventFrom(sender)).toBe(sender[OnEvent__symbol]);
     });
   });
 
   describe('[OnEvent__symbol]', () => {
     it('refers to itself', () => {
 
-      const onEvent = OnEvent.by(() => noEventInterest());
+      const onEvent = onEventBy(() => noEventInterest());
 
       expect(onEvent[OnEvent__symbol]).toBe(onEvent);
     });
@@ -76,7 +76,7 @@ describe('OnEvent', () => {
         registeredReceiver = c;
         return interestSpy;
       });
-      onEvent = OnEvent.by(mockRegister);
+      onEvent = onEventBy(mockRegister);
       mockReceiver = jest.fn();
     });
 
@@ -127,7 +127,7 @@ describe('OnEvent', () => {
         registeredReceiver = c;
         return mockInterest;
       });
-      onEvent = OnEvent.by(mockRegister);
+      onEvent = onEventBy(mockRegister);
       mockReceiver = jest.fn();
     });
 

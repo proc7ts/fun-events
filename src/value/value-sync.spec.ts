@@ -1,4 +1,4 @@
-import { trackValue } from './tracked-value';
+import { trackValue } from './track-value';
 import { ValueSync } from './value-sync';
 import { ValueTracker } from './value-tracker';
 import { EventInterest } from '../event-interest';

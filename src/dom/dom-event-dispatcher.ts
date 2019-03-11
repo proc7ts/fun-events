@@ -1,4 +1,4 @@
-import { OnDomEvent } from './on-dom-event';
+import { OnDomEvent, onDomEventBy } from './on-dom-event';
 import { eventInterest } from '../event-interest';
 
 /**
@@ -30,7 +30,7 @@ export class DomEventDispatcher {
    * `EventTarget.removeEventListener()` when its `off()` method is called.
    */
   on<E extends Event>(type: string): OnDomEvent<E> {
-    return OnDomEvent.by<E>((listener, opts) => {
+    return onDomEventBy<E>((listener, opts) => {
 
       const _listener: EventListener = event => listener(event as E); // Create unique listener instance
 
