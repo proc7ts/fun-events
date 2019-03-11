@@ -13,45 +13,11 @@ import Args = NextCall.Callee.Args;
  * An `OnEvent` function also has a set of handy methods. More could be added later. It also can be used as
  * `EventSender`.
  *
- * To convert a plain event receiver registration function to `OnEvent` an `OnEvent.by()` function can be used.
+ * To convert a plain event receiver registration function to `OnEvent` an `onEventBy()` function can be used.
  *
  * @param <E> An event type. This is a list of event receiver parameter types.
  */
 export abstract class OnEvent<E extends any[]> extends Function implements EventSender<E> {
-
-  /**
-   * Converts a plain event receiver registration function to `OnEvent` registrar.
-   *
-   * @param register An event receiver registration function returning an event interest.
-   *
-   * @returns An `OnEvent` registrar instance registering event receivers with the given `register` function.
-   */
-  static by<E extends any[]>(register: (this: void, receiver: EventReceiver<E>) => EventInterest): OnEvent<E> {
-
-    const onEvent = ((receiver: EventReceiver<E>) => register(receiver)) as OnEvent<E>;
-
-    Object.setPrototypeOf(onEvent, OnEvent.prototype);
-
-    return onEvent;
-  }
-
-  /**
-   * Builds an `OnEvent` registrar of receivers of events sent by the given `sender`.
-   *
-   * @param sender An event sender.
-   *
-   * @returns An `OnEvent` registrar instance.
-   */
-  static from<E extends any[]>(sender: EventSender<E>): OnEvent<E> {
-
-    const onEvent = sender[OnEvent__symbol];
-
-    if (onEvent instanceof OnEvent) {
-      return onEvent;
-    }
-
-    return OnEvent.by(onEvent.bind(sender));
-  }
 
   get [OnEvent__symbol](): this {
     return this;
@@ -332,7 +298,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
 
     let shared: [EventNotifier<any[]>, EventInterest] | undefined;
 
-    return OnEvent.by((receiver: EventReceiver<any[]>) => {
+    return onEventBy((receiver: EventReceiver<any[]>) => {
 
       const emitter = shared || (shared = thruNotifier(this, fns));
       const interest = shared[0].on(receiver);
@@ -349,21 +315,6 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
 
 }
 
-/**
- * An `OnEvent` registrar of receivers that would never receive any events.
- */
-export const onNever: OnEvent<any> = /*#__PURE__*/ OnEvent.by(() => noEventInterest());
-
-function thruNotifier(receiver: OnEvent<any[]>, fns: any[]): [EventNotifier<any[]>, EventInterest] {
-
-  const shared = new EventNotifier<any[]>();
-  const thru = callThru as any;
-  const transform = thru(...fns, (...event: any[]) => shared.send(...event));
-  const interest = receiver(transform);
-
-  return [shared, interest];
-}
-
 export interface OnEvent<E extends any[]> {
 
   /**
@@ -376,4 +327,54 @@ export interface OnEvent<E extends any[]> {
    */
   (this: void, receiver: EventReceiver<E>): EventInterest; // tslint:disable-line:callable-types
 
+}
+
+/**
+ * Converts a plain event receiver registration function to `OnEvent` registrar.
+ *
+ * @param register An event receiver registration function returning an event interest.
+ *
+ * @returns An `OnEvent` registrar instance registering event receivers with the given `register` function.
+ */
+export function onEventBy<E extends any[]>(
+    register: (this: void, receiver: EventReceiver<E>) => EventInterest): OnEvent<E> {
+
+  const onEvent = ((receiver: EventReceiver<E>) => register(receiver)) as OnEvent<E>;
+
+  Object.setPrototypeOf(onEvent, OnEvent.prototype);
+
+  return onEvent;
+}
+
+/**
+ * Builds an `OnEvent` registrar of receivers of events sent by the given `sender`.
+ *
+ * @param sender An event sender.
+ *
+ * @returns An `OnEvent` registrar instance.
+ */
+export function onEventFrom<E extends any[]>(sender: EventSender<E>): OnEvent<E> {
+
+  const onEvent = sender[OnEvent__symbol];
+
+  if (onEvent instanceof OnEvent) {
+    return onEvent;
+  }
+
+  return onEventBy(onEvent.bind(sender));
+}
+
+/**
+ * An `OnEvent` registrar of receivers that would never receive any events.
+ */
+export const onNever: OnEvent<any> = /*#__PURE__*/ onEventBy(() => noEventInterest());
+
+function thruNotifier(receiver: OnEvent<any[]>, fns: any[]): [EventNotifier<any[]>, EventInterest] {
+
+  const shared = new EventNotifier<any[]>();
+  const thru = callThru as any;
+  const transform = thru(...fns, (...event: any[]) => shared.send(...event));
+  const interest = receiver(transform);
+
+  return [shared, interest];
 }

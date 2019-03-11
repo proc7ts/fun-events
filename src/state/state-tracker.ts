@@ -1,7 +1,7 @@
 import { noop } from 'call-thru';
 import { EventEmitter } from '../event-emitter';
-import { OnEvent } from '../on-event';
-import { StateUpdateReceiver, StatePath, statePath } from './state-events';
+import { OnEvent, onEventBy } from '../on-event';
+import { StatePath, statePath, StateUpdateReceiver } from './state-events';
 import { eventInterest, EventInterest } from '../event-interest';
 import { EventSender, OnEvent__symbol } from '../event-sender';
 
@@ -106,7 +106,7 @@ class SubStateTracker implements StateTracker {
   });
 
   readonly onUpdate: OnStateUpdate =
-      OnEvent.by<[StatePath, any, any]>(receiver => this._trackers.on(this._path, receiver));
+      onEventBy<[StatePath, any, any]>(receiver => this._trackers.on(this._path, receiver));
 
   constructor(private readonly _trackers: Trackers, private readonly _path: StatePath.Normalized) {
   }

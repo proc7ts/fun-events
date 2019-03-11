@@ -52,8 +52,7 @@ An event sender interface has only one method accepting an event receiver to reg
 receiver will start receiving the events while still interested.
 
 The event receiver registrar method is typically implements an `OnEvent` interface - a function augmented with handy
-methods. To convert a plain event receiver registration function to `OnEvent` an `OnEvent.by()` static method can be
-used.
+methods. To convert a plain event receiver registration function to `OnEvent` an `onEventBy()` function can be used.
 
 
 ### `OnEvent.once()`
