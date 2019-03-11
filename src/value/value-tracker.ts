@@ -2,7 +2,7 @@ import { noEventInterest } from '../event-interest';
 import { OnEvent } from '../on-event';
 import { EventSender, OnEvent__symbol } from '../event-sender';
 import { AfterEvent__symbol, EventKeeper } from '../event-keeper';
-import { AfterEvent } from '../after-event';
+import { AfterEvent, afterEventBy } from '../after-event';
 import { consumeNestedEvents } from '../nested-events';
 
 /**
@@ -26,7 +26,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
    * Registers current and updated values receiver.
    */
   readonly read: AfterEvent<[T]> =
-      AfterEvent.by<[T]>(receiver => this.on(value => receiver(value)), () => [this.it]);
+      afterEventBy<[T]>(receiver => this.on(value => receiver(value)), () => [this.it]);
 
   get [OnEvent__symbol](): OnEvent<[N, T]> {
     return this.on;

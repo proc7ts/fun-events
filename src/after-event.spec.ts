@@ -1,7 +1,7 @@
 import { trackValue, ValueTracker } from './value';
 import { EventReceiver } from './event-receiver';
 import { EventInterest, noEventInterest } from './event-interest';
-import { AfterEvent } from './after-event';
+import { AfterEvent, afterEventBy, afterEventFrom } from './after-event';
 import { EventEmitter } from './event-emitter';
 import { OnEvent__symbol } from './event-sender';
 import { AfterEvent__symbol } from './event-keeper';
@@ -20,7 +20,7 @@ describe('AfterEvent', () => {
         registeredReceiver = rcv;
         return mockInterest;
       });
-      const afterEvent = AfterEvent.by(mockRegister, ['initial']);
+      const afterEvent = afterEventBy(mockRegister, ['initial']);
       const mockReceiver: Mock<void, [string]> = jest.fn();
 
       expect(afterEvent(mockReceiver)).toBe(mockInterest);
@@ -41,7 +41,7 @@ describe('AfterEvent', () => {
 
     beforeEach(() => {
       keeper = trackValue('initial');
-      afterEvent = AfterEvent.from({
+      afterEvent = afterEventFrom({
         [AfterEvent__symbol](receiver) {
           return keeper.read(receiver);
         }
@@ -78,7 +78,7 @@ describe('AfterEvent', () => {
 
       const keeper = trackValue('initial');
 
-      expect(AfterEvent.from(keeper)).toBe(keeper[AfterEvent__symbol]);
+      expect(afterEventFrom(keeper)).toBe(keeper[AfterEvent__symbol]);
     });
   });
 
@@ -91,7 +91,7 @@ describe('AfterEvent', () => {
 
     beforeEach(() => {
       sender = new EventEmitter();
-      afterEvent = AfterEvent.from(sender, ['initial']);
+      afterEvent = afterEventFrom(sender, ['initial']);
       mockReceiver = jest.fn();
       interest = afterEvent(mockReceiver);
     });
@@ -126,7 +126,7 @@ describe('AfterEvent', () => {
 
     beforeEach(() => {
       sender = new EventEmitter();
-      afterEvent = AfterEvent.from(sender);
+      afterEvent = afterEventFrom(sender);
     });
 
     it('throws an exception upon receiver registration', () => {
@@ -140,7 +140,7 @@ describe('AfterEvent', () => {
   describe('[OnEvent__symbol]', () => {
     it('refers to itself', () => {
 
-      const afterEvent = AfterEvent.by(() => noEventInterest());
+      const afterEvent = afterEventBy(() => noEventInterest());
 
       expect(afterEvent[OnEvent__symbol]).toBe(afterEvent);
     });
@@ -149,7 +149,7 @@ describe('AfterEvent', () => {
   describe('[AfterEvent__symbol]', () => {
     it('refers to itself', () => {
 
-      const afterEvent = AfterEvent.by(() => noEventInterest());
+      const afterEvent = afterEventBy(() => noEventInterest());
 
       expect(afterEvent[AfterEvent__symbol]).toBe(afterEvent);
     });
