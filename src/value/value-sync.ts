@@ -1,9 +1,8 @@
 import { EventEmitter } from '../event-emitter';
 import { eventInterest, EventInterest } from '../event-interest';
 import { ValueTracker } from './value-tracker';
-import { OnEvent } from '../on-event';
+import { OnEvent, onEventFrom } from '../on-event';
 import { EventSender } from '../event-sender';
-import { consumeNestedEvents } from '../nested-events';
 
 /**
  * Synchronizes tracked values with each other.
@@ -131,7 +130,7 @@ export class ValueSync<T> extends ValueTracker<T> {
 
     const sender = senderOrTracker as EventSender<U>;
 
-    return consumeNestedEvents(sender, (...event) => {
+    return onEventFrom(sender).consume((...event) => {
 
       const tracker = extractTracker(...event);
 

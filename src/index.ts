@@ -6,7 +6,6 @@ export * from './event-sender';
 export * from './event-interest';
 export * from './event-keeper';
 export * from './event-notifier';
-export * from './nested-events';
 export * from './on-event';
 export * from './state';
 export * from './value';

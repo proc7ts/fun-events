@@ -1,9 +1,8 @@
 import { noEventInterest } from '../event-interest';
-import { OnEvent } from '../on-event';
+import { OnEvent, onEventFrom } from '../on-event';
 import { EventSender, OnEvent__symbol } from '../event-sender';
 import { AfterEvent__symbol, EventKeeper } from '../event-keeper';
 import { AfterEvent, afterEventBy } from '../after-event';
-import { consumeNestedEvents } from '../nested-events';
 
 /**
  * Value accessor and changes tracker.
@@ -93,7 +92,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
 
       const sender = senderOrKeeper as EventSender<U>;
 
-      this._by = consumeNestedEvents(sender, (...event: U) => {
+      this._by = onEventFrom(sender).consume((...event: U) => {
 
         const extracted = extract(...event);
 

@@ -53,6 +53,28 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
     return interest;
   }
 
+  /**
+   * Consumes events.
+   *
+   * @param consumer A function consuming events. This function may return an `EventInterest` instance when registers
+   * a nested event receiver. This interest will be lost on new event.
+   *
+   * @returns An event interest that will stop consuming events once lost.
+   */
+  consume(consumer: (...event: E) => EventInterest | undefined): EventInterest {
+
+    let consumerInterest = noEventInterest();
+    const senderInterest = this((...event: E) => {
+      consumerInterest.off();
+      consumerInterest = consumer(...event) || noEventInterest();
+    });
+
+    return eventInterest(reason => {
+      consumerInterest.off(reason);
+      senderInterest.off(reason);
+    }).needs(senderInterest);
+  }
+
   thru<R1,
       TE extends Args<R1>>(
       fn1: (this: void, ...args: E) => R1):
