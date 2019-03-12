@@ -54,19 +54,46 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   }
 
   /**
+   * Extracts event senders from incoming events.
+   *
+   * @param extract A function extracting event sender from incoming event. May return `undefined` when nothing
+   * extracted.
+   *
+   * @returns An `OnEvent` registrar of extracted events receivers. The events exhaust once the incoming events do.
+   */
+  dig<F extends any[]>(extract: (this: void, ...event: E) => EventSender<F> | undefined): OnEvent<F> {
+    return onEventBy((receiver: EventReceiver<F>) => {
+
+      let nestedInterest = noEventInterest();
+      const senderInterest = this((...event: E) => {
+        nestedInterest.off();
+
+        const extracted = extract(...event);
+
+        nestedInterest = extracted ? extracted[OnEvent__symbol](receiver) : noEventInterest();
+      });
+
+      return eventInterest(reason => {
+        nestedInterest.off(reason);
+        senderInterest.off(reason);
+      }).needs(senderInterest);
+    });
+  }
+
+  /**
    * Consumes events.
    *
-   * @param consumer A function consuming events. This function may return an `EventInterest` instance when registers
+   * @param consume A function consuming events. This function may return an `EventInterest` instance when registers
    * a nested event receiver. This interest will be lost on new event.
    *
    * @returns An event interest that will stop consuming events once lost.
    */
-  consume(consumer: (...event: E) => EventInterest | undefined): EventInterest {
+  consume(consume: (...event: E) => EventInterest | undefined): EventInterest {
 
     let consumerInterest = noEventInterest();
     const senderInterest = this((...event: E) => {
       consumerInterest.off();
-      consumerInterest = consumer(...event) || noEventInterest();
+      consumerInterest = consume(...event) || noEventInterest();
     });
 
     return eventInterest(reason => {
