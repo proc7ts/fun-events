@@ -1,5 +1,5 @@
-Functional event sender/receiver API
-======================================
+Functional Event Processor
+==========================
 
 [![NPM][npm-image]][npm-url]
 [![CircleCI][ci-image]][ci-url]

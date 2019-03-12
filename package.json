@@ -1,10 +1,13 @@
 {
   "name": "fun-events",
   "version": "4.0.0-dev",
-  "description": "Functional event sender/receiver API",
+  "description": "Functional event processor",
   "keywords": [
-    "event-sender",
+    "event",
+    "events",
     "event-receiver",
+    "event-sender",
+    "event-processor",
     "typescript"
   ],
   "homepage": "https://github.com/surol/fun-events",
