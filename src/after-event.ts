@@ -79,7 +79,7 @@ export function afterEventBy<E extends any[]>(
 }
 
 /**
- * Builds an `AfterEvent` registrar of receivers of events kept and sent by the given `sender`.
+ * Builds an `AfterEvent` registrar of receivers of events kept and sent by the given `keeper`.
  *
  * @param keeper A keeper of events.
  *

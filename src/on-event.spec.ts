@@ -5,6 +5,8 @@ import { passIf } from 'call-thru';
 import { EventEmitter } from './event-emitter';
 import { EventReceiver } from './event-receiver';
 import Mock = jest.Mock;
+import { trackValue } from './value/track-value';
+import { AfterEvent__symbol } from './event-keeper';
 
 describe('OnEvent', () => {
   describe('from event sender', () => {
@@ -46,6 +48,18 @@ describe('OnEvent', () => {
       const sender = new EventEmitter<[string]>();
 
       expect(onEventFrom(sender)).toBe(sender[OnEvent__symbol]);
+    });
+  });
+
+  describe('from event keeper', () => {
+    it('returns the keeper\'s registrar', () => {
+
+      const tracker = trackValue(1);
+      const keeper = {
+        [AfterEvent__symbol]: tracker.read,
+      };
+
+      expect(onEventFrom(keeper)).toBe(keeper[AfterEvent__symbol]);
     });
   });
 

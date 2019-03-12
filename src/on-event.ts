@@ -4,6 +4,7 @@ import { eventInterest, EventInterest, noEventInterest } from './event-interest'
 import { EventSender, OnEvent__symbol } from './event-sender';
 import { EventNotifier } from './event-notifier';
 import Args = NextCall.Callee.Args;
+import { AfterEvent__symbol, EventKeeper } from './event-keeper';
 
 /**
  * An event receiver registration function interface.
@@ -56,12 +57,12 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   /**
    * Extracts event senders from incoming events.
    *
-   * @param extract A function extracting event sender from incoming event. May return `undefined` when nothing
-   * extracted.
+   * @param extract A function extracting event sender or event keeper from incoming event. May return `undefined` when
+   * nothing extracted.
    *
    * @returns An `OnEvent` registrar of extracted events receivers. The events exhaust once the incoming events do.
    */
-  dig<F extends any[]>(extract: (this: void, ...event: E) => EventSender<F> | undefined): OnEvent<F> {
+  dig<F extends any[]>(extract: (this: void, ...event: E) => EventSender<F> | EventKeeper<F> | undefined): OnEvent<F> {
     return onEventBy((receiver: EventReceiver<F>) => {
 
       let nestedInterest = noEventInterest();
@@ -70,7 +71,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
 
         const extracted = extract(...event);
 
-        nestedInterest = extracted ? extracted[OnEvent__symbol](receiver) : noEventInterest();
+        nestedInterest = extracted ? onEventFrom(extracted)(receiver) : noEventInterest();
       });
 
       return eventInterest(reason => {
@@ -396,21 +397,25 @@ export function onEventBy<E extends any[]>(
 }
 
 /**
- * Builds an `OnEvent` registrar of receivers of events sent by the given `sender`.
+ * Builds an `OnEvent` registrar of receivers of events sent by the given sender or keeper.
  *
- * @param sender An event sender.
+ * @param senderOrKeeper An event sender or keeper.
  *
  * @returns An `OnEvent` registrar instance.
  */
-export function onEventFrom<E extends any[]>(sender: EventSender<E>): OnEvent<E> {
+export function onEventFrom<E extends any[]>(senderOrKeeper: EventSender<E> | EventKeeper<E>): OnEvent<E> {
 
-  const onEvent = sender[OnEvent__symbol];
+  const onEvent = isSender(senderOrKeeper) ? senderOrKeeper[OnEvent__symbol] : senderOrKeeper[AfterEvent__symbol];
 
   if (onEvent instanceof OnEvent) {
     return onEvent;
   }
 
-  return onEventBy(onEvent.bind(sender));
+  return onEventBy(onEvent.bind(senderOrKeeper));
+}
+
+function isSender<E extends any[]>(senderOrKeeper: EventSender<E> | EventKeeper<E>): senderOrKeeper is EventSender<E> {
+  return OnEvent__symbol in senderOrKeeper;
 }
 
 /**
