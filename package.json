@@ -3,6 +3,7 @@
   "version": "4.0.0-dev",
   "description": "Functional event processor",
   "keywords": [
+    "dom-events",
     "event",
     "events",
     "event-receiver",
