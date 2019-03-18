@@ -40,7 +40,7 @@ export abstract class AfterEvent<E extends any[]> extends OnEvent<E> implements 
  * @returns An `AfterEvent` registrar instance registering event receivers with the given `register` function.
  */
 export function afterEventBy<E extends any[]>(
-    register: (this: void, register: EventReceiver<E>) => EventInterest,
+    register: (this: void, receiver: EventReceiver<E>) => EventInterest,
     initial: ((this: void) => E) | E = noEvent): AfterEvent<E> {
 
   let _last: E | undefined;
