@@ -26,22 +26,22 @@
   "esm5": "dist/fun-events.esm5.js",
   "typings": "index.d.ts",
   "dependencies": {
+    "call-thru": "^2.2.1",
     "tslib": "^1.9.0"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.9",
-    "call-thru": "^2.2.0",
+    "@types/jest": "^24.0.11",
     "codecov": "^3.1.0",
     "fs-extra": "^7.0.1",
-    "jest": "^24.1.0",
+    "jest": "^24.5.0",
     "jest-junit": "^6.3.0",
-    "rollup": "^1.5.0",
+    "rollup": "^1.6.0",
     "rollup-plugin-commonjs": "^9.2.1",
     "rollup-plugin-node-resolve": "^4.0.1",
     "rollup-plugin-sourcemaps": "^0.4.2",
-    "rollup-plugin-typescript2": "^0.19.3",
+    "rollup-plugin-typescript2": "^0.20.1",
     "ts-jest": "^24.0.0",
-    "tslint": "^5.13.1",
+    "tslint": "^5.14.0",
     "typescript": "^3.3.3333"
   },
   "scripts": {
