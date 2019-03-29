@@ -346,20 +346,24 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
 
   thru(...fns: any[]): OnEvent<any[]> {
 
-    let shared: [EventNotifier<any[]>, EventInterest] | undefined;
+    let shared: ReturnType<typeof thruNotifier> | undefined;
 
     return onEventBy((receiver: EventReceiver<any[]>) => {
 
-      const emitter = shared || (shared = thruNotifier(this, fns));
-      const interest = shared[0].on(receiver);
+      const [emitter, emitterInterest, firstEvent] = shared || (shared = thruNotifier(this, fns));
+      const interest = emitter.on(receiver);
+
+      if (firstEvent) {
+        receiver(...firstEvent);
+      }
 
       return eventInterest(reason => {
         interest.off(reason);
-        if (!emitter[0].size) {
-          emitter[1].off(reason);
+        if (!emitter.size) {
+          emitterInterest.off(reason);
           shared = undefined;
         }
-      }).needs(interest).needs(emitter[1]);
+      }).needs(interest).needs(emitterInterest);
     });
   }
 
@@ -423,12 +427,22 @@ function isSender<E extends any[]>(senderOrKeeper: EventSender<E> | EventKeeper<
  */
 export const onNever: OnEvent<any> = /*#__PURE__*/ onEventBy(() => noEventInterest());
 
-function thruNotifier(receiver: OnEvent<any[]>, fns: any[]): [EventNotifier<any[]>, EventInterest] {
+function thruNotifier(
+    onEvent: OnEvent<any[]>,
+    fns: any[]):
+    [EventNotifier<any[]>, EventInterest, any[]?] {
 
   const shared = new EventNotifier<any[]>();
   const thru = callThru as any;
-  const transform = thru(...fns, (...event: any[]) => shared.send(...event));
-  const interest = receiver(transform);
 
-  return [shared, interest];
+  let received: any[] | undefined;
+  const transform = thru(...fns, (...event: any[]) => {
+    received = event;
+    shared.send(...event);
+  });
+
+  const interest = onEvent(transform);
+
+  // noinspection JSUnusedAssignment
+  return [shared, interest, received];
 }
