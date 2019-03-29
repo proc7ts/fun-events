@@ -448,6 +448,5 @@ function thruNotifier(
 
   received = undefined; // Stop recording events.
 
-  // noinspection JSUnusedAssignment
   return [shared, interest, firstEvents];
 }
