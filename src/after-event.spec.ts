@@ -153,6 +153,31 @@ describe('AfterEvent', () => {
     });
   });
 
+  describe('kept', () => {
+    it('returns initial event', () => {
+      expect(afterEventOf('abc').kept).toEqual(['abc']);
+    });
+    it('returns initial event without receivers', () => {
+
+      const emitter = new EventEmitter<[string]>();
+      const afterEvent = afterEventFrom(emitter, ['initial']);
+
+      emitter.send('updated');
+
+      expect(afterEvent.kept).toEqual(['initial']);
+    });
+    it('returns the last event sent', () => {
+
+      const emitter = new EventEmitter<[string]>();
+      const afterEvent = afterEventFrom(emitter, ['initial']);
+
+      afterEvent(noop);
+      emitter.send('updated');
+
+      expect(afterEvent.kept).toEqual(['updated']);
+    });
+  });
+
   describe('thru', () => {
 
     let initial: [string, string];

@@ -4,6 +4,7 @@ import { EventSender, OnEvent__symbol } from './event-sender';
 import { EventReceiver } from './event-receiver';
 import { EventInterest } from './event-interest';
 import { EventEmitter } from './event-emitter';
+import { noop } from 'call-thru';
 
 /**
  * A kept and upcoming events receiver registration function interface.
@@ -19,6 +20,8 @@ export abstract class AfterEvent<E extends any[]> extends OnEvent<E> implements 
 
   /**
    * The kept event tuple.
+   *
+   * This is the last event sent. If no events sent yet, then tries to receive one first.
    */
   abstract readonly kept: E;
 
@@ -53,7 +56,12 @@ export function afterEventBy<E extends any[]>(
   class After extends AfterEvent<E> {
 
     get kept() {
-      return last();
+      if (_last) {
+        // The last event sent.
+        return _last;
+      }
+      this.once(noop); // Try to receive an event first.
+      return last(); // This should return the last event sent, or throw an exception.
     }
 
   }
