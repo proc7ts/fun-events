@@ -142,11 +142,16 @@ export class ValueSync<T> extends ValueTracker<T> {
       const interest1 = tracker1.read(value => tracker2.it = value);
       const interest2 = tracker2.on(value => tracker1.it = value);
 
-      return eventInterest(() => {
-        interest2.off();
-        interest1.off();
-      });
+      return eventInterest(reason => {
+        interest2.off(reason);
+        interest1.off(reason);
+      }).needs(interest1).needs(interest2);
     }
+  }
+
+  clear(reason?: any): this {
+    this._on.clear(reason);
+    return this;
   }
 
 }

@@ -103,7 +103,17 @@ describe('ValueTracker', () => {
       expect(v2.it).toBe(v3.it);
     });
     it('is unbound with `off()`', () => {
-      v2.off();
+      expect(v2.off()).toBe(v2);
+
+      const listener = jest.fn();
+
+      v2.on(listener);
+      v1.it = 'new';
+      expect(v2.it).toBe('old');
+      expect(listener).not.toBeCalled();
+    });
+    it('is unbound when events exhausted', () => {
+      v1.clear();
 
       const listener = jest.fn();
 

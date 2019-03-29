@@ -71,4 +71,19 @@ describe('ValueSync', () => {
     sender.send(v4);
     expect(sync.it).toBe(v4.it);
   });
+
+  describe('clear', () => {
+    it('stops synchronization', () => {
+
+      const mockWhenDone = jest.fn();
+      const reason = 'some reason';
+
+      ei1.whenDone(mockWhenDone);
+      sync.clear(reason);
+      expect(mockWhenDone).toHaveBeenCalledWith(reason);
+
+      v2.it = 999;
+      expect(sync.it).toBe(0);
+    });
+  });
 });

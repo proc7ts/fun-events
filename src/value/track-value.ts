@@ -27,6 +27,11 @@ class TrackedValue<T> extends ValueTracker<T> {
     }
   }
 
+  clear(reason?: any): this {
+    this._on.clear(reason);
+    return this;
+  }
+
 }
 
 /**

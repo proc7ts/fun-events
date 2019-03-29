@@ -24,8 +24,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
   /**
    * Registers current and updated values receiver.
    */
-  readonly read: AfterEvent<[T]> =
-      afterEventBy<[T]>(receiver => this.on(value => receiver(value)), () => [this.it]);
+  readonly read: AfterEvent<[T]> = afterEventBy<[T]>(receiver => this.on(value => receiver(value)), () => [this.it]);
 
   get [OnEvent__symbol](): OnEvent<[N, T]> {
     return this.on;
@@ -99,6 +98,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
         return extracted && extracted[AfterEvent__symbol](value => this.it = value);
       });
     }
+    this._by.whenDone(() => this._by = noEventInterest());
 
     return this;
   }
@@ -107,10 +107,26 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
    * Unbinds the tracked value from the value sender or keeper this tracker is bound to with `by()` method.
    *
    * If the tracker is not bound then does nothing.
+   *
+   * @param reason Arbitrary reason of unbinding the value.
+   *
+   * @returns `this` instance.
    */
-  off() {
-    this._by.off();
-    this._by = noEventInterest();
+  off(reason?: any): this {
+    this._by.off(reason);
+    return this;
   }
+
+  /**
+   * Removes all registered event receivers.
+   *
+   * After this method call they won't receive events. Informs all corresponding event interests on that by calling
+   * the callbacks registered with `whenDone()`.
+
+   * @param reason A reason to stop sending events to receivers.
+   *
+   * @returns `this` instance.
+   */
+  abstract clear(reason?: any): this;
 
 }
