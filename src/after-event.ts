@@ -3,6 +3,7 @@ import { AfterEvent__symbol, EventKeeper } from './event-keeper';
 import { EventSender, OnEvent__symbol } from './event-sender';
 import { EventReceiver } from './event-receiver';
 import { EventInterest } from './event-interest';
+import { EventEmitter } from './event-emitter';
 
 /**
  * A kept and upcoming events receiver registration function interface.
@@ -119,6 +120,15 @@ export function afterEventFrom<E extends any[], R>(
   }
 
   return afterEventBy(afterEvent.bind(senderOrKeeper));
+}
+
+/**
+ * Builds an `AfterEvent` registrar of receivers of the `event`.
+ *
+ * @param event An event that will be sent to all receivers upon registration.
+ */
+export function afterEventOf<E extends any[]>(...event: E): AfterEvent<E> {
+  return afterEventFrom(new EventEmitter<E>(), event);
 }
 
 function isKeeper<E extends any[]>(senderOrKeeper: EventSender<E> | EventKeeper<E>): senderOrKeeper is EventKeeper<E> {

@@ -1,7 +1,7 @@
 import { trackValue, ValueTracker } from './value';
 import { EventReceiver } from './event-receiver';
 import { EventInterest, noEventInterest } from './event-interest';
-import { AfterEvent, afterEventBy, afterEventFrom } from './after-event';
+import { AfterEvent, afterEventBy, afterEventFrom, afterEventOf } from './after-event';
 import { EventEmitter } from './event-emitter';
 import { OnEvent__symbol } from './event-sender';
 import { AfterEvent__symbol } from './event-keeper';
@@ -134,6 +134,22 @@ describe('AfterEvent', () => {
     });
     it('throws an exception when requesting the last event', () => {
       expect(() => afterEvent.kept).toThrow('No events to send');
+    });
+  });
+
+  describe('of event', () => {
+    it('always sends the same event', () => {
+
+      const event = ['foo', 'bar'];
+      const mockReceiver1 = jest.fn();
+      const mockReceiver2 = jest.fn();
+      const afterEvent = afterEventOf(...event);
+
+      afterEvent(mockReceiver1);
+      afterEvent(mockReceiver2);
+
+      expect(mockReceiver1).toHaveBeenCalledWith(...event);
+      expect(mockReceiver2).toHaveBeenCalledWith(...event);
     });
   });
 
