@@ -350,12 +350,11 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
 
     return onEventBy((receiver: EventReceiver<any[]>) => {
 
-      const [emitter, emitterInterest, firstEvent] = shared || (shared = thruNotifier(this, fns));
+      const [emitter, emitterInterest, firstEvents] = shared || (shared = thruNotifier(this, fns));
       const interest = emitter.on(receiver);
 
-      if (firstEvent) {
-        receiver(...firstEvent);
-      }
+      // Send events received during registration.
+      firstEvents.forEach(event => receiver(...event));
 
       return eventInterest(reason => {
         interest.off(reason);
@@ -430,19 +429,25 @@ export const onNever: OnEvent<any> = /*#__PURE__*/ onEventBy(() => noEventIntere
 function thruNotifier(
     onEvent: OnEvent<any[]>,
     fns: any[]):
-    [EventNotifier<any[]>, EventInterest, any[]?] {
+    [EventNotifier<any[]>, EventInterest, any[][]] {
 
   const shared = new EventNotifier<any[]>();
   const thru = callThru as any;
 
-  let received: any[] | undefined;
+  let received: any[][]  | undefined = [];
   const transform = thru(...fns, (...event: any[]) => {
-    received = event;
+    if (received) {
+      // Record events received during registration.
+      received.push(event);
+    }
     shared.send(...event);
   });
 
   const interest = onEvent(transform);
+  const firstEvents = received;
+
+  received = undefined; // Stop recording events.
 
   // noinspection JSUnusedAssignment
-  return [shared, interest, received];
+  return [shared, interest, firstEvents];
 }
