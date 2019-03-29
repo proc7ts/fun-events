@@ -6,6 +6,8 @@ import { EventNotifier } from './event-notifier';
 import Args = NextCall.Callee.Args;
 import { AfterEvent__symbol, EventKeeper } from './event-keeper';
 
+const NO_EVENTS: any[][] = [];
+
 /**
  * An event receiver registration function interface.
  *
@@ -347,20 +349,32 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   thru(...fns: any[]): OnEvent<any[]> {
 
     let shared: ReturnType<typeof thruNotifier> | undefined;
+    let firstEvents: any[][] = NO_EVENTS;
 
     return onEventBy((receiver: EventReceiver<any[]>) => {
+      if (!shared) {
+        shared = thruNotifier(this, fns);
+        firstEvents = shared[2];
+      }
 
-      const [emitter, emitterInterest, firstEvents] = shared || (shared = thruNotifier(this, fns));
-      const interest = emitter.on(receiver);
+      const [emitter, emitterInterest] = shared;
 
-      // Send events received during registration.
+      // Send events received during registration until new events received
       firstEvents.forEach(event => receiver(...event));
+
+      const interest = emitter.on((...event) => {
+        // Events received after initial ones
+        // Stop sending the initial events
+        firstEvents = NO_EVENTS;
+        receiver(...event);
+      });
 
       return eventInterest(reason => {
         interest.off(reason);
         if (!emitter.size) {
           emitterInterest.off(reason);
           shared = undefined;
+          firstEvents = [];
         }
       }).needs(interest).needs(emitterInterest);
     });
@@ -434,7 +448,7 @@ function thruNotifier(
   const shared = new EventNotifier<any[]>();
   const thru = callThru as any;
 
-  let received: any[][]  | undefined = [];
+  let received: any[][] | undefined = [];
   const transform = thru(...fns, (...event: any[]) => {
     if (received) {
       // Record events received during registration.

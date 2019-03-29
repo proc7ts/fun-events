@@ -49,7 +49,7 @@ export abstract class EventInterest {
    *
    * Once the events received with the `other` event interest are exhausted, this event interest would be lost.
    *
-   * @param other An event interes this one depends on.
+   * @param other An event interest this one depends on.
    *
    * @return `this` instance.
    */

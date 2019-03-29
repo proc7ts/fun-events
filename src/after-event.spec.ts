@@ -230,13 +230,6 @@ describe('AfterEvent', () => {
       expect(mockReceiver).toHaveBeenCalledWith('a, bb');
 
       mockReceiver.mockClear();
-
-      const mockReceiver2 = jest.fn();
-
-      transforming(mockReceiver2);
-      registeredReceiver('b', 'a');
-      expect(mockReceiver2).toHaveBeenCalledWith('init1, init2');
-      expect(mockReceiver2).toHaveBeenCalledTimes(1);
       expect(mockReceiver).not.toHaveBeenCalled();
     });
     it('exhausts when original sender exhausts', () => {
