@@ -166,7 +166,7 @@ describe('AfterEvent', () => {
     let mockReceiver: Mock<void, [string]>;
 
     beforeEach(() => {
-      initial = ['init1', 'init2']
+      initial = ['init1', 'init2'];
       mockInterest = {
         off: jest.fn(),
         whenDone: jest.fn(),
