@@ -1,5 +1,5 @@
 import { OnEvent } from './on-event';
-import { AfterEvent__symbol, EventKeeper } from './event-keeper';
+import { AfterEvent__symbol, EventKeeper, isEventKeeper } from './event-keeper';
 import { EventSender, OnEvent__symbol } from './event-sender';
 import { EventReceiver } from './event-receiver';
 import { EventInterest } from './event-interest';
@@ -117,7 +117,7 @@ export function afterEventFrom<E extends any[], R>(
     senderOrKeeper: EventSender<E> | EventKeeper<E>,
     initial?: ((this: void) => E) | E):
     AfterEvent<E> {
-  if (!isKeeper(senderOrKeeper)) {
+  if (!isEventKeeper(senderOrKeeper)) {
     return afterEventBy(senderOrKeeper[OnEvent__symbol].bind(senderOrKeeper), initial);
   }
 
@@ -137,10 +137,6 @@ export function afterEventFrom<E extends any[], R>(
  */
 export function afterEventOf<E extends any[]>(...event: E): AfterEvent<E> {
   return afterEventFrom(new EventEmitter<E>(), event);
-}
-
-function isKeeper<E extends any[]>(senderOrKeeper: EventSender<E> | EventKeeper<E>): senderOrKeeper is EventKeeper<E> {
-  return AfterEvent__symbol in senderOrKeeper;
 }
 
 function noEvent(): never {

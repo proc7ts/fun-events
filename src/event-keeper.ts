@@ -27,3 +27,15 @@ export interface EventKeeper<E extends any[]> {
   [AfterEvent__symbol](receiver: EventReceiver<E>): EventInterest;
 
 }
+
+/**
+ * Checks whether the given object implements an `EventKeeper` interface.
+ *
+ * @param <E> An event type. This is a list of event receiver parameter types.
+ * @param value An object to check.
+ *
+ * @returns `true` if `value` contains `[AfterEvent__symbol]` property, or `false` otherwise.
+ */
+export function isEventKeeper<E extends any[]>(value: object | (() => any)): value is EventKeeper<E> {
+  return AfterEvent__symbol in value;
+}

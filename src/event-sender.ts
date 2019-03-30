@@ -26,3 +26,15 @@ export interface EventSender<E extends any[]> {
   [OnEvent__symbol](receiver: EventReceiver<E>): EventInterest;
 
 }
+
+/**
+ * Checks whether the given object implements an `EventSender` interface.
+ *
+ * @param <E> An event type. This is a list of event receiver parameter types.
+ * @param value An object to check.
+ *
+ * @returns `true` if `value` contains `[OnEvent__symbol]` property, or `false` otherwise.
+ */
+export function isEventSender<E extends any[]>(value: object | (() => any)): value is EventSender<E> {
+  return OnEvent__symbol in value;
+}

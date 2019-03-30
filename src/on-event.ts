@@ -1,7 +1,7 @@
 import { callThru, NextCall } from 'call-thru';
 import { EventReceiver } from './event-receiver';
 import { eventInterest, EventInterest, noEventInterest } from './event-interest';
-import { EventSender, OnEvent__symbol } from './event-sender';
+import { EventSender, isEventSender, OnEvent__symbol } from './event-sender';
 import { EventNotifier } from './event-notifier';
 import Args = NextCall.Callee.Args;
 import { AfterEvent__symbol, EventKeeper } from './event-keeper';
@@ -422,17 +422,13 @@ export function onEventBy<E extends any[]>(
  */
 export function onEventFrom<E extends any[]>(senderOrKeeper: EventSender<E> | EventKeeper<E>): OnEvent<E> {
 
-  const onEvent = isSender(senderOrKeeper) ? senderOrKeeper[OnEvent__symbol] : senderOrKeeper[AfterEvent__symbol];
+  const onEvent = isEventSender(senderOrKeeper) ? senderOrKeeper[OnEvent__symbol] : senderOrKeeper[AfterEvent__symbol];
 
   if (onEvent instanceof OnEvent) {
     return onEvent;
   }
 
   return onEventBy(onEvent.bind(senderOrKeeper));
-}
-
-function isSender<E extends any[]>(senderOrKeeper: EventSender<E> | EventKeeper<E>): senderOrKeeper is EventSender<E> {
-  return OnEvent__symbol in senderOrKeeper;
 }
 
 /**
