@@ -244,7 +244,7 @@ describe('AfterEvent', () => {
     it('skips original event', () => {
 
       const transforming = afterEventFrom(afterEvent.thru(
-          passIf((event1: string, event2: string) => event1 < event2),
+          passIf<[string, string], string>((event1: string, event2: string) => event1 < event2),
           (event1: string, event2: string) => `${event1}, ${event2}`,
       ));
 
