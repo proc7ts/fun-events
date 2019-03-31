@@ -104,16 +104,4 @@ describe('EventEmitter', () => {
       expect(whenDone2).toHaveBeenCalledWith(reason);
     });
   });
-
-  describe('clear', () => {
-    it('is an alias of `done()`', () => {
-
-      const doneSpy = jest.spyOn(emitter, 'done');
-      const reason = 'some reason';
-
-      emitter.clear(reason);
-
-      expect(doneSpy).toHaveBeenCalledWith(reason);
-    });
-  });
 });

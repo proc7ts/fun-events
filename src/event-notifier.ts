@@ -104,15 +104,4 @@ export class EventNotifier<E extends any[]> implements EventSender<E> {
     return this;
   }
 
-  /**
-   * Removes all registered event receivers.
-   *
-   * This is an alias of `done()`.
-   *
-   * @deprecated Use `done()` instead.
-   */
-  clear(reason?: any): this {
-    return this.done(reason);
-  }
-
 }

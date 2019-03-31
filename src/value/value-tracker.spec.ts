@@ -67,17 +67,6 @@ describe('ValueTracker', () => {
     });
   });
 
-  describe('clear', () => {
-    it('is an alias of `done()`', () => {
-
-      const doneSpy = jest.spyOn(v1, 'done');
-      const reason = 'some reason';
-
-      v1.clear(reason);
-      expect(doneSpy).toHaveBeenCalledWith(reason);
-    });
-  });
-
   describe('by value keeper', () => {
 
     let mockReceiver: Mock<void, [string | undefined, string | undefined]>;
