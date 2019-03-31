@@ -79,7 +79,7 @@ describe('ValueSync', () => {
       const reason = 'some reason';
 
       ei1.whenDone(mockWhenDone);
-      sync.clear(reason);
+      sync.done(reason);
       expect(mockWhenDone).toHaveBeenCalledWith(reason);
 
       v2.it = 999;

@@ -149,8 +149,8 @@ export class ValueSync<T> extends ValueTracker<T> {
     }
   }
 
-  clear(reason?: any): this {
-    this._on.clear(reason);
+  done(reason?: any): this {
+    this._on.done(reason);
     return this;
   }
 

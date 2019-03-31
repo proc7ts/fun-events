@@ -186,7 +186,7 @@ describe('OnEvent', () => {
 
       const reason = 'some reason';
 
-      sender.clear(reason);
+      sender.done(reason);
 
       expect(mockDone).toHaveBeenCalledWith(reason);
 
@@ -205,7 +205,7 @@ describe('OnEvent', () => {
 
       sender.send(nested1);
       nested1.send('value1');
-      nested1.clear(reason);
+      nested1.done(reason);
       nested1.send('value2');
 
       expect(mockDone).not.toHaveBeenCalledWith(reason);
@@ -283,7 +283,7 @@ describe('OnEvent', () => {
 
       const reason = 'some reason';
 
-      sender.clear(reason);
+      sender.done(reason);
 
       expect(mockDone).toHaveBeenCalledWith(reason);
 
@@ -302,7 +302,7 @@ describe('OnEvent', () => {
 
       sender.send(nested1);
       nested1.send('value1');
-      nested1.clear(reason);
+      nested1.done(reason);
       nested1.send('value2');
 
       expect(mockDone).not.toHaveBeenCalledWith(reason);

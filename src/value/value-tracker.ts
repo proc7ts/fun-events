@@ -127,6 +127,17 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
    *
    * @returns `this` instance.
    */
-  abstract clear(reason?: any): this;
+  abstract done(reason?: any): this;
+
+  /**
+   * Removes all registered event receivers.
+   *
+   * This is a deprecated alias of `done()`
+   *
+   * @deprecated Use `done()` instead.
+   */
+  clear(reason?: any): this {
+    return this.done(reason);
+  }
 
 }
