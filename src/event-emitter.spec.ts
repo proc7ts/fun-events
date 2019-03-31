@@ -77,11 +77,11 @@ describe('EventEmitter', () => {
     });
   });
 
-  describe('clear', () => {
+  describe('done', () => {
     it('removes all event receivers', () => {
       emitter.on(mockReceiver);
       emitter.on(mockReceiver2);
-      emitter.clear();
+      emitter.done();
 
       expect(emitter.size).toBe(0);
 
@@ -98,10 +98,22 @@ describe('EventEmitter', () => {
 
       emitter.on(mockReceiver).whenDone(whenDone1);
       emitter.on(mockReceiver2).whenDone(whenDone2);
-      emitter.clear(reason);
+      emitter.done(reason);
 
       expect(whenDone1).toHaveBeenCalledWith(reason);
       expect(whenDone2).toHaveBeenCalledWith(reason);
+    });
+  });
+
+  describe('clear', () => {
+    it('is an alias of `done()`', () => {
+
+      const doneSpy = jest.spyOn(emitter, 'done');
+      const reason = 'some reason';
+
+      emitter.clear(reason);
+
+      expect(doneSpy).toHaveBeenCalledWith(reason);
     });
   });
 });

@@ -95,10 +95,24 @@ export class EventNotifier<E extends any[]> implements EventSender<E> {
    * the callbacks registered with `whenDone()`.
    *
    * @param reason A reason to stop sending events to receivers.
+   *
+   * @returns `this` instance.
    */
-  clear(reason?: any) {
+  done(reason?: any): this {
     this._rcvs.forEach(recv => recv.done(reason));
     this._rcvs.clear();
+    return this;
+  }
+
+  /**
+   * Removes all registered event receivers.
+   *
+   * This is an alias of `done()`.
+   *
+   * @deprecated Use `done()` instead.
+   */
+  clear(reason?: any): this {
+    return this.done(reason);
   }
 
 }
