@@ -3,10 +3,8 @@ import { EventReceiver } from './event-receiver';
 import { eventInterest, EventInterest, noEventInterest } from './event-interest';
 import { EventSender, isEventSender, OnEvent__symbol } from './event-sender';
 import { EventNotifier } from './event-notifier';
-import Args = NextCall.Callee.Args;
 import { AfterEvent__symbol, EventKeeper } from './event-keeper';
-
-const NO_EVENTS: any[][] = [];
+import Args = NextCall.Callee.Args;
 
 /**
  * An event receiver registration function interface.
@@ -103,6 +101,19 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
       consumerInterest.off(reason);
       senderInterest.off(reason);
     }).needs(senderInterest);
+  }
+
+  /**
+   * Constructs an event receiver registrar that shares an event interest among all registered receivers.
+   *
+   * The created registrar receives events from this one and sends them to receivers. The shared registrar registers
+   * a receiver in this one only once, when first receiver registered. And loses its interest when all receivers lost
+   * their interest.
+   *
+   * @returns An `OnEvent` registrar of receivers sharing a common interest to events sent by this sender.
+   */
+  share(): OnEvent<E> {
+    return shareInterestTo(this);
   }
 
   thru<R1,
@@ -347,37 +358,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
       OnEvent<TE>;
 
   thru(...fns: any[]): OnEvent<any[]> {
-
-    let shared: ReturnType<typeof thruNotifier> | undefined;
-    let firstEvents: any[][] = NO_EVENTS;
-
-    return onEventBy((receiver: EventReceiver<any[]>) => {
-      if (!shared) {
-        shared = thruNotifier(this, fns);
-        firstEvents = shared[2];
-      }
-
-      const [emitter, emitterInterest] = shared;
-
-      // Send events received during registration until new events received
-      firstEvents.forEach(event => receiver(...event));
-
-      const interest = emitter.on((...event) => {
-        // Events received after initial ones
-        // Stop sending the initial events
-        firstEvents = NO_EVENTS;
-        receiver(...event);
-      });
-
-      return eventInterest(reason => {
-        interest.off(reason);
-        if (!emitter.size) {
-          emitterInterest.off(reason);
-          shared = undefined;
-          firstEvents = [];
-        }
-      }).needs(interest).needs(emitterInterest);
-    });
+    return shareInterestTo(eventsThru(this, fns));
   }
 
 }
@@ -436,27 +417,59 @@ export function onEventFrom<E extends any[]>(senderOrKeeper: EventSender<E> | Ev
  */
 export const onNever: OnEvent<any> = /*#__PURE__*/ onEventBy(() => noEventInterest());
 
-function thruNotifier(
-    onEvent: OnEvent<any[]>,
-    fns: any[]):
-    [EventNotifier<any[]>, EventInterest, any[][]] {
+function shareInterestTo<E extends any[]>(onEvent: OnEvent<E>): OnEvent<E> {
 
-  const shared = new EventNotifier<any[]>();
+  const shared = new EventNotifier<E>();
+  let sourceInterest = noEventInterest();
+  let initialEvents: E[] | undefined = [];
+  let hasReceivers = false;
+
+  return onEventBy(receiver => {
+    if (!shared.size) {
+      sourceInterest = onEvent((...event) => {
+        if (initialEvents) {
+          if (hasReceivers) {
+            // More events received
+            // Stop sending initial ones
+            initialEvents = undefined;
+          } else {
+            // Record events received during first receiver registration
+            // to send them to all receivers until more event received
+            initialEvents.push(event);
+          }
+        }
+        shared.send(...event);
+      });
+    }
+
+    const interest = shared.on(receiver).whenDone(reason => {
+      if (!shared.size) {
+        sourceInterest.off(reason);
+        sourceInterest = noEventInterest();
+        initialEvents = [];
+        hasReceivers = false;
+      }
+    }).needs(sourceInterest);
+
+    hasReceivers = true;
+
+    if (initialEvents) {
+      // Send initial events to just registered receiver
+      initialEvents.forEach(event => receiver(...event));
+    }
+
+    return interest;
+  });
+}
+
+function eventsThru(onEvent: OnEvent<any[]>, fns: any[]): OnEvent<any[]> {
+
   const thru = callThru as any;
 
-  let received: any[][] | undefined = [];
-  const transform = thru(...fns, (...event: any[]) => {
-    if (received) {
-      // Record events received during registration.
-      received.push(event);
-    }
-    shared.send(...event);
-  });
-
-  const interest = onEvent(transform);
-  const firstEvents = received;
-
-  received = undefined; // Stop recording events.
-
-  return [shared, interest, firstEvents];
+  return onEventBy(receiver =>
+      onEvent((...event) =>
+          thru(
+              ...fns,
+              (...transformed: any[]) => receiver(...transformed),
+          )(...event)));
 }

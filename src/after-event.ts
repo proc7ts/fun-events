@@ -29,6 +29,19 @@ export abstract class AfterEvent<E extends any[]> extends OnEvent<E> implements 
     return this;
   }
 
+  /**
+   * Constructs an event receiver registrar that shares an event interest among all registered receivers.
+   *
+   * The created registrar receives events from this one and sends them to receivers. The shared registrar registers
+   * a receiver in this one only once, when first receiver registered. And loses its interest when all receivers lost
+   * their interest.
+   *
+   * @returns An `AfterEvent` registrar of receivers sharing a common interest to events sent by this sender.
+   */
+  share(): AfterEvent<E> {
+    return afterEventBy(super.share());
+  }
+
 }
 
 /**

@@ -7,6 +7,7 @@ import { OnEvent__symbol } from './event-sender';
 import { AfterEvent__symbol } from './event-keeper';
 import { noop, passIf } from 'call-thru';
 import Mock = jest.Mock;
+import Mocked = jest.Mocked;
 
 describe('AfterEvent', () => {
   describe('by', () => {
@@ -178,14 +179,64 @@ describe('AfterEvent', () => {
     });
   });
 
+  describe('share', () => {
+
+    let initial: [string, string];
+    let mockRegister: Mock;
+    let mockInterest: Mocked<EventInterest>;
+    let registeredReceiver: (event1: string, event2: string) => void;
+    let afterEvent: AfterEvent<[string, string]>;
+    let mockReceiver: Mock<void, [string, string]>;
+    let mockReceiver2: Mock<void, [string, string]>;
+
+    beforeEach(() => {
+      initial = ['init1', 'init2'];
+      mockInterest = {
+        off: jest.fn(),
+        whenDone: jest.fn(),
+      } as any;
+      mockInterest.off.mockName('interest.off()');
+      mockRegister = jest.fn(receiver => {
+        registeredReceiver = receiver;
+        return mockInterest;
+      });
+      afterEvent = afterEventBy(mockRegister, initial);
+      mockReceiver = jest.fn();
+      mockReceiver2 = jest.fn();
+    });
+
+    it('sends initial event from the source', () => {
+
+      const shared = afterEvent.share();
+
+      shared(mockReceiver);
+      shared(mockReceiver2);
+      expect(mockReceiver).toHaveBeenCalledWith(...initial);
+      expect(mockReceiver2).toHaveBeenCalledWith(...initial);
+    });
+    it('keeps initial event from the source', () => {
+
+      const shared = afterEvent.share();
+
+      expect(shared.kept).toEqual(initial);
+    });
+    it('sends events from the source', () => {
+
+      const shared = afterEvent.share();
+
+      shared(mockReceiver);
+      shared(mockReceiver2);
+      registeredReceiver('a', 'b');
+      expect(mockReceiver).toHaveBeenCalledWith('a', 'b');
+      expect(mockReceiver2).toHaveBeenCalledWith('a', 'b');
+    });
+  });
+
   describe('thru', () => {
 
     let initial: [string, string];
     let mockRegister: Mock;
-    let mockInterest: {
-      off: Mock<void, []> & EventInterest['off'],
-      whenDone: Mock<void, [(reason?: any) => void]>,
-    } & EventInterest;
+    let mockInterest: Mocked<EventInterest>;
     let registeredReceiver: (event1: string, event2: string) => void;
     let afterEvent: AfterEvent<[string, string]>;
     let mockReceiver: Mock<void, [string]>;
@@ -197,8 +248,8 @@ describe('AfterEvent', () => {
         whenDone: jest.fn(),
       } as any;
       mockInterest.off.mockName('interest.off()');
-      mockRegister = jest.fn((c: (event1: string, event2: string) => number) => {
-        registeredReceiver = c;
+      mockRegister = jest.fn(receiver => {
+        registeredReceiver = receiver;
         return mockInterest;
       });
       afterEvent = afterEventBy(mockRegister, initial);

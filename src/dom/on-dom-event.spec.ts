@@ -1,23 +1,23 @@
 import { EventInterest } from '../event-interest';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 import Mock = jest.Mock;
+import Mocked = jest.Mocked;
+import { EventReceiver } from '../event-receiver';
 
 describe('OnDomEvent', () => {
 
-  let mockRegister: Mock;
+  let mockRegister: Mock<EventInterest, [EventReceiver<[Event]>, (AddEventListenerOptions | boolean)?]>;
   let onDomEvent: OnDomEvent<Event>;
-  let mockListener: Mock<(event: Event) => void>;
-  let mockInterest: {
-    off: Mock<void, []> & EventInterest['off'],
-  } & EventInterest;
+  let mockListener: Mock<void, [Event]>;
+  let mockInterest: Mocked<EventInterest>;
   let registeredListener: (event: Event) => void;
 
   beforeEach(() => {
     mockInterest = {
-      off: jest.fn()
+      off: jest.fn(),
     } as any;
-    mockRegister = jest.fn((c: (event: Event) => void) => {
-      registeredListener = c;
+    mockRegister = jest.fn(listener => {
+      registeredListener = listener;
       return mockInterest;
     });
     onDomEvent = onDomEventBy<Event>((c, opts) => mockRegister(c, opts));
