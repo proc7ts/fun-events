@@ -193,6 +193,7 @@ describe('OnEvent', () => {
       nested1.send('value');
       expect(receiver).not.toHaveBeenCalled();
       expect(extract).not.toHaveBeenCalled();
+      expect(sender.size).toBe(0);
     });
     it('does not exhaust when nested events exhausted', () => {
 
@@ -273,6 +274,7 @@ describe('OnEvent', () => {
       nested1.send('value');
       expect(receiver).not.toHaveBeenCalled();
       expect(consume).not.toHaveBeenCalled();
+      expect(sender.size).toBe(0);
     });
     it('stops consumption when sender events exhausted', () => {
 

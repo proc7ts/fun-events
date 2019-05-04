@@ -61,8 +61,25 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
    * nothing extracted.
    *
    * @returns An `OnEvent` registrar of extracted events receivers. The events exhaust once the incoming events do.
+   * The returned registrar shares the interest to extracted events among receivers.
    */
   dig<F extends any[]>(extract: (this: void, ...event: E) => EventSender<F> | EventKeeper<F> | undefined): OnEvent<F> {
+    return shareInterestTo(this.dig_(extract));
+  }
+
+  /**
+   * Extracts event senders from incoming events.
+   *
+   * This method does the same as `thru_()` one, except it interest does not share the interest to extracted events
+   * among receivers. This may be useful e.g. when the result will be further transformed. It is wise to share the
+   * interest to final result in this case.
+   *
+   * @param extract A function extracting event sender or event keeper from incoming event. May return `undefined` when
+   * nothing extracted.
+   *
+   * @returns An `OnEvent` registrar of extracted events receivers. The events exhaust once the incoming events do.
+   */
+  dig_<F extends any[]>(extract: (this: void, ...event: E) => EventSender<F> | EventKeeper<F> | undefined): OnEvent<F> {
     return onEventBy((receiver: EventReceiver<F>) => {
 
       let nestedInterest = noEventInterest();
@@ -569,9 +586,9 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
    * Constructs an event receiver registrar that passes the original event trough the chain of transformation passes
    * without sharing the result.
    *
-   * This method does the same as `thru_`, except it interest does not share the interest to transformed events among
-   * receivers. This may be useful e.g. when you the result will be transformed anyway. The it is wise to share the
-   * interest to final transformation result.
+   * This method does the same as `thru_()` one, except it interest does not share the interest to transformed events
+   * among receivers. This may be useful e.g. when the result will be further transformed anyway. It is wise to share
+   * the interest to final result in this case.
    *
    * @returns An `OnEvent` registrar of receivers of events transformed with provided passes.
    */
