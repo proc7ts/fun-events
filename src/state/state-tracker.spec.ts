@@ -2,6 +2,7 @@ import { StateUpdateReceiver } from './state-events';
 import { StateTracker } from './state-tracker';
 import { OnEvent__symbol } from '../event-sender';
 import Mock = jest.Mock;
+import { noop } from 'call-thru';
 
 describe('StateTracker', () => {
 
@@ -35,15 +36,51 @@ describe('StateTracker', () => {
     tracker.update(path, newValue, oldValue);
     expect(mockReceiver).not.toHaveBeenCalled();
   });
+
+  describe('done', () => {
+    it('notifies interests', () => {
+
+      const mockDone = jest.fn();
+      const reason = 'some reason';
+
+      tracker.onUpdate(mockReceiver).whenDone(mockDone);
+
+      tracker.done(reason);
+      expect(mockDone).toHaveBeenCalledWith(reason);
+    });
+    it('does not notify lost interests', () => {
+
+      const mockDone = jest.fn();
+      const reason1 = 'first reason';
+      const reason2 = 'second reason';
+
+      tracker.onUpdate(mockReceiver).whenDone(mockDone).off(reason1);
+
+      tracker.done(reason2);
+      expect(mockDone).toHaveBeenCalledWith(reason1);
+      expect(mockDone).not.toHaveBeenCalledWith(reason2);
+    });
+    it('stops nested state tracking', () => {
+
+      const nested = tracker.track('some');
+      const mockDone = jest.fn();
+      const reason = 'some reason';
+
+      nested.onUpdate(noop).whenDone(mockDone);
+      tracker.done(reason);
+      expect(mockDone).toHaveBeenCalledWith(reason);
+    });
+  });
+
   describe('part', () => {
 
     const partPath = ['path', 2, 'part'];
     let part: StateTracker;
-    let partSpy: Mock<StateUpdateReceiver>;
+    let mockPartReceiver: Mock<StateUpdateReceiver>;
 
     beforeEach(() => {
       part = tracker.track(partPath);
-      partSpy = jest.fn();
+      mockPartReceiver = jest.fn();
     });
 
     describe('[onEventKey]', () => {
@@ -61,7 +98,7 @@ describe('StateTracker', () => {
     it('notifies on partial state update', () => {
       tracker.onUpdate(mockReceiver);
 
-      const interest = part.onUpdate(partSpy);
+      const interest = part.onUpdate(mockPartReceiver);
 
       const path = ['some', 'path'];
       const fullPath = [...partPath, ...path];
@@ -70,20 +107,20 @@ describe('StateTracker', () => {
 
       part.update(path, newValue, oldValue);
       expect(mockReceiver).toHaveBeenCalledWith(fullPath, newValue, oldValue);
-      expect(partSpy).toHaveBeenCalledWith(path, newValue, oldValue);
+      expect(mockPartReceiver).toHaveBeenCalledWith(path, newValue, oldValue);
 
       mockReceiver.mockClear();
-      partSpy.mockClear();
+      mockPartReceiver.mockClear();
       interest.off();
 
       part.update(path, newValue, oldValue);
       expect(mockReceiver).toHaveBeenCalledWith(fullPath, newValue, oldValue);
-      expect(partSpy).not.toHaveBeenCalled();
+      expect(mockPartReceiver).not.toHaveBeenCalled();
     });
     it('is notified on partial state update', () => {
       tracker.onUpdate(mockReceiver);
 
-      const interest = part.onUpdate(partSpy);
+      const interest = part.onUpdate(mockPartReceiver);
 
       const subPath = ['some'];
       const path = [...partPath, ...subPath];
@@ -92,19 +129,19 @@ describe('StateTracker', () => {
 
       tracker.update(path, newValue, oldValue);
       expect(mockReceiver).toHaveBeenCalledWith(path, newValue, oldValue);
-      expect(partSpy).toHaveBeenCalledWith(subPath, newValue, oldValue);
+      expect(mockPartReceiver).toHaveBeenCalledWith(subPath, newValue, oldValue);
 
       mockReceiver.mockClear();
-      partSpy.mockClear();
+      mockPartReceiver.mockClear();
       interest.off();
 
       tracker.update(path, newValue, oldValue);
       expect(mockReceiver).toHaveBeenCalledWith(path, newValue, oldValue);
-      expect(partSpy).not.toHaveBeenCalled();
+      expect(mockPartReceiver).not.toHaveBeenCalled();
     });
     it('is not notified on other state update', () => {
       tracker.onUpdate(mockReceiver);
-      part.onUpdate(partSpy);
+      part.onUpdate(mockPartReceiver);
 
       const path = [...partPath.slice(0, partPath.length - 1), 'other'];
       const newValue = 'new';
@@ -112,11 +149,11 @@ describe('StateTracker', () => {
 
       tracker.update(path, newValue, oldValue);
       expect(mockReceiver).toHaveBeenCalledWith(path, newValue, oldValue);
-      expect(partSpy).not.toHaveBeenCalled();
+      expect(mockPartReceiver).not.toHaveBeenCalled();
     });
     it('is notified on parent state update', () => {
       tracker.onUpdate(mockReceiver);
-      part.onUpdate(partSpy);
+      part.onUpdate(mockPartReceiver);
 
       const parent = tracker.track(partPath[0]);
       const parentSpy = jest.fn();
@@ -132,17 +169,42 @@ describe('StateTracker', () => {
       parent.update(parentPath, newValue, oldValue);
       expect(mockReceiver).toHaveBeenCalledWith(fullPath, newValue, oldValue);
       expect(parentSpy).toHaveBeenCalledWith(parentPath, newValue, oldValue);
-      expect(partSpy).toHaveBeenCalledWith(subPath, newValue, oldValue);
+      expect(mockPartReceiver).toHaveBeenCalledWith(subPath, newValue, oldValue);
 
       mockReceiver.mockClear();
       parentSpy.mockClear();
-      partSpy.mockClear();
+      mockPartReceiver.mockClear();
       parentInterest.off();
 
       parent.update(parentPath, newValue, oldValue);
       expect(mockReceiver).toHaveBeenCalledWith(fullPath, newValue, oldValue);
       expect(parentSpy).not.toHaveBeenCalled();
-      expect(partSpy).toHaveBeenCalledWith(subPath, newValue, oldValue);
+      expect(mockPartReceiver).toHaveBeenCalledWith(subPath, newValue, oldValue);
+    });
+
+    describe('done', () => {
+      it('notifies interests', () => {
+
+        const mockDone = jest.fn();
+        const reason = 'some reason';
+
+        part.onUpdate(mockPartReceiver).whenDone(mockDone);
+
+        part.done(reason);
+        expect(mockDone).toHaveBeenCalledWith(reason);
+      });
+      it('does not notify lost interests', () => {
+
+        const mockDone = jest.fn();
+        const reason1 = 'first reason';
+        const reason2 = 'second reason';
+
+        part.onUpdate(mockPartReceiver).whenDone(mockDone).off(reason1);
+
+        part.done(reason2);
+        expect(mockDone).toHaveBeenCalledWith(reason1);
+        expect(mockDone).not.toHaveBeenCalledWith(reason2);
+      });
     });
   });
 });

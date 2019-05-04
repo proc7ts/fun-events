@@ -39,17 +39,23 @@ class PathEntry {
     const entry = this;
     const interest = this.emitter.on(receiver);
 
-    return eventInterest(() => {
-      interest.off();
+    return eventInterest(reason => {
+      interest.off(reason);
       entry._dropIfEmpty();
-    });
+    }).needs(interest);
   }
 
-  nest(key: PropertyKey): PathEntry {
+  nest(key: PropertyKey): PathEntry;
+
+  nest(key: PropertyKey, dontCreateMissing: true): PathEntry | undefined;
+
+  nest(key: PropertyKey, dontCreateMissing?: true): PathEntry | undefined;
+
+  nest(key: PropertyKey, dontCreateMissing?: true): PathEntry | undefined {
 
     const found = this._nested.get(key);
 
-    if (found) {
+    if (found || dontCreateMissing) {
       return found;
     }
 
@@ -58,6 +64,13 @@ class PathEntry {
     this._nested.set(key, created);
 
     return created;
+  }
+
+  done(reason?: any) {
+    for (const nested of this._nested.values()) {
+      nested.done(reason);
+    }
+    this.emitter.done(reason);
   }
 
   private _remove(key: PropertyKey) {
@@ -85,12 +98,32 @@ class Trackers {
     this._root.emitter.send(path, newValue, oldValue);
   }
 
-  private _entry(path: StatePath.Normalized): PathEntry {
+  done(path: StatePath.Normalized, reason?: any) {
+
+    const entry = this._entry(path, true);
+
+    if (entry) {
+      entry.done(reason);
+    }
+  }
+
+  private _entry(path: StatePath.Normalized): PathEntry;
+
+  private _entry(path: StatePath.Normalized, dontCreateMissing: true): PathEntry | undefined;
+
+  private _entry(path: StatePath.Normalized, dontCreateMissing?: true): PathEntry | undefined {
 
     let entry = this._root;
 
     for (const key of path) {
-      entry = entry.nest(key);
+
+      const nested = entry.nest(key, dontCreateMissing);
+
+      if (!nested) {
+        return;
+      }
+
+      entry = nested;
     }
 
     return entry;
@@ -126,6 +159,10 @@ class SubStateTracker implements StateTracker {
       return this; // Path to itself.
     }
     return new SubStateTracker(this._trackers, [...this._path, ...path]);
+  }
+
+  done(reason?: any) {
+    this._trackers.done(this._path, reason);
   }
 
 }
@@ -190,6 +227,18 @@ export class StateTracker implements EventSender<[StatePath, any, any]> {
     const subTracker = this._tracker.track(path);
 
     return subTracker === this._tracker ? this : subTracker;
+  }
+
+  /**
+   * Stops changes tracking and notifies event interests on events exhausting.
+   *
+   * After this method call the listeners registered in for this partial state and all nested states won't receive
+   * any updates.
+   *
+   * @param reason An optional reason to stop tracking.
+   */
+  done(reason?: any) {
+    this._tracker.done(reason);
   }
 
 }
