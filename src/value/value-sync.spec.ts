@@ -3,6 +3,7 @@ import { ValueSync } from './value-sync';
 import { ValueTracker } from './value-tracker';
 import { EventInterest } from '../event-interest';
 import { EventEmitter } from '../event-emitter';
+import { asis } from 'call-thru';
 
 describe('ValueSync', () => {
 
@@ -62,17 +63,25 @@ describe('ValueSync', () => {
     expect(v3.it).toBe(11);
     expect(sync.it).toBe(11);
   });
-  it('synchronizes with nested values', () => {
+  it('synchronizes with values nested in source sender', () => {
 
     const v4 = trackValue(4);
-    const sender = new EventEmitter<[ValueTracker<number>]>();
+    const source = new EventEmitter<[ValueTracker<number>]>();
 
-    sync.sync(sender, tracker => tracker);
-    sender.send(v4);
+    sync.sync(source, asis);
+    source.send(v4);
+    expect(sync.it).toBe(v4.it);
+  });
+  it('synchronizes with values nested in source keeper', () => {
+
+    const v4 = trackValue(4);
+    const source = trackValue(v4);
+
+    sync.sync(source, asis);
     expect(sync.it).toBe(v4.it);
   });
 
-  describe('clear', () => {
+  describe('done', () => {
     it('stops synchronization', () => {
 
       const mockWhenDone = jest.fn();
