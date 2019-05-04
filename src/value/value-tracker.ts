@@ -1,7 +1,7 @@
-import { noEventInterest } from '../event-interest';
+import { EventInterest, noEventInterest } from '../event-interest';
 import { OnEvent, onEventFrom } from '../on-event';
 import { EventSender, OnEvent__symbol } from '../event-sender';
-import { AfterEvent__symbol, EventKeeper } from '../event-keeper';
+import { AfterEvent__symbol, EventKeeper, isEventKeeper } from '../event-keeper';
 import { AfterEvent, afterEventBy } from '../after-event';
 
 /**
@@ -40,67 +40,81 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
   abstract it: T;
 
   /**
-   * Binds the tracked value to the given value `keeper`.
+   * Binds the tracked value to the given `source` value sender or keeper.
    *
-   * Updates the value when the `keeper` sends another value.
+   * Updates the value when the `source` sends another value.
    *
-   * If the value is already bound to another value sender ot keeper, then unbinds from the old one first.
+   * If the value is already bound to another value source, then unbinds from the old one first.
    *
-   * Call the `off()` method to unbind the tracked value from the `keeper`.
+   * Call the `off()` method to unbind the tracked value from the `source`.
    *
-   * Note that explicitly updating the value would override the value received from the `keeper`.
+   * Note that explicitly updating the value would override the value received from the `source`.
    *
-   * @param keeper The originating value keeper.
+   * @param source The source value sender or keeper.
    *
    * @returns `this` instance.
    */
-  by(keeper: EventKeeper<[T]>): this;
+  by(source: EventKeeper<[T]> | EventSender<[T]>): this;
 
   /**
-   * Binds the tracked value to the value keeper extracted from the events sent by the given `sender`.
+   * Binds the tracked value to the value sender or keeper extracted from the events sent by the given `source`.
    *
-   * Updates the value when extracted keeper sends another value.
+   * Updates the value when extracted sender or keeper sends another value.
    *
-   * If the value is already bound to another value sender or keeper, then unbinds from the old one first.
+   * If the value is already bound to another value source, then unbinds from the old one first.
    *
-   * Call the `off()` method to unbind the tracked value from the `sender`.
+   * Call the `off()` method to unbind the tracked value from the `source`.
    *
-   * Note that explicitly updating the value would override the value received from the `sender`.
+   * Note that explicitly updating the value would override the value received from the `source`.
    *
-   * @param sender The event sender to extract value keepers from.
-   * @param extract A function extracting value keepers from events received from the `sender`. May return `undefined`
-   * to suspend receiving values.
+   * @param source The event sender or keeper to extract value senders or keepers from.
+   * @param extract A function extracting value senders or keepers from events received from the `source`.
+   * May return `undefined` to suspend receiving values.
    *
    * @returns `this` instance.
    */
   by<U extends any[]>(
-      sender: EventSender<U>,
-      extract: (this: void, ...event: U) => EventKeeper<[T]> | undefined): this;
+      source: EventKeeper<U> | EventSender<U>,
+      extract: (this: void, ...event: U) => EventKeeper<[T]> | EventSender<[T]> | undefined): this;
 
   by<U extends any[]>(
-      senderOrKeeper: EventSender<U> | EventKeeper<[T]>,
-      extract?: (this: void, ...event: U) => EventKeeper<[T]> | undefined): this {
+      source: EventKeeper<U> | EventSender<U> | EventKeeper<[T]> | EventSender<[T]>,
+      extract?: (this: void, ...event: U) => EventKeeper<[T]> | EventSender<[T]> | undefined): this {
+
+    const self = this;
+
     this.off();
 
     if (!extract) {
 
-      const keeper = senderOrKeeper as EventKeeper<[T]>;
+      const sender = source as EventKeeper<[T]> | EventSender<[T]>;
 
-      this._by = keeper[AfterEvent__symbol](value => this.it = value);
+      this._by = acceptValuesFrom(sender);
     } else {
 
-      const sender = senderOrKeeper as EventSender<U>;
+      const container = source as EventKeeper<U> | EventSender<U>;
 
-      this._by = onEventFrom(sender).consume((...event: U) => {
+      this._by = onEventFrom(container).consume((...event: U) => {
 
-        const extracted = extract(...event);
+        const sender = extract(...event);
 
-        return extracted && extracted[AfterEvent__symbol](value => this.it = value);
+        if (sender) {
+          return acceptValuesFrom(sender);
+        }
+
+        return;
       });
     }
     this._by.whenDone(() => this._by = noEventInterest());
 
     return this;
+
+    function acceptValuesFrom(sender: EventSender<[T]> | EventKeeper<[T]>): EventInterest {
+
+      const registrar = isEventKeeper(sender) ? sender[AfterEvent__symbol] : sender[OnEvent__symbol];
+
+      return registrar(value => self.it = value);
+    }
   }
 
   /**
