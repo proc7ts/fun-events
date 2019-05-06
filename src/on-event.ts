@@ -106,7 +106,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
    *
    * @returns An event interest that will stop consuming events once lost.
    */
-  consume(consume: (...event: E) => EventInterest | undefined): EventInterest {
+  consume(consume: (...event: E) => EventInterest | void | undefined): EventInterest {
 
     let consumerInterest = noEventInterest();
     const senderInterest = this((...event: E) => {
@@ -678,6 +678,7 @@ export function onEventFrom<E extends any[]>(senderOrKeeper: EventSender<E> | Ev
 
   const onEvent = isEventSender(senderOrKeeper) ? senderOrKeeper[OnEvent__symbol] : senderOrKeeper[AfterEvent__symbol];
 
+  // noinspection SuspiciousTypeOfGuard
   if (onEvent instanceof OnEvent) {
     return onEvent;
   }
