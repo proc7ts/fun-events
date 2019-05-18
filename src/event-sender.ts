@@ -27,6 +27,17 @@ export interface EventSender<E extends any[]> {
 
 }
 
+export namespace EventSender {
+
+  /**
+   * A type of events sent by the given event sender.
+   *
+   * @typeparam T Target event sender.
+   */
+  export type Event<T extends EventSender<any>> = T extends EventSender<infer E> ? E : never;
+
+}
+
 /**
  * Checks whether the given object implements an `EventSender` interface.
  *
