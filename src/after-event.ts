@@ -176,30 +176,24 @@ function noEvent(): never {
  */
 export function afterEventFromAll<S extends { readonly [key: string]: EventKeeper<any> }>(sources: S):
     AfterEvent<[{ readonly [key in keyof S]: EventKeeper.Event<S[key]> }]> {
+
+  // Registering source receivers.
+  const keys = Object.keys(sources);
+
+  if (!keys.length) {
+    return afterNever;
+  }
+
   return afterEventBy<[{ [key in keyof S]: EventKeeper.Event<S[key]> }]>(receiver => {
 
     const kept: { [key in keyof S]: EventKeeper.Event<S[key]> } = {} as any;
-    const interests: EventInterest[] = [];
-    const interest = eventInterest(reason => {
-      interests.forEach(i => i.off(reason));
-    });
     // Do not send events until receiving from all sources.
     let send: (event: { [key in keyof S]: EventKeeper.Event<S[key]> }) => void = noop;
+    let interests: EventInterest[] = [];
+    const interest = eventInterest(interestLost);
 
-    // Registering source receivers.
-    Object.keys(sources).forEach(key => {
-      if (!interest.done) {
+    interests = keys.map(receiveFrom);
 
-        const source = sources[key];
-        const sourceInterest = source[AfterEvent__symbol]((...event) => {
-          kept[key] = event;
-          send(kept);
-        });
-
-        interests.push(sourceInterest);
-        interest.needs(sourceInterest);
-      }
-    });
     if (!interest.done) {
       // Now receiving events from all sources.
       // Start sending them.
@@ -208,5 +202,26 @@ export function afterEventFromAll<S extends { readonly [key: string]: EventKeepe
     }
 
     return interest;
+
+    function receiveFrom(key: string): EventInterest {
+      if (interest.done) {
+        return noEventInterest();
+      }
+
+      const source = sources[key];
+      const sourceInterest = source[AfterEvent__symbol]((...event) => {
+        kept[key] = event;
+        send(kept);
+      });
+
+      interest.needs(sourceInterest);
+
+      return sourceInterest;
+    }
+
+    function interestLost(reason: any) {
+      interests.forEach(i => i.off(reason));
+      interests = [];
+    }
   }).share();
 }

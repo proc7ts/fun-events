@@ -174,6 +174,9 @@ describe('AfterEvent', () => {
       expect(mockReceiver).toHaveBeenCalledWith({ source1: ['init'], source2: [1] });
       expect(mockReceiver).toHaveBeenCalledTimes(1);
     });
+    it('does not send anything without sources', () => {
+      expect(afterEventFromAll({})).toBe(afterNever);
+    });
     it('sends updates', () => {
       mockReceiver.mockClear();
       source1.it = 'update';
