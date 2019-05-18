@@ -1,9 +1,9 @@
 import { noop } from 'call-thru';
 import { EventEmitter } from '../event-emitter';
-import { OnEvent, onEventBy } from '../on-event';
-import { StatePath, statePath, StateUpdateReceiver } from './state-events';
 import { eventInterest, EventInterest } from '../event-interest';
 import { EventSender, OnEvent__symbol } from '../event-sender';
+import { OnEvent, onEventBy } from '../on-event';
+import { StatePath, statePath, StateUpdateReceiver } from './state-events';
 
 /**
  * A state update receivers registration function interface.

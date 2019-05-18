@@ -1,5 +1,5 @@
-import { OnEvent__symbol } from './event-sender';
 import { EventNotifier } from './event-notifier';
+import { OnEvent__symbol } from './event-sender';
 import Mock = jest.Mock;
 
 describe('EventNotifier', () => {

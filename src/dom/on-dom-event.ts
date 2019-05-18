@@ -1,6 +1,6 @@
-import { OnEvent } from '../on-event';
 import { EventInterest } from '../event-interest';
 import { EventReceiver } from '../event-receiver';
+import { OnEvent } from '../on-event';
 
 /**
  * DOM event listener.

@@ -1,7 +1,7 @@
-import { EventReceiver } from './event-receiver';
-import { eventInterest, EventInterest } from './event-interest';
-import { EventSender, OnEvent__symbol } from './event-sender';
 import { noop } from 'call-thru';
+import { eventInterest, EventInterest } from './event-interest';
+import { EventReceiver } from './event-receiver';
+import { EventSender, OnEvent__symbol } from './event-sender';
 
 class ReceiverInfo<E extends any[]> {
 

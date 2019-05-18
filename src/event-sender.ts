@@ -1,5 +1,5 @@
-import { EventReceiver } from './event-receiver';
 import { EventInterest } from './event-interest';
+import { EventReceiver } from './event-receiver';
 
 /**
  * A key of event receiver registration method of `EventSender`.

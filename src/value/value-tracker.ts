@@ -1,8 +1,8 @@
-import { EventInterest, noEventInterest } from '../event-interest';
-import { OnEvent, onEventFrom } from '../on-event';
-import { EventSender, OnEvent__symbol } from '../event-sender';
-import { AfterEvent__symbol, EventKeeper, isEventKeeper } from '../event-keeper';
 import { AfterEvent, afterEventBy } from '../after-event';
+import { EventInterest, noEventInterest } from '../event-interest';
+import { AfterEvent__symbol, EventKeeper, isEventKeeper } from '../event-keeper';
+import { EventSender, OnEvent__symbol } from '../event-sender';
+import { OnEvent, onEventFrom } from '../on-event';
 
 /**
  * Value accessor and changes tracker.

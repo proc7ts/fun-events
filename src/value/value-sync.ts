@@ -1,10 +1,10 @@
+import { afterEventFrom } from '../after-event';
 import { EventEmitter } from '../event-emitter';
 import { eventInterest, EventInterest } from '../event-interest';
-import { ValueTracker } from './value-tracker';
-import { OnEvent, onEventFrom } from '../on-event';
-import { EventSender } from '../event-sender';
 import { EventKeeper, isEventKeeper } from '../event-keeper';
-import { afterEventFrom } from '../after-event';
+import { EventSender } from '../event-sender';
+import { OnEvent, onEventFrom } from '../on-event';
+import { ValueTracker } from './value-tracker';
 
 /**
  * Synchronizes tracked values with each other.

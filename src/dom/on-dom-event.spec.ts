@@ -1,8 +1,8 @@
 import { EventInterest } from '../event-interest';
+import { EventReceiver } from '../event-receiver';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 import Mock = jest.Mock;
 import Mocked = jest.Mocked;
-import { EventReceiver } from '../event-receiver';
 
 describe('OnDomEvent', () => {
 

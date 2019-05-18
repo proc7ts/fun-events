@@ -1,6 +1,6 @@
-import { OnEvent, onEventBy } from './on-event';
-import { EventSender, OnEvent__symbol } from './event-sender';
 import { EventNotifier } from './event-notifier';
+import { EventSender, OnEvent__symbol } from './event-sender';
+import { OnEvent, onEventBy } from './on-event';
 
 /**
  * Event emitter is a handy implementation of `OnEvent` registrar along with methods for sending events.

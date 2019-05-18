@@ -1,5 +1,5 @@
-import { OnDomEvent, onDomEventBy } from './on-dom-event';
 import { eventInterest } from '../event-interest';
+import { OnDomEvent, onDomEventBy } from './on-dom-event';
 
 /**
  * DOM event dispatcher can be used to register event listeners and dispatch events.

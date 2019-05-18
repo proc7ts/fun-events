@@ -1,9 +1,9 @@
+import { asis } from 'call-thru';
+import { EventEmitter } from '../event-emitter';
+import { EventInterest } from '../event-interest';
 import { trackValue } from './track-value';
 import { ValueSync } from './value-sync';
 import { ValueTracker } from './value-tracker';
-import { EventInterest } from '../event-interest';
-import { EventEmitter } from '../event-emitter';
-import { asis } from 'call-thru';
 
 describe('ValueSync', () => {
 

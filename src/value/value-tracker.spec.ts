@@ -1,9 +1,9 @@
-import { ValueTracker } from './value-tracker';
-import { EventInterest } from '../event-interest';
-import { trackValue } from './track-value';
-import { EventSender, OnEvent__symbol } from '../event-sender';
-import { AfterEvent__symbol, EventKeeper } from '../event-keeper';
 import { EventEmitter } from '../event-emitter';
+import { EventInterest } from '../event-interest';
+import { AfterEvent__symbol, EventKeeper } from '../event-keeper';
+import { EventSender, OnEvent__symbol } from '../event-sender';
+import { trackValue } from './track-value';
+import { ValueTracker } from './value-tracker';
 import Mock = jest.Mock;
 
 describe('ValueTracker', () => {

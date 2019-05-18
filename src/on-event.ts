@@ -1,9 +1,9 @@
 import { callThru, NextCall } from 'call-thru';
-import { EventReceiver } from './event-receiver';
 import { eventInterest, EventInterest, noEventInterest } from './event-interest';
-import { EventSender, isEventSender, OnEvent__symbol } from './event-sender';
-import { EventNotifier } from './event-notifier';
 import { AfterEvent__symbol, EventKeeper } from './event-keeper';
+import { EventNotifier } from './event-notifier';
+import { EventReceiver } from './event-receiver';
+import { EventSender, isEventSender, OnEvent__symbol } from './event-sender';
 import Args = NextCall.Callee.Args;
 
 /**

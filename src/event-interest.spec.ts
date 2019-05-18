@@ -1,5 +1,5 @@
-import { eventInterest, EventInterest, noEventInterest } from './event-interest';
 import { noop } from 'call-thru';
+import { eventInterest, EventInterest, noEventInterest } from './event-interest';
 import Mock = jest.Mock;
 
 describe('EventInterest', () => {

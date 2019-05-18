@@ -1,8 +1,8 @@
+import { noop } from 'call-thru';
+import { OnEvent__symbol } from '../event-sender';
 import { StateUpdateReceiver } from './state-events';
 import { StateTracker } from './state-tracker';
-import { OnEvent__symbol } from '../event-sender';
 import Mock = jest.Mock;
-import { noop } from 'call-thru';
 
 describe('StateTracker', () => {
 
