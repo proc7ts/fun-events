@@ -5,14 +5,14 @@ import { OnEvent } from '../on-event';
 /**
  * DOM event listener.
  *
- * @param <E> Supported DOM event type.
+ * @typeparam E Supported DOM event type.
  */
 export type DomEventListener<E extends Event> = EventReceiver<[E]>;
 
 /**
  * A DOM event listener registration function interface.
  *
- * @param <E> Supported DOM event type.
+ * @typeparam E Supported DOM event type.
  */
 export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
 

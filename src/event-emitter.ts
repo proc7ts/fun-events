@@ -7,7 +7,7 @@ import { OnEvent, onEventBy } from './on-event';
  *
  * Extends `EventNotifier` by making its `on()` method implement an `OnEvent` interface.
  *
- * @param <E> An event type. This is a list of event receiver parameter types.
+ * @typeparam E An event type. This is a list of event receiver parameter types.
  */
 export class EventEmitter<E extends any[]> extends EventNotifier<E> implements EventSender<E> {
 

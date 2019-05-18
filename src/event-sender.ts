@@ -11,7 +11,7 @@ export const OnEvent__symbol = /*#__PURE__*/ Symbol('on-event');
  *
  * It is able to register event receivers.
  *
- * @param <E> An event type. This is a tuple of event receiver parameter types.
+ * @typeparam E An event type. This is a tuple of event receiver parameter types.
  */
 export interface EventSender<E extends any[]> {
 
@@ -30,7 +30,7 @@ export interface EventSender<E extends any[]> {
 /**
  * Checks whether the given object implements an `EventSender` interface.
  *
- * @param <E> An event type. This is a list of event receiver parameter types.
+ * @typeparam E An event type. This is a list of event receiver parameter types.
  * @param value An object to check.
  *
  * @returns `true` if `value` contains `[OnEvent__symbol]` property, or `false` otherwise.

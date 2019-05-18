@@ -16,7 +16,7 @@ import Args = NextCall.Callee.Args;
  *
  * To convert a plain event receiver registration function to `OnEvent` an `onEventBy()` function can be used.
  *
- * @param <E> An event type. This is a list of event receiver parameter types.
+ * @typeparam E An event type. This is a list of event receiver parameter types.
  */
 export abstract class OnEvent<E extends any[]> extends Function implements EventSender<E> {
 
@@ -57,6 +57,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   /**
    * Extracts event senders from incoming events.
    *
+   * @typeparam F Extracted event type.
    * @param extract A function extracting event sender or event keeper from incoming event. May return `undefined` when
    * nothing extracted.
    *
@@ -74,6 +75,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
    * among receivers. This may be useful e.g. when the result will be further transformed. It is wise to share the
    * interest to final result in this case.
    *
+   * @typeparam F Extracted event type.
    * @param extract A function extracting event sender or event keeper from incoming event. May return `undefined` when
    * nothing extracted.
    *
@@ -653,6 +655,7 @@ export interface OnEvent<E extends any[]> {
 /**
  * Converts a plain event receiver registration function to `OnEvent` registrar.
  *
+ * @typeparam E An event type. This is a list of event receiver parameter types.
  * @param register An event receiver registration function returning an event interest.
  *
  * @returns An `OnEvent` registrar instance registering event receivers with the given `register` function.
@@ -670,6 +673,7 @@ export function onEventBy<E extends any[]>(
 /**
  * Builds an `OnEvent` registrar of receivers of events sent by the given sender or keeper.
  *
+ * @typeparam E An event type. This is a list of event receiver parameter types.
  * @param senderOrKeeper An event sender or keeper.
  *
  * @returns An `OnEvent` registrar instance.

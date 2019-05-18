@@ -3,7 +3,7 @@
  *
  * It is called when the value with the given `key` changes.
  *
- * @param <V> A type of changed value.
+ * @typeparam V A type of changed value.
  * @param path A path to changed state part.
  * @param newValue New value.
  * @param oldValue Previous value.

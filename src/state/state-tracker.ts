@@ -206,7 +206,7 @@ export class StateTracker implements EventSender<[StatePath, any, any]> {
    *
    * All receivers registered with `onUpdate()` will receive this update.
    *
-   * @param <V> A type of changed value.
+   * @typeparam V A type of changed value.
    * @param key Changed value key.
    * @param newValue New value.
    * @param oldValue Previous value.

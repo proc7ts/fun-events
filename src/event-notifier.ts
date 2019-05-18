@@ -32,7 +32,7 @@ class ReceiverInfo<E extends any[]> {
  *
  * Can be used as `EventSender`.
  *
- * @param <E> An event type. This is a list of event receiver parameter types.
+ * @typeparam E An event type. This is a list of event receiver parameter types.
  */
 export class EventNotifier<E extends any[]> implements EventSender<E> {
 
