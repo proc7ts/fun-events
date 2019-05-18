@@ -1,4 +1,4 @@
-import { passIf } from 'call-thru';
+import { noop, passIf } from 'call-thru';
 import { EventEmitter } from './event-emitter';
 import { EventInterest, noEventInterest } from './event-interest';
 import { AfterEvent__symbol } from './event-keeper';
@@ -588,18 +588,7 @@ describe('OnEvent', () => {
 });
 
 describe('onNever', () => {
-
-  let onEvent: OnEvent<[string]>;
-  let mockReceiver: Mock<void, [string]>;
-  let interest: EventInterest;
-
-  beforeEach(() => {
-    onEvent = onNever;
-    mockReceiver = jest.fn();
-    interest = onEvent(mockReceiver);
-  });
-
   it('returns no event interest', () => {
-    expect(interest).toBeInstanceOf(noEventInterest().constructor);
+    expect(onNever(noop)).toBe(noEventInterest());
   });
 });
