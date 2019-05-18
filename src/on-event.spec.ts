@@ -2,11 +2,11 @@ import { passIf } from 'call-thru';
 import { EventEmitter } from './event-emitter';
 import { EventInterest, noEventInterest } from './event-interest';
 import { AfterEvent__symbol } from './event-keeper';
-import { EventNotifier } from "./event-notifier";
+import { EventNotifier } from './event-notifier';
 import { EventReceiver } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
 import { OnEvent, onEventBy, onEventFrom, onEventFromAny, onNever } from './on-event';
-import { trackValue, ValueTracker } from './value';
+import { trackValue } from './value';
 import Mock = jest.Mock;
 import Mocked = jest.Mocked;
 
