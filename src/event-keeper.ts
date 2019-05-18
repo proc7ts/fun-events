@@ -1,5 +1,5 @@
-import { EventReceiver } from './event-receiver';
 import { EventInterest } from './event-interest';
+import { EventReceiver } from './event-receiver';
 
 /**
  * A key of event receiver registration method of `EventKeeper`.
@@ -12,7 +12,7 @@ export const AfterEvent__symbol = /*#__PURE__*/ Symbol('after-event');
  * The registered event receiver would receive the kept event immediately upon registration, and all upcoming events
  * after that.
  *
- * @param <E> An event type. This is a list of event receiver parameter types.
+ * @typeparam E An event type. This is a list of event receiver parameter types.
  */
 export interface EventKeeper<E extends any[]> {
 
@@ -28,10 +28,21 @@ export interface EventKeeper<E extends any[]> {
 
 }
 
+export namespace EventKeeper {
+
+  /**
+   * A type of events sent by the given event keeper.
+   *
+   * @typeparam T Target event keeper.
+   */
+  export type Event<T extends EventKeeper<any>> = T extends EventKeeper<infer E> ? E : never;
+
+}
+
 /**
  * Checks whether the given object implements an `EventKeeper` interface.
  *
- * @param <E> An event type. This is a list of event receiver parameter types.
+ * @typeparam E An event type. This is a list of event receiver parameter types.
  * @param value An object to check.
  *
  * @returns `true` if `value` contains `[AfterEvent__symbol]` property, or `false` otherwise.

@@ -1,10 +1,10 @@
-import { OnEvent } from './on-event';
-import { AfterEvent__symbol, EventKeeper, isEventKeeper } from './event-keeper';
-import { EventSender, OnEvent__symbol } from './event-sender';
-import { EventReceiver } from './event-receiver';
-import { EventInterest } from './event-interest';
-import { EventEmitter } from './event-emitter';
 import { noop } from 'call-thru';
+import { EventEmitter } from './event-emitter';
+import { eventInterest, EventInterest } from './event-interest';
+import { AfterEvent__symbol, EventKeeper, isEventKeeper } from './event-keeper';
+import { EventReceiver } from './event-receiver';
+import { EventSender, OnEvent__symbol } from './event-sender';
+import { OnEvent } from './on-event';
 
 /**
  * A kept and upcoming events receiver registration function interface.
@@ -14,7 +14,7 @@ import { noop } from 'call-thru';
  *
  * To convert a plain event receiver registration function to `AfterEvent` an `afterEventBy()` function can be used.
  *
- * @param <E> An event type. This is a list of event receiver parameter types.
+ * @typeparam E An event type. This is a list of event receiver parameter types.
  */
 export abstract class AfterEvent<E extends any[]> extends OnEvent<E> implements EventKeeper<E> {
 
@@ -50,6 +50,7 @@ export abstract class AfterEvent<E extends any[]> extends OnEvent<E> implements 
  * The `initial` event will be kept until more events received. After that the latest event sent will be kept.
  * If an event is sent immediately upon receiver registration, the `initial` event won't be created or sent.
  *
+ * @typeparam E An event type. This is a list of event receiver parameter types.
  * @param register An event receiver registration function returning an event interest.
  * @param initial An event tuple to keep initially. Or a function creating such event. When omitted the initial
  * event is expected to be sent by `register` function. A receiver registration would lead to an error otherwise.
@@ -88,7 +89,7 @@ export function afterEventBy<E extends any[]>(
       return receiver(...event);
     });
 
-    if (!reported) {
+    if (!reported && !interest.done) {
       receiver(...last());
     }
 
@@ -103,6 +104,7 @@ export function afterEventBy<E extends any[]>(
 /**
  * Builds an `AfterEvent` registrar of receivers of events kept and sent by the given `keeper`.
  *
+ * @typeparam E An event type. This is a list of event receiver parameter types.
  * @param keeper A keeper of events.
  *
  * @returns An `AfterEvent` registrar instance.
@@ -116,6 +118,7 @@ export function afterEventFrom<E extends any[]>(keeper: EventKeeper<E>): AfterEv
  * kept. If the `sender` sends an event immediately upon receiver registration, the `initial` event won't be created
  * or used.
  *
+ * @typeparam E An event type. This is a list of event receiver parameter types.
  * @param sender An event sender.
  * @param initial A an event tuple to keep initially. Or a function creating such event.
  *
@@ -154,4 +157,50 @@ export function afterEventOf<E extends any[]>(...event: E): AfterEvent<E> {
 
 function noEvent(): never {
   throw new Error('No events to send');
+}
+
+/**
+ * Builds an `AfterEvent` registrar of receivers of events sent by all event keepers in `source` map.
+ *
+ * @typeparam S A type of `sources` map.
+ * @param sources A map of named event keepers the events are originated from.
+ *
+ * @returns An event keeper sending a map of events received from each event keeper. Each event in this map has the
+ * same name as its originating event keeper in `sources`.
+ */
+export function afterEventFromAll<S extends { readonly [key: string]: EventKeeper<any> }>(sources: S):
+    AfterEvent<[{ readonly [key in keyof S]: EventKeeper.Event<S[key]> }]> {
+  return afterEventBy<[{ [key in keyof S]: EventKeeper.Event<S[key]> }]>(receiver => {
+
+    const kept: { [key in keyof S]: EventKeeper.Event<S[key]> } = {} as any;
+    const interests: EventInterest[] = [];
+    const interest = eventInterest(reason => {
+      interests.forEach(i => i.off(reason));
+    });
+    // Do not send events until receiving from all sources.
+    let send: (event: { [key in keyof S]: EventKeeper.Event<S[key]> }) => void = noop;
+
+    // Registering source receivers.
+    Object.keys(sources).forEach(key => {
+      if (!interest.done) {
+
+        const source = sources[key];
+        const sourceInterest = source[AfterEvent__symbol]((...event) => {
+          kept[key] = event;
+          send(kept);
+        });
+
+        interests.push(sourceInterest);
+        interest.needs(sourceInterest);
+      }
+    });
+    if (!interest.done) {
+      // Now receiving events from all sources.
+      // Start sending them.
+      send = receiver;
+      receiver(kept);
+    }
+
+    return interest;
+  }).share();
 }
