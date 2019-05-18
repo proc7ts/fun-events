@@ -139,6 +139,7 @@ export function afterEventFrom<E extends any[], R>(
 
   const afterEvent = senderOrKeeper[AfterEvent__symbol];
 
+  // noinspection SuspiciousTypeOfGuard
   if (afterEvent instanceof AfterEvent) {
     return afterEvent;
   }
