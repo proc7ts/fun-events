@@ -693,7 +693,7 @@ export function onEventFrom<E extends any[]>(senderOrKeeper: EventSender<E> | Ev
 /**
  * An `OnEvent` registrar of receivers that would never receive any events.
  */
-export const onNever: OnEvent<any> = /*#__PURE__*/ onEventBy(() => noEventInterest());
+export const onNever: OnEvent<any> = /*#__PURE__*/ onEventBy(noEventInterest);
 
 /**
  * Builds an `OnEvent` registrar of receivers of events sent by any of the given senders of keepers.
