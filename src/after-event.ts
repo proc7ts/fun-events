@@ -1,6 +1,6 @@
 import { noop } from 'call-thru';
 import { EventEmitter } from './event-emitter';
-import { eventInterest, EventInterest } from './event-interest';
+import { eventInterest, EventInterest, noEventInterest } from './event-interest';
 import { AfterEvent__symbol, EventKeeper, isEventKeeper } from './event-keeper';
 import { EventReceiver } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
@@ -154,6 +154,11 @@ export function afterEventFrom<E extends any[], R>(
 export function afterEventOf<E extends any[]>(...event: E): AfterEvent<E> {
   return afterEventFrom(new EventEmitter<E>(), event);
 }
+
+/**
+ * An `AfterEvent` registrar of receivers that would never receive any events.
+ */
+export const afterNever: AfterEvent<any> = /*#__PURE__*/ afterEventBy(noEventInterest);
 
 function noEvent(): never {
   throw new Error('No events to send');

@@ -1,5 +1,5 @@
 import { noop, passIf } from 'call-thru';
-import { AfterEvent, afterEventBy, afterEventFrom, afterEventFromAll, afterEventOf } from './after-event';
+import { AfterEvent, afterEventBy, afterEventFrom, afterEventFromAll, afterEventOf, afterNever } from './after-event';
 import { EventEmitter } from './event-emitter';
 import { eventInterest, EventInterest, noEventInterest } from './event-interest';
 import { AfterEvent__symbol } from './event-keeper';
@@ -396,5 +396,11 @@ describe('AfterEvent', () => {
 
       expect(afterEvent[AfterEvent__symbol]).toBe(afterEvent);
     });
+  });
+});
+
+describe('afterNever', () => {
+  it('returns no event interest', () => {
+    expect(afterNever(noop)).toBe(noEventInterest());
   });
 });
