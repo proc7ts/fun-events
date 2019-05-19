@@ -203,7 +203,7 @@ export function afterEventFromAll<S extends { readonly [key: string]: EventKeepe
 
     return interest;
 
-    function receiveFrom(key: string): EventInterest {
+    function receiveFrom(key: keyof S): EventInterest {
       if (interest.done) {
         return noEventInterest();
       }

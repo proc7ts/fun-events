@@ -185,7 +185,7 @@ describe('OnEvent', () => {
       nested1 = new EventEmitter();
       nested2 = new EventEmitter();
       receiver = jest.fn();
-      extract = jest.fn(nested => nested);
+      extract = jest.fn((nested?) => nested);
       result = sender.on.dig(extract);
       interest = result(receiver);
     });
@@ -284,7 +284,7 @@ describe('OnEvent', () => {
       nested1 = new EventEmitter();
       nested2 = new EventEmitter();
       receiver = jest.fn();
-      consume = jest.fn(nested => nested && nested.on(receiver));
+      consume = jest.fn((nested?) => nested && nested.on(receiver));
       interest = sender.on.consume(consume);
     });
 

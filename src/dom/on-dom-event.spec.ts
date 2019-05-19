@@ -16,7 +16,7 @@ describe('OnDomEvent', () => {
     mockInterest = {
       off: jest.fn(),
     } as any;
-    mockRegister = jest.fn(listener => {
+    mockRegister = jest.fn((listener, _opts?) => {
       registeredListener = listener;
       return mockInterest;
     });
