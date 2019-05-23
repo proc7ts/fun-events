@@ -5,6 +5,7 @@ import { EventNotifier } from './event-notifier';
 import { EventReceiver } from './event-receiver';
 import { EventSender, isEventSender, OnEvent__symbol } from './event-sender';
 import Args = NextCall.Callee.Args;
+import Result = NextCall.CallResult;
 
 /**
  * An event receiver registration function interface.
@@ -135,99 +136,73 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
     return shareInterestTo(this);
   }
 
-  thru<R1,
-      TE extends Args<R1>>(
-      fn1: (this: void, ...args: E) => R1):
-      OnEvent<TE>;
-
-  thru<
-      R1,
-      P2 extends Args<R1>, R2,
-      TE extends Args<R2>>(
+  thru<R1>(
       fn1: (this: void, ...args: E) => R1,
-      fn2: (this: void, ...args: P2) => R2):
-      OnEvent<TE>;
+  ): OnEvent<Args<R1>>;
 
   thru<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      TE extends Args<R3>>(
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2>(
       fn1: (this: void, ...args: E) => R1,
       fn2: (this: void, ...args: P2) => R2,
-      fn3: (this: void, ...args: P3) => R3):
-      OnEvent<TE>;
+  ): OnEvent<Args<R2>>;
 
   thru<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4,
-      TE extends Args<R4>>(
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3>(
       fn1: (this: void, ...args: E) => R1,
       fn2: (this: void, ...args: P2) => R2,
       fn3: (this: void, ...args: P3) => R3,
-      fn4: (this: void, ...args: P4) => R4):
-      OnEvent<TE>;
+  ): OnEvent<Args<R3>>;
 
   thru<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4,
-      P5 extends Args<R4>, R5,
-      TE extends Args<R5>>(
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3 extends Result<P4, R4>,
+      P4 extends any[], R4>(
       fn1: (this: void, ...args: E) => R1,
       fn2: (this: void, ...args: P2) => R2,
       fn3: (this: void, ...args: P3) => R3,
       fn4: (this: void, ...args: P4) => R4,
-      fn5: (this: void, ...args: P5) => R5):
-      OnEvent<TE>;
+  ): OnEvent<Args<R4>>;
 
   thru<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4,
-      P5 extends Args<R4>, R5,
-      P6 extends Args<R5>, R6,
-      TE extends Args<R6>>(
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3 extends Result<P4, R4>,
+      P4 extends any[], R4 extends Result<P5, R5>,
+      P5 extends any[], R5>(
       fn1: (this: void, ...args: E) => R1,
       fn2: (this: void, ...args: P2) => R2,
       fn3: (this: void, ...args: P3) => R3,
       fn4: (this: void, ...args: P4) => R4,
       fn5: (this: void, ...args: P5) => R5,
-      fn6: (this: void, ...args: P6) => R6):
-      OnEvent<TE>;
+  ): OnEvent<Args<R5>>;
 
   thru<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4,
-      P5 extends Args<R4>, R5,
-      P6 extends Args<R5>, R6,
-      P7 extends Args<R6>, R7,
-      TE extends Args<R7>>(
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3 extends Result<P4, R4>,
+      P4 extends any[], R4 extends Result<P5, R5>,
+      P5 extends any[], R5 extends Result<P6, R6>,
+      P6 extends any[], R6>(
       fn1: (this: void, ...args: E) => R1,
       fn2: (this: void, ...args: P2) => R2,
       fn3: (this: void, ...args: P3) => R3,
       fn4: (this: void, ...args: P4) => R4,
       fn5: (this: void, ...args: P5) => R5,
       fn6: (this: void, ...args: P6) => R6,
-      fn7: (this: void, ...args: P7) => R7):
-      OnEvent<TE>;
+  ): OnEvent<Args<R6>>;
 
   thru<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4,
-      P5 extends Args<R4>, R5,
-      P6 extends Args<R5>, R6,
-      P7 extends Args<R6>, R7,
-      P8 extends Args<R7>, R8,
-      TE extends Args<R8>>(
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3 extends Result<P4, R4>,
+      P4 extends any[], R4 extends Result<P5, R5>,
+      P5 extends any[], R5 extends Result<P6, R6>,
+      P6 extends any[], R6 extends Result<P7, R7>,
+      P7 extends any[], R7>(
       fn1: (this: void, ...args: E) => R1,
       fn2: (this: void, ...args: P2) => R2,
       fn3: (this: void, ...args: P3) => R3,
@@ -235,20 +210,17 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
       fn5: (this: void, ...args: P5) => R5,
       fn6: (this: void, ...args: P6) => R6,
       fn7: (this: void, ...args: P7) => R7,
-      fn8: (this: void, ...args: P8) => R8):
-      OnEvent<TE>;
+  ): OnEvent<Args<R7>>;
 
   thru<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4,
-      P5 extends Args<R4>, R5,
-      P6 extends Args<R5>, R6,
-      P7 extends Args<R6>, R7,
-      P8 extends Args<R7>, R8,
-      P9 extends Args<R8>, R9,
-      TE extends Args<R9>>(
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3 extends Result<P4, R4>,
+      P4 extends any[], R4 extends Result<P5, R5>,
+      P5 extends any[], R5 extends Result<P6, R6>,
+      P6 extends any[], R6 extends Result<P7, R7>,
+      P7 extends any[], R7 extends Result<P8, R8>,
+      P8 extends any[], R8>(
       fn1: (this: void, ...args: E) => R1,
       fn2: (this: void, ...args: P2) => R2,
       fn3: (this: void, ...args: P3) => R3,
@@ -257,21 +229,18 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
       fn6: (this: void, ...args: P6) => R6,
       fn7: (this: void, ...args: P7) => R7,
       fn8: (this: void, ...args: P8) => R8,
-      fn9: (this: void, ...args: P9) => R9):
-      OnEvent<TE>;
+  ): OnEvent<Args<R8>>;
 
   thru<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4,
-      P5 extends Args<R4>, R5,
-      P6 extends Args<R5>, R6,
-      P7 extends Args<R6>, R7,
-      P8 extends Args<R7>, R8,
-      P9 extends Args<R8>, R9,
-      P10 extends Args<R9>, R10,
-      TE extends Args<R10>>(
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3 extends Result<P4, R4>,
+      P4 extends any[], R4 extends Result<P5, R5>,
+      P5 extends any[], R5 extends Result<P6, R6>,
+      P6 extends any[], R6 extends Result<P7, R7>,
+      P7 extends any[], R7 extends Result<P8, R8>,
+      P8 extends any[], R8 extends Result<P9, R9>,
+      P9 extends any[], R9>(
       fn1: (this: void, ...args: E) => R1,
       fn2: (this: void, ...args: P2) => R2,
       fn3: (this: void, ...args: P3) => R3,
@@ -281,22 +250,19 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
       fn7: (this: void, ...args: P7) => R7,
       fn8: (this: void, ...args: P8) => R8,
       fn9: (this: void, ...args: P9) => R9,
-      fn10: (this: void, ...args: P10) => R10):
-      OnEvent<TE>;
+  ): OnEvent<Args<R9>>;
 
   thru<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4,
-      P5 extends Args<R4>, R5,
-      P6 extends Args<R5>, R6,
-      P7 extends Args<R6>, R7,
-      P8 extends Args<R7>, R8,
-      P9 extends Args<R8>, R9,
-      P10 extends Args<R9>, R10,
-      P11 extends Args<R10>, R11,
-      TE extends Args<R11>>(
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3 extends Result<P4, R4>,
+      P4 extends any[], R4 extends Result<P5, R5>,
+      P5 extends any[], R5 extends Result<P6, R6>,
+      P6 extends any[], R6 extends Result<P7, R7>,
+      P7 extends any[], R7 extends Result<P8, R8>,
+      P8 extends any[], R8 extends Result<P9, R9>,
+      P9 extends any[], R9 extends Result<P10, R10>,
+      P10 extends any[], R10>(
       fn1: (this: void, ...args: E) => R1,
       fn2: (this: void, ...args: P2) => R2,
       fn3: (this: void, ...args: P3) => R3,
@@ -307,23 +273,20 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
       fn8: (this: void, ...args: P8) => R8,
       fn9: (this: void, ...args: P9) => R9,
       fn10: (this: void, ...args: P10) => R10,
-      fn11: (this: void, ...args: P11) => R11):
-      OnEvent<TE>;
+  ): OnEvent<Args<R10>>;
 
   thru<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4,
-      P5 extends Args<R4>, R5,
-      P6 extends Args<R5>, R6,
-      P7 extends Args<R6>, R7,
-      P8 extends Args<R7>, R8,
-      P9 extends Args<R8>, R9,
-      P10 extends Args<R9>, R10,
-      P11 extends Args<R10>, R11,
-      P12 extends Args<R11>, R12,
-      TE extends Args<R12>>(
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3 extends Result<P4, R4>,
+      P4 extends any[], R4 extends Result<P5, R5>,
+      P5 extends any[], R5 extends Result<P6, R6>,
+      P6 extends any[], R6 extends Result<P7, R7>,
+      P7 extends any[], R7 extends Result<P8, R8>,
+      P8 extends any[], R8 extends Result<P9, R9>,
+      P9 extends any[], R9 extends Result<P10, R10>,
+      P10 extends any[], R10 extends Result<P11, R11>,
+      P11 extends any[], R11>(
       fn1: (this: void, ...args: E) => R1,
       fn2: (this: void, ...args: P2) => R2,
       fn3: (this: void, ...args: P3) => R3,
@@ -335,33 +298,21 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
       fn9: (this: void, ...args: P9) => R9,
       fn10: (this: void, ...args: P10) => R10,
       fn11: (this: void, ...args: P11) => R11,
-      fn12: (this: void, ...args: P12) => R12):
-      OnEvent<TE>;
+  ): OnEvent<Args<R11>>;
 
-  /**
-   * Constructs an event receiver registrar that passes the original event trough the chain of transformation passes.
-   *
-   * The passes are preformed by `callThru()` function. The event receivers registered by resulting `OnEvent` registrar
-   * are called by the last pass in chain. Thus they can be e.g. filtered out or called multiple times.
-   *
-   * @returns An `OnEvent` registrar of receivers of events transformed with provided passes. The returned registrar
-   * shares the interest to transformed events among receivers.
-   */
   thru<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4,
-      P5 extends Args<R4>, R5,
-      P6 extends Args<R5>, R6,
-      P7 extends Args<R6>, R7,
-      P8 extends Args<R7>, R8,
-      P9 extends Args<R8>, R9,
-      P10 extends Args<R9>, R10,
-      P11 extends Args<R10>, R11,
-      P12 extends Args<R11>, R12,
-      P13 extends Args<R12>, R13,
-      TE extends Args<R13>>(
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3 extends Result<P4, R4>,
+      P4 extends any[], R4 extends Result<P5, R5>,
+      P5 extends any[], R5 extends Result<P6, R6>,
+      P6 extends any[], R6 extends Result<P7, R7>,
+      P7 extends any[], R7 extends Result<P8, R8>,
+      P8 extends any[], R8 extends Result<P9, R9>,
+      P9 extends any[], R9 extends Result<P10, R10>,
+      P10 extends any[], R10 extends Result<P11, R11>,
+      P11 extends any[], R11 extends Result<P12, R12>,
+      P12 extends any[], R12>(
       fn1: (this: void, ...args: E) => R1,
       fn2: (this: void, ...args: P2) => R2,
       fn3: (this: void, ...args: P3) => R3,
@@ -374,202 +325,31 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
       fn10: (this: void, ...args: P10) => R10,
       fn11: (this: void, ...args: P11) => R11,
       fn12: (this: void, ...args: P12) => R12,
-      fn13: (this: void, ...args: P13) => R13):
-      OnEvent<TE>;
+  ): OnEvent<Args<R12>>;
 
-  thru(...fns: any[]): OnEvent<any[]> {
-    return shareInterestTo((this as any).thru_(...fns));
-  }
-
-  thru_<R1,
-      TE extends Args<R1>>(
-      fn1: (this: void, ...args: E) => R1):
-      OnEvent<TE>;
-
-  thru_<
-      R1,
-      P2 extends Args<R1>, R2,
-      TE extends Args<R2>>(
-      fn1: (this: void, ...args: E) => R1,
-      fn2: (this: void, ...args: P2) => R2):
-      OnEvent<TE>;
-
-  thru_<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      TE extends Args<R3>>(
-      fn1: (this: void, ...args: E) => R1,
-      fn2: (this: void, ...args: P2) => R2,
-      fn3: (this: void, ...args: P3) => R3):
-      OnEvent<TE>;
-
-  thru_<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4,
-      TE extends Args<R4>>(
-      fn1: (this: void, ...args: E) => R1,
-      fn2: (this: void, ...args: P2) => R2,
-      fn3: (this: void, ...args: P3) => R3,
-      fn4: (this: void, ...args: P4) => R4):
-      OnEvent<TE>;
-
-  thru_<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4,
-      P5 extends Args<R4>, R5,
-      TE extends Args<R5>>(
-      fn1: (this: void, ...args: E) => R1,
-      fn2: (this: void, ...args: P2) => R2,
-      fn3: (this: void, ...args: P3) => R3,
-      fn4: (this: void, ...args: P4) => R4,
-      fn5: (this: void, ...args: P5) => R5):
-      OnEvent<TE>;
-
-  thru_<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4,
-      P5 extends Args<R4>, R5,
-      P6 extends Args<R5>, R6,
-      TE extends Args<R6>>(
-      fn1: (this: void, ...args: E) => R1,
-      fn2: (this: void, ...args: P2) => R2,
-      fn3: (this: void, ...args: P3) => R3,
-      fn4: (this: void, ...args: P4) => R4,
-      fn5: (this: void, ...args: P5) => R5,
-      fn6: (this: void, ...args: P6) => R6):
-      OnEvent<TE>;
-
-  thru_<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4,
-      P5 extends Args<R4>, R5,
-      P6 extends Args<R5>, R6,
-      P7 extends Args<R6>, R7,
-      TE extends Args<R7>>(
-      fn1: (this: void, ...args: E) => R1,
-      fn2: (this: void, ...args: P2) => R2,
-      fn3: (this: void, ...args: P3) => R3,
-      fn4: (this: void, ...args: P4) => R4,
-      fn5: (this: void, ...args: P5) => R5,
-      fn6: (this: void, ...args: P6) => R6,
-      fn7: (this: void, ...args: P7) => R7):
-      OnEvent<TE>;
-
-  thru_<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4,
-      P5 extends Args<R4>, R5,
-      P6 extends Args<R5>, R6,
-      P7 extends Args<R6>, R7,
-      P8 extends Args<R7>, R8,
-      TE extends Args<R8>>(
-      fn1: (this: void, ...args: E) => R1,
-      fn2: (this: void, ...args: P2) => R2,
-      fn3: (this: void, ...args: P3) => R3,
-      fn4: (this: void, ...args: P4) => R4,
-      fn5: (this: void, ...args: P5) => R5,
-      fn6: (this: void, ...args: P6) => R6,
-      fn7: (this: void, ...args: P7) => R7,
-      fn8: (this: void, ...args: P8) => R8):
-      OnEvent<TE>;
-
-  thru_<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4,
-      P5 extends Args<R4>, R5,
-      P6 extends Args<R5>, R6,
-      P7 extends Args<R6>, R7,
-      P8 extends Args<R7>, R8,
-      P9 extends Args<R8>, R9,
-      TE extends Args<R9>>(
-      fn1: (this: void, ...args: E) => R1,
-      fn2: (this: void, ...args: P2) => R2,
-      fn3: (this: void, ...args: P3) => R3,
-      fn4: (this: void, ...args: P4) => R4,
-      fn5: (this: void, ...args: P5) => R5,
-      fn6: (this: void, ...args: P6) => R6,
-      fn7: (this: void, ...args: P7) => R7,
-      fn8: (this: void, ...args: P8) => R8,
-      fn9: (this: void, ...args: P9) => R9):
-      OnEvent<TE>;
-
-  thru_<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4,
-      P5 extends Args<R4>, R5,
-      P6 extends Args<R5>, R6,
-      P7 extends Args<R6>, R7,
-      P8 extends Args<R7>, R8,
-      P9 extends Args<R8>, R9,
-      P10 extends Args<R9>, R10,
-      TE extends Args<R10>>(
-      fn1: (this: void, ...args: E) => R1,
-      fn2: (this: void, ...args: P2) => R2,
-      fn3: (this: void, ...args: P3) => R3,
-      fn4: (this: void, ...args: P4) => R4,
-      fn5: (this: void, ...args: P5) => R5,
-      fn6: (this: void, ...args: P6) => R6,
-      fn7: (this: void, ...args: P7) => R7,
-      fn8: (this: void, ...args: P8) => R8,
-      fn9: (this: void, ...args: P9) => R9,
-      fn10: (this: void, ...args: P10) => R10):
-      OnEvent<TE>;
-
-  thru_<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4,
-      P5 extends Args<R4>, R5,
-      P6 extends Args<R5>, R6,
-      P7 extends Args<R6>, R7,
-      P8 extends Args<R7>, R8,
-      P9 extends Args<R8>, R9,
-      P10 extends Args<R9>, R10,
-      P11 extends Args<R10>, R11,
-      TE extends Args<R11>>(
-      fn1: (this: void, ...args: E) => R1,
-      fn2: (this: void, ...args: P2) => R2,
-      fn3: (this: void, ...args: P3) => R3,
-      fn4: (this: void, ...args: P4) => R4,
-      fn5: (this: void, ...args: P5) => R5,
-      fn6: (this: void, ...args: P6) => R6,
-      fn7: (this: void, ...args: P7) => R7,
-      fn8: (this: void, ...args: P8) => R8,
-      fn9: (this: void, ...args: P9) => R9,
-      fn10: (this: void, ...args: P10) => R10,
-      fn11: (this: void, ...args: P11) => R11):
-      OnEvent<TE>;
-
-  thru_<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4,
-      P5 extends Args<R4>, R5,
-      P6 extends Args<R5>, R6,
-      P7 extends Args<R6>, R7,
-      P8 extends Args<R7>, R8,
-      P9 extends Args<R8>, R9,
-      P10 extends Args<R9>, R10,
-      P11 extends Args<R10>, R11,
-      P12 extends Args<R11>, R12,
-      TE extends Args<R12>>(
+  /**
+   * Constructs an event receiver registrar that passes the original event trough the chain of transformation passes.
+   *
+   * The passes are preformed by `callThru()` function. The event receivers registered by resulting `OnEvent` registrar
+   * are called by the last pass in chain. Thus they can be e.g. filtered out or called multiple times.
+   *
+   * @returns An `OnEvent` registrar of receivers of events transformed with provided passes. The returned registrar
+   * shares the interest to transformed events among receivers.
+   */
+  thru<
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3 extends Result<P4, R4>,
+      P4 extends any[], R4 extends Result<P5, R5>,
+      P5 extends any[], R5 extends Result<P6, R6>,
+      P6 extends any[], R6 extends Result<P7, R7>,
+      P7 extends any[], R7 extends Result<P8, R8>,
+      P8 extends any[], R8 extends Result<P9, R9>,
+      P9 extends any[], R9 extends Result<P10, R10>,
+      P10 extends any[], R10 extends Result<P11, R11>,
+      P11 extends any[], R11 extends Result<P12, R12>,
+      P12 extends any[], R12 extends Result<P13, R13>,
+      P13 extends any[], R13>(
       fn1: (this: void, ...args: E) => R1,
       fn2: (this: void, ...args: P2) => R2,
       fn3: (this: void, ...args: P3) => R3,
@@ -581,8 +361,204 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
       fn9: (this: void, ...args: P9) => R9,
       fn10: (this: void, ...args: P10) => R10,
       fn11: (this: void, ...args: P11) => R11,
-      fn12: (this: void, ...args: P12) => R12):
-      OnEvent<TE>;
+      fn12: (this: void, ...args: P12) => R12,
+      fn13: (this: void, ...args: P13) => R13,
+  ): OnEvent<Args<R12>>;
+
+  thru(...fns: any[]): OnEvent<any[]> {
+    return shareInterestTo((this as any).thru_(...fns));
+  }
+
+  thru_<R1>(
+      fn1: (this: void, ...args: E) => R1,
+  ): OnEvent<Args<R1>>;
+
+  thru_<
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2>(
+      fn1: (this: void, ...args: E) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+  ): OnEvent<Args<R2>>;
+
+  thru_<
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3>(
+      fn1: (this: void, ...args: E) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+  ): OnEvent<Args<R3>>;
+
+  thru_<
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3 extends Result<P4, R4>,
+      P4 extends any[], R4>(
+      fn1: (this: void, ...args: E) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+  ): OnEvent<Args<R4>>;
+
+  thru_<
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3 extends Result<P4, R4>,
+      P4 extends any[], R4 extends Result<P5, R5>,
+      P5 extends any[], R5>(
+      fn1: (this: void, ...args: E) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+  ): OnEvent<Args<R5>>;
+
+  thru_<
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3 extends Result<P4, R4>,
+      P4 extends any[], R4 extends Result<P5, R5>,
+      P5 extends any[], R5 extends Result<P6, R6>,
+      P6 extends any[], R6>(
+      fn1: (this: void, ...args: E) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6,
+  ): OnEvent<Args<R6>>;
+
+  thru_<
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3 extends Result<P4, R4>,
+      P4 extends any[], R4 extends Result<P5, R5>,
+      P5 extends any[], R5 extends Result<P6, R6>,
+      P6 extends any[], R6 extends Result<P7, R7>,
+      P7 extends any[], R7>(
+      fn1: (this: void, ...args: E) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6,
+      fn7: (this: void, ...args: P7) => R7,
+  ): OnEvent<Args<R7>>;
+
+  thru_<
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3 extends Result<P4, R4>,
+      P4 extends any[], R4 extends Result<P5, R5>,
+      P5 extends any[], R5 extends Result<P6, R6>,
+      P6 extends any[], R6 extends Result<P7, R7>,
+      P7 extends any[], R7 extends Result<P8, R8>,
+      P8 extends any[], R8>(
+      fn1: (this: void, ...args: E) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6,
+      fn7: (this: void, ...args: P7) => R7,
+      fn8: (this: void, ...args: P8) => R8,
+  ): OnEvent<Args<R8>>;
+
+  thru_<
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3 extends Result<P4, R4>,
+      P4 extends any[], R4 extends Result<P5, R5>,
+      P5 extends any[], R5 extends Result<P6, R6>,
+      P6 extends any[], R6 extends Result<P7, R7>,
+      P7 extends any[], R7 extends Result<P8, R8>,
+      P8 extends any[], R8 extends Result<P9, R9>,
+      P9 extends any[], R9>(
+      fn1: (this: void, ...args: E) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6,
+      fn7: (this: void, ...args: P7) => R7,
+      fn8: (this: void, ...args: P8) => R8,
+      fn9: (this: void, ...args: P9) => R9,
+  ): OnEvent<Args<R9>>;
+
+  thru_<
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3 extends Result<P4, R4>,
+      P4 extends any[], R4 extends Result<P5, R5>,
+      P5 extends any[], R5 extends Result<P6, R6>,
+      P6 extends any[], R6 extends Result<P7, R7>,
+      P7 extends any[], R7 extends Result<P8, R8>,
+      P8 extends any[], R8 extends Result<P9, R9>,
+      P9 extends any[], R9 extends Result<P10, R10>,
+      P10 extends any[], R10>(
+      fn1: (this: void, ...args: E) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6,
+      fn7: (this: void, ...args: P7) => R7,
+      fn8: (this: void, ...args: P8) => R8,
+      fn9: (this: void, ...args: P9) => R9,
+      fn10: (this: void, ...args: P10) => R10,
+  ): OnEvent<Args<R10>>;
+
+  thru_<
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3 extends Result<P4, R4>,
+      P4 extends any[], R4 extends Result<P5, R5>,
+      P5 extends any[], R5 extends Result<P6, R6>,
+      P6 extends any[], R6 extends Result<P7, R7>,
+      P7 extends any[], R7 extends Result<P8, R8>,
+      P8 extends any[], R8 extends Result<P9, R9>,
+      P9 extends any[], R9 extends Result<P10, R10>,
+      P10 extends any[], R10 extends Result<P11, R11>,
+      P11 extends any[], R11>(
+      fn1: (this: void, ...args: E) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6,
+      fn7: (this: void, ...args: P7) => R7,
+      fn8: (this: void, ...args: P8) => R8,
+      fn9: (this: void, ...args: P9) => R9,
+      fn10: (this: void, ...args: P10) => R10,
+      fn11: (this: void, ...args: P11) => R11,
+  ): OnEvent<Args<R11>>;
+
+  thru_<
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3 extends Result<P4, R4>,
+      P4 extends any[], R4 extends Result<P5, R5>,
+      P5 extends any[], R5 extends Result<P6, R6>,
+      P6 extends any[], R6 extends Result<P7, R7>,
+      P7 extends any[], R7 extends Result<P8, R8>,
+      P8 extends any[], R8 extends Result<P9, R9>,
+      P9 extends any[], R9 extends Result<P10, R10>,
+      P10 extends any[], R10 extends Result<P11, R11>,
+      P11 extends any[], R11 extends Result<P12, R12>,
+      P12 extends any[], R12>(
+      fn1: (this: void, ...args: E) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6,
+      fn7: (this: void, ...args: P7) => R7,
+      fn8: (this: void, ...args: P8) => R8,
+      fn9: (this: void, ...args: P9) => R9,
+      fn10: (this: void, ...args: P10) => R10,
+      fn11: (this: void, ...args: P11) => R11,
+      fn12: (this: void, ...args: P12) => R12,
+  ): OnEvent<Args<R12>>;
 
   /**
    * Constructs an event receiver registrar that passes the original event trough the chain of transformation passes
@@ -595,20 +571,19 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
    * @returns An `OnEvent` registrar of receivers of events transformed with provided passes.
    */
   thru_<
-      R1,
-      P2 extends Args<R1>, R2,
-      P3 extends Args<R2>, R3,
-      P4 extends Args<R3>, R4,
-      P5 extends Args<R4>, R5,
-      P6 extends Args<R5>, R6,
-      P7 extends Args<R6>, R7,
-      P8 extends Args<R7>, R8,
-      P9 extends Args<R8>, R9,
-      P10 extends Args<R9>, R10,
-      P11 extends Args<R10>, R11,
-      P12 extends Args<R11>, R12,
-      P13 extends Args<R12>, R13,
-      TE extends Args<R13>>(
+      R1 extends Result<P2, R2>,
+      P2 extends any[], R2 extends Result<P3, R3>,
+      P3 extends any[], R3 extends Result<P4, R4>,
+      P4 extends any[], R4 extends Result<P5, R5>,
+      P5 extends any[], R5 extends Result<P6, R6>,
+      P6 extends any[], R6 extends Result<P7, R7>,
+      P7 extends any[], R7 extends Result<P8, R8>,
+      P8 extends any[], R8 extends Result<P9, R9>,
+      P9 extends any[], R9 extends Result<P10, R10>,
+      P10 extends any[], R10 extends Result<P11, R11>,
+      P11 extends any[], R11 extends Result<P12, R12>,
+      P12 extends any[], R12 extends Result<P13, R13>,
+      P13 extends any[], R13>(
       fn1: (this: void, ...args: E) => R1,
       fn2: (this: void, ...args: P2) => R2,
       fn3: (this: void, ...args: P3) => R3,
@@ -621,8 +596,8 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
       fn10: (this: void, ...args: P10) => R10,
       fn11: (this: void, ...args: P11) => R11,
       fn12: (this: void, ...args: P12) => R12,
-      fn13: (this: void, ...args: P13) => R13):
-      OnEvent<TE>;
+      fn13: (this: void, ...args: P13) => R13,
+  ): OnEvent<Args<R12>>;
 
   thru_(...fns: any[]): OnEvent<any[]> {
 
