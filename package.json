@@ -26,7 +26,7 @@
   "esm5": "dist/fun-events.esm5.js",
   "typings": "index.d.ts",
   "dependencies": {
-    "call-thru": "^2.4.0",
+    "call-thru": "^2.5.0-rc.1",
     "tslib": "^1.9.0"
   },
   "devDependencies": {

@@ -701,10 +701,10 @@ cache-base@^1.0.1:
     union-value "^1.0.0"
     unset-value "^1.0.0"
 
-call-thru@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/call-thru/-/call-thru-2.4.0.tgz#d74790926f47c7afa74c6ccf3d9961f2d4e2513f"
-  integrity sha512-bRtgVfhNExcXJXzQ2T6ai0RApOqyRbiJlI7NsrltUBDxDatSuul1B1LD/QzNSWH4T3MXV69vTIMJlYklznrJEw==
+call-thru@^2.5.0-rc.1:
+  version "2.5.0-rc.1"
+  resolved "https://registry.yarnpkg.com/call-thru/-/call-thru-2.5.0-rc.1.tgz#b52d182bf0882bd8c1f9a69326f79a7f8808410b"
+  integrity sha512-4AiPCxOff7cmhY0dzxyUH+wpN/OD5mmBpbjnH6U9iCyuVtvtTJKQ8wv/ns2tTTHU9z0nsn/uV9Wi8hmuhKBqTQ==
   dependencies:
     tslib "^1.9.0"
 
