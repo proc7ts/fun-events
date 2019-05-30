@@ -5,7 +5,6 @@ import { eventInterest, EventInterest, noEventInterest } from './event-interest'
 import { AfterEvent__symbol } from './event-keeper';
 import { EventReceiver } from './event-receiver';
 import { OnEvent__symbol } from './event-sender';
-import { OnEvent } from './on-event';
 import { trackValue, ValueTracker } from './value';
 import Mock = jest.Mock;
 import Mocked = jest.Mocked;
@@ -292,95 +291,129 @@ describe('AfterEvent', () => {
     });
   });
 
-  describe('thru', () => {
+  describe('keep', () => {
+    describe('dig', () => {
 
-    let initial: [string, string];
-    let mockRegister: Mock;
-    let mockInterest: Mocked<EventInterest>;
-    let registeredReceiver: (event1: string, event2: string) => void;
-    let afterEvent: AfterEvent<[string, string]>;
-    let mockReceiver: Mock<void, [string]>;
+      let sender: ValueTracker<ValueTracker<string>>;
+      let nested1: ValueTracker<string>;
+      let nested2: ValueTracker<string>;
+      let extract: Mock<ValueTracker<string>, [ValueTracker<string>]>;
+      let result: AfterEvent<[string]>;
+      let receiver: Mock<void, [string]>;
+      let interest: EventInterest;
 
-    beforeEach(() => {
-      initial = ['init1', 'init2'];
-      mockInterest = {
-        off: jest.fn(),
-        whenDone: jest.fn(),
-      } as any;
-      mockInterest.off.mockName('interest.off()');
-      mockRegister = jest.fn(receiver => {
-        registeredReceiver = receiver;
-        return mockInterest;
+      beforeEach(() => {
+        nested1 = trackValue('1');
+        nested2 = trackValue('2');
+        sender = trackValue(nested1);
+        receiver = jest.fn();
+        extract = jest.fn((nested) => nested);
+        result = sender.read.keep.dig(extract);
+        interest = result(receiver);
       });
-      afterEvent = afterEventBy(mockRegister, initial);
-      mockReceiver = jest.fn();
+
+      it('returns `AfterEvent` registrar', () => {
+        expect(result).toBeInstanceOf(AfterEvent);
+      });
+      it('receives nested events', () => {
+        expect(receiver).toHaveBeenCalledWith('1');
+        sender.it = nested2;
+        expect(receiver).toHaveBeenCalledWith('2');
+        nested2.it = '3';
+        expect(receiver).toHaveBeenCalledWith('3');
+      });
     });
 
-    it('registers event receiver', () => {
+    describe('thru', () => {
 
-      const transformed: OnEvent<[string]> = afterEvent.thru(
-          (event1: string, event2: string) => `${event1}, ${event2}`
-      );
+      let initial: [string, string];
+      let mockRegister: Mock;
+      let mockInterest: Mocked<EventInterest>;
+      let registeredReceiver: (event1: string, event2: string) => void;
+      let afterEvent: AfterEvent<[string, string]>;
+      let mockReceiver: Mock<void, [string]>;
 
-      transformed(mockReceiver);
-      expect(mockRegister).toHaveBeenCalled();
-    });
-    it('unregisters event receiver when interest lost', () => {
+      beforeEach(() => {
+        initial = ['init1', 'init2'];
+        mockInterest = {
+          off: jest.fn(),
+          whenDone: jest.fn(),
+        } as any;
+        mockInterest.off.mockName('interest.off()');
+        mockRegister = jest.fn(receiver => {
+          registeredReceiver = receiver;
+          return mockInterest;
+        });
+        afterEvent = afterEventBy(mockRegister, initial);
+        mockReceiver = jest.fn();
+      });
 
-      const transforming = afterEventFrom<[string]>(afterEvent.thru(
-          (event1: string, event2: string) => `${event1}, ${event2}`
-      ));
+      it('registers event receiver', () => {
 
-      const interest1 = transforming(mockReceiver);
-      const interest2 = transforming(jest.fn());
+        const transforming = afterEvent.keep.thru(
+            (event1: string, event2: string) => `${event1}, ${event2}`
+        );
 
-      interest1.off();
-      expect(mockInterest.off).not.toHaveBeenCalled();
-      interest2.off();
-      expect(mockInterest.off).toHaveBeenCalled();
-    });
-    it('transforms original event', () => {
+        transforming(mockReceiver);
+        expect(mockRegister).toHaveBeenCalled();
+      });
+      it('unregisters event receiver when interest lost', () => {
 
-      const transforming = afterEventFrom(afterEvent.thru(
-          (event1: string, event2: string) => `${event1}, ${event2}`
-      ));
+        const transforming = afterEvent.keep.thru(
+            (event1: string, event2: string) => `${event1}, ${event2}`
+        );
 
-      transforming(mockReceiver);
+        const interest1 = transforming(mockReceiver);
+        const interest2 = transforming(jest.fn());
 
-      registeredReceiver('a', 'bb');
+        interest1.off();
+        expect(mockInterest.off).not.toHaveBeenCalled();
+        interest2.off();
+        expect(mockInterest.off).toHaveBeenCalled();
+      });
+      it('transforms original event', () => {
 
-      expect(mockReceiver).toHaveBeenCalledWith('init1, init2');
-      expect(mockReceiver).toHaveBeenCalledWith('a, bb');
-    });
-    it('skips original event', () => {
+        const transforming = afterEvent.keep.thru(
+            (event1: string, event2: string) => `${event1}, ${event2}`
+        );
 
-      const transforming = afterEventFrom(afterEvent.thru(
-          passIf<[string, string], string>((event1: string, event2: string) => event1 < event2),
-          (event1: string, event2: string) => `${event1}, ${event2}`,
-      ));
+        transforming(mockReceiver);
 
-      transforming(mockReceiver);
+        registeredReceiver('a', 'bb');
 
-      registeredReceiver('a', 'bb');
-      expect(mockReceiver).toHaveBeenCalledWith('init1, init2');
-      expect(mockReceiver).toHaveBeenCalledWith('a, bb');
+        expect(mockReceiver).toHaveBeenCalledWith('init1, init2');
+        expect(mockReceiver).toHaveBeenCalledWith('a, bb');
+      });
+      it('skips original event', () => {
 
-      mockReceiver.mockClear();
-      expect(mockReceiver).not.toHaveBeenCalled();
-    });
-    it('exhausts when original sender exhausts', () => {
+        const transforming = afterEvent.keep.thru(
+            passIf<[string, string], string>((event1: string, event2: string) => event1 < event2),
+            (event1: string, event2: string) => `${event1}, ${event2}`,
+        );
 
-      const mockDone = jest.fn();
-      const transforming = afterEventFrom(afterEvent.thru(
-          (event1: string, event2: string) => `${event1}, ${event2}`
-      ));
+        transforming(mockReceiver);
 
-      transforming(mockReceiver).whenDone(mockDone);
+        registeredReceiver('a', 'bb');
+        expect(mockReceiver).toHaveBeenCalledWith('init1, init2');
+        expect(mockReceiver).toHaveBeenCalledWith('a, bb');
 
-      const reason = 'some reason';
+        mockReceiver.mockClear();
+        expect(mockReceiver).not.toHaveBeenCalled();
+      });
+      it('exhausts when original sender exhausts', () => {
 
-      mockInterest.whenDone.mock.calls[0][0](reason);
-      expect(mockDone).toHaveBeenCalledWith(reason);
+        const mockDone = jest.fn();
+        const transforming = afterEvent.keep.thru(
+            (event1: string, event2: string) => `${event1}, ${event2}`
+        );
+
+        transforming(mockReceiver).whenDone(mockDone);
+
+        const reason = 'some reason';
+
+        mockInterest.whenDone.mock.calls[0][0](reason);
+        expect(mockDone).toHaveBeenCalledWith(reason);
+      });
     });
   });
 

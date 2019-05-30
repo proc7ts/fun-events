@@ -64,15 +64,16 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
    * @returns An `OnEvent` registrar of extracted events receivers. The events exhaust once the incoming events do.
    * The returned registrar shares the interest to extracted events among receivers.
    */
-  dig<F extends any[]>(extract: (this: void, ...event: E) => EventSender<F> | EventKeeper<F> | undefined): OnEvent<F> {
+  dig<F extends any[]>(
+      extract: (this: void, ...event: E) => EventSender<F> | EventKeeper<F> | void | undefined): OnEvent<F> {
     return shareInterestTo(this.dig_(extract));
   }
 
   /**
    * Extracts event senders from incoming events.
    *
-   * This method does the same as `thru_()` one, except it interest does not share the interest to extracted events
-   * among receivers. This may be useful e.g. when the result will be further transformed. It is wise to share the
+   * This method does the same as `dig()` one, except it does not share the interest to extracted events among
+   * receivers. This may be useful e.g. when the result will be further transformed. It is wise to share the
    * interest to final result in this case.
    *
    * @typeparam F Extracted event type.
@@ -81,7 +82,8 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
    *
    * @returns An `OnEvent` registrar of extracted events receivers. The events exhaust once the incoming events do.
    */
-  dig_<F extends any[]>(extract: (this: void, ...event: E) => EventSender<F> | EventKeeper<F> | undefined): OnEvent<F> {
+  dig_<F extends any[]>(
+      extract: (this: void, ...event: E) => EventSender<F> | EventKeeper<F> | void | undefined): OnEvent<F> {
     return onEventBy((receiver: EventReceiver<F>) => {
 
       let nestedInterest = noEventInterest();
@@ -536,7 +538,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   ): OnEvent<R13>;
 
   /**
-   * Constructs an event receiver registrar that passes the original event trough the chain of transformation passes.
+   * Constructs an `OnEvent` registrar of receivers of original events passed trough the chain of transformations.
    *
    * The passes are preformed by `callThru()` function. The event receivers registered by resulting `OnEvent` registrar
    * are called by the last pass in chain. Thus they can be e.g. filtered out or called multiple times.
@@ -978,7 +980,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   ): OnEvent<R13>;
 
   /**
-   * Constructs an event receiver registrar that passes the original event trough the chain of transformation passes
+   * Constructs an `OnEvent` registrar of receivers of original events passed trough the chain of transformations
    * without sharing the result.
    *
    * This method does the same as `thru_()` one, except it interest does not share the interest to transformed events
