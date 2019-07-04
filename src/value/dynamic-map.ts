@@ -1,4 +1,3 @@
-import { asis, nextArgs } from 'call-thru';
 import { AfterEvent, afterEventFrom } from '../after-event';
 import { EventEmitter } from '../event-emitter';
 import { AfterEvent__symbol, EventKeeper } from '../event-keeper';
@@ -103,7 +102,12 @@ export namespace DynamicMap {
     set(key: K, value?: V): V | undefined;
 
     /**
-     * Builds new snapshot out of current modifications.
+     * Takes a snapshot of current associations.
+     *
+     * This method is called after a series of modifications. The returned snapshot is then sent to registered snapshot
+     * receivers.
+     *
+     * @returns The latest snapshot
      */
     snapshot(): S;
 
@@ -126,7 +130,7 @@ export namespace DynamicMap {
      *
      * @returns An iterable iterator of key/value tuples.
      */
-    [Symbol.iterator](): IterableIterator<[K, V]>;
+        [Symbol.iterator](): IterableIterator<[K, V]>;
 
     /**
      * Requests a value associated with the given `key`.
@@ -197,12 +201,11 @@ export function dynamicMap<K, V, S>(
     editor: DynamicMap.Editor<K, V, S> = new IterableSnapshotEditor<K, V>() as DynamicMap.Editor<K, V, any>):
     DynamicMap<K, V, S> {
 
-  const updates = new EventEmitter<[S, [K, V][], [K, V][]]>();
-  const on: OnEvent<[[K, V][], [K, V][]]> = updates.on.thru(
-      (_snapshot, added, removed) => nextArgs(added, removed),
-  );
+  const updates = new EventEmitter<[[K, V][], [K, V][]]>();
   const read = afterEventFrom<[S]>(
-      updates.on.thru(asis),
+      updates.on.thru(
+          () => editor.snapshot(),
+      ),
       () => [editor.snapshot()]
   );
 
@@ -210,7 +213,7 @@ export function dynamicMap<K, V, S>(
 
     // noinspection JSMethodCanBeStatic
     get on() {
-      return on;
+      return updates.on;
     }
 
     // noinspection JSMethodCanBeStatic
@@ -226,7 +229,7 @@ export function dynamicMap<K, V, S>(
       set(key, value, added, removed);
 
       if (added.length || removed.length) {
-        updates.send(editor.snapshot(), added, removed);
+        updates.send(added, removed);
       }
 
       return this;
@@ -242,7 +245,7 @@ export function dynamicMap<K, V, S>(
       }
 
       if (added.length || removed.length) {
-        updates.send(editor.snapshot(), added, removed);
+        updates.send(added, removed);
       }
 
       return this;

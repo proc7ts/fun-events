@@ -128,6 +128,18 @@ describe('DynamicMap', () => {
       expect(afterEventFrom(map)).toBe(map.read);
     });
   });
+
+  it('does not build snapshots if there is no snapshot receivers', () => {
+
+    const editor = new TestEditor();
+
+    map = dynamicMap(editor);
+    map.on(onUpdate);
+    map.set('key', 'value');
+    expect(onUpdate).toHaveBeenCalledWith([['key', 'value']], []);
+    expect(editor.snapshot).not.toHaveBeenCalled();
+  });
+
 });
 
 describe('dynamicMap() without editor', () => {
