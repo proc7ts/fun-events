@@ -36,9 +36,10 @@ describe('DynamicMap', () => {
   let readSnapshot: Mock<void, [{ [key: string]: string }]>;
 
   beforeEach(() => {
+    map.set('init', '1');
     map.on(onUpdate = jest.fn());
     map.read(readSnapshot = jest.fn());
-    expect(readSnapshot).toHaveBeenCalledWith({});
+    expect(readSnapshot).toHaveBeenCalledWith({ init: '1' });
     readSnapshot.mockClear();
   });
 
@@ -46,7 +47,7 @@ describe('DynamicMap', () => {
     it('associates a value with a key', () => {
       map.set('key', 'value');
       expect(onUpdate).toHaveBeenCalledWith([['key', 'value']], []);
-      expect(readSnapshot).toHaveBeenCalledWith({ key: 'value' });
+      expect(readSnapshot).toHaveBeenCalledWith({ init: '1', key: 'value' });
     });
     it('replaces associated value', () => {
       map.set('key', 'value');
@@ -54,7 +55,7 @@ describe('DynamicMap', () => {
       readSnapshot.mockClear();
       map.set('key', 'other');
       expect(onUpdate).toHaveBeenCalledWith([['key', 'other']], [['key', 'value']]);
-      expect(readSnapshot).toHaveBeenCalledWith({ key: 'other' });
+      expect(readSnapshot).toHaveBeenCalledWith({ init: '1', key: 'other' });
     });
     it('does nothing with the same value', () => {
       map.set('key', 'value');
@@ -73,7 +74,7 @@ describe('DynamicMap', () => {
       readSnapshot.mockClear();
       map.delete('key');
       expect(onUpdate).toHaveBeenCalledWith([], [['key', 'value']]);
-      expect(readSnapshot).toHaveBeenCalledWith({});
+      expect(readSnapshot).toHaveBeenCalledWith({ init: '1' });
     });
   });
 
@@ -81,7 +82,7 @@ describe('DynamicMap', () => {
     it('associates values with keys', () => {
       map.from([['key', 'value'], ['key2', 'value2']]);
       expect(onUpdate).toHaveBeenCalledWith([['key', 'value'], ['key2', 'value2']], []);
-      expect(readSnapshot).toHaveBeenCalledWith({ key: 'value', key2: 'value2' });
+      expect(readSnapshot).toHaveBeenCalledWith({ init: '1', key: 'value', key2: 'value2' });
     });
     it('replaces associated values', () => {
       map.set('key', 'value');
@@ -89,7 +90,7 @@ describe('DynamicMap', () => {
       readSnapshot.mockClear();
       map.from([['key', 'other'], ['key2', 'value2']]);
       expect(onUpdate).toHaveBeenCalledWith([['key', 'other'], ['key2', 'value2']], [['key', 'value']]);
-      expect(readSnapshot).toHaveBeenCalledWith({ key: 'other', key2: 'value2' });
+      expect(readSnapshot).toHaveBeenCalledWith({ init: '1', key: 'other', key2: 'value2' });
     });
     it('removes key/value associations', () => {
       map.set('key', 'value');
@@ -97,7 +98,7 @@ describe('DynamicMap', () => {
       readSnapshot.mockClear();
       map.from([['key', undefined], ['key2', 'value2']]);
       expect(onUpdate).toHaveBeenCalledWith([['key2', 'value2']], [['key', 'value']]);
-      expect(readSnapshot).toHaveBeenCalledWith({ key2: 'value2' });
+      expect(readSnapshot).toHaveBeenCalledWith({ init: '1', key2: 'value2' });
     });
     it('does nothing with the same values', () => {
       map.set('key', 'value');

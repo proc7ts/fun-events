@@ -53,7 +53,9 @@ export abstract class DynamicMap<K, V, S = DynamicMap.IterableSnapshot<K, V>>
    *
    * @returns `this` instance.
    */
-  abstract set(key: K, value: V | undefined): this;
+  set(key: K, value: V | undefined): this {
+    return this.from([[key, value]]);
+  }
 
   /**
    * Removes the value association with the given `key`.
@@ -76,7 +78,7 @@ export abstract class DynamicMap<K, V, S = DynamicMap.IterableSnapshot<K, V>>
    *
    * @returns `this` instance.
    */
-  abstract from(entries: Iterable<[K, V | undefined]>): this;
+  abstract from(entries: Iterable<[K, V?]>): this;
 
 }
 
@@ -130,7 +132,7 @@ export namespace DynamicMap {
      *
      * @returns An iterable iterator of key/value tuples.
      */
-        [Symbol.iterator](): IterableIterator<[K, V]>;
+    [Symbol.iterator](): IterableIterator<[K, V]>;
 
     /**
      * Requests a value associated with the given `key`.
@@ -221,21 +223,7 @@ export function dynamicMap<K, V, S>(
       return read;
     }
 
-    set(key: K, value: V | undefined): this {
-
-      const added: [K, V][] = [];
-      const removed: [K, V][] = [];
-
-      set(key, value, added, removed);
-
-      if (added.length || removed.length) {
-        updates.send(added, removed);
-      }
-
-      return this;
-    }
-
-    from(entries: Iterable<[K, (V | undefined)]>): this {
+    from(entries: Iterable<[K, V?]>): this {
 
       const added: [K, V][] = [];
       const removed: [K, V][] = [];
