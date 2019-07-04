@@ -131,7 +131,6 @@ class Trackers {
 
 }
 
-// tslint:disable-next-line:no-use-before-declare
 class SubStateTracker implements StateTracker {
 
   readonly update: StateUpdateReceiver = (<V>(path: StatePath, newValue: V, oldValue: V) => {
