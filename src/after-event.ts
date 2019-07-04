@@ -1077,7 +1077,7 @@ export function afterEventFrom<E extends any[]>(
     initial?: ((this: void) => E) | E):
     AfterEvent<E>;
 
-export function afterEventFrom<E extends any[], R>(
+export function afterEventFrom<E extends any[]>(
     senderOrKeeper: EventSender<E> | EventKeeper<E>,
     initial?: ((this: void) => E) | E):
     AfterEvent<E> {

@@ -12,7 +12,6 @@ describe('ValueSync', () => {
   let v2: ValueTracker<number>;
   let ei2: EventInterest;
   let v3: ValueTracker<number>;
-  let ei3: EventInterest;
   let sync: ValueSync<number>;
 
   beforeEach(() => {
@@ -22,7 +21,7 @@ describe('ValueSync', () => {
     v3 = trackValue(3);
     ei1 = sync.sync('out', v1);
     ei2 = sync.sync(v2);
-    ei3 = sync.sync(v3);
+    sync.sync(v3);
   });
 
   it('initializes the added values', () => {

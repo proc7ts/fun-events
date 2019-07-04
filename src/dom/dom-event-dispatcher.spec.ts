@@ -12,7 +12,7 @@ describe('DomEventDispatcher', () => {
 
   beforeEach(() => {
     targetSpy = {
-      addEventListener: jest.fn((type: string, listener: EventListener) => {
+      addEventListener: jest.fn((_type: string, listener: EventListener) => {
         registeredListener = listener;
       }),
       removeEventListener: jest.fn(),

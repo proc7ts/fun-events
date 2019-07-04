@@ -300,7 +300,6 @@ describe('AfterEvent', () => {
       let extract: Mock<ValueTracker<string>, [ValueTracker<string>]>;
       let result: AfterEvent<[string]>;
       let receiver: Mock<void, [string]>;
-      let interest: EventInterest;
 
       beforeEach(() => {
         nested1 = trackValue('1');
@@ -309,7 +308,7 @@ describe('AfterEvent', () => {
         receiver = jest.fn();
         extract = jest.fn((nested) => nested);
         result = sender.read.keep.dig(extract);
-        interest = result(receiver);
+        result(receiver);
       });
 
       it('returns `AfterEvent` registrar', () => {
