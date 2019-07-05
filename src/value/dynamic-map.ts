@@ -80,6 +80,18 @@ export abstract class DynamicMap<K, V, S = DynamicMap.IterableSnapshot<K, V>>
    */
   abstract from(entries: Iterable<[K, V?]>): this;
 
+  /**
+   * Removes all registered event receivers.
+   *
+   * After this method call they won't receive events. Informs all corresponding event interests on that by calling
+   * the callbacks registered with `whenDone()`.
+
+   * @param reason A reason to stop sending events to receivers.
+   *
+   * @returns `this` instance.
+   */
+  abstract done(reason?: any): this;
+
 }
 
 export namespace DynamicMap {
@@ -237,6 +249,11 @@ export function dynamicMap<K, V, S>(
         updates.send(added, removed);
       }
 
+      return this;
+    }
+
+    done(reason?: any): this {
+      updates.done(reason);
       return this;
     }
 

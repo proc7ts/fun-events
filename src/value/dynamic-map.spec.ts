@@ -34,13 +34,14 @@ describe('DynamicMap', () => {
   });
 
   let onUpdate: Mock<void, [[string, string][], [string, string][]]>;
+  let updatesInterest: EventInterest;
   let readSnapshot: Mock<void, [{ [key: string]: string }]>;
-  let readInterest: EventInterest;
+  let snapshotsInterest: EventInterest;
 
   beforeEach(() => {
     map.set('init', '1');
-    map.on(onUpdate = jest.fn());
-    readInterest = map.read(readSnapshot = jest.fn());
+    updatesInterest = map.on(onUpdate = jest.fn());
+    snapshotsInterest = map.read(readSnapshot = jest.fn());
     expect(readSnapshot).toHaveBeenCalledWith({ init: '1' });
     readSnapshot.mockClear();
   });
@@ -71,7 +72,7 @@ describe('DynamicMap', () => {
 
   describe('read', () => {
     it('sends actual snapshot even when updated without receivers', () => {
-      readInterest.off();
+      snapshotsInterest.off();
       map.set('key', 'value');
       map.read(readSnapshot);
       expect(readSnapshot).toHaveBeenCalledWith({ init: '1', key: 'value' });
@@ -150,6 +151,25 @@ describe('DynamicMap', () => {
     map.set('key', 'value');
     expect(onUpdate).toHaveBeenCalledWith([['key', 'value']], []);
     expect(editor.snapshot).not.toHaveBeenCalled();
+  });
+
+  describe('done', () => {
+    it('stops sending updates', () => {
+
+      const updatesDone = jest.fn();
+
+      updatesInterest.whenDone(updatesDone);
+
+      const snapshotsDone = jest.fn();
+
+      snapshotsInterest.whenDone(snapshotsDone);
+
+      const reason = 'some reason';
+
+      map.done(reason);
+      expect(updatesDone).toHaveBeenCalledWith(reason);
+      expect(snapshotsDone).toHaveBeenCalledWith(reason);
+    });
   });
 
 });
