@@ -64,40 +64,29 @@ export abstract class EventInterest {
  * Constructs new `EventInterest` instance.
  *
  * @param off A function to call to indicate the lost of interest in receiving events. Accepts a single parameter
- * indicating the reason of losing interest that will be passed to `whenDone()` callbacks.
+ * indicating the reason of losing interest that will be passed to `whenDone()` callbacks. No-op by default.
  * @param whenDone A function that will be called to register events exhaust callback. This function will be called
  * at most once. The `off()` method would call the registered callbacks in any case.
  */
 export function eventInterest(
-    off: (this: EventInterest, reason?: any) => void,
+    off: (this: EventInterest, reason?: any) => void = noop,
     {
       whenDone = noop,
     }: {
       whenDone?: (callback: (this: EventInterest, reason?: any) => void) => void;
     } = {}): EventInterest {
 
-  let _done = false;
-  let _reason: any | undefined;
-  let _whenDone: (reason?: any) => void = noop;
-
-  function doWhenDone(reason?: any) {
-    if (!_done) {
-
-      const callback = _whenDone;
-
-      _done = true;
-      _reason = reason;
-      _whenDone = noop;
-      callback(reason);
-    }
-  }
+  let alreadyDone = false;
+  let doneReason: any | undefined;
+  let doneCallback: (reason?: any) => void = noop;
 
   whenDone(doWhenDone);
 
   class Interest extends EventInterest {
 
+    // noinspection JSMethodCanBeStatic
     get done() {
-      return _done;
+      return alreadyDone;
     }
 
     off(reason?: any): void {
@@ -106,13 +95,13 @@ export function eventInterest(
     }
 
     whenDone(callback: (reason?: any) => void): this {
-      if (_done) {
-        callback(_reason);
+      if (alreadyDone) {
+        callback(doneReason);
       } else {
 
-        const prev = _whenDone;
+        const prev = doneCallback;
 
-        _whenDone = reason => {
+        doneCallback = reason => {
           prev(reason);
           callback(reason);
         };
@@ -124,10 +113,23 @@ export function eventInterest(
   }
 
   return new Interest();
+
+  function doWhenDone(reason?: any) {
+    if (!alreadyDone) {
+
+      const callback = doneCallback;
+
+      alreadyDone = true;
+      doneReason = reason;
+      doneCallback = noop;
+      callback(reason);
+    }
+  }
 }
 
 class NoInterest extends EventInterest {
 
+  // noinspection JSMethodCanBeStatic
   get done() {
     return true;
   }

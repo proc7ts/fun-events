@@ -22,7 +22,7 @@ describe('AfterEvent', () => {
     it('builds an `AfterEvent` registrar by arbitrary function', () => {
 
       let registeredReceiver: EventReceiver<[string]> = noop;
-      const mockInterest = eventInterest(noop);
+      const mockInterest = eventInterest();
       const mockRegister = jest.fn<EventInterest, [EventReceiver<[string]>]>(rcv => {
         registeredReceiver = rcv;
         return mockInterest;
@@ -50,7 +50,7 @@ describe('AfterEvent', () => {
 
     beforeEach(() => {
       registeredReceiver = noop;
-      mockInterest = eventInterest(noop);
+      mockInterest = eventInterest();
       mockFallback = jest.fn(() => ['fallback']);
       mockRegister = jest.fn<EventInterest, [EventReceiver<[string]>]>(rcv => {
         registeredReceiver = rcv;
@@ -98,7 +98,7 @@ describe('AfterEvent', () => {
       it('returns fallback when last receiver removed there are receivers', () => {
         mockRegister.mockImplementation(rcv => {
           registeredReceiver = rcv;
-          return eventInterest(noop);
+          return eventInterest();
         });
 
         const interest1 = afterEvent(mockReceiver);
@@ -280,7 +280,7 @@ describe('AfterEvent', () => {
       const reason = 'some reason';
       const stopper = afterEventBy<[string]>(() => {
 
-        const stop = eventInterest(noop);
+        const stop = eventInterest();
 
         stop.off(reason);
 
