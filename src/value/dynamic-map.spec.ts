@@ -1,4 +1,5 @@
 import { afterEventFrom } from '../after-event';
+import { EventInterest } from '../event-interest';
 import { onEventFrom } from '../on-event';
 import { dynamicMap, DynamicMap } from './dynamic-map';
 import Mock = jest.Mock;
@@ -34,11 +35,12 @@ describe('DynamicMap', () => {
 
   let onUpdate: Mock<void, [[string, string][], [string, string][]]>;
   let readSnapshot: Mock<void, [{ [key: string]: string }]>;
+  let readInterest: EventInterest;
 
   beforeEach(() => {
     map.set('init', '1');
     map.on(onUpdate = jest.fn());
-    map.read(readSnapshot = jest.fn());
+    readInterest = map.read(readSnapshot = jest.fn());
     expect(readSnapshot).toHaveBeenCalledWith({ init: '1' });
     readSnapshot.mockClear();
   });
@@ -64,6 +66,15 @@ describe('DynamicMap', () => {
       map.set('key', 'value');
       expect(onUpdate).not.toHaveBeenCalled();
       expect(readSnapshot).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('read', () => {
+    it('sends actual snapshot even when updated without receivers', () => {
+      readInterest.off();
+      map.set('key', 'value');
+      map.read(readSnapshot);
+      expect(readSnapshot).toHaveBeenCalledWith({ init: '1', key: 'value' });
     });
   });
 

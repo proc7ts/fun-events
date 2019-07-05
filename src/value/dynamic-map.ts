@@ -1,4 +1,4 @@
-import { AfterEvent, afterEventFrom } from '../after-event';
+import { AfterEvent, afterEventBy } from '../after-event';
 import { EventEmitter } from '../event-emitter';
 import { AfterEvent__symbol, EventKeeper } from '../event-keeper';
 import { EventSender, OnEvent__symbol } from '../event-sender';
@@ -204,12 +204,13 @@ export function dynamicMap<K, V, S>(
     DynamicMap<K, V, S> {
 
   const updates = new EventEmitter<[[K, V][], [K, V][]]>();
-  const read = afterEventFrom<[S]>(
-      updates.on.thru(
-          () => editor.snapshot(),
-      ),
-      () => [editor.snapshot()]
+  const onSnapshot = updates.on.thru(
+      () => editor.snapshot(),
   );
+  const read = afterEventBy<[S]>(receiver => {
+    receiver(editor.snapshot());
+    return onSnapshot(receiver);
+  }).share();
 
   class DMap extends DynamicMap<K, V, S> {
 
