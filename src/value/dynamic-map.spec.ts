@@ -185,10 +185,11 @@ describe('dynamicMap() without editor', () => {
   let onUpdate: Mock<void, [[string, string][], [string, string][]]>;
   let readSnapshot: Mock<void, [DynamicMap.IterableSnapshot<string, string>]>;
   let lastSnapshot: DynamicMap.IterableSnapshot<string, string>;
+  let snapshotInterest: EventInterest;
 
   beforeEach(() => {
     map.on(onUpdate = jest.fn());
-    map.read(readSnapshot = jest.fn(snapshot => {
+    snapshotInterest = map.read(readSnapshot = jest.fn(snapshot => {
       lastSnapshot = snapshot;
     }));
     expect([...lastSnapshot]).toHaveLength(0);
@@ -218,6 +219,21 @@ describe('dynamicMap() without editor', () => {
       expect(onUpdate).not.toHaveBeenCalled();
       expect(readSnapshot).not.toHaveBeenCalled();
     });
+    it('retains snapshot instance without modifications', () => {
+      map.set('key', 'value');
+      map.read.once(snapshot => {
+        expect(snapshot).toBe(lastSnapshot);
+      });
+    });
+    it('replaces snapshot instance after modifications', () => {
+      map.set('key', 'value');
+      snapshotInterest.off();
+      map.set('key', 'value2');
+      map.set('key2', 'value2');
+      map.read.once(snapshot => {
+        expect(snapshot).not.toBe(lastSnapshot);
+      });
+    });
   });
 
   describe('delete', () => {
@@ -227,6 +243,10 @@ describe('dynamicMap() without editor', () => {
       map.delete('key');
       expect(onUpdate).toHaveBeenCalledWith([], [['key', 'value']]);
       expect(lastSnapshot.get('key')).toBeUndefined();
+    });
+    it('does nothing when no such key', () => {
+      map.delete('wrong');
+      expect(onUpdate).not.toHaveBeenCalled();
     });
   });
 

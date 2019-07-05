@@ -161,30 +161,41 @@ export namespace DynamicMap {
 
 class IterableSnapshotEditor<K, V> implements DynamicMap.Editor<K, V, DynamicMap.IterableSnapshot<K, V>> {
 
-  private readonly _map = new Map<K, V>();
+  private _map = new Map<K, V>();
+  private _shot?: DynamicMap.IterableSnapshot<K, V>;
 
   set(key: K, value?: V): V | undefined {
 
+    const self = this;
     const replaced = this._map.get(key);
 
     if (value !== undefined) {
-      this._map.set(key, value);
-    } else {
-      this._map.delete(key);
+      modify().set(key, value);
+    } else if (replaced) {
+      modify().delete(key);
     }
 
     return replaced;
+
+    function modify(): Map<K, V> {
+      if (!self._shot) {
+        return self._map;
+      }
+
+      const map = new Map<K, V>();
+
+      for (const [k, v] of self._map.entries()) {
+        map.set(k, v);
+      }
+
+      self._shot = undefined;
+
+      return self._map = map;
+    }
   }
 
   snapshot(): DynamicMap.IterableSnapshot<K, V> {
-
-    const map = new Map<K, V>();
-
-    for (const [key, value] of this._map.entries()) {
-      map.set(key, value);
-    }
-
-    return map;
+    return this._shot || (this._shot = this._map);
   }
 
 }
