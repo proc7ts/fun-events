@@ -25,7 +25,7 @@ export class EventNotifier<E extends any[]> implements EventSender<E> {
   private readonly _rcvs = new Set<ReceiverInfo<E>>();
 
   /**
-   * The number of registered event receivers.
+   * The number of currently registered event receivers.
    */
   get size(): number {
     return this._rcvs.size;
@@ -40,7 +40,7 @@ export class EventNotifier<E extends any[]> implements EventSender<E> {
    *
    * Receivers registered with this method will receive the emitted events.
    *
-   * An `[OnEvent__symbol]` method is an alias of this one.
+   * The `[OnEvent__symbol]` method is an alias of this one.
    *
    * @param receiver A receiver of events.
    *
