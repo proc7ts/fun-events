@@ -1,3 +1,5 @@
+import { EventReceiver } from '../event-receiver';
+
 /**
  * A state updates receiver function.
  *
@@ -8,7 +10,22 @@
  * @param newValue New value.
  * @param oldValue Previous value.
  */
-export type StateUpdateReceiver = <V>(this: void, path: StatePath, newValue: V, oldValue: V) => void;
+export type StateUpdateReceiver = <V>(
+    this: StateUpdateReceiver.Context,
+    path: StatePath,
+    newValue: V,
+    oldValue: V,
+) => void;
+
+export namespace StateUpdateReceiver {
+
+  export interface Context extends EventReceiver.Context<[StatePath, any, any]> {
+
+    afterRecurrent(receiver: StateUpdateReceiver): void;
+
+  }
+
+}
 
 /**
  * A path to state or its part. E.g. property value.

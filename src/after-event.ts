@@ -2,7 +2,7 @@ import { NextCall, noop } from 'call-thru';
 import { EventEmitter } from './event-emitter';
 import { eventInterest, EventInterest, noEventInterest } from './event-interest';
 import { AfterEvent__symbol, EventKeeper, isEventKeeper } from './event-keeper';
-import { EventReceiver } from './event-receiver';
+import { EventReceiver, receiveEventsBy } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
 import { OnEvent } from './on-event';
 import Result = NextCall.CallResult;
@@ -1026,18 +1026,20 @@ export function afterEventBy<E extends any[]>(
 
   const afterEvent = ((receiver: EventReceiver<E>) => {
 
-    let reported = false;
-    const interest = register((...event: E) => {
-      lastEvent = event;
-      reported = true;
-      return receiver(...event);
-    });
+    let dest: EventReceiver<E> = noop;
+    const interest = register(dispatch);
 
-    if (!reported && !interest.done) {
-      receiver(...last());
+    if (!interest.done) {
+      receiveEventsBy(receiver)(...last());
+      dest = receiver;
     }
 
     return interest;
+
+    function dispatch(this: EventReceiver.Context<E>, ...event: E) {
+      lastEvent = event;
+      dest.apply(this, event);
+    }
   }) as AfterEvent<E>;
 
   Object.setPrototypeOf(afterEvent, After.prototype);
@@ -1070,7 +1072,7 @@ export function afterEventOr<E extends any[]>(
 
   class AfterOr extends AfterEvent<E> {
 
-    // noinspection TypescriptExplicitMemberType
+    // noinspection JSMethodCanBeStatic
     get kept() {
       return last();
     }
@@ -1079,16 +1081,14 @@ export function afterEventOr<E extends any[]>(
 
   const afterEvent = ((receiver: EventReceiver<E>) => {
 
-    let reported = false;
-    const interest = register((...event: E) => {
-      lastEvent = event;
-      reported = true;
-      return receiver(...event);
-    });
+    let dest: EventReceiver<E> = noop;
+    const interest = register(dispatch);
+
     ++numReceivers;
 
-    if (!reported && !interest.done) {
-      receiver(...last());
+    if (!interest.done) {
+      receiveEventsBy(receiver)(...last());
+      dest = receiver;
     }
 
     return interest.whenDone(() => {
@@ -1096,6 +1096,11 @@ export function afterEventOr<E extends any[]>(
         lastEvent = undefined;
       }
     });
+
+    function dispatch(this: EventReceiver.Context<E>, ...event: E) {
+      lastEvent = event;
+      dest.apply(this, event);
+    }
   }) as AfterEvent<E>;
 
   Object.setPrototypeOf(afterEvent, AfterOr.prototype);
@@ -1204,7 +1209,7 @@ export function afterEventFromAll<S extends { readonly [key: string]: EventKeepe
 
     const kept: { [key in keyof S]: EventKeeper.Event<S[key]> } = {} as any;
     // Do not send events until receiving from all sources.
-    let send: (event: { [key in keyof S]: EventKeeper.Event<S[key]> }) => void = noop;
+    let send: EventReceiver<[{ [key in keyof S]: EventKeeper.Event<S[key]> }]> = noop;
     let interests: EventInterest[] = [];
     const interest = eventInterest(interestLost);
 
@@ -1214,7 +1219,7 @@ export function afterEventFromAll<S extends { readonly [key: string]: EventKeepe
       // Now receiving events from all sources.
       // Start sending them.
       send = receiver;
-      receiver(kept);
+      receiveEventsBy(receiver)(kept);
     }
 
     return interest;
@@ -1225,9 +1230,9 @@ export function afterEventFromAll<S extends { readonly [key: string]: EventKeepe
       }
 
       const source = sources[key];
-      const sourceInterest = source[AfterEvent__symbol]((...event) => {
+      const sourceInterest = source[AfterEvent__symbol](function (...event) {
         kept[key] = event;
-        send(kept);
+        send.call(this, kept);
       });
 
       interest.needs(sourceInterest);

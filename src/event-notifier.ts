@@ -1,6 +1,6 @@
 import { noop } from 'call-thru';
 import { eventInterest, EventInterest } from './event-interest';
-import { EventReceiver } from './event-receiver';
+import { EventReceiver, receiveEventsByEach } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
 
 type ReceiverInfo<E extends any[]> = [EventReceiver<E>, (this: void, reason?: any) => void];
@@ -23,6 +23,13 @@ export class EventNotifier<E extends any[]> implements EventSender<E> {
    * @internal
    */
   private readonly _rcvs = new Set<ReceiverInfo<E>>();
+
+  /**
+   * Sends the given `event` to all registered receivers.
+   *
+   * @param event An event to send represented by function call arguments.
+   */
+  readonly send: (this: this, ...event: E) => void = receiveEventsByEach(allReceivers(this._rcvs));
 
   /**
    * The number of currently registered event receivers.
@@ -62,15 +69,6 @@ export class EventNotifier<E extends any[]> implements EventSender<E> {
   }
 
   /**
-   * Sends the given `event` to all registered receivers.
-   *
-   * @param event An event to send represented by function call arguments.
-   */
-  send(...event: E): void {
-    this._rcvs.forEach(([receiver]) => receiver(...event));
-  }
-
-  /**
    * Removes all registered event receivers.
    *
    * After this method call they won't receive events. Informs all corresponding event interests on that by calling
@@ -86,4 +84,14 @@ export class EventNotifier<E extends any[]> implements EventSender<E> {
     return this;
   }
 
+}
+
+function allReceivers<E extends any[]>(rcvs: Set<ReceiverInfo<E>>): Iterable<EventReceiver<E>> {
+  return {
+    * [Symbol.iterator]() {
+      for (const [receiver] of rcvs) {
+        yield receiver;
+      }
+    }
+  };
 }

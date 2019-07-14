@@ -46,9 +46,9 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean) => {
       return this(
-          event => {
+          function(event) {
             event.preventDefault();
-            listener(event);
+            listener.call(this, event);
           },
           opts);
     });
@@ -65,9 +65,9 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean) => {
       return this(
-          event => {
+          function (event) {
             event.stopPropagation();
-            listener(event);
+            listener.call(this, event);
           },
           opts);
     });
@@ -83,9 +83,9 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean) => {
       return this(
-          event => {
+          function (event) {
             event.stopImmediatePropagation();
-            listener(event);
+            listener.call(this, event);
           },
           opts);
     });

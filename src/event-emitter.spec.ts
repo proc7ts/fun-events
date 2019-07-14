@@ -1,13 +1,14 @@
 import { EventEmitter } from './event-emitter';
 import { EventInterest } from './event-interest';
+import { EventReceiver } from './event-receiver';
 import { OnEvent__symbol } from './event-sender';
 import Mock = jest.Mock;
 
 describe('EventEmitter', () => {
 
   let emitter: EventEmitter<[string]>;
-  let mockReceiver: Mock<string, [string]>;
-  let mockReceiver2: Mock<string, [string]>;
+  let mockReceiver: Mock<void, [string]>;
+  let mockReceiver2: Mock<void, [string]>;
 
   beforeEach(() => {
     emitter = new EventEmitter();
@@ -74,6 +75,30 @@ describe('EventEmitter', () => {
 
       expect(mockReceiver).toHaveBeenCalledWith('event2');
       expect(mockReceiver).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('recurrent event', () => {
+
+    let records: [string, number][];
+
+    beforeEach(() => {
+      records = [];
+      emitter.on(mockReceiver.mockImplementation(function (this: EventReceiver.Context<[string]>, event: string) {
+        records.push([event, 1]);
+        emitter.send(event + '!');
+        this.afterRecurrent(recurrent => {
+          records.push([recurrent, 11]);
+        });
+      }));
+      emitter.on(mockReceiver2.mockImplementation(event => {
+        records.push([event, 2]);
+      }));
+    });
+
+    it('is handled after original one', () => {
+      emitter.send('event');
+      expect(records).toEqual([['event', 1], ['event', 2], ['event!', 11], ['event!', 2]]);
     });
   });
 

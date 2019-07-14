@@ -45,6 +45,32 @@ Event receiver is a function that is called on each event sent by event sender w
 To register an event receiver in event receiver just call the registration function with this receiver as argument.
 
 
+### Recurrent Events
+
+A _recurrent event_ is an event sent from inside event receiver and targeted the same receiver. Recurrent event
+processing is scheduled until after the current event processing finishes. To handle recurrent events in a specific
+way the event receiver may utilize an event processing context available as `this` parameter.
+
+This context has an `afterRecurrent()` method. It schedules the given event receiver to be called to process recurrent
+event(s). If this method is called during event processing, the recurrent events will be sent to the given `receiver`
+after current event processed instead of original one:
+
+The event receiver then can look like this:
+```typescript
+import { EventReceiver } from 'fun-events';
+
+// API supports arbitrary event receiver signatures
+// An event is a tuple of event receiver arguments
+function eventReceiver(this: EventReceiver.Context<[string, Event]>, type: string, event: Event) { 
+  console.log('Event of type ', type, event);
+  // Event processing potentially leading to sending event to this receiver again
+  this.afterRecurrent((recurrentType, recurrentEvent) => {
+    console.log('Recurrent event of type ', type, event);
+  });
+}
+``` 
+
+
 `EventSender`
 -------------
 

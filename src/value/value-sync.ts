@@ -144,8 +144,12 @@ export class ValueSync<T> extends ValueTracker<T> {
 
     function syncTrackers(tracker1: ValueTracker<T, any>, tracker2: ValueTracker<T, any>) {
 
-      const interest1 = tracker1.read(value => tracker2.it = value);
-      const interest2 = tracker2.on(value => tracker1.it = value);
+      const interest1 = tracker1.read(value => {
+        tracker2.it = value;
+      });
+      const interest2 = tracker2.on(value => {
+        tracker1.it = value;
+      });
 
       return eventInterest(reason => {
         interest2.off(reason);
