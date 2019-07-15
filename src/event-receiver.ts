@@ -33,6 +33,9 @@ export namespace EventReceiver {
      *
      * If not called the recurrent events will be sent to original event receiver.
      *
+     * > This method should be called __before__ the recurrent event issued. Otherwise it may happen that recurrent
+     * > event will be ignored in some situations. E.g. when it is issued during receiver registration.
+     *
      * @param receiver Recurrent events receiver.
      */
     afterRecurrent(receiver: EventReceiver<E>): void;
