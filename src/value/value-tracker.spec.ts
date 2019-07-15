@@ -80,8 +80,8 @@ describe('ValueTracker', () => {
     });
     it('is supported for initial value', () => {
       v1.read.once(function (value) {
-        v1.it = value + '!';
         this.afterRecurrent(noop);
+        v1.it = value + '!';
       });
       expect(v1.it).toBe('old!');
     });

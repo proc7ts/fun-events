@@ -1,8 +1,9 @@
 import { NextCall, noop } from 'call-thru';
 import { EventEmitter } from './event-emitter';
-import { eventInterest, EventInterest, noEventInterest } from './event-interest';
+import { EventInterest, noEventInterest } from './event-interest';
 import { AfterEvent__symbol, EventKeeper, isEventKeeper } from './event-keeper';
-import { EventReceiver, receiveEventsBy } from './event-receiver';
+import { EventNotifier } from './event-notifier';
+import { EventReceiver } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
 import { OnEvent } from './on-event';
 import Result = NextCall.CallResult;
@@ -1030,7 +1031,14 @@ export function afterEventBy<E extends any[]>(
     const interest = register(dispatch);
 
     if (!interest.done) {
-      receiveEventsBy(receiver)(...last());
+      receiver.apply(
+          {
+            afterRecurrent(recurrent) {
+              dest = recurrent;
+            },
+          },
+          last(),
+      );
       dest = receiver;
     }
 
@@ -1087,7 +1095,14 @@ export function afterEventOr<E extends any[]>(
     ++numReceivers;
 
     if (!interest.done) {
-      receiveEventsBy(receiver)(...last());
+      receiver.apply(
+          {
+            afterRecurrent(recurrent) {
+              dest = recurrent;
+            },
+          },
+          last(),
+      );
       dest = receiver;
     }
 

@@ -19,23 +19,44 @@ import Mocked = jest.Mocked;
 
 describe('AfterEvent', () => {
   describe('by', () => {
-    it('builds an `AfterEvent` registrar by arbitrary function', () => {
 
-      let registeredReceiver: (this: void, event: string) => void = noop;
-      const mockInterest = eventInterest();
-      const mockRegister = jest.fn<EventInterest, [EventReceiver<[string]>]>(rcv => {
+    let registeredReceiver: (this: void, event: string) => void;
+    let mockInterest: EventInterest;
+    let mockRegister: Mock<EventInterest, [EventReceiver<[string]>]>;
+    let afterEvent: AfterEvent<[string]>;
+    let mockReceiver: Mock<void, [string]>;
+
+    beforeEach(() => {
+      registeredReceiver = noop;
+      mockInterest = eventInterest();
+      mockRegister = jest.fn(rcv => {
         registeredReceiver = receiveEventsBy(rcv);
         return mockInterest;
       });
-      const afterEvent = afterEventBy(mockRegister, ['initial']);
-      const mockReceiver: Mock<void, [string]> = jest.fn();
+      afterEvent = afterEventBy(mockRegister, ['initial']);
+      mockReceiver = jest.fn();
+    });
 
+    it('builds an `AfterEvent` registrar by arbitrary function', () => {
       expect(afterEvent(mockReceiver)).toBe(mockInterest);
       expect(mockRegister).toHaveBeenCalled();
       expect(mockReceiver).toHaveBeenCalledWith('initial');
 
       registeredReceiver('event');
       expect(mockReceiver).toHaveBeenCalledWith('event');
+    });
+    it('sends recurrent event sent during registration to recurrent receiver', () => {
+
+      const recurrentReceiver = jest.fn();
+
+      mockReceiver.mockImplementation(function (this: EventReceiver.Context<[string]>) {
+        this.afterRecurrent(recurrentReceiver);
+        registeredReceiver('recurrent');
+      });
+
+      expect(afterEvent(mockReceiver)).toBe(mockInterest);
+      expect(mockReceiver).toHaveBeenCalledWith('initial');
+      expect(recurrentReceiver).toHaveBeenCalledWith('recurrent');
     });
   });
 
@@ -92,6 +113,19 @@ describe('AfterEvent', () => {
       afterEvent(mockReceiver);
 
       expect(mockReceiver).not.toHaveBeenCalled();
+    });
+    it('sends recurrent event sent during registration to recurrent receiver', () => {
+
+      const recurrentReceiver = jest.fn();
+
+      mockReceiver.mockImplementation(function (this: EventReceiver.Context<[string]>) {
+        this.afterRecurrent(recurrentReceiver);
+        registeredReceiver('recurrent');
+      });
+
+      expect(afterEvent(mockReceiver)).toBe(mockInterest);
+      expect(mockReceiver).toHaveBeenCalledWith('fallback');
+      expect(recurrentReceiver).toHaveBeenCalledWith('recurrent');
     });
 
     describe('kept', () => {
