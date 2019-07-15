@@ -1211,7 +1211,7 @@ function noEvent(): never {
  * same name as its originating event keeper in `sources`.
  */
 export function afterEventFromAll<S extends { readonly [key: string]: EventKeeper<any> }>(sources: S):
-    AfterEvent<[{ readonly [key in keyof S]: EventKeeper.Event<S[key]> }]> {
+    AfterEvent<[{ readonly [K in keyof S]: EventKeeper.Event<S[K]> }]> {
 
   // Registering source receivers.
   const keys = Object.keys(sources);
@@ -1220,44 +1220,40 @@ export function afterEventFromAll<S extends { readonly [key: string]: EventKeepe
     return afterNever;
   }
 
-  return afterEventBy<[{ [key in keyof S]: EventKeeper.Event<S[key]> }]>(receiver => {
+  const notifier = new EventNotifier<[{ readonly [K in keyof S]: EventKeeper.Event<S[K]> }]>();
 
-    const kept: { [key in keyof S]: EventKeeper.Event<S[key]> } = {} as any;
-    // Do not send events until receiving from all sources.
-    let send: EventReceiver<[{ [key in keyof S]: EventKeeper.Event<S[key]> }]> = noop;
-    let interests: EventInterest[] = [];
-    const interest = eventInterest(interestLost);
+  return afterEventOr(registerReceiver, latestEvent).share();
 
-    interests = keys.map(receiveFrom);
+  function registerReceiver(receiver: EventReceiver<[{ readonly [K in keyof S]: EventKeeper.Event<S[K]> }]>) {
+
+    const interest = notifier.on(receiver);
+    let send: () => void = noop;
+    const result: { [K in keyof S]: EventKeeper.Event<S[K]> } = {} as any;
+
+    keys.forEach(readFrom);
 
     if (!interest.done) {
-      // Now receiving events from all sources.
-      // Start sending them.
-      send = receiver;
-      receiveEventsBy(receiver)(kept);
+      send = () => notifier.send(result);
     }
 
     return interest;
 
-    function receiveFrom(key: keyof S): EventInterest {
-      if (interest.done) {
-        return noEventInterest();
-      }
-
-      const source = sources[key];
-      const sourceInterest = source[AfterEvent__symbol](function (...event) {
-        kept[key] = event;
-        send.call(this, kept);
-      });
-
-      interest.needs(sourceInterest);
-
-      return sourceInterest;
+    function readFrom(key: keyof S) {
+      interest.needs(sources[key][AfterEvent__symbol]((...event) => {
+        result[key] = event;
+        send();
+      }).needs(interest));
     }
+  }
 
-    function interestLost(reason: any) {
-      interests.forEach(i => i.off(reason));
-      interests = [];
-    }
-  }).share();
+  function latestEvent(): [{ readonly [K in keyof S]: EventKeeper.Event<S[K]> }] {
+
+    const result: { [K in keyof S]: EventKeeper.Event<S[K]> } = {} as any;
+
+    keys.forEach(key =>
+        afterEventFrom(sources[key])
+            .once((...event) => result[key as keyof S] = event));
+
+    return [result];
+  }
 }
