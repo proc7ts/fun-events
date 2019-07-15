@@ -1220,12 +1220,11 @@ export function afterEventFromAll<S extends { readonly [key: string]: EventKeepe
     return afterNever;
   }
 
-  const notifier = new EventNotifier<[{ readonly [K in keyof S]: EventKeeper.Event<S[K]> }]>();
-
   return afterEventOr(registerReceiver, latestEvent).share();
 
   function registerReceiver(receiver: EventReceiver<[{ readonly [K in keyof S]: EventKeeper.Event<S[K]> }]>) {
 
+    const notifier = new EventNotifier<[{ readonly [K in keyof S]: EventKeeper.Event<S[K]> }]>();
     const interest = notifier.on(receiver);
     let send: () => void = noop;
     const result: { [K in keyof S]: EventKeeper.Event<S[K]> } = {} as any;
