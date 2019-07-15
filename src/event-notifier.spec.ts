@@ -5,7 +5,7 @@ import Mock = jest.Mock;
 describe('EventNotifier', () => {
 
   let notifier: EventNotifier<[string]>;
-  let mockReceiver: Mock<string, [string]>;
+  let mockReceiver: Mock<void, [string]>;
 
   beforeEach(() => {
     notifier = new EventNotifier();

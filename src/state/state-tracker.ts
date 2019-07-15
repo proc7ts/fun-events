@@ -133,7 +133,12 @@ class Trackers {
 
 class SubStateTracker implements StateTracker {
 
-  readonly update: StateUpdateReceiver = (<V>(path: StatePath, newValue: V, oldValue: V) => {
+  readonly update: <V>(
+      this: void,
+      path: StatePath,
+      newValue: V,
+      oldValue: V,
+  ) => void = (<V>(path: StatePath, newValue: V, oldValue: V) => {
     this._trackers.send([...this._path, ...statePath(path)], newValue, oldValue);
   });
 
@@ -210,7 +215,12 @@ export class StateTracker implements EventSender<[StatePath, any, any]> {
    * @param newValue New value.
    * @param oldValue Previous value.
    */
-  get update(): StateUpdateReceiver {
+  get update(): <V>(
+      this: void,
+      path: StatePath,
+      newValue: V,
+      oldValue: V,
+  ) => void {
     return this._tracker.update;
   }
 

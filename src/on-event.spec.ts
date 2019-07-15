@@ -3,7 +3,7 @@ import { EventEmitter } from './event-emitter';
 import { EventInterest, noEventInterest } from './event-interest';
 import { AfterEvent__symbol } from './event-keeper';
 import { EventNotifier } from './event-notifier';
-import { EventReceiver } from './event-receiver';
+import { EventReceiver, receiveEventsBy } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
 import { OnEvent, onEventBy, onEventFrom, onEventFromAny, onNever } from './on-event';
 import { trackValue } from './value';
@@ -372,7 +372,7 @@ describe('OnEvent', () => {
 
     let mockRegister: Mock<EventInterest, [EventReceiver<[string, string]>]>;
     let mockInterest: Mocked<EventInterest>;
-    let registeredReceiver: (event1: string, event2: string) => void;
+    let registeredReceiver: (this: void, event1: string, event2: string) => void;
     let onEvent: OnEvent<[string, string]>;
     let mockReceiver: Mock<void, [string, string]>;
     let mockReceiver2: Mock<void, [string, string]>;
@@ -384,7 +384,7 @@ describe('OnEvent', () => {
       } as any;
       mockInterest.off.mockName('interest.off()');
       mockRegister = jest.fn(receiver => {
-        registeredReceiver = receiver;
+        registeredReceiver = receiveEventsBy(receiver);
         return mockInterest;
       });
       onEvent = onEventBy(mockRegister);
@@ -425,9 +425,9 @@ describe('OnEvent', () => {
     it('replicates events sent during registration', () => {
 
       mockRegister.mockImplementation(receiver => {
-        registeredReceiver = receiver;
-        receiver('init1', '1');
-        receiver('init2', '2');
+        registeredReceiver = receiveEventsBy(receiver);
+        registeredReceiver('init1', '1');
+        registeredReceiver('init2', '2');
         return mockInterest;
       });
 
@@ -446,9 +446,9 @@ describe('OnEvent', () => {
     it('replicates events sent during registration to receivers registered after all interests are lost', () => {
 
       mockRegister.mockImplementation(receiver => {
-        registeredReceiver = receiver;
-        receiver('init1', '1');
-        receiver('init2', '2');
+        registeredReceiver = receiveEventsBy(receiver);
+        registeredReceiver('init1', '1');
+        registeredReceiver('init2', '2');
         return mockInterest;
       });
 
@@ -474,9 +474,9 @@ describe('OnEvent', () => {
     it('stops events replication of events sent during registration after new event received', () => {
 
       mockRegister.mockImplementation(receiver => {
-        registeredReceiver = receiver;
-        receiver('init1', '1');
-        receiver('init2', '2');
+        registeredReceiver = receiveEventsBy(receiver);
+        registeredReceiver('init1', '1');
+        registeredReceiver('init2', '2');
         return mockInterest;
       });
 

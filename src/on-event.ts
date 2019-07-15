@@ -2,7 +2,7 @@ import { callThru, NextCall } from 'call-thru';
 import { eventInterest, EventInterest, noEventInterest } from './event-interest';
 import { AfterEvent__symbol, EventKeeper } from './event-keeper';
 import { EventNotifier } from './event-notifier';
-import { EventReceiver } from './event-receiver';
+import { EventReceiver, receiveEventsBy } from './event-receiver';
 import { EventSender, isEventSender, OnEvent__symbol } from './event-sender';
 import Result = NextCall.CallResult;
 
@@ -37,10 +37,10 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
     let interest = noEventInterest();
     let off = false;
 
-    const wrapper: EventReceiver<E> = (...args: E) => {
+    const wrapper: EventReceiver<E> = function (...args: E) {
       interest.off();
       off = true;
-      return receiver(...args);
+      receiver.apply(this, args);
     };
 
     interest = this(wrapper);
@@ -1023,11 +1023,12 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
     const thru = callThru as any;
 
     return onEventBy(receiver =>
-        this((...event) =>
-            thru(
-                ...fns,
-                (...transformed: any[]) => receiver(...transformed),
-            )(...event)));
+        this(function (...event) {
+          return thru(
+              ...fns,
+              (...transformed: any[]) => receiver.apply(this, transformed),
+          )(...event);
+        }));
   }
 
 }
@@ -1165,7 +1166,10 @@ function shareInterestTo<E extends any[]>(onEvent: OnEvent<E>): OnEvent<E> {
 
     if (initialEvents) {
       // Send initial events to just registered receiver
-      initialEvents.forEach(event => receiver(...event));
+
+      const dispatcher = receiveEventsBy(receiver);
+
+      initialEvents.forEach(event => dispatcher(...event));
     }
 
     return interest;

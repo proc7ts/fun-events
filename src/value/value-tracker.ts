@@ -1,6 +1,7 @@
-import { AfterEvent, afterEventBy } from '../after-event';
+import { AfterEvent, afterEventOr } from '../after-event';
 import { EventInterest, noEventInterest } from '../event-interest';
 import { AfterEvent__symbol, EventKeeper, isEventKeeper } from '../event-keeper';
+import { EventReceiver } from '../event-receiver';
 import { EventSender, OnEvent__symbol } from '../event-sender';
 import { OnEvent, onEventFrom } from '../on-event';
 
@@ -24,7 +25,10 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
   /**
    * Registers current and updated values receiver.
    */
-  readonly read: AfterEvent<[T]> = afterEventBy<[T]>(receiver => this.on(value => receiver(value)), () => [this.it]);
+  readonly read: AfterEvent<[T]> = afterEventOr<[T]>(
+      receiver => this.on(receiveNewValue(receiver)),
+      () => [this.it],
+  );
 
   get [OnEvent__symbol](): OnEvent<[N, T]> {
     return this.on;
@@ -143,4 +147,20 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
    */
   abstract done(reason?: any): this;
 
+}
+
+function receiveNewValue<T, N extends T>(valueReceiver: EventReceiver<[T]>): EventReceiver<[N, T]> {
+  return function(newValue) {
+
+    const context = this;
+
+    valueReceiver.call(
+      {
+        afterRecurrent(recurrentReceiver) {
+          context.afterRecurrent(receiveNewValue(recurrentReceiver));
+        },
+      },
+      newValue
+    );
+  };
 }

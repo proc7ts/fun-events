@@ -3,7 +3,7 @@ import {
   AfterEvent,
   afterEventBy,
   afterEventFrom,
-  afterEventFromAll,
+  afterEventFromAll, afterEventFromEach,
   afterEventOf,
   afterEventOr,
   afterNever
@@ -11,7 +11,7 @@ import {
 import { EventEmitter } from './event-emitter';
 import { eventInterest, EventInterest, noEventInterest } from './event-interest';
 import { AfterEvent__symbol } from './event-keeper';
-import { EventReceiver } from './event-receiver';
+import { EventReceiver, receiveEventsBy } from './event-receiver';
 import { OnEvent__symbol } from './event-sender';
 import { trackValue, ValueTracker } from './value';
 import Mock = jest.Mock;
@@ -19,29 +19,50 @@ import Mocked = jest.Mocked;
 
 describe('AfterEvent', () => {
   describe('by', () => {
-    it('builds an `AfterEvent` registrar by arbitrary function', () => {
 
-      let registeredReceiver: EventReceiver<[string]> = noop;
-      const mockInterest = eventInterest();
-      const mockRegister = jest.fn<EventInterest, [EventReceiver<[string]>]>(rcv => {
-        registeredReceiver = rcv;
+    let registeredReceiver: (this: void, event: string) => void;
+    let mockInterest: EventInterest;
+    let mockRegister: Mock<EventInterest, [EventReceiver<[string]>]>;
+    let afterEvent: AfterEvent<[string]>;
+    let mockReceiver: Mock<void, [string]>;
+
+    beforeEach(() => {
+      registeredReceiver = noop;
+      mockInterest = eventInterest();
+      mockRegister = jest.fn(rcv => {
+        registeredReceiver = receiveEventsBy(rcv);
         return mockInterest;
       });
-      const afterEvent = afterEventBy(mockRegister, ['initial']);
-      const mockReceiver: Mock<void, [string]> = jest.fn();
+      afterEvent = afterEventBy(mockRegister, ['initial']);
+      mockReceiver = jest.fn();
+    });
 
+    it('builds an `AfterEvent` registrar by arbitrary function', () => {
       expect(afterEvent(mockReceiver)).toBe(mockInterest);
-      expect(mockRegister).toHaveBeenCalledWith(registeredReceiver);
+      expect(mockRegister).toHaveBeenCalled();
       expect(mockReceiver).toHaveBeenCalledWith('initial');
 
       registeredReceiver('event');
       expect(mockReceiver).toHaveBeenCalledWith('event');
     });
+    it('sends recurrent event sent during registration to recurrent receiver', () => {
+
+      const recurrentReceiver = jest.fn();
+
+      mockReceiver.mockImplementation(function (this: EventReceiver.Context<[string]>) {
+        this.afterRecurrent(recurrentReceiver);
+        registeredReceiver('recurrent');
+      });
+
+      expect(afterEvent(mockReceiver)).toBe(mockInterest);
+      expect(mockReceiver).toHaveBeenCalledWith('initial');
+      expect(recurrentReceiver).toHaveBeenCalledWith('recurrent');
+    });
   });
 
   describe('or', () => {
 
-    let registeredReceiver: EventReceiver<[string]>;
+    let registeredReceiver: (this: void, event: string) => void;
     let mockInterest: EventInterest;
     let mockFallback: Mock<[string], []>;
     let mockRegister: Mock<EventInterest, [EventReceiver<[string]>]>;
@@ -53,7 +74,7 @@ describe('AfterEvent', () => {
       mockInterest = eventInterest();
       mockFallback = jest.fn(() => ['fallback']);
       mockRegister = jest.fn<EventInterest, [EventReceiver<[string]>]>(rcv => {
-        registeredReceiver = rcv;
+        registeredReceiver = receiveEventsBy(rcv);
         return mockInterest;
       });
       afterEvent = afterEventOr(mockRegister, mockFallback);
@@ -62,7 +83,7 @@ describe('AfterEvent', () => {
 
     it('builds an `AfterEvent` registrar', () => {
       expect(afterEvent(mockReceiver)).toBe(mockInterest);
-      expect(mockRegister).toHaveBeenCalledWith(registeredReceiver);
+      expect(mockRegister).toHaveBeenCalled();
       expect(mockReceiver).toHaveBeenCalledWith('fallback');
       expect(mockReceiver).toHaveBeenCalledTimes(1);
 
@@ -70,11 +91,10 @@ describe('AfterEvent', () => {
       expect(mockReceiver).toHaveBeenCalledWith('event');
       expect(mockReceiver).toHaveBeenCalledTimes(2);
     });
-
-    it('sends the event sent by registration function', () => {
+    it('sends an event sent by registration function', () => {
       mockRegister.mockImplementation(rcv => {
-        registeredReceiver = rcv;
-        rcv('event');
+        registeredReceiver = receiveEventsBy(rcv);
+        registeredReceiver('event');
         return mockInterest;
       });
 
@@ -82,6 +102,30 @@ describe('AfterEvent', () => {
 
       expect(mockReceiver).toHaveBeenCalledWith('event');
       expect(mockReceiver).toHaveBeenCalledTimes(1);
+    });
+    it('does not send an event sent by registration function if receiver lost the interest already', () => {
+      mockRegister.mockImplementation(rcv => {
+        registeredReceiver = receiveEventsBy(rcv);
+        registeredReceiver('event');
+        return noEventInterest();
+      });
+
+      afterEvent(mockReceiver);
+
+      expect(mockReceiver).not.toHaveBeenCalled();
+    });
+    it('sends recurrent event sent during registration to recurrent receiver', () => {
+
+      const recurrentReceiver = jest.fn();
+
+      mockReceiver.mockImplementation(function (this: EventReceiver.Context<[string]>) {
+        this.afterRecurrent(recurrentReceiver);
+        registeredReceiver('recurrent');
+      });
+
+      expect(afterEvent(mockReceiver)).toBe(mockInterest);
+      expect(mockReceiver).toHaveBeenCalledWith('fallback');
+      expect(recurrentReceiver).toHaveBeenCalledWith('recurrent');
     });
 
     describe('kept', () => {
@@ -97,7 +141,7 @@ describe('AfterEvent', () => {
       });
       it('returns fallback when last receiver removed there are receivers', () => {
         mockRegister.mockImplementation(rcv => {
-          registeredReceiver = rcv;
+          registeredReceiver = receiveEventsBy(rcv);
           return eventInterest();
         });
 
@@ -243,24 +287,25 @@ describe('AfterEvent', () => {
     let source2: ValueTracker<number>;
     let fromAll: AfterEvent<[{ source1: [string], source2: [number] }]>;
     let mockReceiver: Mock<void, [{ source1: [string], source2: [number] }]>;
-    let interest: EventInterest;
 
     beforeEach(() => {
       source1 = trackValue('init');
       source2 = trackValue(1);
       fromAll = afterEventFromAll({ source1, source2 });
       mockReceiver = jest.fn();
-      interest = fromAll(mockReceiver);
     });
 
     it('sends initial event only once', () => {
+      fromAll(mockReceiver);
       expect(mockReceiver).toHaveBeenCalledWith({ source1: ['init'], source2: [1] });
       expect(mockReceiver).toHaveBeenCalledTimes(1);
     });
     it('does not send anything without sources', () => {
+      fromAll(mockReceiver);
       expect(afterEventFromAll({})).toBe(afterNever);
     });
     it('sends updates', () => {
+      fromAll(mockReceiver);
       mockReceiver.mockClear();
       source1.it = 'update';
       expect(mockReceiver).toHaveBeenCalledWith({ source1: ['update'], source2: [1] });
@@ -268,14 +313,15 @@ describe('AfterEvent', () => {
       expect(mockReceiver).toHaveBeenCalledWith({ source1: ['update'], source2: [2] });
     });
     it('stops sending updates when interest is lost', () => {
+
+      const interest = fromAll(mockReceiver);
+
       mockReceiver.mockClear();
       interest.off();
       source1.it = 'update';
       expect(mockReceiver).not.toHaveBeenCalled();
     });
     it('stops sending updates when interest is lost during registration', () => {
-      mockReceiver.mockClear();
-      interest.off();
 
       const reason = 'some reason';
       const stopper = afterEventBy<[string]>(() => {
@@ -286,13 +332,104 @@ describe('AfterEvent', () => {
 
         return stop;
       });
+
       const mockDone = jest.fn();
 
       fromAll = afterEventFromAll({ source1: stopper, source2 });
-      interest = fromAll(mockReceiver).whenDone(mockDone);
+      fromAll(mockReceiver).whenDone(mockDone);
 
       expect(mockReceiver).not.toHaveBeenCalled();
       expect(mockDone).toHaveBeenCalledWith(reason);
+    });
+    it('sends recurrent event sent during registration to recurrent receiver', () => {
+
+      const recurrentReceiver = jest.fn();
+
+      mockReceiver.mockImplementation(
+          function (this: EventReceiver.Context<[{ source1: [string], source2: [number] }]>) {
+            this.afterRecurrent(recurrentReceiver);
+            source1.it = 'recurrent';
+          });
+
+      fromAll(mockReceiver);
+      expect(mockReceiver).toHaveBeenCalledWith({ source1: ['init'], source2: [1] });
+      expect(recurrentReceiver).toHaveBeenCalledWith({ source1: ['recurrent'], source2: [1] });
+    });
+  });
+
+  describe('from each', () => {
+
+    let source1: ValueTracker<string>;
+    let source2: ValueTracker<string>;
+    let fromEach: AfterEvent<[string][]>;
+    let mockReceiver: Mock<void, [string][]>;
+
+    beforeEach(() => {
+      source1 = trackValue('init1');
+      source2 = trackValue('init2');
+      fromEach = afterEventFromEach(source1, source2);
+      mockReceiver = jest.fn();
+    });
+
+    it('sends initial event only once', () => {
+      fromEach(mockReceiver);
+      expect(mockReceiver).toHaveBeenCalledWith(['init1'], ['init2']);
+      expect(mockReceiver).toHaveBeenCalledTimes(1);
+    });
+    it('does not send anything without sources', () => {
+      fromEach(mockReceiver);
+      expect(afterEventFromEach()).toBe(afterNever);
+    });
+    it('sends updates', () => {
+      fromEach(mockReceiver);
+      mockReceiver.mockClear();
+      source1.it = 'update1';
+      expect(mockReceiver).toHaveBeenCalledWith(['update1'], ['init2']);
+      source2.it = 'update2';
+      expect(mockReceiver).toHaveBeenCalledWith(['update1'], ['update2']);
+    });
+    it('stops sending updates when interest is lost', () => {
+
+      const interest = fromEach(mockReceiver);
+
+      mockReceiver.mockClear();
+      interest.off();
+      source1.it = 'update';
+      expect(mockReceiver).not.toHaveBeenCalled();
+    });
+    it('stops sending updates when interest is lost during registration', () => {
+
+      const reason = 'some reason';
+      const stopper = afterEventBy<[string]>(() => {
+
+        const stop = eventInterest();
+
+        stop.off(reason);
+
+        return stop;
+      });
+
+      const mockDone = jest.fn();
+
+      fromEach = afterEventFromEach(stopper, source2);
+      fromEach(mockReceiver).whenDone(mockDone);
+
+      expect(mockReceiver).not.toHaveBeenCalled();
+      expect(mockDone).toHaveBeenCalledWith(reason);
+    });
+    it('sends recurrent event sent during registration to recurrent receiver', () => {
+
+      const recurrentReceiver = jest.fn();
+
+      mockReceiver.mockImplementation(
+          function (this: EventReceiver.Context<[string][]>) {
+            this.afterRecurrent(recurrentReceiver);
+            source1.it = 'recurrent';
+          });
+
+      fromEach(mockReceiver);
+      expect(mockReceiver).toHaveBeenCalledWith(['init1'], ['init2']);
+      expect(recurrentReceiver).toHaveBeenCalledWith(['recurrent'], ['init2']);
     });
   });
 

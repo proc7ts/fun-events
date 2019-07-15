@@ -1,4 +1,5 @@
 import { eventInterest } from '../event-interest';
+import { receiveEventsBy } from '../event-receiver';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 
 /**
@@ -32,11 +33,12 @@ export class DomEventDispatcher {
   on<E extends Event>(type: string): OnDomEvent<E> {
     return onDomEventBy<E>((listener, opts) => {
 
-      const _listener: EventListener = event => listener(event as E); // Create unique listener instance
+      // Create unique DOM listener instance
+      const domListener: EventListener = event => receiveEventsBy(listener)(event as E);
 
-      this._target.addEventListener(type, _listener, opts);
+      this._target.addEventListener(type, domListener, opts);
 
-      return eventInterest(() => this._target.removeEventListener(type, _listener));
+      return eventInterest(() => this._target.removeEventListener(type, domListener));
     });
   }
 
