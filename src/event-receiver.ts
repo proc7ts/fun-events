@@ -1,5 +1,5 @@
 /**
- * Event receiver is a function that is called on each event sent by `EventSender` when registered.
+ * Event receiver is a function that is called on each event sent by [[EventSender]] when registered.
  *
  * To register an event receiver just call the event sender's `[OnEvent__symbol]` or event keeper's
  * `[AfterEvent__symbol]` method with this event receiver as argument.
@@ -8,9 +8,10 @@
  * processing is scheduled until after the current event processing finishes. To handle recurrent events in a specific
  * way the event receiver may utilize an event processing context available as `this` parameter.
  *
- * @typeparam E An event type. This is a tuple of event receiver parameter types.
- * @param this An event processing context.
- * @param event An event represented by function call arguments.
+ * @category Core
+ * @typeparam E  An event type. This is a tuple of event receiver parameter types.
+ * @param this  An event processing context.
+ * @param event  An event represented by function call arguments.
  *
  * @returns Either `void` or recurrent event receiver.
  */
@@ -36,7 +37,7 @@ export namespace EventReceiver {
      * > This method should be called __before__ the recurrent event issued. Otherwise it may happen that recurrent
      * > event will be ignored in some situations. E.g. when it is issued during receiver registration.
      *
-     * @param receiver Recurrent events receiver.
+     * @param receiver  Recurrent events receiver.
      */
     afterRecurrent(receiver: EventReceiver<E>): void;
 
@@ -47,7 +48,8 @@ export namespace EventReceiver {
 /**
  * Creates an event receiver function that dispatches event to the given event receiver.
  *
- * @param receiver An event receivers to dispatch event to.
+ * @category Core
+ * @param receiver  An event receivers to dispatch event to.
  *
  * @returns An event receiver function that does not utilize event processing context an thus can be called directly.
  */
@@ -60,7 +62,8 @@ export function receiveEventsBy<E extends any[]>(
 /**
  * Creates an event receiver function that dispatches events to each of the given event receivers.
  *
- * @param receivers An iterable of event receivers to dispatch event to.
+ * @category Core
+ * @param receivers  An iterable of event receivers to dispatch event to.
  *
  * @returns An event receiver function that does not utilize event processing context an thus can be called directly.
  */

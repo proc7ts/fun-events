@@ -37,7 +37,8 @@ class TrackedValue<T> extends ValueTracker<T> {
 /**
  * Constructs a value which changes can be tracked.
  *
- * @param initial Initial value.
+ * @category Value Tracking
+ * @param initial  Initial value.
  *
  * @returns Value tracker instance.
  */
@@ -46,7 +47,7 @@ export function trackValue<T>(initial: T): ValueTracker<T>;
 /**
  * Constructs an optional value which changes can be tracked.
  *
- * @param initial Initial value.
+ * @param initial  Initial value.
  *
  * @returns Value tracker instance.
  */

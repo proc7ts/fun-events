@@ -5,14 +5,16 @@ import { OnEvent } from '../on-event';
 /**
  * DOM event listener.
  *
- * @typeparam E Supported DOM event type.
+ * @category DOM
+ * @typeparam E  Supported DOM event type.
  */
 export type DomEventListener<E extends Event> = EventReceiver<[E]>;
 
 /**
  * A DOM event listener registration function interface.
  *
- * @typeparam E Supported DOM event type.
+ * @category DOM
+ * @typeparam E  Supported DOM event type.
  */
 export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
 
@@ -120,11 +122,11 @@ export interface OnDomEvent<E extends Event> {
   /**
    * Registers a DOM event listener.
    *
-   * @param listener DOM event listener to register.
-   * @param opts DOM event listener options to pass to `EventTarget.addEventListener()`.
+   * @param listener  DOM event listener to register.
+   * @param opts  DOM event listener options to pass to `EventTarget.addEventListener()`.
    *
-   * @return An event interest. The events will be sent to `listener` until the `off()` method of returned event
-   * interest is called.
+   * @return An event interest. The events will be sent to `listener` until the [[EventInterest.off]] method
+   * of the returned event interest is called.
    */
   // tslint:disable-next-line:callable-types
   (this: void, listener: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): EventInterest;
@@ -132,11 +134,12 @@ export interface OnDomEvent<E extends Event> {
 }
 
 /**
- * Converts a plain DOM event listener registration function to `OnDomEvent` registrar.
+ * Converts a plain DOM event listener registration function to [[OnDomEvent]] registrar.
  *
- * @param register A DOM event listener registration function returning an event interest.
+ * @category State Tracking
+ * @param register  A DOM event listener registration function returning an event interest.
  *
- * @returns An `OnDomEvent` registrar instance registering event listeners with the given `register` function.
+ * @returns An [[OnDomEvent]] registrar instance registering event listeners with the given `register` function.
  */
 export function onDomEventBy<E extends Event>(
     register: (

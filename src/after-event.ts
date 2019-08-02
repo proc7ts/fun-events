@@ -9,13 +9,15 @@ import { OnEvent } from './on-event';
 import Result = NextCall.CallResult;
 
 /**
- * A subset of `AfterEvent` transformation methods inherited from `OnEvent` that return `AfterEvent` registrar
- * instances instead of `OnEvent` ones.
+ * A subset of [[AfterEvent]] transformation methods inherited that return [[AfterEvent]] registrar instances instead
+ * of [[OnEvent]] ones.
  *
- * This can not be done automatically, as not every transformation results to `EventKeeper`. E.g. when some events
+ * This can not be done automatically, as not every transformation results to [[EventKeeper]]. E.g. when some events
  * are filtered out.
  *
- * An instance of this class can be obtained from `AfterEvent.keep` property.
+ * An instance of this class can be obtained from [[AfterEvent.keep]] property.
+ *
+ * @category Core
  */
 export class AfterEventKeep<E extends any[]> {
 
@@ -31,10 +33,10 @@ export class AfterEventKeep<E extends any[]> {
   /**
    * Extracts event keepers from incoming events.
    *
-   * @typeparam F Extracted event type.
-   * @param extract A function extracting event keeper from incoming event.
+   * @typeparam F  Extracted event type.
+   * @param extract  A function extracting event keeper from incoming event.
    *
-   * @returns An `AfterEvent` registrar of extracted events receivers. The events exhaust once the incoming events do.
+   * @returns An [[AfterEvent]] registrar of extracted events receivers. The events exhaust once the incoming events do.
    * The returned registrar shares the interest to extracted events among receivers.
    */
   dig<F extends any[]>(extract: (this: void, ...event: E) => EventKeeper<F>): AfterEvent<F> {
@@ -44,19 +46,28 @@ export class AfterEventKeep<E extends any[]> {
   /**
    * Extracts event keepers from incoming events.
    *
-   * This method does the same as `dig()` one, except it does not share the interest to extracted events among
-   * receivers. This may be useful e.g. when the result will be further transformed. It is wise to share the
+   * This method does the same as [[AfterEventKeep.dig]] one, except it does not share the interest to extracted events
+   * among receivers. This may be useful e.g. when the result will be further transformed. It is wise to share the
    * interest to final result in this case.
    *
-   * @typeparam F Extracted event type.
-   * @param extract A function extracting event keeper from incoming event.
+   * @typeparam F  Extracted event type.
+   * @param extract  A function extracting event keeper from incoming event.
    *
-   * @returns An `AfterEvent` registrar of extracted events receivers. The events exhaust once the incoming events do.
+   * @returns An [[AfterEvent]] registrar of extracted events receivers. The events exhaust once the incoming events do.
    */
   dig_<F extends any[]>(extract: (this: void, ...event: E) => EventKeeper<F>): AfterEvent<F> {
     return afterEventFrom(this._keeper.dig_((...event) => afterEventFrom(extract(...event))));
   }
 
+  /**
+   * Constructs an [[AfterEvent]] registrar of original events passed trough the chain of transformations.
+   *
+   * The passes are preformed by `callThru()` function. The event receivers registered by resulting registrar
+   * are called by the last pass in chain. Thus they can be e.g. filtered out or called multiple times.
+   *
+   * @returns An [[AfterEvent]] registrar of receivers of events transformed with provided passes.
+   * The returned registrar shares the interest to transformed events among receivers.
+   */
   thru<R1 extends any[]>(
       fn1: (this: void, ...args: E) => NextCall<any, R1, any, any, any>,
   ): AfterEvent<R1>;
@@ -457,15 +468,6 @@ export class AfterEventKeep<E extends any[]> {
       fn13: (this: void, ...args: P13) => NextCall<any, R13, any, any, any>,
   ): AfterEvent<R13>;
 
-  /**
-   * Constructs an `AfterEvent` registrar of original events passed trough the chain of transformations.
-   *
-   * The passes are preformed by `callThru()` function. The event receivers registered by resulting registrar are called
-   * by the last pass in chain. Thus they can be e.g. filtered out or called multiple times.
-   *
-   * @returns An `AfterEvent` registrar of receivers of events transformed with provided passes. The returned registrar
-   * shares the interest to transformed events among receivers.
-   */
   thru<
       R1 extends Result<P2>,
       P2 extends any[], R2 extends Result<P3>,
@@ -499,6 +501,16 @@ export class AfterEventKeep<E extends any[]> {
     return (this as any).thru_(...fns).share();
   }
 
+  /**
+   * Constructs an [[AfterEvent]] registrar of receivers of original events passed trough the chain of transformations
+   * without sharing the result.
+   *
+   * This method does the same as [[AfterEventKeep.thru]] one, except it does not share the interest to transformed
+   * events among receivers. This may be useful e.g. when the result will be further transformed anyway.
+   * It is wise to share the interest to final result in this case.
+   *
+   * @returns An [[AfterEvent]] registrar of receivers of events transformed with provided passes.
+   */
   thru_<R1 extends any[]>(
       fn1: (this: void, ...args: E) => NextCall<any, R1, any, any, any>,
   ): AfterEvent<R1>;
@@ -899,16 +911,6 @@ export class AfterEventKeep<E extends any[]> {
       fn13: (this: void, ...args: P13) => NextCall<any, R13, any, any, any>,
   ): AfterEvent<R13>;
 
-  /**
-   * Constructs an `OnEvent` registrar of receivers of original events passed trough the chain of transformations
-   * without sharing the result.
-   *
-   * This method does the same as `thru_()` one, except it interest does not share the interest to transformed events
-   * among receivers. This may be useful e.g. when the result will be further transformed anyway. It is wise to share
-   * the interest to final result in this case.
-   *
-   * @returns An `OnEvent` registrar of receivers of events transformed with provided passes.
-   */
   thru_<
       R1 extends Result<P2>,
       P2 extends any[], R2 extends Result<P3>,
@@ -950,9 +952,10 @@ export class AfterEventKeep<E extends any[]> {
  * The registered event receiver would receive the kept event immediately upon registration, and all upcoming events
  * after that.
  *
- * To convert a plain event receiver registration function to `AfterEvent` an `afterEventBy()` function can be used.
+ * To convert a plain event receiver registration function to [[AfterEvent]] an [[afterEventBy]] function can be used.
  *
- * @typeparam E An event type. This is a list of event receiver parameter types.
+ * @category Core
+ * @typeparam E  An event type. This is a list of event receiver parameter types.
  */
 export abstract class AfterEvent<E extends any[]> extends OnEvent<E> implements EventKeeper<E> {
 
@@ -968,11 +971,11 @@ export abstract class AfterEvent<E extends any[]> extends OnEvent<E> implements 
   }
 
   /**
-   * A subset of `AfterEvent` transformation methods inherited from `OnEvent` that return `AfterEvent` registrar
-   * instances instead of `OnEvent` ones.
+   * A subset of [[AfterEvent]] transformation methods that return [[AfterEvent]] registrar instances instead of
+   * [[OnEvent]] ones.
    *
-   * Note that not every transformation can properly result to `EventKeeper`. E.g. some events may be filtered out and
-   * the resulting `AfterEvent` would rise an exception on receiver registration, as it won't have any event to report.
+   * Note that not every transformation can properly result to [[EventKeeper]]. E.g. some events may be filtered out and
+   * the resulting [[AfterEvent]] would rise an exception on receiver registration, as it won't have any event to send.
    */
   get keep(): AfterEventKeep<E> {
     return new AfterEventKeep(this);
@@ -985,7 +988,7 @@ export abstract class AfterEvent<E extends any[]> extends OnEvent<E> implements 
    * a receiver in this one only once, when first receiver registered. And loses its interest when all receivers lost
    * their interest.
    *
-   * @returns An `AfterEvent` registrar of receivers sharing a common interest to events sent by this sender.
+   * @returns An [[AfterEvent]] registrar of receivers sharing a common interest to events sent by this sender.
    */
   share(): AfterEvent<E> {
     return afterEventBy(super.share());
@@ -994,17 +997,18 @@ export abstract class AfterEvent<E extends any[]> extends OnEvent<E> implements 
 }
 
 /**
- * Converts a plain event receiver registration function to `AfterEvent` registrar.
+ * Converts a plain event receiver registration function to [[AfterEvent]] registrar.
  *
  * The `initial` event will be kept until more events received. After that the latest event sent will be kept.
  * If an event is sent immediately upon receiver registration, the `initial` event won't be created or sent.
  *
- * @typeparam E An event type. This is a list of event receiver parameter types.
- * @param register An event receiver registration function returning an event interest.
- * @param initial An event tuple to keep initially. Or a function creating such event. When omitted the initial
+ * @category Core
+ * @typeparam E  An event type. This is a list of event receiver parameter types.
+ * @param register  An event receiver registration function returning an event interest.
+ * @param initial  An event tuple to keep initially. Or a function creating such event. When omitted the initial
  * event is expected to be sent by `register` function. A receiver registration would lead to an error otherwise.
  *
- * @returns An `AfterEvent` registrar instance registering event receivers with the given `register` function.
+ * @returns An [[AfterEvent]] registrar instance registering event receivers with the given `register` function.
  */
 export function afterEventBy<E extends any[]>(
     register: (this: void, receiver: EventReceiver<E>) => EventInterest,
@@ -1060,16 +1064,17 @@ export function afterEventBy<E extends any[]>(
 }
 
 /**
- * Converts a plain event receiver registration function to `AfterEvent` registrar with a fallback.
+ * Converts a plain event receiver registration function to [[AfterEvent]] registrar with a fallback.
  *
  * The event generated by `fallback` will be sent to new receivers unless `register` function send one. It will be
  * returned by `kept` property, unless there are receivers still registered.
  *
- * @typeparam E An event type. This is a list of event receiver parameter types.
- * @param register An event receiver registration function returning an event interest.
- * @param fallback A function creating a fallback event.
+ * @category Core
+ * @typeparam E  An event type. This is a list of event receiver parameter types.
+ * @param register  An event receiver registration function returning an event interest.
+ * @param fallback  A function creating a fallback event.
  *
- * @returns An `AfterEvent` registrar instance registering event receivers with the given `register` function.
+ * @returns An [[AfterEvent]] registrar instance registering event receivers with the given `register` function.
  */
 export function afterEventOr<E extends any[]>(
     register: (this: void, receiver: EventReceiver<E>) => EventInterest,
@@ -1138,27 +1143,28 @@ export function afterEventOr<E extends any[]>(
 }
 
 /**
- * Builds an `AfterEvent` registrar of receivers of events kept and sent by the given `keeper`.
+ * Builds an [[AfterEvent]] registrar of receivers of events kept and sent by the given `keeper`.
  *
- * @typeparam E An event type. This is a list of event receiver parameter types.
- * @param keeper A keeper of events.
+ * @category Core
+ * @typeparam E  An event type. This is a list of event receiver parameter types.
+ * @param keeper  A keeper of events.
  *
- * @returns An `AfterEvent` registrar instance.
+ * @returns An [[AfterEvent]] registrar instance.
  */
 export function afterEventFrom<E extends any[]>(keeper: EventKeeper<E>): AfterEvent<E>;
 
 /**
- * Builds an `AfterEvent` registrar of receivers of events sent by the given `sender`.
+ * Builds an [[AfterEvent]] registrar of receivers of events sent by the given `sender`.
  *
  * The `initial` event will be kept until the `sender` send more events. After that the latest event sent will be
  * kept. If the `sender` sends an event immediately upon receiver registration, the `initial` event won't be created
  * or used.
  *
- * @typeparam E An event type. This is a list of event receiver parameter types.
- * @param sender An event sender.
- * @param initial A an event tuple to keep initially. Or a function creating such event.
+ * @typeparam E  An event type. This is a list of event receiver parameter types.
+ * @param sender  An event sender.
+ * @param initial  A an event tuple to keep initially. Or a function creating such event.
  *
- * @returns An `AfterEvent` registrar instance.
+ * @returns An [[AfterEvent]] registrar instance.
  */
 export function afterEventFrom<E extends any[]>(
     sender: EventSender<E>,
@@ -1184,16 +1190,19 @@ export function afterEventFrom<E extends any[]>(
 }
 
 /**
- * Builds an `AfterEvent` registrar of receivers of the `event`.
+ * Builds an [[AfterEvent]] registrar of receivers of the `event`.
  *
- * @param event An event that will be sent to all receivers upon registration.
+ * @category Core
+ * @param event  An event that will be sent to all receivers upon registration.
  */
 export function afterEventOf<E extends any[]>(...event: E): AfterEvent<E> {
   return afterEventFrom(new EventEmitter<E>(), event);
 }
 
 /**
- * An `AfterEvent` registrar of receivers that would never receive any events.
+ * An [[AfterEvent]] registrar of receivers that would never receive any events.
+ *
+ * @category Core
  */
 export const afterNever: AfterEvent<any> = /*#__PURE__*/ afterEventBy(noEventInterest);
 
@@ -1202,10 +1211,11 @@ function noEvent(): never {
 }
 
 /**
- * Builds an `AfterEvent` registrar of receivers of events sent by all event keepers in `source` map.
+ * Builds an [[AfterEvent]] registrar of receivers of events sent by all event keepers in `source` map.
  *
- * @typeparam S A type of `sources` map.
- * @param sources A map of named event keepers the events are originated from.
+ * @category Core
+ * @typeparam S  A type of `sources` map.
+ * @param sources  A map of named event keepers the events are originated from.
  *
  * @returns An event keeper sending a map of events received from each event keeper. Each event in this map has the
  * same name as its originating event keeper in `sources`.
@@ -1257,10 +1267,11 @@ export function afterEventFromAll<S extends { readonly [key: string]: EventKeepe
 }
 
 /**
- * Builds an `AfterEvent` registrar of receivers of events sent by each of the `sources`.
+ * Builds an [[AfterEvent]] registrar of receivers of events sent by each of the `sources`.
  *
- * @typeparam E A type of events sent by each source.
- * @param sources An array of source event keepers.
+ * @category Core
+ * @typeparam E  A type of events sent by each source.
+ * @param sources  An array of source event keepers.
  *
  * @returns An event keeper sending events received from each event keeper. Each event item is an event tuple originated
  * from event keeper under the same index in `sources` array.

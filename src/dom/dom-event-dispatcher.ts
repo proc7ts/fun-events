@@ -4,6 +4,8 @@ import { OnDomEvent, onDomEventBy } from './on-dom-event';
 
 /**
  * DOM event dispatcher can be used to register event listeners and dispatch events.
+ *
+ * @category DOM
  */
 export class DomEventDispatcher {
 
@@ -15,7 +17,7 @@ export class DomEventDispatcher {
   /**
    * Constructs DOM event dispatcher for the given event target.
    *
-   * @param target Event target to construct event dispatcher for.
+   * @param target  Event target to construct event dispatcher for.
    */
   constructor(target: EventTarget) {
     this._target = target;
@@ -27,8 +29,8 @@ export class DomEventDispatcher {
    * The returned DOM event listener registrar calls an `EventTarget.addEventListener()` to register listeners.
    * But, in contrast, it allows to register the same listener many times.
    *
-   * The `EventInterest` returned upon event listener registration, unregisters the given event listener with
-   * `EventTarget.removeEventListener()` when its `off()` method is called.
+   * The [[EventInterest]] returned upon event listener registration, unregisters the given event listener with
+   * `EventTarget.removeEventListener()` when its [[EventInterest.off]] method is called.
    */
   on<E extends Event>(type: string): OnDomEvent<E> {
     return onDomEventBy<E>((listener, opts) => {
@@ -47,7 +49,7 @@ export class DomEventDispatcher {
    *
    * Calls `EventTarget.dispatchEvent()` method.
    *
-   * @param event An event to dispatch.
+   * @param event  An event to dispatch.
    *
    * @returns `true` if either event's `cancelable` attribute value is `false` or its `preventDefault()` method was not
    * invoked, or `false` otherwise.

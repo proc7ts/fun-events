@@ -10,6 +10,8 @@ import { ValueTracker } from './value-tracker';
  * Synchronizes tracked values with each other.
  *
  * Any change to any of the added tracked values would update all the others.
+ *
+ * @category Value Tracking
  */
 export class ValueSync<T> extends ValueTracker<T> {
 
@@ -51,20 +53,20 @@ export class ValueSync<T> extends ValueTracker<T> {
    *
    * Applies the value from this sync to the given tracker first.
    *
-   * @param tracker A value tracker to keep in sync.
+   * @param tracker  A value tracker to keep in sync.
    *
-   * @returns An event interest instance. Call its `off()` method to break the tracked value synchronization.
+   * @returns An event interest instance. Call its [[EventInterest.off]] method to break the synchronization.
    */
   sync(tracker: ValueTracker<T, any>): EventInterest;
 
   /**
    * Synchronizes the tracked value with the others in the given direction.
    *
-   * @param direction If set to `"in"` the value from the given tracker takes precedence over the one in `ValueSync`.
+   * @param direction  If set to `"in"` the value from the given tracker takes precedence over the one in [[ValueSync]].
    * Otherwise the value from the sync is applied to the given tracker first.
-   * @param tracker A value tracker to keep in sync.
+   * @param tracker  A value tracker to keep in sync.
    *
-   * @returns An event interest instance. Call its `off()` method to break the tracked value synchronization.
+   * @returns An event interest instance. Call its [[EventInterest.off]] method to break the synchronization.
    */
   sync(direction: 'in' | 'out', tracker: ValueTracker<T, any>): EventInterest;
 
@@ -75,11 +77,11 @@ export class ValueSync<T> extends ValueTracker<T> {
    *
    * Applies the value from this sync to extracted trackers.
    *
-   * @param source The event sender or keeper to extract value trackers from.
-   * @param extract A function extracting the value tracker to keep in sync from the event received from `sender`.
+   * @param source  The event sender or keeper to extract value trackers from.
+   * @param extract  A function extracting the value tracker to keep in sync from the event received from `sender`.
    * May return `undefined` to just break the sync with previous tracker.
    *
-   * @returns An event interest instance. Call its `off()` method to break the tracked value synchronization.
+   * @returns An event interest instance. Call its [[EventInterest.off]] method to break the synchronization.
    */
   sync<U extends any[]>(
       source: EventSender<U> | EventKeeper<U>,
@@ -91,13 +93,13 @@ export class ValueSync<T> extends ValueTracker<T> {
    *
    * Once next value tracker extracted the previous one becomes out of sync.
    *
-   * @param direction If set to `"in"` the value from extracted trackers takes precedence over the one in `ValueSync`.
-   * Otherwise the value from the sync is applied to extracted trackers first.
-   * @param source The event sender or keeper to extract value trackers from.
-   * @param extract A function extracting the value tracker to keep in sync from the event received from `sender`.
+   * @param direction  If set to `"in"` the value from extracted tracker takes precedence over the one in
+   * [[ValueSync]]. Otherwise the value from the sync is applied to extracted trackers first.
+   * @param source  The event sender or keeper to extract value trackers from.
+   * @param extract  A function extracting the value tracker to keep in sync from the event received from `sender`.
    * May return `undefined` to just break the sync with previous tracker.
    *
-   * @returns An event interest instance. Call its `off()` method to break the tracked value synchronization.
+   * @returns An event interest instance. Call its [[EventInterest.off]] method to break the synchronization.
    */
   sync<U extends any[]>(
       direction: 'in' | 'out',

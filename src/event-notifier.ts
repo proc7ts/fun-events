@@ -8,14 +8,15 @@ type ReceiverInfo<E extends any[]> = [EventReceiver<E>, (this: void, reason?: an
 /**
  * Event notifier can be used to register event receivers and send events to them.
  *
- * It does not implement an `OnEvent` interface though. Use an `EventEmitter` if you need one.
+ * It does not implement an [[OnEvent]] interface though. Use an `EventEmitter` if you need one.
  *
  * Manages a list of registered event receivers, and removes them from the list once they lose their interest
- * (i.e. the `off()` is called on the returned event interest instance).
+ * (i.e. the [[EventInterest.off]] is called on the returned event interest instance).
  *
- * Can be used as `EventSender`.
+ * Can be used as [[EventSender]].
  *
- * @typeparam E An event type. This is a list of event receiver parameter types.
+ * @category Core
+ * @typeparam E  An event type. This is a list of event receiver parameter types.
  */
 export class EventNotifier<E extends any[]> implements EventSender<E> {
 
@@ -27,7 +28,7 @@ export class EventNotifier<E extends any[]> implements EventSender<E> {
   /**
    * Sends the given `event` to all registered receivers.
    *
-   * @param event An event to send represented by function call arguments.
+   * @param event  An event to send represented by function call arguments.
    */
   readonly send: (this: this, ...event: E) => void = receiveEventsByEach(allReceivers(this._rcvs));
 
@@ -49,10 +50,10 @@ export class EventNotifier<E extends any[]> implements EventSender<E> {
    *
    * The `[OnEvent__symbol]` method is an alias of this one.
    *
-   * @param receiver A receiver of events.
+   * @param receiver  A receiver of events.
    *
-   * @returns An event interest. The events will be sent to `receiver` until the `off()` method of returned event
-   * interest is called.
+   * @returns An event interest. The events will be sent to `receiver` until the [[EventInterest.off]] method
+   * of returned event interest is called.
    */
   on(receiver: EventReceiver<E>): EventInterest {
 
@@ -72,9 +73,9 @@ export class EventNotifier<E extends any[]> implements EventSender<E> {
    * Removes all registered event receivers.
    *
    * After this method call they won't receive events. Informs all corresponding event interests on that by calling
-   * the callbacks registered with `whenDone()`.
+   * the callbacks registered with [[EventInterest.whenDone]].
    *
-   * @param reason A reason to stop sending events to receivers.
+   * @param reason  A reason to stop sending events to receivers.
    *
    * @returns `this` instance.
    */

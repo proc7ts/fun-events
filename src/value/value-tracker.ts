@@ -8,7 +8,9 @@ import { OnEvent, onEventFrom } from '../on-event';
 /**
  * Value accessor and changes tracker.
  *
- * Can be used as `EventSender` and `EventKeeper`. Events originated from them never exhaust.
+ * Can be used as [[EventSender]] and [[EventKeeper]]. Events originated from them never exhaust.
+ *
+ * @category Value Tracking
  */
 export abstract class ValueTracker<T = any, N extends T = T> implements EventSender<[N, T]>, EventKeeper<[T]> {
 
@@ -50,11 +52,11 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
    *
    * If the value is already bound to another value source, then unbinds from the old one first.
    *
-   * Call the `off()` method to unbind the tracked value from the `source`.
+   * Call the [[ValueTracker.off]] method to unbind the tracked value from the `source`.
    *
    * Note that explicitly updating the value would override the value received from the `source`.
    *
-   * @param source The source value sender or keeper.
+   * @param source  The source value sender or keeper.
    *
    * @returns `this` instance.
    */
@@ -67,12 +69,12 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
    *
    * If the value is already bound to another value source, then unbinds from the old one first.
    *
-   * Call the `off()` method to unbind the tracked value from the `source`.
+   * Call the [[ValueTracker.off]] method to unbind the tracked value from the `source`.
    *
    * Note that explicitly updating the value would override the value received from the `source`.
    *
-   * @param source The event sender or keeper to extract value senders or keepers from.
-   * @param extract A function extracting value senders or keepers from events received from the `source`.
+   * @param source  The event sender or keeper to extract value senders or keepers from.
+   * @param extract  A function extracting value senders or keepers from events received from the `source`.
    * May return `undefined` to suspend receiving values.
    *
    * @returns `this` instance.
@@ -122,11 +124,11 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
   }
 
   /**
-   * Unbinds the tracked value from the value sender or keeper this tracker is bound to with `by()` method.
+   * Unbinds the tracked value from the value sender or keeper this tracker is bound to with [[ValueTracker.by]] method.
    *
    * If the tracker is not bound then does nothing.
    *
-   * @param reason Arbitrary reason of unbinding the value.
+   * @param reason  Arbitrary reason of unbinding the value.
    *
    * @returns `this` instance.
    */
@@ -139,9 +141,9 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
    * Removes all registered event receivers.
    *
    * After this method call they won't receive events. Informs all corresponding event interests on that by calling
-   * the callbacks registered with `whenDone()`.
+   * the callbacks registered with [[EventInterest.whenDone]].
 
-   * @param reason A reason to stop sending events to receivers.
+   * @param reason  A reason to stop sending events to receivers.
    *
    * @returns `this` instance.
    */

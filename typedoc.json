@@ -1,0 +1,9 @@
+{
+  "categorizeByGroup": true,
+  "categoryOrder": ["Core", "State Tracking", "Value Tracking", "DOM Events", "*"],
+  "excludeNotExported": true,
+  "mode": "file",
+  "name": "Functional Event Processor",
+  "out": "./target/typedoc",
+  "tsconfig": "tsconfig.main.json"
+}

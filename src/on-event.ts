@@ -11,12 +11,13 @@ import Result = NextCall.CallResult;
  *
  * Once called, the receiver will start receiving the events while still interested.
  *
- * An `OnEvent` function also has a set of handy methods. More could be added later. It also can be used as
- * `EventSender`.
+ * An [[OnEvent]] function also has a set of handy methods. More could be added later. It also can be used as
+ * [[EventSender]].
  *
- * To convert a plain event receiver registration function to `OnEvent` an `onEventBy()` function can be used.
+ * To convert a plain event receiver registration function to [[OnEvent]] an [[onEventBy]] function can be used.
  *
- * @typeparam E An event type. This is a list of event receiver parameter types.
+ * @category Core
+ * @typeparam E  An event type. This is a list of event receiver parameter types.
  */
 export abstract class OnEvent<E extends any[]> extends Function implements EventSender<E> {
 
@@ -27,10 +28,10 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   /**
    * Registers the next event receiver. It won't receive any events after receiving the first one.
    *
-   * @param receiver Next event receiver.
+   * @param receiver  Next event receiver.
    *
-   * @returns An event interest. The receiver won't receive any events if the `off()` method of returned event interest
-   * is called before any event is sent.
+   * @returns An event interest. The receiver won't receive any events if the [[EventInterest.off]] method
+   * of the returned event interest is called before any event is sent.
    */
   once(receiver: EventReceiver<E>): EventInterest {
 
@@ -57,11 +58,11 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   /**
    * Extracts event senders from incoming events.
    *
-   * @typeparam F Extracted event type.
-   * @param extract A function extracting event sender or event keeper from incoming event. May return `undefined` when
+   * @typeparam F  Extracted event type.
+   * @param extract  A function extracting event sender or event keeper from incoming event. May return `undefined` when
    * nothing extracted.
    *
-   * @returns An `OnEvent` registrar of extracted events receivers. The events exhaust once the incoming events do.
+   * @returns An [[OnEvent]] registrar of extracted events receivers. The events exhaust once the incoming events do.
    * The returned registrar shares the interest to extracted events among receivers.
    */
   dig<F extends any[]>(
@@ -72,15 +73,15 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   /**
    * Extracts event senders from incoming events.
    *
-   * This method does the same as `dig()` one, except it does not share the interest to extracted events among
+   * This method does the same as [[OnEvent.dig]] one, except it does not share the interest to extracted events among
    * receivers. This may be useful e.g. when the result will be further transformed. It is wise to share the
    * interest to final result in this case.
    *
-   * @typeparam F Extracted event type.
-   * @param extract A function extracting event sender or event keeper from incoming event. May return `undefined` when
+   * @typeparam F  Extracted event type.
+   * @param extract  A function extracting event sender or event keeper from incoming event. May return `undefined` when
    * nothing extracted.
    *
-   * @returns An `OnEvent` registrar of extracted events receivers. The events exhaust once the incoming events do.
+   * @returns An [[OnEvent]] registrar of extracted events receivers. The events exhaust once the incoming events do.
    */
   dig_<F extends any[]>(
       extract: (this: void, ...event: E) => EventSender<F> | EventKeeper<F> | void | undefined): OnEvent<F> {
@@ -105,7 +106,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   /**
    * Consumes events.
    *
-   * @param consume A function consuming events. This function may return an `EventInterest` instance when registers
+   * @param consume  A function consuming events. This function may return an [[EventInterest]] instance when registers
    * a nested event receiver. This interest will be lost on new event.
    *
    * @returns An event interest that will stop consuming events once lost.
@@ -131,12 +132,21 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
    * a receiver in this one only once, when first receiver registered. And loses its interest when all receivers lost
    * their interest.
    *
-   * @returns An `OnEvent` registrar of receivers sharing a common interest to events sent by this sender.
+   * @returns An [[OnEvent]] registrar of receivers sharing a common interest to events sent by this sender.
    */
   share(): OnEvent<E> {
     return shareInterestTo(this);
   }
 
+  /**
+   * Constructs an [[OnEvent]] registrar of receivers of original events passed trough the chain of transformations.
+   *
+   * The passes are preformed by `callThru()` function. The event receivers registered by resulting [[OnEvent]]
+   * registrar are called by the last pass in chain. Thus they can be e.g. filtered out or called multiple times.
+   *
+   * @returns An [[OnEvent]] registrar of receivers of events transformed with provided passes. The returned registrar
+   * shares the interest to transformed events among receivers.
+   */
   thru<R1 extends any[]>(
       fn1: (this: void, ...args: E) => NextCall<any, R1, any, any, any>,
   ): OnEvent<R1>;
@@ -537,15 +547,6 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
       fn13: (this: void, ...args: P13) => NextCall<any, R13, any, any, any>,
   ): OnEvent<R13>;
 
-  /**
-   * Constructs an `OnEvent` registrar of receivers of original events passed trough the chain of transformations.
-   *
-   * The passes are preformed by `callThru()` function. The event receivers registered by resulting `OnEvent` registrar
-   * are called by the last pass in chain. Thus they can be e.g. filtered out or called multiple times.
-   *
-   * @returns An `OnEvent` registrar of receivers of events transformed with provided passes. The returned registrar
-   * shares the interest to transformed events among receivers.
-   */
   thru<
       R1 extends Result<P2>,
       P2 extends any[], R2 extends Result<P3>,
@@ -579,6 +580,16 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
     return shareInterestTo((this as any).thru_(...fns));
   }
 
+  /**
+   * Constructs an [[OnEvent]] registrar of receivers of original events passed trough the chain of transformations
+   * without sharing the result.
+   *
+   * This method does the same as [[OnEvent.thru]] one, except it does not share the interest to transformed events
+   * among receivers. This may be useful e.g. when the result will be further transformed anyway. It is wise to share
+   * the interest to final result in this case.
+   *
+   * @returns An [[OnEvent]] registrar of receivers of events transformed with provided passes.
+   */
   thru_<R1 extends any[]>(
       fn1: (this: void, ...args: E) => NextCall<any, R1, any, any, any>,
   ): OnEvent<R1>;
@@ -979,16 +990,6 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
       fn13: (this: void, ...args: P13) => NextCall<any, R13, any, any, any>,
   ): OnEvent<R13>;
 
-  /**
-   * Constructs an `OnEvent` registrar of receivers of original events passed trough the chain of transformations
-   * without sharing the result.
-   *
-   * This method does the same as `thru_()` one, except it interest does not share the interest to transformed events
-   * among receivers. This may be useful e.g. when the result will be further transformed anyway. It is wise to share
-   * the interest to final result in this case.
-   *
-   * @returns An `OnEvent` registrar of receivers of events transformed with provided passes.
-   */
   thru_<
       R1 extends Result<P2>,
       P2 extends any[], R2 extends Result<P3>,
@@ -1038,22 +1039,23 @@ export interface OnEvent<E extends any[]> {
   /**
    * Registers a receiver of events.
    *
-   * @param receiver A receiver of events.
+   * @param receiver  A receiver of events.
    *
-   * @returns An event interest. The events will be sent to `receiver` until the `off()` method of returned event
-   * interest is called.
+   * @returns An event interest. The events will be sent to `receiver` until the [[EventInterest.off]] method
+   * of the returned event interest is called.
    */
   (this: void, receiver: EventReceiver<E>): EventInterest; // tslint:disable-line:callable-types
 
 }
 
 /**
- * Converts a plain event receiver registration function to `OnEvent` registrar.
+ * Converts a plain event receiver registration function to [[OnEvent]] registrar.
  *
- * @typeparam E An event type. This is a list of event receiver parameter types.
- * @param register An event receiver registration function returning an event interest.
+ * @category Core
+ * @typeparam E  An event type. This is a list of event receiver parameter types.
+ * @param register  An event receiver registration function returning an event interest.
  *
- * @returns An `OnEvent` registrar instance registering event receivers with the given `register` function.
+ * @returns An [[OnEvent]] registrar instance registering event receivers with the given `register` function.
  */
 export function onEventBy<E extends any[]>(
     register: (this: void, receiver: EventReceiver<E>) => EventInterest): OnEvent<E> {
@@ -1066,12 +1068,13 @@ export function onEventBy<E extends any[]>(
 }
 
 /**
- * Builds an `OnEvent` registrar of receivers of events sent by the given sender or keeper.
+ * Builds an [[OnEvent]] registrar of receivers of events sent by the given sender or keeper.
  *
- * @typeparam E An event type. This is a list of event receiver parameter types.
- * @param senderOrKeeper An event sender or keeper.
+ * @category Core
+ * @typeparam E  An event type. This is a list of event receiver parameter types.
+ * @param senderOrKeeper  An event sender or keeper.
  *
- * @returns An `OnEvent` registrar instance.
+ * @returns An [[OnEvent]] registrar instance.
  */
 export function onEventFrom<E extends any[]>(senderOrKeeper: EventSender<E> | EventKeeper<E>): OnEvent<E> {
 
@@ -1086,19 +1089,22 @@ export function onEventFrom<E extends any[]>(senderOrKeeper: EventSender<E> | Ev
 }
 
 /**
- * An `OnEvent` registrar of receivers that would never receive any events.
+ * An [[OnEvent]] registrar of receivers that would never receive any events.
+ *
+ * @category Core
  */
 export const onNever: OnEvent<any> = /*#__PURE__*/ onEventBy(noEventInterest);
 
 /**
- * Builds an `OnEvent` registrar of receivers of events sent by any of the given senders of keepers.
+ * Builds an [[OnEvent]] registrar of receivers of events sent by any of the given senders of keepers.
  *
  * The resulting event sender exhausts as soon as all sources do.
  *
- * @typeparam E An event type. This is a list of event receiver parameter types.
- * @param sources Event senders or keepers the events originated from.
+ * @category Core
+ * @typeparam E  An event type. This is a list of event receiver parameter types.
+ * @param sources  Event senders or keepers the events originated from.
  *
- * @returns An `OnEvent` registrar instance.
+ * @returns An [[OnEvent]] registrar instance.
  */
 export function onEventFromAny<E extends any[]>(...sources: (EventSender<E> | EventKeeper<E>)[]): OnEvent<E> {
   if (!sources.length) {

@@ -5,10 +5,12 @@ import { noop } from 'call-thru';
  *
  * This is what returned when registering an event receiver.
  *
- * Once the receiver is no longer interested in receiving events, an `off()` method should be called to indicate the
- * lost of interest in receiving events.
+ * Once the receiver is no longer interested in receiving events, an [[EventInterest.off]] method should be called
+ * to indicate the lost of interest in receiving events.
  *
- * By convenience, `EventInterest` instances should be constructed using `eventInterest()` function.
+ * By convenience, [[EventInterest]] instances should be constructed using [[eventInterest]] function.
+ *
+ * @category Core
  */
 export abstract class EventInterest {
 
@@ -26,18 +28,19 @@ export abstract class EventInterest {
    *
    * Calling this method for the second time, or when the events exhausted, has no effect.
    *
-   * @param reason An optional reason why interest is lost. This will be reported to `whenDone()` callback.
+   * @param reason  An optional reason why interest is lost. This will be reported to [[EventInterest.whenDone]]
+   * callback.
    */
   abstract off(reason?: any): void;
 
   /**
    * Registers a callback function that will be called when events exhausted and will more events will be sent to the
-   * receiver. This callback will be called immediately when `done` is `true`.
+   * receiver. This callback will be called immediately when [[EventInterest.done]] become `true`.
    *
-   * Not every event sender informs on that, but it is guaranteed that this callback will be called when `off()` method
-   * is called.
+   * Not every event sender informs on that, but it is guaranteed that this callback will be called when
+   * [[EventInterest.off]] method is called.
    *
-   * @param callback A callback function that receives an optional event completion reason as its only parameter.
+   * @param callback  A callback function that receives an optional event completion reason as its only parameter.
    * By convenience an `undefined` reason means normal completion.
    *
    * @returns `this` instance.
@@ -49,7 +52,7 @@ export abstract class EventInterest {
    *
    * Once the events received with the `other` event interest are exhausted, this event interest would be lost.
    *
-   * @param other An event interest this one depends on.
+   * @param other  An event interest this one depends on.
    *
    * @return `this` instance.
    */
@@ -61,12 +64,14 @@ export abstract class EventInterest {
 }
 
 /**
- * Constructs new `EventInterest` instance.
+ * Constructs new [[EventInterest]] instance.
  *
- * @param off A function to call to indicate the lost of interest in receiving events. Accepts a single parameter
- * indicating the reason of losing interest that will be passed to `whenDone()` callbacks. No-op by default.
- * @param whenDone A function that will be called to register events exhaust callback. This function will be called
- * at most once. The `off()` method would call the registered callbacks in any case.
+ * @category Core
+ * @param off  A function to call to indicate the lost of interest in receiving events. Accepts a single parameter
+ * indicating the reason of losing interest that will be passed to [[EventInterest.whenDone]] callbacks.
+ * No-op by default.
+ * @param whenDone  A function that will be called to register events exhaust callback. This function will be called
+ * at most once. The [[EventInterest.off]] method would call the registered callbacks in any case.
  */
 export function eventInterest(
     off: (this: EventInterest, reason?: any) => void = noop,
@@ -151,6 +156,8 @@ const NO_INTEREST = /*#__PURE__*/ new NoInterest();
  * Returns a missing event interest.
  *
  * This is handy e.g. when initializing fields.
+ *
+ * @category Core
  */
 export function noEventInterest(): EventInterest {
   return NO_INTEREST;

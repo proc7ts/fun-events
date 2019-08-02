@@ -7,6 +7,8 @@ import { StatePath, statePath, StateUpdateReceiver } from './state-events';
 
 /**
  * A state update receivers registration function interface.
+ *
+ * @category State Tracking
  */
 export interface OnStateUpdate extends OnEvent<[StatePath, any, any]> {
 
@@ -174,10 +176,12 @@ class SubStateTracker implements StateTracker {
 /**
  * State changes tracker.
  *
- * A state is a tree-like structure of sub-states (nodes) available under `StatePath`.
+ * A state is a tree-like structure of sub-states (nodes) available under [[StatePath]].
  *
- * When node modified an `update` function should be called. Then all state update receivers registered by `onUpdate`
- * registrar will receive a notification.
+ * When node modified a [[StateTracker.update]] should be called. Then all state update receivers registered by
+ * [[StateTracker.onUpdate]] registrar will receive this update.
+ *
+ * @category State Tracking
  */
 export class StateTracker implements EventSender<[StatePath, any, any]> {
 
@@ -192,7 +196,7 @@ export class StateTracker implements EventSender<[StatePath, any, any]> {
    *
    * A state update will be sent to it whenever an `update()` function is called.
    *
-   * @param listener A state updates receiver to register.
+   * @param listener  A state updates receiver to register.
    *
    * @return An event interest instance.
    */
@@ -210,10 +214,10 @@ export class StateTracker implements EventSender<[StatePath, any, any]> {
    *
    * All receivers registered with `onUpdate()` will receive this update.
    *
-   * @typeparam V A type of changed value.
-   * @param key Changed value key.
-   * @param newValue New value.
-   * @param oldValue Previous value.
+   * @typeparam V  A type of changed value.
+   * @param key  Changed value key.
+   * @param newValue  New value.
+   * @param oldValue  Previous value.
    */
   get update(): <V>(
       this: void,
@@ -227,7 +231,7 @@ export class StateTracker implements EventSender<[StatePath, any, any]> {
   /**
    * Starts tracking of partial state under the given path.
    *
-   * @param path A path to state part.
+   * @param path  A path to state part.
    *
    * @return New partial state tracker.
    */
@@ -244,7 +248,7 @@ export class StateTracker implements EventSender<[StatePath, any, any]> {
    * After this method call the listeners registered in for this partial state and all nested states won't receive
    * any updates.
    *
-   * @param reason An optional reason to stop tracking.
+   * @param reason  An optional reason to stop tracking.
    */
   done(reason?: any) {
     this._tracker.done(reason);

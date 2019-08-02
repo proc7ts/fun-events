@@ -4,8 +4,10 @@ Functional Event Processor
 [![NPM][npm-image]][npm-url]
 [![CircleCI][ci-image]][ci-url]
 [![codecov][codecov-image]][codecov-url]
+[![GitHub Project][github-image]][github-url]
+[![API Documentation][api-docs-image]][api-docs-url]
 
-The API implements a simple protocol for registering event receivers in event senders for event receiving:
+A simple protocol for sending events to receivers registered in senders:
 
 ```typescript
 import { EventIterest, OnEvent } from 'fun-events';
@@ -29,12 +31,16 @@ interest.off(); // The eventReceiver will no longer receive events after this ca
 ```
 
 
-[npm-image]: https://img.shields.io/npm/v/fun-events.svg
+[npm-image]: https://img.shields.io/npm/v/fun-events.svg?logo=npm
 [npm-url]: https://www.npmjs.com/package/fun-events
-[ci-image]:https://circleci.com/gh/surol/fun-events.svg?style=shield
-[ci-url]:https://circleci.com/gh/surol/fun-events  
+[ci-image]: https://img.shields.io/circleci/build/github/surol/fun-events?logo=circleci
+[ci-url]: https://img.shields.io/codecov/c/github/surol/fun-events?logo=codecov
 [codecov-image]: https://codecov.io/gh/surol/fun-events/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/surol/fun-events
+[github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
+[github-url]: https://github.com/surol/fun-events
+[api-docs-image]: https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational
+[api-docs-url]: https://surol.github.io/fun-events/
 
 
 `EventReceiver`

@@ -3,12 +3,13 @@ import { EventReceiver } from '../event-receiver';
 /**
  * A state updates receiver function.
  *
- * It is called when the value with the given `key` changes.
+ * It is called whenever the value with at given `path` changes.
  *
- * @typeparam V A type of changed value.
- * @param path A path to changed state part.
- * @param newValue New value.
- * @param oldValue Previous value.
+ * @category State Tracking
+ * @typeparam V  A type of changed value.
+ * @param path  A path to changed state part.
+ * @param newValue  New value.
+ * @param oldValue  Previous value.
  */
 export type StateUpdateReceiver = <V>(
     this: StateUpdateReceiver.Context,
@@ -35,6 +36,8 @@ export namespace StateUpdateReceiver {
  * An array consisting of the only one property key is the same as this property key.
  *
  * An empty array is a path to the state itself.
+ *
+ * @category State Tracking
  */
 export type StatePath = PropertyKey | StatePath.Normalized;
 
@@ -52,7 +55,8 @@ export namespace StatePath {
 /**
  * Normalizes a state path consisting of single key.
  *
- * @param key A path key.
+ * @category State Tracking
+ * @param key  A path key.
  *
  * @return Normalized state path.
  */
@@ -61,7 +65,7 @@ export function statePath<K extends PropertyKey>(key: K): [K];
 /**
  * Normalizes arbitrary state path. I.e. converts it to array.
  *
- * @param path Arbitrary state path.
+ * @param path  Arbitrary state path.
  *
  * @return Normalized state path.
  */
