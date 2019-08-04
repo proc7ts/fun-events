@@ -34,7 +34,7 @@ interest.off(); // The eventReceiver will no longer receive events after this ca
 [npm-image]: https://img.shields.io/npm/v/fun-events.svg?logo=npm
 [npm-url]: https://www.npmjs.com/package/fun-events
 [ci-image]: https://img.shields.io/circleci/build/github/surol/fun-events?logo=circleci
-[ci-url]: https://img.shields.io/codecov/c/github/surol/fun-events?logo=codecov
+[ci-url]: https://circleci.com/gh/surol/fun-events
 [codecov-image]: https://codecov.io/gh/surol/fun-events/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/surol/fun-events
 [github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
