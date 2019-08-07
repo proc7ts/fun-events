@@ -1,6 +1,11 @@
+import { noop } from 'call-thru';
 import { eventInterest } from '../event-interest';
-import { receiveEventsBy } from '../event-receiver';
+import { EventReceiver } from '../event-receiver';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
+
+const domEventContext: EventReceiver.Context<any> = {
+  afterRecurrent: noop,
+};
 
 /**
  * DOM event dispatcher can be used to register event listeners and dispatch events.
@@ -36,7 +41,7 @@ export class DomEventDispatcher {
     return onDomEventBy<E>((listener, opts) => {
 
       // Create unique DOM listener instance
-      const domListener: EventListener = event => receiveEventsBy(listener)(event as E);
+      const domListener: EventListener = listener.bind(domEventContext) as EventListener;
 
       this._target.addEventListener(type, domListener, opts);
 

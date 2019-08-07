@@ -5,6 +5,8 @@ import { OnEvent } from '../on-event';
 /**
  * DOM event listener.
  *
+ * DOM events are never recurrent.
+ *
  * @category DOM
  * @typeparam E  Supported DOM event type.
  */
