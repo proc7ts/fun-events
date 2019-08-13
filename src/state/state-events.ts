@@ -6,17 +6,20 @@ import { EventReceiver } from '../event-receiver';
  * It is called whenever the value with at given `path` changes.
  *
  * @category State Tracking
+ */
+export type StateUpdateReceiver =
+/**
  * @typeparam V  A type of changed value.
  * @param path  A path to changed state part.
  * @param newValue  New value.
  * @param oldValue  Previous value.
  */
-export type StateUpdateReceiver = <V>(
-    this: StateUpdateReceiver.Context,
-    path: StatePath,
-    newValue: V,
-    oldValue: V,
-) => void;
+    <V>(
+        this: StateUpdateReceiver.Context,
+        path: StatePath,
+        newValue: V,
+        oldValue: V,
+    ) => void;
 
 export namespace StateUpdateReceiver {
 

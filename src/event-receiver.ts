@@ -10,12 +10,15 @@
  *
  * @category Core
  * @typeparam E  An event type. This is a tuple of event receiver parameter types.
+ */
+export type EventReceiver<E extends any[]> =
+/**
  * @param this  An event processing context.
  * @param event  An event represented by function call arguments.
  *
  * @returns Either `void` or recurrent event receiver.
  */
-export type EventReceiver<E extends any[]> = (this: EventReceiver.Context<E>, ...event: E) => void;
+    (this: EventReceiver.Context<E>, ...event: E) => void;
 
 export namespace EventReceiver {
 
