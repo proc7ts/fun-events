@@ -51,7 +51,7 @@ export namespace StatePath {
    *
    * This is always an array of property keys.
    */
-  export type Normalized = PropertyKey[];
+  export type Normalized = readonly PropertyKey[];
 
 }
 
