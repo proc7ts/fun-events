@@ -4,43 +4,12 @@ import sourcemaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
 import pkg from './package.json';
 
-const mainConfig = makeConfig(
-    baseConfig('tsconfig.main.json'),
-    {
-      output: {
-        format: 'cjs',
-        file: pkg.main,
-      },
-    });
+export default [
+  makeConfig({ tsconfig: 'tsconfig.module.json', file: pkg.module, format: 'esm' }),
+  makeConfig({ tsconfig: 'tsconfig.main.json', file: pkg.main, format: 'cjs' }),
+];
 
-const esmConfig = makeConfig(
-    baseConfig('tsconfig.es6.json'),
-    {
-      output: {
-        file: pkg.module,
-      },
-    });
-
-const esm5Config = makeConfig(
-    baseConfig('tsconfig.es5.json'),
-    {
-      output: {
-        file: pkg.esm5,
-      },
-    });
-
-function makeConfig(baseConfig, ...configs) {
-  return configs.reduce(
-      (prev, config) => ({
-        ...prev,
-        ...config,
-        plugins: [ ...(prev.plugins || []), ...(config.plugins || []) ],
-        output: { ...(prev.output || {}), ...(config.output || {}) },
-      }),
-      baseConfig);
-}
-
-function baseConfig(tsconfig) {
+function makeConfig({ tsconfig, file, format }) {
   return {
     plugins: [
       commonjs(),
@@ -56,14 +25,9 @@ function baseConfig(tsconfig) {
     input: './src/index.ts',
     external: Object.keys(pkg.dependencies),
     output: {
-      format: 'esm',
+      file,
+      format,
       sourcemap: true,
     },
   };
 }
-
-export default [
-  mainConfig,
-  esmConfig,
-  esm5Config,
-]

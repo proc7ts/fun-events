@@ -23,7 +23,6 @@
   },
   "main": "dist/fun-events.js",
   "module": "dist/fun-events.mjs",
-  "esm5": "dist/fun-events.esm5.js",
   "typings": "index.d.ts",
   "dependencies": {
     "call-thru": "^2.5.2",
