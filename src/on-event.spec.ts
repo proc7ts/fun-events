@@ -1,6 +1,6 @@
 import { noop, passIf } from 'call-thru';
 import { EventEmitter } from './event-emitter';
-import { EventInterest, noEventInterest } from './event-interest';
+import { eventInterest, EventInterest, noEventInterest } from './event-interest';
 import { AfterEvent__symbol } from './event-keeper';
 import { EventNotifier } from './event-notifier';
 import { EventReceiver, receiveEventsBy } from './event-receiver';
@@ -9,6 +9,7 @@ import { OnEvent, onEventBy, onEventFrom, onEventFromAny, onNever } from './on-e
 import { trackValue } from './value';
 import Mock = jest.Mock;
 import Mocked = jest.Mocked;
+import SpyInstance = jest.SpyInstance;
 
 describe('OnEvent', () => {
   describe('from event sender', () => {
@@ -128,45 +129,51 @@ describe('OnEvent', () => {
 
     let mockRegister: Mock;
     let onEvent: OnEvent<[string]>;
-    let mockInterest: Mocked<EventInterest>;
+    let interest: EventInterest;
+    let offSpy: SpyInstance;
     let registeredReceiver: (event: string) => void;
     let mockReceiver: Mock<void, [string]>;
 
     beforeEach(() => {
-      mockInterest = {
-        off: jest.fn()
-      } as any;
+      interest = eventInterest();
+      offSpy = jest.spyOn(interest, 'off');
       mockRegister = jest.fn((c: (event: string) => string) => {
         registeredReceiver = c;
-        return mockInterest;
+        return interest;
       });
       onEvent = onEventBy(mockRegister);
       mockReceiver = jest.fn();
     });
 
     it('registers event receiver', () => {
-      expect(onEvent.once(mockReceiver)).toBe(mockInterest);
+      expect(onEvent.once(mockReceiver)).toBe(interest);
       expect(mockRegister).toHaveBeenCalledWith(registeredReceiver);
     });
     it('unregisters notified event receiver', () => {
       onEvent.once(mockReceiver);
-      expect(mockInterest.off).not.toHaveBeenCalled();
+      expect(offSpy).not.toHaveBeenCalled();
 
       registeredReceiver('event');
       expect(mockReceiver).toHaveBeenCalledWith('event');
-      expect(mockInterest.off).toHaveBeenCalled();
+      expect(offSpy).toHaveBeenCalled();
     });
     it('unregisters immediately notified event receiver', () => {
       mockRegister.mockImplementation(c => {
         registeredReceiver = c;
         c('event');
-        return mockInterest;
+        return interest;
       });
 
       onEvent.once(mockReceiver);
 
-      expect(mockInterest.off).toHaveBeenCalled();
+      expect(offSpy).toHaveBeenCalled();
       expect(mockReceiver).toHaveBeenCalledWith('event');
+    });
+    it('never sends event if interest already lost', () => {
+      interest.off();
+      onEvent.once(mockReceiver);
+      registeredReceiver('event');
+      expect(mockReceiver).not.toHaveBeenCalled();
     });
   });
 

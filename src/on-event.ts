@@ -35,24 +35,16 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
    */
   once(receiver: EventReceiver<E>): EventInterest {
 
-    let interest = noEventInterest();
-    let off = false;
+    let interest = eventInterest();
 
     const wrapper: EventReceiver<E> = function (...args: E) {
-      interest.off();
-      off = true;
-      receiver.apply(this, args);
+      if (!interest.done) {
+        interest.off();
+        receiver.apply(this, args);
+      }
     };
 
-    interest = this(wrapper);
-
-    if (off) {
-      // The receiver is notified immediately during registration.
-      // Unregister event interest right away.
-      interest.off();
-    }
-
-    return interest;
+    return interest = this(wrapper).needs(interest);
   }
 
   /**
