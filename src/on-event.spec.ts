@@ -169,11 +169,23 @@ describe('OnEvent', () => {
       expect(offSpy).toHaveBeenCalled();
       expect(mockReceiver).toHaveBeenCalledWith('event');
     });
-    it('never sends event if interest already lost', () => {
+    it('never sends events if interest is initially lost', () => {
       interest.off();
       onEvent.once(mockReceiver);
       registeredReceiver('event');
       expect(mockReceiver).not.toHaveBeenCalled();
+    });
+    it('never sends events after interest is lost', () => {
+      onEvent.once(mockReceiver).off();
+      registeredReceiver('event');
+      expect(mockReceiver).not.toHaveBeenCalled();
+    });
+    it('sends only one event', () => {
+      onEvent.once(mockReceiver);
+      registeredReceiver('event1');
+      registeredReceiver('event2');
+      expect(mockReceiver).toHaveBeenCalledTimes(1);
+      expect(mockReceiver).toHaveBeenLastCalledWith('event1');
     });
   });
 
