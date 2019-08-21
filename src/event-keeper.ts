@@ -51,6 +51,6 @@ export namespace EventKeeper {
  *
  * @returns `true` if `value` contains an `[AfterEvent__symbol]` property, or `false` otherwise.
  */
-export function isEventKeeper<E extends any[]>(value: object | (() => any)): value is EventKeeper<E> {
+export function isEventKeeper<E extends any[]>(value: object): value is EventKeeper<E> {
   return AfterEvent__symbol in value;
 }

@@ -50,6 +50,6 @@ export namespace EventSender {
  *
  * @returns `true` if `value` contains `[OnEvent__symbol]` property, or `false` otherwise.
  */
-export function isEventSender<E extends any[]>(value: object | (() => any)): value is EventSender<E> {
+export function isEventSender<E extends any[]>(value: object): value is EventSender<E> {
   return OnEvent__symbol in value;
 }
