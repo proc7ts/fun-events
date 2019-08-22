@@ -36,6 +36,11 @@ export class DomEventDispatcher {
    *
    * The [[EventInterest]] returned upon event listener registration, unregisters the given event listener with
    * `EventTarget.removeEventListener()` when its [[EventInterest.off]] method is called.
+   *
+   * @typeparam E  DOM event type.
+   * @param type  DOM event type name.
+   *
+   * @returns [[OnDomEvent]] registrar of DOM event listeners of the given `type`.
    */
   on<E extends Event>(type: string): OnDomEvent<E> {
     return onDomEventBy<E>((listener, opts) => {

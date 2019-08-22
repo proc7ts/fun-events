@@ -3,7 +3,7 @@ import { EventReceiver } from '../event-receiver';
 import { OnEvent } from '../on-event';
 
 /**
- * DOM event listener.
+ * DOM event listener signature.
  *
  * DOM events are never recurrent.
  *
@@ -13,7 +13,7 @@ import { OnEvent } from '../on-event';
 export type DomEventListener<E extends Event> = EventReceiver<[E]>;
 
 /**
- * A DOM event listener registration function interface.
+ * A DOM event listener registrar signature.
  *
  * @category DOM
  * @typeparam E  Supported DOM event type.
@@ -29,7 +29,8 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
   get capture(): OnDomEvent<E> {
     return onDomEventBy((
         listener: DomEventListener<E>,
-        opts?: AddEventListenerOptions | boolean) => {
+        opts?: AddEventListenerOptions | boolean,
+    ) => {
       if (opts == null) {
         return this(listener, true);
       }
@@ -48,7 +49,8 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
   get instead(): OnDomEvent<E> {
     return onDomEventBy((
         listener: DomEventListener<E>,
-        opts?: AddEventListenerOptions | boolean) => {
+        opts?: AddEventListenerOptions | boolean,
+    ) => {
       return this(
           function(event) {
             event.preventDefault();
@@ -67,7 +69,8 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
   get just(): OnDomEvent<E> {
     return onDomEventBy((
         listener: DomEventListener<E>,
-        opts?: AddEventListenerOptions | boolean) => {
+        opts?: AddEventListenerOptions | boolean,
+    ) => {
       return this(
           function (event) {
             event.stopPropagation();
@@ -85,7 +88,8 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
   get last(): OnDomEvent<E> {
     return onDomEventBy((
         listener: DomEventListener<E>,
-        opts?: AddEventListenerOptions | boolean) => {
+        opts?: AddEventListenerOptions | boolean,
+    ) => {
       return this(
           function (event) {
             event.stopImmediatePropagation();
@@ -103,7 +107,8 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
   get passive(): OnDomEvent<E> {
     return onDomEventBy((
         listener: DomEventListener<E>,
-        opts?: AddEventListenerOptions | boolean) => {
+        opts?: AddEventListenerOptions | boolean,
+    ) => {
       if (opts == null) {
         return this(listener, { passive: true });
       }
@@ -139,6 +144,7 @@ export interface OnDomEvent<E extends Event> {
  * Converts a plain DOM event listener registration function to [[OnDomEvent]] registrar.
  *
  * @category State Tracking
+ * @typeparam E  Supported DOM event type.
  * @param register  A DOM event listener registration function returning an event interest.
  *
  * @returns An [[OnDomEvent]] registrar instance registering event listeners with the given `register` function.
@@ -147,8 +153,9 @@ export function onDomEventBy<E extends Event>(
     register: (
         this: void,
         listener: DomEventListener<E>,
-        opts?: AddEventListenerOptions | boolean) => EventInterest):
-    OnDomEvent<E> {
+        opts?: AddEventListenerOptions | boolean,
+    ) => EventInterest,
+): OnDomEvent<E> {
 
   const onDomEvent = ((
       listener: (this: void, event: E) => void,

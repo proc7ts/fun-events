@@ -85,7 +85,8 @@ export class ValueSync<T> extends ValueTracker<T> {
    */
   sync<U extends any[]>(
       source: EventSender<U> | EventKeeper<U>,
-      extract: (this: void, ...event: U) => ValueTracker<T, any> | undefined): EventInterest;
+      extract: (this: void, ...event: U) => ValueTracker<T, any> | undefined,
+  ): EventInterest;
 
   /**
    * Synchronizes the tracked value with the ones extracted from the events sent by the given `source` sender or keeper
@@ -104,7 +105,8 @@ export class ValueSync<T> extends ValueTracker<T> {
   sync<U extends any[]>(
       direction: 'in' | 'out',
       source: EventSender<U> | EventKeeper<U>,
-      extract: (this: void, ...event: U) => ValueTracker<T, any> | undefined): EventInterest;
+      extract: (this: void, ...event: U) => ValueTracker<T, any> | undefined,
+  ): EventInterest;
 
   sync<U extends any[]>(
       first: 'in' | 'out' | ValueTracker<T, any> | EventSender<U> | EventKeeper<U>,
@@ -112,7 +114,8 @@ export class ValueSync<T> extends ValueTracker<T> {
           | EventSender<U>
           | EventKeeper<U>
           | ((this: void, ...event: U) => ValueTracker<T, any> | undefined),
-      third?: (this: void, ...event: U) => ValueTracker<T, any> | undefined): EventInterest {
+      third?: (this: void, ...event: U) => ValueTracker<T, any> | undefined,
+  ): EventInterest {
 
     let syncWithTracker = (tracker: ValueTracker<T, any>) => syncTrackers(this, tracker);
     let source: ValueTracker<T, any> | EventSender<U> | EventKeeper<U>;

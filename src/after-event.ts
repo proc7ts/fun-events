@@ -1012,7 +1012,8 @@ export abstract class AfterEvent<E extends any[]> extends OnEvent<E> implements 
  */
 export function afterEventBy<E extends any[]>(
     register: (this: void, receiver: EventReceiver<E>) => EventInterest,
-    initial: ((this: void) => E) | E = noEvent): AfterEvent<E> {
+    initial: ((this: void) => E) | E = noEvent,
+): AfterEvent<E> {
 
   let lastEvent: E | undefined;
 
@@ -1078,7 +1079,8 @@ export function afterEventBy<E extends any[]>(
  */
 export function afterEventOr<E extends any[]>(
     register: (this: void, receiver: EventReceiver<E>) => EventInterest,
-    fallback: (this: void) => E): AfterEvent<E> {
+    fallback: (this: void) => E,
+): AfterEvent<E> {
 
   let lastEvent: E | undefined;
   let numReceivers = 0;
@@ -1173,8 +1175,8 @@ export function afterEventFrom<E extends any[]>(
 
 export function afterEventFrom<E extends any[]>(
     senderOrKeeper: EventSender<E> | EventKeeper<E>,
-    initial?: ((this: void) => E) | E):
-    AfterEvent<E> {
+    initial?: ((this: void) => E) | E,
+): AfterEvent<E> {
   if (!isEventKeeper(senderOrKeeper)) {
     return afterEventBy(senderOrKeeper[OnEvent__symbol].bind(senderOrKeeper), initial);
   }
@@ -1220,8 +1222,9 @@ function noEvent(): never {
  * @returns An event keeper sending a map of events received from each event keeper. Each event in this map has the
  * same name as its originating event keeper in `sources`.
  */
-export function afterEventFromAll<S extends { readonly [key: string]: EventKeeper<any> }>(sources: S):
-    AfterEvent<[{ readonly [K in keyof S]: EventKeeper.Event<S[K]> }]> {
+export function afterEventFromAll<S extends { readonly [key: string]: EventKeeper<any> }>(
+    sources: S,
+): AfterEvent<[{ readonly [K in keyof S]: EventKeeper.Event<S[K]> }]> {
 
   const keys = Object.keys(sources);
 

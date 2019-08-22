@@ -81,11 +81,13 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
    */
   by<U extends any[]>(
       source: EventKeeper<U> | EventSender<U>,
-      extract: (this: void, ...event: U) => EventKeeper<[T]> | EventSender<[T]> | undefined): this;
+      extract: (this: void, ...event: U) => EventKeeper<[T]> | EventSender<[T]> | undefined,
+  ): this;
 
   by<U extends any[]>(
       source: EventKeeper<U> | EventSender<U> | EventKeeper<[T]> | EventSender<[T]>,
-      extract?: (this: void, ...event: U) => EventKeeper<[T]> | EventSender<[T]> | undefined): this {
+      extract?: (this: void, ...event: U) => EventKeeper<[T]> | EventSender<[T]> | undefined,
+  ): this {
 
     const self = this;
 
@@ -157,12 +159,12 @@ function receiveNewValue<T, N extends T>(valueReceiver: EventReceiver<[T]>): Eve
     const context = this;
 
     valueReceiver.call(
-      {
-        afterRecurrent(recurrentReceiver) {
-          context.afterRecurrent(receiveNewValue(recurrentReceiver));
+        {
+          afterRecurrent(recurrentReceiver) {
+            context.afterRecurrent(receiveNewValue(recurrentReceiver));
+          },
         },
-      },
-      newValue
+        newValue,
     );
   };
 }

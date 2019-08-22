@@ -79,7 +79,8 @@ export function eventInterest(
       whenDone = noop,
     }: {
       whenDone?: (callback: (this: EventInterest, reason?: any) => void) => void;
-    } = {}): EventInterest {
+    } = {},
+): EventInterest {
 
   let alreadyDone = false;
   let doneReason: any | undefined;
