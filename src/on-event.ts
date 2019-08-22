@@ -58,7 +58,8 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
    * The returned registrar shares the interest to extracted events among receivers.
    */
   dig<F extends any[]>(
-      extract: (this: void, ...event: E) => EventSender<F> | EventKeeper<F> | void | undefined): OnEvent<F> {
+      extract: (this: void, ...event: E) => EventSender<F> | EventKeeper<F> | void | undefined,
+  ): OnEvent<F> {
     return shareInterestTo(this.dig_(extract));
   }
 
@@ -76,16 +77,21 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
    * @returns An [[OnEvent]] registrar of extracted events receivers. The events exhaust once the incoming events do.
    */
   dig_<F extends any[]>(
-      extract: (this: void, ...event: E) => EventSender<F> | EventKeeper<F> | void | undefined): OnEvent<F> {
+      extract: (this: void, ...event: E) => EventSender<F> | EventKeeper<F> | void | undefined,
+  ): OnEvent<F> {
     return onEventBy((receiver: EventReceiver<F>) => {
 
       let nestedInterest = noEventInterest();
       const senderInterest = this((...event: E) => {
-        nestedInterest.off();
 
+        const prevInterest = nestedInterest;
         const extracted = extract(...event);
 
-        nestedInterest = extracted ? onEventFrom(extracted)(receiver) : noEventInterest();
+        try {
+          nestedInterest = extracted ? onEventFrom(extracted)(receiver) : noEventInterest();
+        } finally {
+          prevInterest.off();
+        }
       });
 
       return eventInterest(reason => {
@@ -107,8 +113,14 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
 
     let consumerInterest = noEventInterest();
     const senderInterest = this((...event: E) => {
-      consumerInterest.off();
-      consumerInterest = consume(...event) || noEventInterest();
+
+      const prevInterest = consumerInterest;
+
+      try {
+        consumerInterest = consume(...event) || noEventInterest();
+      } finally {
+        prevInterest.off();
+      }
     });
 
     return eventInterest(reason => {
@@ -1050,7 +1062,8 @@ export interface OnEvent<E extends any[]> {
  * @returns An [[OnEvent]] registrar instance registering event receivers with the given `register` function.
  */
 export function onEventBy<E extends any[]>(
-    register: (this: void, receiver: EventReceiver<E>) => EventInterest): OnEvent<E> {
+    register: (this: void, receiver: EventReceiver<E>) => EventInterest,
+): OnEvent<E> {
 
   const onEvent = ((receiver: EventReceiver<E>) => register(receiver)) as OnEvent<E>;
 
