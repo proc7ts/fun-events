@@ -3,6 +3,7 @@
   "compilerOptions": {
     "declaration": true,
     "declarationDir": "d.ts",
+    "declarationMap": true,
     "stripInternal": true
   }
 }
