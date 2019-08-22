@@ -1,3 +1,6 @@
+/**
+ * @module fun-events
+ */
 import { AfterEvent, afterEventOr } from '../after-event';
 import { EventInterest, noEventInterest } from '../event-interest';
 import { AfterEvent__symbol, EventKeeper, isEventKeeper } from '../event-keeper';
@@ -11,6 +14,8 @@ import { OnEvent, onEventFrom } from '../on-event';
  * Can be used as [[EventSender]] and [[EventKeeper]]. Events originated from them never exhaust.
  *
  * @category Value Tracking
+ * @typeparam T  Tracked value type.
+ * @typeparam N  New (updated) value type.
  */
 export abstract class ValueTracker<T = any, N extends T = T> implements EventSender<[N, T]>, EventKeeper<[T]> {
 
@@ -73,20 +78,21 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
    *
    * Note that explicitly updating the value would override the value received from the `source`.
    *
+   * @typeparam S  Source value type.
    * @param source  The event sender or keeper to extract value senders or keepers from.
    * @param extract  A function extracting value senders or keepers from events received from the `source`.
    * May return `undefined` to suspend receiving values.
    *
    * @returns `this` instance.
    */
-  by<U extends any[]>(
-      source: EventKeeper<U> | EventSender<U>,
-      extract: (this: void, ...event: U) => EventKeeper<[T]> | EventSender<[T]> | undefined,
+  by<S extends any[]>(
+      source: EventKeeper<S> | EventSender<S>,
+      extract: (this: void, ...event: S) => EventKeeper<[T]> | EventSender<[T]> | undefined,
   ): this;
 
-  by<U extends any[]>(
-      source: EventKeeper<U> | EventSender<U> | EventKeeper<[T]> | EventSender<[T]>,
-      extract?: (this: void, ...event: U) => EventKeeper<[T]> | EventSender<[T]> | undefined,
+  by<S extends any[]>(
+      source: EventKeeper<S> | EventSender<S> | EventKeeper<[T]> | EventSender<[T]>,
+      extract?: (this: void, ...event: S) => EventKeeper<[T]> | EventSender<[T]> | undefined,
   ): this {
 
     const self = this;
@@ -100,9 +106,9 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
       this._by = acceptValuesFrom(sender);
     } else {
 
-      const container = source as EventKeeper<U> | EventSender<U>;
+      const container = source as EventKeeper<S> | EventSender<S>;
 
-      this._by = onEventFrom(container).consume((...event: U) => {
+      this._by = onEventFrom(container).consume((...event: S) => {
 
         const sender = extract(...event);
 

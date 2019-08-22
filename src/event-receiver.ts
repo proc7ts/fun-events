@@ -1,4 +1,7 @@
 /**
+ * @module fun-events
+ */
+/**
  * Event receiver is a function that is called on each event sent by [[EventSender]] when registered.
  *
  * To register an event receiver just call the event sender's `[OnEvent__symbol]` or event keeper's

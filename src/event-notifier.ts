@@ -1,3 +1,6 @@
+/**
+ * @module fun-events
+ */
 import { noop } from 'call-thru';
 import { eventInterest, EventInterest } from './event-interest';
 import { EventReceiver, receiveEventsByEach } from './event-receiver';

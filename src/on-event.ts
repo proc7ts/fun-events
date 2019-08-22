@@ -1,3 +1,6 @@
+/**
+ * @module fun-events
+ */
 import { callThru, NextCall } from 'call-thru';
 import { eventInterest, EventInterest, noEventInterest } from './event-interest';
 import { AfterEvent__symbol, EventKeeper } from './event-keeper';

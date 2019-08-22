@@ -1,3 +1,6 @@
+/**
+ * @module fun-events
+ */
 import { EventNotifier } from './event-notifier';
 import { EventSender, OnEvent__symbol } from './event-sender';
 import { OnEvent, onEventBy } from './on-event';

@@ -1,3 +1,6 @@
+/**
+ * @module fun-events
+ */
 import { EventEmitter } from '../event-emitter';
 import { ValueTracker } from './value-tracker';
 

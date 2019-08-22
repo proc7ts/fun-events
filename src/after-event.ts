@@ -1,3 +1,6 @@
+/**
+ * @module fun-events
+ */
 import { NextCall, noop } from 'call-thru';
 import { EventEmitter } from './event-emitter';
 import { EventInterest, noEventInterest } from './event-interest';

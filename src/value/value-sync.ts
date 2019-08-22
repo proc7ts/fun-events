@@ -1,3 +1,6 @@
+/**
+ * @module fun-events
+ */
 import { afterEventFrom } from '../after-event';
 import { EventEmitter } from '../event-emitter';
 import { eventInterest, EventInterest } from '../event-interest';
