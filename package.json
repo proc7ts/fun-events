@@ -25,8 +25,7 @@
   "module": "dist/fun-events.mjs",
   "typings": "index.d.ts",
   "dependencies": {
-    "call-thru": "^2.5.2",
-    "tslib": "^1.10.0"
+    "call-thru": "^2.5.3"
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",
@@ -34,27 +33,31 @@
     "fs-extra": "^8.1.0",
     "gh-pages": "^2.1.1",
     "jest": "^24.9.0",
-    "jest-junit": "^7.0.0",
+    "jest-junit": "^8.0.0",
     "npm-run-all": "^4.1.5",
-    "rollup": "^1.20.0",
-    "rollup-plugin-commonjs": "^10.0.2",
+    "rollup": "^1.20.3",
+    "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
-    "rollup-plugin-typescript2": "^0.22.1",
+    "rollup-plugin-typescript2": "^0.24.0",
     "ts-jest": "^24.0.2",
     "tslint": "^5.19.0",
     "typedoc": "^0.15.0",
     "typedoc-plugin-external-module-name": "^2.1.0",
-    "typescript": "^3.5.3"
+    "typescript": "^3.6.2"
   },
   "scripts": {
+    "all": "run-p rebuild lint test",
     "build": "rollup --config ./rollup.config.js",
+    "ci:all": "run-p build lint ci:test",
+    "ci:test": "jest --ci --runInBand",
     "clean": "node ./build/clean",
     "doc": "typedoc",
     "doc:gh-pages": "gh-pages --dist target/typedoc --dotfiles",
     "doc:ci": "node ./build/doc-ci",
     "doc:publish": "run-s doc doc:ci \"doc:gh-pages {@}\" --",
     "lint": "tslint --project .",
+    "rebuild": "run-s clean build",
     "test": "jest"
   }
 }
