@@ -6,7 +6,7 @@ version: 2.1
 jobs:
   build:
     docker:
-    - image: circleci/node:10-jessie
+    - image: circleci/node:lts-buster
 
     working_directory: ~/repo
 
@@ -16,9 +16,9 @@ jobs:
     - restore_cache:
         name: Restore Yarn package cache
         keys:
-        - v2-dependencies-{{ checksum "yarn.lock" }}
+        - v3-dependencies-{{ checksum "yarn.lock" }}
         # fallback to using the latest cache if no exact match is found
-        - v2-dependencies-
+        - v3-dependencies-
 
     - run:
         name: Install dependencies
@@ -26,17 +26,13 @@ jobs:
 
     - save_cache:
         name: Save Yarn package cache
-        key: v2-dependencies-{{ checksum "yarn.lock" }}
+        key: v3-dependencies-{{ checksum "yarn.lock" }}
         paths:
         - ~/.cache/yarn
 
     - run:
         name: Build the project
-        command: yarn build
-
-    - run:
-        name: Run tests
-        command: yarn test --ci
+        command: yarn ci:all
 
     - store_artifacts:
         name: Store test results
@@ -55,10 +51,6 @@ jobs:
     - run:
         name: Upload code coverage report
         command: yarn codecov --disable=gcov
-
-    - run:
-        name: Linting
-        command: yarn lint
 
 workflows:
   version: 2.1
