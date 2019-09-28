@@ -10,5 +10,6 @@ export * from './event-interest';
 export * from './event-keeper';
 export * from './event-notifier';
 export * from './on-event';
+export * from './senders';
 export * from './state';
 export * from './value';
