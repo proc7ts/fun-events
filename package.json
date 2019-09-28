@@ -24,11 +24,12 @@
   "main": "dist/fun-events.js",
   "module": "dist/fun-events.mjs",
   "typings": "index.d.ts",
-  "dependencies": {
+  "peerDependencies": {
     "call-thru": "^2.5.3"
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",
+    "call-thru": "^2.5.3",
     "codecov": "^3.6.1",
     "fs-extra": "^8.1.0",
     "gh-pages": "^2.1.1",
