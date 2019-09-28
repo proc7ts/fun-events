@@ -1088,7 +1088,6 @@ export function onEventFrom<E extends any[]>(senderOrKeeper: EventSender<E> | Ev
 
   const onEvent = isEventSender(senderOrKeeper) ? senderOrKeeper[OnEvent__symbol] : senderOrKeeper[AfterEvent__symbol];
 
-  // noinspection SuspiciousTypeOfGuard
   if (onEvent instanceof OnEvent) {
     return onEvent;
   }
