@@ -5,7 +5,7 @@ import Mock = jest.Mock;
 describe('EventInterest', () => {
   describe('noEventInterest', () => {
     it('is no-op', () => {
-      expect(noEventInterest().off).toBe(noop);
+      expect(noEventInterest().off()).toBe(noEventInterest());
     });
     it('is done', () => {
       expect(noEventInterest().done).toBe(true);
@@ -36,7 +36,7 @@ describe('EventInterest', () => {
 
       const reason = 'some reason';
 
-      interest.off(reason);
+      expect(interest.off(reason)).toBe(interest);
       expect(mockOff).toHaveBeenCalledWith(reason);
       expect(mockOff.mock.instances[0]).toBe(interest);
     });

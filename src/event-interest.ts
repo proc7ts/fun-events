@@ -33,8 +33,9 @@ export abstract class EventInterest {
    *
    * @param reason  An optional reason why interest is lost. This will be reported to [[EventInterest.whenDone]]
    * callback.
+   * @returns A lost event interest instance.
    */
-  abstract off(reason?: any): void;
+  abstract off(reason?: any): EventInterest;
 
   /**
    * Registers a callback function that will be called when events exhausted and will more events will be sent to the
@@ -98,9 +99,10 @@ export function eventInterest(
       return alreadyDone;
     }
 
-    off(reason?: any): void {
+    off(reason?: any): EventInterest {
       off.call(this, reason);
       doWhenDone(reason);
+      return this;
     }
 
     whenDone(callback: (reason?: any) => void): this {
@@ -143,8 +145,8 @@ class NoInterest extends EventInterest {
     return true;
   }
 
-  get off() {
-    return noop;
+  off() {
+    return this;
   }
 
   whenDone(callback: (reason?: any) => void): this {
