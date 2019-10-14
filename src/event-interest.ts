@@ -94,7 +94,6 @@ export function eventInterest(
 
   class Interest extends EventInterest {
 
-    // noinspection JSMethodCanBeStatic
     get done() {
       return alreadyDone;
     }
@@ -140,7 +139,6 @@ export function eventInterest(
 
 class NoInterest extends EventInterest {
 
-  // noinspection JSMethodCanBeStatic
   get done() {
     return true;
   }

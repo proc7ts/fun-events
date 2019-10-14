@@ -1089,7 +1089,6 @@ export function afterEventOr<E extends any[]>(
 
   class AfterOr extends AfterEvent<E> {
 
-    // noinspection JSMethodCanBeStatic
     get kept() {
       return last();
     }
