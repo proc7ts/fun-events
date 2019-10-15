@@ -2,7 +2,8 @@ import { noop, passIf } from 'call-thru';
 import { EventEmitter } from './event-emitter';
 import { eventInterest, EventInterest, noEventInterest } from './event-interest';
 import { AfterEvent__symbol } from './event-keeper';
-import { EventReceiver, receiveEventsBy } from './event-receiver';
+import { EventNotifier } from './event-notifier';
+import { EventReceiver } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
 import { OnEvent, onEventBy, onEventFrom, onNever } from './on-event';
 import { trackValue } from './value';
@@ -80,14 +81,15 @@ describe('OnEvent', () => {
     let onEvent: OnEvent<[string]>;
     let interest: EventInterest;
     let offSpy: SpyInstance;
-    let registeredReceiver: (event: string) => void;
+    let emitter: EventNotifier<[string]>;
     let mockReceiver: Mock<void, [string]>;
 
     beforeEach(() => {
+      emitter = new EventNotifier();
       interest = eventInterest();
       offSpy = jest.spyOn(interest, 'off');
       mockRegister = jest.fn((c: (event: string) => string) => {
-        registeredReceiver = c;
+        emitter.on(c);
         return interest;
       });
       onEvent = onEventBy(mockRegister);
@@ -96,19 +98,19 @@ describe('OnEvent', () => {
 
     it('registers event receiver', () => {
       expect(onEvent.once(mockReceiver)).toBe(interest);
-      expect(mockRegister).toHaveBeenCalledWith(registeredReceiver);
+      expect(mockRegister).toHaveBeenCalled();
     });
     it('unregisters notified event receiver', () => {
       onEvent.once(mockReceiver);
       expect(offSpy).not.toHaveBeenCalled();
 
-      registeredReceiver('event');
+      emitter.send('event');
       expect(mockReceiver).toHaveBeenCalledWith('event');
       expect(offSpy).toHaveBeenCalled();
     });
     it('unregisters immediately notified event receiver', () => {
       mockRegister.mockImplementation(c => {
-        registeredReceiver = c;
+        emitter.on(c);
         c('event');
         return interest;
       });
@@ -121,18 +123,18 @@ describe('OnEvent', () => {
     it('never sends events if interest is initially lost', () => {
       interest.off();
       onEvent.once(mockReceiver);
-      registeredReceiver('event');
+      emitter.send('event');
       expect(mockReceiver).not.toHaveBeenCalled();
     });
     it('never sends events after interest is lost', () => {
       onEvent.once(mockReceiver).off();
-      registeredReceiver('event');
+      emitter.send('event');
       expect(mockReceiver).not.toHaveBeenCalled();
     });
     it('sends only one event', () => {
       onEvent.once(mockReceiver);
-      registeredReceiver('event1');
-      registeredReceiver('event2');
+      emitter.send('event1');
+      emitter.send('event2');
       expect(mockReceiver).toHaveBeenCalledTimes(1);
       expect(mockReceiver).toHaveBeenLastCalledWith('event1');
     });
@@ -340,19 +342,20 @@ describe('OnEvent', () => {
 
     let mockRegister: Mock<EventInterest, [EventReceiver<[string, string]>]>;
     let mockInterest: Mocked<EventInterest>;
-    let registeredReceiver: (this: void, event1: string, event2: string) => void;
+    let emitter: EventNotifier<[string, string]>;
     let onEvent: OnEvent<[string, string]>;
     let mockReceiver: Mock<void, [string, string]>;
     let mockReceiver2: Mock<void, [string, string]>;
 
     beforeEach(() => {
+      emitter = new EventNotifier();
       mockInterest = {
         off: jest.fn(),
         whenDone: jest.fn(),
       } as any;
       mockInterest.off.mockName('interest.off()');
       mockRegister = jest.fn(receiver => {
-        registeredReceiver = receiveEventsBy(receiver);
+        emitter.on(receiver);
         return mockInterest;
       });
       onEvent = onEventBy(mockRegister);
@@ -366,7 +369,7 @@ describe('OnEvent', () => {
 
       shared(mockReceiver);
       shared(mockReceiver2);
-      registeredReceiver('a', 'b');
+      emitter.send('a', 'b');
       expect(mockReceiver).toHaveBeenCalledWith('a', 'b');
       expect(mockReceiver2).toHaveBeenCalledWith('a', 'b');
     });
@@ -393,9 +396,9 @@ describe('OnEvent', () => {
     it('replicates events sent during registration', () => {
 
       mockRegister.mockImplementation(receiver => {
-        registeredReceiver = receiveEventsBy(receiver);
-        registeredReceiver('init1', '1');
-        registeredReceiver('init2', '2');
+        emitter.on(receiver);
+        emitter.send('init1', '1');
+        emitter.send('init2', '2');
         return mockInterest;
       });
 
@@ -414,9 +417,13 @@ describe('OnEvent', () => {
     it('replicates events sent during registration to receivers registered after all interests are lost', () => {
 
       mockRegister.mockImplementation(receiver => {
-        registeredReceiver = receiveEventsBy(receiver);
-        registeredReceiver('init1', '1');
-        registeredReceiver('init2', '2');
+
+        const receiverEmitter = new EventNotifier<[string, string]>();
+
+        receiverEmitter.on(receiver);
+        receiverEmitter.send('init1', '1');
+        receiverEmitter.send('init2', '2');
+
         return mockInterest;
       });
 
@@ -442,18 +449,18 @@ describe('OnEvent', () => {
     it('stops events replication of events sent during registration after new event received', () => {
 
       mockRegister.mockImplementation(receiver => {
-        registeredReceiver = receiveEventsBy(receiver);
-        registeredReceiver('init1', '1');
-        registeredReceiver('init2', '2');
+        emitter.on(receiver);
+        emitter.send('init1', '1');
+        emitter.send('init2', '2');
         return mockInterest;
       });
 
       const shared = onEvent.share();
 
       shared(mockReceiver);
-      registeredReceiver('update1', '11');
+      emitter.send('update1', '11');
       shared(mockReceiver2);
-      registeredReceiver('update2', '12');
+      emitter.send('update2', '12');
 
       expect(mockReceiver).toHaveBeenCalledWith('init1', '1');
       expect(mockReceiver).toHaveBeenCalledWith('init2', '2');
@@ -469,18 +476,19 @@ describe('OnEvent', () => {
 
     let mockRegister: Mock<EventInterest, [EventReceiver<[string, string]>]>;
     let mockInterest: Mocked<EventInterest>;
-    let registeredReceiver: (event1: string, event2: string) => void;
+    let emitter: EventNotifier<[string, string]>;
     let onEvent: OnEvent<[string, string]>;
     let mockReceiver: Mock<void, [string]>;
 
     beforeEach(() => {
+      emitter = new EventNotifier();
       mockInterest = {
         off: jest.fn(),
         whenDone: jest.fn(),
       } as any;
       mockInterest.off.mockName('interest.off()');
       mockRegister = jest.fn(receiver => {
-        registeredReceiver = receiver;
+        emitter.on(receiver);
         return mockInterest;
       });
       onEvent = onEventBy(mockRegister);
@@ -518,7 +526,7 @@ describe('OnEvent', () => {
 
       transforming(mockReceiver);
 
-      registeredReceiver('a', 'bb');
+      emitter.send('a', 'bb');
 
       expect(mockReceiver).toHaveBeenCalledWith('a, bb');
     });
@@ -531,11 +539,11 @@ describe('OnEvent', () => {
 
       transforming(mockReceiver);
 
-      registeredReceiver('a', 'bb');
+      emitter.send('a', 'bb');
       expect(mockReceiver).toHaveBeenCalledWith('a, bb');
 
       mockReceiver.mockClear();
-      registeredReceiver('b', 'a');
+      emitter.send('b', 'a');
       expect(mockReceiver).not.toHaveBeenCalled();
     });
     it('exhausts when original sender exhausts', () => {

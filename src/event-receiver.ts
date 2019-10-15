@@ -55,6 +55,7 @@ export namespace EventReceiver {
  * Creates an event receiver function that dispatches event to the given event receiver.
  *
  * @category Core
+ * @deprecated
  * @param receiver  An event receivers to dispatch event to.
  *
  * @returns An event receiver function that does not utilize event processing context an thus can be called directly.

@@ -3,7 +3,7 @@
  */
 import { noop } from 'call-thru';
 import { eventInterest } from '../event-interest';
-import { receiveEventsBy } from '../event-receiver';
+import { EventNotifier } from '../event-notifier';
 import { OnEvent, onEventBy } from '../on-event';
 
 /**
@@ -34,7 +34,11 @@ export function onPromise<T>(promise: Promise<T>): OnEvent<[T]> {
 
     promise.then(
         value => {
-          receiveEventsBy(receiver)(value);
+
+          const dispatcher = new EventNotifier<[T]>();
+
+          dispatcher.on(receiver);
+          dispatcher.send(value);
           done();
         }
     ).catch(done);

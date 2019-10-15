@@ -5,7 +5,7 @@ import { callThru, NextCall } from 'call-thru';
 import { eventInterest, EventInterest, noEventInterest } from './event-interest';
 import { AfterEvent__symbol, EventKeeper } from './event-keeper';
 import { EventNotifier } from './event-notifier';
-import { EventReceiver, receiveEventsBy } from './event-receiver';
+import { EventReceiver } from './event-receiver';
 import { EventSender, isEventSender, OnEvent__symbol } from './event-sender';
 import Result = NextCall.CallResult;
 
@@ -1141,9 +1141,11 @@ function shareInterestTo<E extends any[]>(onEvent: OnEvent<E>): OnEvent<E> {
     if (initialEvents) {
       // Send initial events to just registered receiver
 
-      const dispatcher = receiveEventsBy(receiver);
+      const dispatcher = new EventNotifier<E>();
 
-      initialEvents.forEach(event => dispatcher(...event));
+      dispatcher.on(receiver);
+
+      initialEvents.forEach(event => dispatcher.send(...event));
     }
 
     return interest;

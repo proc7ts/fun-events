@@ -3,7 +3,8 @@ import { AfterEvent, afterEventBy, afterEventFrom, afterEventOf, afterEventOr, a
 import { EventEmitter } from './event-emitter';
 import { eventInterest, EventInterest, noEventInterest } from './event-interest';
 import { AfterEvent__symbol } from './event-keeper';
-import { EventReceiver, receiveEventsBy } from './event-receiver';
+import { EventNotifier } from './event-notifier';
+import { EventReceiver } from './event-receiver';
 import { OnEvent__symbol } from './event-sender';
 import { trackValue, ValueTracker } from './value';
 import Mock = jest.Mock;
@@ -12,17 +13,17 @@ import Mocked = jest.Mocked;
 describe('AfterEvent', () => {
   describe('by', () => {
 
-    let registeredReceiver: (this: void, event: string) => void;
+    let emitter: EventNotifier<[string]>;
     let mockInterest: EventInterest;
     let mockRegister: Mock<EventInterest, [EventReceiver<[string]>]>;
     let afterEvent: AfterEvent<[string]>;
     let mockReceiver: Mock<void, [string]>;
 
     beforeEach(() => {
-      registeredReceiver = noop;
+      emitter = new EventNotifier();
       mockInterest = eventInterest();
       mockRegister = jest.fn(rcv => {
-        registeredReceiver = receiveEventsBy(rcv);
+        emitter.on(rcv);
         return mockInterest;
       });
       afterEvent = afterEventBy(mockRegister, ['initial']);
@@ -34,7 +35,7 @@ describe('AfterEvent', () => {
       expect(mockRegister).toHaveBeenCalled();
       expect(mockReceiver).toHaveBeenCalledWith('initial');
 
-      registeredReceiver('event');
+      emitter.send('event');
       expect(mockReceiver).toHaveBeenCalledWith('event');
     });
     it('sends recurrent event sent during registration to recurrent receiver', () => {
@@ -43,7 +44,7 @@ describe('AfterEvent', () => {
 
       mockReceiver.mockImplementation(function (this: EventReceiver.Context<[string]>) {
         this.afterRecurrent(recurrentReceiver);
-        registeredReceiver('recurrent');
+        emitter.send('recurrent');
       });
 
       expect(afterEvent(mockReceiver)).toBe(mockInterest);
@@ -54,7 +55,7 @@ describe('AfterEvent', () => {
 
   describe('or', () => {
 
-    let registeredReceiver: (this: void, event: string) => void;
+    let emitter: EventNotifier<[string]>;
     let mockInterest: EventInterest;
     let mockFallback: Mock<[string], []>;
     let mockRegister: Mock<EventInterest, [EventReceiver<[string]>]>;
@@ -62,11 +63,11 @@ describe('AfterEvent', () => {
     let mockReceiver: Mock<void, [string]>;
 
     beforeEach(() => {
-      registeredReceiver = noop;
+      emitter = new EventNotifier();
       mockInterest = eventInterest();
       mockFallback = jest.fn(() => ['fallback']);
       mockRegister = jest.fn<EventInterest, [EventReceiver<[string]>]>(rcv => {
-        registeredReceiver = receiveEventsBy(rcv);
+        emitter.on(rcv);
         return mockInterest;
       });
       afterEvent = afterEventOr(mockRegister, mockFallback);
@@ -79,14 +80,14 @@ describe('AfterEvent', () => {
       expect(mockReceiver).toHaveBeenCalledWith('fallback');
       expect(mockReceiver).toHaveBeenCalledTimes(1);
 
-      registeredReceiver('event');
+      emitter.send('event');
       expect(mockReceiver).toHaveBeenCalledWith('event');
       expect(mockReceiver).toHaveBeenCalledTimes(2);
     });
     it('sends an event sent by registration function', () => {
       mockRegister.mockImplementation(rcv => {
-        registeredReceiver = receiveEventsBy(rcv);
-        registeredReceiver('event');
+        emitter.on(rcv);
+        emitter.send('event');
         return mockInterest;
       });
 
@@ -97,8 +98,8 @@ describe('AfterEvent', () => {
     });
     it('does not send an event sent by registration function if receiver lost the interest already', () => {
       mockRegister.mockImplementation(rcv => {
-        registeredReceiver = receiveEventsBy(rcv);
-        registeredReceiver('event');
+        emitter.on(rcv);
+        emitter.send('event');
         return noEventInterest();
       });
 
@@ -112,7 +113,7 @@ describe('AfterEvent', () => {
 
       mockReceiver.mockImplementation(function (this: EventReceiver.Context<[string]>) {
         this.afterRecurrent(recurrentReceiver);
-        registeredReceiver('recurrent');
+        emitter.send('recurrent');
       });
 
       expect(afterEvent(mockReceiver)).toBe(mockInterest);
@@ -128,19 +129,18 @@ describe('AfterEvent', () => {
       });
       it('returns the last event sent while there are receivers', () => {
         afterEvent(mockReceiver);
-        registeredReceiver('event');
+        emitter.send('event');
         expect(afterEvent.kept).toEqual(['event']);
       });
       it('returns fallback when last receiver removed there are receivers', () => {
         mockRegister.mockImplementation(rcv => {
-          registeredReceiver = receiveEventsBy(rcv);
-          return eventInterest();
+          return emitter.on(rcv);
         });
 
         const interest1 = afterEvent(mockReceiver);
         const interest2 = afterEvent(mockReceiver);
 
-        registeredReceiver('event');
+        emitter.send('event');
         expect(afterEvent.kept).toEqual(['event']);
 
         interest1.off();
