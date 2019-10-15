@@ -1,12 +1,11 @@
 /**
  * @module fun-events
  */
-import { noop } from 'call-thru';
 import { eventInterest, EventInterest } from './event-interest';
 import { EventReceiver, receiveEventsByEach } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
 
-type ReceiverInfo<E extends any[]> = [EventReceiver<E>, (this: void, reason?: any) => void];
+type ReceiverInfo<E extends any[]> = [EventReceiver<E>, EventInterest];
 
 /**
  * Event notifier can be used to register event receivers and send events to them.
@@ -60,12 +59,8 @@ export class EventNotifier<E extends any[]> implements EventSender<E> {
    */
   on(receiver: EventReceiver<E>): EventInterest {
 
-    let whenDone: (this: EventInterest, reason?: any) => void = noop;
-    const interest = eventInterest(noop, {
-      whenDone: callback => whenDone = callback,
-    });
-
-    const rcv: ReceiverInfo<E> = [receiver, reason => whenDone.call(interest, reason)];
+    const interest = eventInterest();
+    const rcv: ReceiverInfo<E> = [receiver, interest];
 
     this._rcvs.add(rcv);
 
@@ -83,7 +78,7 @@ export class EventNotifier<E extends any[]> implements EventSender<E> {
    * @returns `this` instance.
    */
   done(reason?: any): this {
-    this._rcvs.forEach(([, done]) => done(reason));
+    this._rcvs.forEach(([, interest]) => interest.off(reason));
     this._rcvs.clear();
     return this;
   }
