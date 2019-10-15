@@ -1,7 +1,6 @@
 /**
  * @module fun-events
  */
-import { noop } from 'call-thru';
 import { eventInterest } from '../event-interest';
 import { EventNotifier } from '../event-notifier';
 import { OnEvent, onEventBy } from '../on-event';
@@ -22,15 +21,7 @@ import { OnEvent, onEventBy } from '../on-event';
 export function onPromise<T>(promise: Promise<T>): OnEvent<[T]> {
   return onEventBy(receiver => {
 
-    let done: (reason?: any) => void = noop;
-    const interest = eventInterest(
-        noop,
-        {
-          whenDone(callback) {
-            done = callback;
-          }
-        },
-    );
+    const interest = eventInterest();
 
     promise.then(
         value => {
@@ -39,9 +30,11 @@ export function onPromise<T>(promise: Promise<T>): OnEvent<[T]> {
 
           dispatcher.on(receiver);
           dispatcher.send(value);
-          done();
+          interest.off();
         }
-    ).catch(done);
+    ).catch(
+        e => interest.off(e)
+    );
 
     return interest;
   });
