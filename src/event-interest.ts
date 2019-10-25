@@ -49,7 +49,7 @@ export abstract class EventInterest {
    *
    * @returns `this` instance.
    */
-  abstract whenDone(callback: (reason?: any) => void): this;
+  abstract whenDone(callback: (this: void, reason?: any) => void): this;
 
   /**
    * Declares this event interest depends on another one.
@@ -74,67 +74,48 @@ export abstract class EventInterest {
  * @param off  A function to call to indicate the lost of interest in receiving events. Accepts a single parameter
  * indicating the reason of losing interest that will be passed to [[EventInterest.whenDone]] callbacks.
  * No-op by default.
- * @param whenDone  A function that will be called to register events exhaust callback. This function will be called
- * at most once. The [[EventInterest.off]] method would call the registered callbacks in any case.
  */
-export function eventInterest(
-    off: (this: EventInterest, reason?: any) => void = noop,
-    {
-      whenDone = noop,
-    }: {
-      whenDone?: (callback: (this: EventInterest, reason?: any) => void) => void;
-    } = {},
-): EventInterest {
+export function eventInterest(off: (this: void, reason?: any) => void = noop): EventInterest {
 
-  let alreadyDone = false;
-  let doneReason: any | undefined;
-  let doneCallback: (reason?: any) => void = noop;
+  let doneCallback: (reason?: any) => void = off;
+  let whenDone: (callback: (reason?: any) => void) => void = callback => {
 
-  whenDone(doWhenDone);
+    const prev = doneCallback;
+
+    doneCallback = reason => {
+      prev(reason);
+      callback(reason);
+    };
+  };
+  let done: (reason?: any) => void = reason => {
+    done = noop;
+    whenDone = callback => callback(reason);
+
+    const prevCallback = doneCallback;
+
+    doneCallback = noop;
+    prevCallback(reason);
+  };
 
   class Interest extends EventInterest {
 
     get done() {
-      return alreadyDone;
+      return done === noop;
     }
 
     off(reason?: any): EventInterest {
-      off.call(this, reason);
-      doWhenDone(reason);
+      done(reason);
       return this;
     }
 
     whenDone(callback: (reason?: any) => void): this {
-      if (alreadyDone) {
-        callback(doneReason);
-      } else {
-
-        const prev = doneCallback;
-
-        doneCallback = reason => {
-          prev(reason);
-          callback(reason);
-        };
-      }
-
+      whenDone(callback);
       return this;
     }
 
   }
 
   return new Interest();
-
-  function doWhenDone(reason?: any) {
-    if (!alreadyDone) {
-
-      const callback = doneCallback;
-
-      alreadyDone = true;
-      doneReason = reason;
-      doneCallback = noop;
-      callback(reason);
-    }
-  }
 }
 
 class NoInterest extends EventInterest {

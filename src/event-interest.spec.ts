@@ -22,14 +22,11 @@ describe('EventInterest', () => {
   describe('eventInterest', () => {
 
     let mockOff: Mock<void, []>;
-    let mockWhenDone: Mock<void, [any?]>;
-    let registeredWhenDone: (reason?: any) => void;
     let interest: EventInterest;
 
     beforeEach(() => {
       mockOff = jest.fn();
-      mockWhenDone = jest.fn(callback => registeredWhenDone = callback);
-      interest = eventInterest(mockOff, { whenDone: mockWhenDone });
+      interest = eventInterest(mockOff);
     });
 
     it('calls `off` function', () => {
@@ -38,10 +35,6 @@ describe('EventInterest', () => {
 
       expect(interest.off(reason)).toBe(interest);
       expect(mockOff).toHaveBeenCalledWith(reason);
-      expect(mockOff.mock.instances[0]).toBe(interest);
-    });
-    it('registers `whenDone` function', () => {
-      expect(mockWhenDone).toHaveBeenCalledWith(registeredWhenDone);
     });
 
     describe('done', () => {
@@ -50,10 +43,6 @@ describe('EventInterest', () => {
       });
       it('is set to `true` when interest is lost', () => {
         interest.off();
-        expect(interest.done).toBe(true);
-      });
-      it('is set to `true` when event sending completed is lost', () => {
-        registeredWhenDone();
         expect(interest.done).toBe(true);
       });
     });
@@ -68,7 +57,7 @@ describe('EventInterest', () => {
         const reason = 'reason';
 
         interest.whenDone(mockCallback);
-        registeredWhenDone(reason);
+        interest.off(reason);
         expect(mockCallback).toHaveBeenCalledWith(reason);
       });
       it('calls registered completion callback only once', () => {
@@ -78,8 +67,8 @@ describe('EventInterest', () => {
         const reason2 = 'reason2';
 
         interest.whenDone(mockCallback);
-        registeredWhenDone(reason1);
-        registeredWhenDone(reason2);
+        interest.off(reason1);
+        interest.off(reason2);
         expect(mockCallback).toHaveBeenCalledWith(reason1);
         expect(mockCallback).not.toHaveBeenCalledWith(reason2);
         expect(mockCallback).toHaveBeenCalledTimes(1);
@@ -96,7 +85,7 @@ describe('EventInterest', () => {
 
         const reason = 'reason';
 
-        registeredWhenDone(reason);
+        interest.off(reason);
 
         const mockCallback = jest.fn();
 
