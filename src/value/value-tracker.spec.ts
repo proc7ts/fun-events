@@ -143,8 +143,8 @@ describe('ValueTracker', () => {
       v1.it = 'value';
       expect(v2.it).toBe(v3.it);
     });
-    it('is unbound with `off()`', () => {
-      expect(v2.off()).toBe(v2);
+    it('is unbound with `byNone()`', () => {
+      expect(v2.byNone()).toBe(v2);
 
       const listener = jest.fn();
 
@@ -210,11 +210,11 @@ describe('ValueTracker', () => {
       v3.send('new');
       expect(v1.it).toBe('new');
     });
-    it('is unbound with `off()`', () => {
+    it('is unbound with `byNone()`', () => {
 
       const v3 = trackValue('3');
 
-      v1.off();
+      v1.byNone();
 
       const listener = jest.fn();
 

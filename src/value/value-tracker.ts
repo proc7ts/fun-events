@@ -97,7 +97,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
 
     const self = this;
 
-    this.off();
+    this.byNone();
 
     if (!extract) {
 
@@ -132,7 +132,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
   }
 
   /**
-   * Unbinds the tracked value from the value sender or keeper this tracker is bound to with [[ValueTracker.by]] method.
+   * Unbinds the tracked value from the value sender or keeper this tracker is {@link ValueTracker.by bound to}.
    *
    * If the tracker is not bound then does nothing.
    *
@@ -140,7 +140,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
    *
    * @returns `this` instance.
    */
-  off(reason?: any): this {
+  byNone(reason?: any): this {
     this._by.off(reason);
     return this;
   }
