@@ -27,8 +27,6 @@ export class EventEmitter<E extends any[]> extends EventNotifier<E> implements E
    */
   readonly on = onEventBy<E>(receiver => super.on(receiver));
 
-  get [OnEvent__symbol](): OnEvent<E> {
-    return this.on;
-  }
+  readonly [OnEvent__symbol]: OnEvent<E> = this.on;
 
 }
