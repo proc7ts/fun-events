@@ -2,7 +2,7 @@
  * @module fun-events
  */
 import { eventInterest, EventInterest } from './event-interest';
-import { EventReceiver, receiveEventsByEach } from './event-receiver';
+import { EventReceiver } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
 
 type ReceiverInfo<E extends any[]> = [EventReceiver<E>, EventInterest];
@@ -93,4 +93,70 @@ function allReceivers<E extends any[]>(rcvs: Set<ReceiverInfo<E>>): Iterable<Eve
       }
     }
   };
+}
+
+/**
+ * Creates an event receiver function that dispatches events to each of the given event receivers.
+ *
+ * @category Core
+ * @param receivers  An iterable of event receivers to dispatch event to.
+ *
+ * @returns An event receiver function that does not utilize event processing context an thus can be called directly.
+ */
+function receiveEventsByEach<E extends any[]>(
+    receivers: Iterable<EventReceiver<E>>,
+): (this: void, ...event: E) => void  {
+
+  let send: (this: void, event: E) => void = sendNonRecurrent;
+
+  return (...event) => send(event);
+
+  function sendNonRecurrent(event: E) {
+
+    let actualReceivers = receivers;
+    const received: E[] = [];
+
+    send = sendRecurrent;
+
+    try {
+      for (; ;) {
+        actualReceivers = processEvent(actualReceivers, event);
+
+        const recurrent = received.shift();
+
+        if (!recurrent) {
+          break;
+        }
+
+        event = recurrent;
+      }
+    } finally {
+      send = sendNonRecurrent;
+    }
+
+    function sendRecurrent(recurrent: E) {
+      received.push(recurrent);
+    }
+  }
+}
+
+function processEvent<E extends any[]>(receivers: Iterable<EventReceiver<E>>, event: E): EventReceiver<E>[] {
+
+  const recurrentReceivers: EventReceiver<E>[] = [];
+
+  for (const receiver of receivers) {
+
+    const idx = recurrentReceivers.length;
+
+    recurrentReceivers.push(receiver);
+    receiver.call(
+        {
+          afterRecurrent(recurrentReceiver) {
+            recurrentReceivers[idx] = recurrentReceiver;
+          },
+        },
+        ...event);
+  }
+
+  return recurrentReceivers;
 }
