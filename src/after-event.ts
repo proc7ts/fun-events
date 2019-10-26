@@ -2,12 +2,11 @@
  * @module fun-events
  */
 import { NextCall, noop, valueProvider } from 'call-thru';
-import { EventEmitter } from './event-emitter';
 import { AfterEvent__symbol, EventKeeper, isEventKeeper } from './event-keeper';
 import { EventReceiver } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
 import { EventSupplier } from './event-supplier';
-import { EventSupply, noEventSupply } from './event-supply';
+import { eventSupply, EventSupply, noEventSupply } from './event-supply';
 import { OnEvent } from './on-event';
 import Result = NextCall.CallResult;
 
@@ -1130,7 +1129,7 @@ export function afterSent<E extends any[]>(
  * @returns An [[AfterEvent]] keeper that always sends the given `event`.
  */
 export function afterThe<E extends any[]>(...event: E): AfterEvent<E> {
-  return afterSupplied(new EventEmitter<E>(), valueProvider(event));
+  return afterEventBy(() => eventSupply(), valueProvider(event));
 }
 
 /**
