@@ -1,11 +1,11 @@
 /**
  * @module fun-events
  */
-import { AfterEvent, afterEventOr } from '../after-event';
-import { EventSupply, noEventSupply } from '../event-supply';
+import { AfterEvent, afterEventBy } from '../after-event';
 import { AfterEvent__symbol, EventKeeper, isEventKeeper } from '../event-keeper';
 import { EventReceiver } from '../event-receiver';
 import { EventSender, OnEvent__symbol } from '../event-sender';
+import { EventSupply, noEventSupply } from '../event-supply';
 import { OnEvent, onSupplied } from '../on-event';
 
 /**
@@ -32,7 +32,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
   /**
    * Registers current and updated values receiver.
    */
-  readonly read: AfterEvent<[T]> = afterEventOr<[T]>(
+  readonly read: AfterEvent<[T]> = afterEventBy<[T]>(
       receiver => this.on(receiveNewValue(receiver)),
       () => [this.it],
   );

@@ -2,7 +2,7 @@
  * @module fun-events
  */
 import { noop } from 'call-thru';
-import { AfterEvent, afterEventFrom, afterEventOr, afterNever } from '../after-event';
+import { AfterEvent, afterEventBy, afterEventFrom, afterNever } from '../after-event';
 import { AfterEvent__symbol, EventKeeper } from '../event-keeper';
 import { EventNotifier } from '../event-notifier';
 import { EventReceiver } from '../event-receiver';
@@ -22,7 +22,7 @@ export function afterEventFromEach<E extends any[]>(...sources: EventKeeper<E>[]
     return afterNever;
   }
 
-  return afterEventOr(registerReceiver, latestEvent).share();
+  return afterEventBy(registerReceiver, latestEvent).share();
 
   function registerReceiver(receiver: EventReceiver<E[]>) {
 
