@@ -28,7 +28,7 @@
     "call-thru": "^2.5.3"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.19",
+    "@types/jest": "^24.0.20",
     "call-thru": "^2.5.3",
     "codecov": "^3.6.1",
     "fs-extra": "^8.1.0",
