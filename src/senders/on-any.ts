@@ -1,10 +1,9 @@
 /**
  * @module fun-events
  */
-import { EventKeeper } from '../event-keeper';
-import { EventSender } from '../event-sender';
+import { EventSupplier } from '../event-supplier';
 import { eventSupply, EventSupply } from '../event-supply';
-import { OnEvent, onEventBy, onSupplied, onNever } from '../on-event';
+import { OnEvent, onEventBy, onNever, onSupplied } from '../on-event';
 
 /**
  * Builds an [[OnEvent]] sender of events sent by any of the given `suppliers`.
@@ -17,7 +16,7 @@ import { OnEvent, onEventBy, onSupplied, onNever } from '../on-event';
  *
  * @returns An [[OnEvent]] sender of all supplied events.
  */
-export function onEventFromAny<E extends any[]>(...suppliers: (EventSender<E> | EventKeeper<E>)[]): OnEvent<E> {
+export function onAny<E extends any[]>(...suppliers: EventSupplier<E>[]): OnEvent<E> {
   if (!suppliers.length) {
     return onNever;
   }

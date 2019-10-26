@@ -1,10 +1,10 @@
-import { EventSupply } from '../event-supply';
 import { EventNotifier } from '../event-notifier';
+import { EventSupply } from '../event-supply';
 import { OnEvent, onNever } from '../on-event';
-import { onEventFromAny } from './on-event-from-any';
+import { onAny } from './on-any';
 import Mock = jest.Mock;
 
-describe('onEventFromAny', () => {
+describe('onAny', () => {
 
   let source1: EventNotifier<[string]>;
   let source2: EventNotifier<[string]>;
@@ -15,7 +15,7 @@ describe('onEventFromAny', () => {
   beforeEach(() => {
     source1 = new EventNotifier();
     source2 = new EventNotifier();
-    fromAny = onEventFromAny(source1, source2);
+    fromAny = onAny(source1, source2);
     mockReceiver = jest.fn();
     supply = fromAny(mockReceiver);
   });
@@ -27,7 +27,7 @@ describe('onEventFromAny', () => {
     expect(mockReceiver).toHaveBeenCalledWith('2');
   });
   it('does not send any events without sources', () => {
-    expect(onEventFromAny()).toBe(onNever);
+    expect(onAny()).toBe(onNever);
   });
   it('stops sending events once their supply is cut off', () => {
     supply.off();
