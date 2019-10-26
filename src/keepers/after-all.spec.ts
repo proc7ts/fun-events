@@ -2,10 +2,10 @@ import { AfterEvent, afterEventBy, afterNever } from '../after-event';
 import { EventReceiver } from '../event-receiver';
 import { eventSupply } from '../event-supply';
 import { trackValue, ValueTracker } from '../value';
-import { afterEventFromAll } from './after-event-from-all';
+import { afterAll } from './after-all';
 import Mock = jest.Mock;
 
-describe('afterEventFromAll', () => {
+describe('afterAll', () => {
 
   let source1: ValueTracker<string>;
   let source2: ValueTracker<number>;
@@ -15,7 +15,7 @@ describe('afterEventFromAll', () => {
   beforeEach(() => {
     source1 = trackValue('init');
     source2 = trackValue(1);
-    fromAll = afterEventFromAll({ source1, source2 });
+    fromAll = afterAll({ source1, source2 });
     mockReceiver = jest.fn();
   });
 
@@ -26,7 +26,7 @@ describe('afterEventFromAll', () => {
   });
   it('does not send anything without sources', () => {
     fromAll(mockReceiver);
-    expect(afterEventFromAll({})).toBe(afterNever);
+    expect(afterAll({})).toBe(afterNever);
   });
   it('sends updates', () => {
     fromAll(mockReceiver);
@@ -59,7 +59,7 @@ describe('afterEventFromAll', () => {
 
     const mockOff = jest.fn();
 
-    fromAll = afterEventFromAll({ source1: stopper, source2 });
+    fromAll = afterAll({ source1: stopper, source2 });
     fromAll(mockReceiver).whenOff(mockOff);
 
     expect(mockReceiver).not.toHaveBeenCalled();

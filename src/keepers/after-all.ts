@@ -17,7 +17,7 @@ import { EventReceiver } from '../event-receiver';
  * @returns An event keeper sending a map of events received from each event keeper. Each event in this map has the
  * same name as its originating event keeper in `sources`.
  */
-export function afterEventFromAll<S extends { readonly [key: string]: EventKeeper<any> }>(
+export function afterAll<S extends { readonly [key: string]: EventKeeper<any> }>(
     sources: S,
 ): AfterEvent<[{ readonly [K in keyof S]: EventKeeper.Event<S[K]> }]> {
 
