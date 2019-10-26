@@ -17,7 +17,7 @@ import { EventReceiver } from '../event-receiver';
  * @returns An event keeper sending events received from each event keeper. Each event item is an event tuple originated
  * from event keeper under the same index in `sources` array.
  */
-export function afterEventFromEach<E extends any[]>(...sources: EventKeeper<E>[]): AfterEvent<E[]> {
+export function afterEach<E extends any[]>(...sources: EventKeeper<E>[]): AfterEvent<E[]> {
   if (!sources.length) {
     return afterNever;
   }
