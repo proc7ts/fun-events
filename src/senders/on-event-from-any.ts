@@ -1,45 +1,45 @@
 /**
  * @module fun-events
  */
-import { eventInterest, EventInterest } from '../event-interest';
 import { EventKeeper } from '../event-keeper';
 import { EventSender } from '../event-sender';
+import { eventSupply, EventSupply } from '../event-supply';
 import { OnEvent, onEventBy, onEventFrom, onNever } from '../on-event';
 
 /**
- * Builds an [[OnEvent]] registrar of receivers of events sent by any of the given senders of keepers.
+ * Builds an [[OnEvent]] sender of events sent by any of the given `suppliers`.
  *
- * The resulting event sender exhausts as soon as all sources do.
+ * The resulting event supply is cut off as soon as all source supplies do.
  *
  * @category Core
  * @typeparam E  An event type. This is a list of event receiver parameter types.
- * @param sources  Event senders or keepers the events originated from.
+ * @param suppliers  Original event suppliers.
  *
- * @returns An [[OnEvent]] registrar instance.
+ * @returns An [[OnEvent]] sender of all supplied events.
  */
-export function onEventFromAny<E extends any[]>(...sources: (EventSender<E> | EventKeeper<E>)[]): OnEvent<E> {
-  if (!sources.length) {
+export function onEventFromAny<E extends any[]>(...suppliers: (EventSender<E> | EventKeeper<E>)[]): OnEvent<E> {
+  if (!suppliers.length) {
     return onNever;
   }
 
   return onEventBy<E>(receiver => {
 
-    let remained = sources.length;
-    let interests: EventInterest[] = [];
-    const interest = eventInterest(interestLost);
+    let remained = suppliers.length;
+    let supplies: EventSupply[] = [];
+    const supply = eventSupply(cutOff);
 
-    interests = sources.map(source => onEventFrom(source)(receiver).whenDone(sourceDone));
+    supplies = suppliers.map(source => onEventFrom(source)(receiver).whenOff(sourceDone));
 
-    return interest;
+    return supply;
 
-    function interestLost(reason: any) {
-      interests.forEach(i => i.off(reason));
+    function cutOff(reason: any) {
+      supplies.forEach(i => i.off(reason));
     }
 
     function sourceDone(reason: any) {
       if (!--remained) {
-        interest.off(reason);
-        interests = [];
+        supply.off(reason);
+        supplies = [];
       }
     }
   }).share();

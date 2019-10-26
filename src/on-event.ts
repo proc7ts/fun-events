@@ -2,7 +2,8 @@
  * @module fun-events
  */
 import { callThru, NextCall } from 'call-thru';
-import { eventInterest, EventInterest, noEventInterest } from './event-interest';
+import { EventSupplier } from './event-supplier';
+import { eventSupply, EventSupply, noEventSupply } from './event-supply';
 import { AfterEvent__symbol, EventKeeper } from './event-keeper';
 import { EventNotifier } from './event-notifier';
 import { EventReceiver } from './event-receiver';
@@ -12,7 +13,8 @@ import Result = NextCall.CallResult;
 /**
  * An event receiver registration function interface.
  *
- * Once called, the receiver will start receiving the events while still interested.
+ * A registered event receiver would receive upcoming events, until the returned event supply will be
+ * {@link EventSupply.off cut off}.
  *
  * An [[OnEvent]] function also has a set of handy methods. More could be added later. It also can be used as
  * [[EventSender]].
@@ -33,126 +35,126 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
    *
    * @param receiver  Next event receiver.
    *
-   * @returns An event interest. The receiver won't receive any events if the [[EventInterest.off]] method
-   * of the returned event interest is called before any event is sent.
+   * @returns A supply of the next event.
    */
-  once(receiver: EventReceiver<E>): EventInterest {
+  once(receiver: EventReceiver<E>): EventSupply {
 
-    let interest = eventInterest();
+    let supply = eventSupply();
 
     const wrapper: EventReceiver<E> = function (...args: E) {
-      if (!interest.done) {
-        interest.off();
+      if (!supply.isOff) {
+        supply.off();
         receiver.apply(this, args);
       }
     };
 
-    return interest = this(wrapper).needs(interest);
+    return supply = this(wrapper).needs(supply);
   }
 
   /**
-   * Extracts event senders from incoming events.
+   * Extracts event suppliers from incoming events.
    *
    * @typeparam F  Extracted event type.
-   * @param extract  A function extracting event sender or event keeper from incoming event. May return `undefined` when
-   * nothing extracted.
+   * @param extract  A function extracting event supplier from incoming event. May return `undefined` when nothing
+   * extracted.
    *
-   * @returns An [[OnEvent]] registrar of extracted events receivers. The events exhaust once the incoming events do.
-   * The returned registrar shares the interest to extracted events among receivers.
+   * @returns An [[OnEvent]] sender of events from extracted suppliers. The events supply is cut off once the incoming
+   * events supply do. The returned sender shares the supply of extracted events among receivers.
    */
   dig<F extends any[]>(
-      extract: (this: void, ...event: E) => EventSender<F> | EventKeeper<F> | void | undefined,
+      extract: (this: void, ...event: E) => EventSupplier<F> | void | undefined,
   ): OnEvent<F> {
-    return shareInterestTo(this.dig_(extract));
+    return shareSupplyTo(this.dig_(extract));
   }
 
   /**
-   * Extracts event senders from incoming events.
+   * Extracts event suppliers from incoming events without sharing extracted events supply.
    *
-   * This method does the same as [[OnEvent.dig]] one, except it does not share the interest to extracted events among
-   * receivers. This may be useful e.g. when the result will be further transformed. It is wise to share the
-   * interest to final result in this case.
+   * This method does the same as [[OnEvent.dig]] one, except it does not share the supply of extracted events among
+   * receivers. This may be useful e.g. when the result will be further transformed. It is wise to {@link share share}
+   * the supply of events from final result in this case.
    *
    * @typeparam F  Extracted event type.
-   * @param extract  A function extracting event sender or event keeper from incoming event. May return `undefined` when
+   * @param extract  A function extracting event supplier from incoming event. May return `undefined` when
    * nothing extracted.
    *
-   * @returns An [[OnEvent]] registrar of extracted events receivers. The events exhaust once the incoming events do.
+   * @returns An [[OnEvent]] sender of events from extracted suppliers. The events supply is cut off once the incoming
+   * events supply do.
    */
   dig_<F extends any[]>(
-      extract: (this: void, ...event: E) => EventSender<F> | EventKeeper<F> | void | undefined,
+      extract: (this: void, ...event: E) => EventSupplier<F> | void | undefined,
   ): OnEvent<F> {
     return onEventBy((receiver: EventReceiver<F>) => {
 
-      let nestedInterest = noEventInterest();
-      const senderInterest = this((...event: E) => {
+      let nestedSupply = noEventSupply();
+      const senderSupply = this((...event: E) => {
 
-        const prevInterest = nestedInterest;
+        const prevSupply = nestedSupply;
         const extracted = extract(...event);
 
         try {
-          nestedInterest = extracted ? onEventFrom(extracted)(receiver) : noEventInterest();
+          nestedSupply = extracted ? onEventFrom(extracted)(receiver) : noEventSupply();
         } finally {
-          prevInterest.off();
+          prevSupply.off();
         }
       });
 
-      return eventInterest(reason => {
-        nestedInterest.off(reason);
-        senderInterest.off(reason);
-      }).needs(senderInterest);
+      return eventSupply(reason => {
+        nestedSupply.off(reason);
+        senderSupply.off(reason);
+      }).needs(senderSupply);
     });
   }
 
   /**
    * Consumes events.
    *
-   * @param consume  A function consuming events. This function may return an [[EventInterest]] instance when registers
-   * a nested event receiver. This interest will be lost on new event.
+   * @param consume  A function consuming events. This function may return an {@link EventSupply event supply} instance
+   * when registers a nested event receiver. This supply will be cut of on new event.
    *
-   * @returns An event interest that will stop consuming events once lost.
+   * @returns An event supply that will stop consuming events once {@link EventSupply.off cut off}.
    */
-  consume(consume: (...event: E) => EventInterest | void | undefined): EventInterest {
+  consume(consume: (...event: E) => EventSupply | void | undefined): EventSupply {
 
-    let consumerInterest = noEventInterest();
-    const senderInterest = this((...event: E) => {
+    let consumerSupply = noEventSupply();
+    const senderSupply = this((...event: E) => {
 
-      const prevInterest = consumerInterest;
+      const prevSupply = consumerSupply;
 
       try {
-        consumerInterest = consume(...event) || noEventInterest();
+        consumerSupply = consume(...event) || noEventSupply();
       } finally {
-        prevInterest.off();
+        prevSupply.off();
       }
     });
 
-    return eventInterest(reason => {
-      consumerInterest.off(reason);
-      senderInterest.off(reason);
-    }).needs(senderInterest);
+    return eventSupply(reason => {
+      consumerSupply.off(reason);
+      senderSupply.off(reason);
+    }).needs(senderSupply);
   }
 
   /**
-   * Constructs an event receiver registrar that shares an event interest among all registered receivers.
+   * Constructs an [[OnEvent]] sender that shares events supply among all registered receivers.
    *
-   * The created registrar receives events from this one and sends them to receivers. The shared registrar registers
-   * a receiver in this one only once, when first receiver registered. And loses its interest when all receivers lost
-   * their interest.
+   * The created sender receives events from this one and sends to registered receivers. The shared sender registers
+   * a receiver in this one only once, when first receiver registered. And cuts off original events supply once all
+   * supplies do.
    *
-   * @returns An [[OnEvent]] registrar of receivers sharing a common interest to events sent by this sender.
+   * @returns An [[OnEvent]] sender sharing a common supply of events originated from this sender.
    */
   share(): OnEvent<E> {
-    return shareInterestTo(this);
+    return shareSupplyTo(this);
   }
 
   /**
-   * Constructs an [[OnEvent]] registrar of receivers of original events passed trough the chain of transformations.
+   * Constructs an [[OnEvent]] sender of original events passed trough the chain of transformations.
    *
-   * The passes are preformed by `callThru()` function. The event receivers registered by resulting [[OnEvent]]
-   * registrar are called by the last pass in chain. Thus they can be e.g. filtered out or called multiple times.
+   * The passes are preformed by `callThru()` function. The event receivers registered by resulting event sender
+   * are called by the last pass in chain. Thus they can be e.g. filtered out or called multiple times.
    *
-   * @returns An [[OnEvent]] registrar of receivers of events transformed with provided passes. The returned registrar
-   * shares the interest to transformed events among receivers.
+   * @returns An [[OnEvent]] sender of events transformed with provided passes. The returned sender shares the supply
+   * of transformed events among receivers.
    */
   thru<R1 extends any[]>(
       fn1: (this: void, ...args: E) => NextCall<any, R1, any, any, any>,
@@ -584,18 +586,18 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   ): OnEvent<[R13]>;
 
   thru(...fns: any[]): OnEvent<any[]> {
-    return shareInterestTo((this as any).thru_(...fns));
+    return shareSupplyTo((this as any).thru_(...fns));
   }
 
   /**
-   * Constructs an [[OnEvent]] registrar of receivers of original events passed trough the chain of transformations
-   * without sharing the result.
+   * Constructs an [[OnEvent]] sender of original events passed trough the chain of transformations without sharing
+   * the transformed events supply.
    *
-   * This method does the same as [[OnEvent.thru]] one, except it does not share the interest to transformed events
-   * among receivers. This may be useful e.g. when the result will be further transformed anyway. It is wise to share
-   * the interest to final result in this case.
+   * This method does the same as [[OnEvent.thru]] one, except it does not share the supply of transformed events
+   * among receivers. This may be useful e.g. when the result will be further transformed anyway. It is wise to
+   * {@link share share} the supply of events from final result in this case.
    *
-   * @returns An [[OnEvent]] registrar of receivers of events transformed with provided passes.
+   * @returns An [[OnEvent]] sender of events transformed with provided passes.
    */
   thru_<R1 extends any[]>(
       fn1: (this: void, ...args: E) => NextCall<any, R1, any, any, any>,
@@ -1044,28 +1046,27 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
 export interface OnEvent<E extends any[]> {
 
   /**
-   * Registers a receiver of events.
+   * Registers a receiver of events sent by this sender.
    *
-   * @param receiver  A receiver of events.
+   * @param receiver  A receiver of events to register.
    *
-   * @returns An event interest. The events will be sent to `receiver` until the [[EventInterest.off]] method
-   * of the returned event interest is called.
+   * @returns A supply of events from this sender to the given `receiver`.
    */
-  (this: void, receiver: EventReceiver<E>): EventInterest; // tslint:disable-line:callable-types
+  (this: void, receiver: EventReceiver<E>): EventSupply; // tslint:disable-line:callable-types
 
 }
 
 /**
- * Converts a plain event receiver registration function to [[OnEvent]] registrar.
+ * Converts a plain event receiver registration function to [[OnEvent]] sender.
  *
  * @category Core
  * @typeparam E  An event type. This is a list of event receiver parameter types.
- * @param register  An event receiver registration function returning an event interest.
+ * @param register  An event receiver registration function returning an event supply.
  *
- * @returns An [[OnEvent]] registrar instance registering event receivers with the given `register` function.
+ * @returns An [[OnEvent]] sender registering event receivers with the given `register` function.
  */
 export function onEventBy<E extends any[]>(
-    register: (this: void, receiver: EventReceiver<E>) => EventInterest,
+    register: (this: void, receiver: EventReceiver<E>) => EventSupply,
 ): OnEvent<E> {
 
   const onEvent = ((receiver: EventReceiver<E>) => register(receiver)) as OnEvent<E>;
@@ -1076,42 +1077,42 @@ export function onEventBy<E extends any[]>(
 }
 
 /**
- * Builds an [[OnEvent]] registrar of receivers of events sent by the given sender or keeper.
+ * Builds an [[OnEvent]] sender of events sent by the given supplier.
  *
  * @category Core
  * @typeparam E  An event type. This is a list of event receiver parameter types.
- * @param senderOrKeeper  An event sender or keeper.
+ * @param supplier  An event supplier.
  *
- * @returns An [[OnEvent]] registrar instance.
+ * @returns An [[OnEvent]] sender of events originated from the given `supplier`.
  */
-export function onEventFrom<E extends any[]>(senderOrKeeper: EventSender<E> | EventKeeper<E>): OnEvent<E> {
+export function onEventFrom<E extends any[]>(supplier: EventSender<E> | EventKeeper<E>): OnEvent<E> {
 
-  const onEvent = isEventSender(senderOrKeeper) ? senderOrKeeper[OnEvent__symbol] : senderOrKeeper[AfterEvent__symbol];
+  const onEvent = isEventSender(supplier) ? supplier[OnEvent__symbol] : supplier[AfterEvent__symbol];
 
   if (onEvent instanceof OnEvent) {
     return onEvent;
   }
 
-  return onEventBy(onEvent.bind(senderOrKeeper));
+  return onEventBy(onEvent.bind(supplier));
 }
 
 /**
- * An [[OnEvent]] registrar of receivers that would never receive any events.
+ * An [[OnEvent]] sender that never sends any events.
  *
  * @category Core
  */
-export const onNever: OnEvent<any> = /*#__PURE__*/ onEventBy(noEventInterest);
+export const onNever: OnEvent<any> = /*#__PURE__*/ onEventBy(noEventSupply);
 
-function shareInterestTo<E extends any[]>(onEvent: OnEvent<E>): OnEvent<E> {
+function shareSupplyTo<E extends any[]>(onEvent: OnEvent<E>): OnEvent<E> {
 
   const shared = new EventNotifier<E>();
-  let sourceInterest = noEventInterest();
+  let sourceSupply = noEventSupply();
   let initialEvents: E[] | undefined = [];
   let hasReceivers = false;
 
   return onEventBy(receiver => {
     if (!shared.size) {
-      sourceInterest = onEvent((...event) => {
+      sourceSupply = onEvent((...event) => {
         if (initialEvents) {
           if (hasReceivers) {
             // More events received
@@ -1127,14 +1128,14 @@ function shareInterestTo<E extends any[]>(onEvent: OnEvent<E>): OnEvent<E> {
       });
     }
 
-    const interest = shared.on(receiver).whenDone(reason => {
+    const supply = shared.on(receiver).whenOff(reason => {
       if (!shared.size) {
-        sourceInterest.off(reason);
-        sourceInterest = noEventInterest();
+        sourceSupply.off(reason);
+        sourceSupply = noEventSupply();
         initialEvents = [];
         hasReceivers = false;
       }
-    }).needs(sourceInterest);
+    }).needs(sourceSupply);
 
     hasReceivers = true;
 
@@ -1148,6 +1149,6 @@ function shareInterestTo<E extends any[]>(onEvent: OnEvent<E>): OnEvent<E> {
       initialEvents.forEach(event => dispatcher.send(...event));
     }
 
-    return interest;
+    return supply;
   });
 }

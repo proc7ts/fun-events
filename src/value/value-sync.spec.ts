@@ -1,6 +1,6 @@
 import { asis } from 'call-thru';
 import { EventEmitter } from '../event-emitter';
-import { EventInterest } from '../event-interest';
+import { EventSupply } from '../event-supply';
 import { trackValue } from './track-value';
 import { ValueSync } from './value-sync';
 import { ValueTracker } from './value-tracker';
@@ -8,9 +8,9 @@ import { ValueTracker } from './value-tracker';
 describe('ValueSync', () => {
 
   let v1: ValueTracker<number>;
-  let ei1: EventInterest;
+  let es1: EventSupply;
   let v2: ValueTracker<number>;
-  let ei2: EventInterest;
+  let es2: EventSupply;
   let v3: ValueTracker<number>;
   let sync: ValueSync<number>;
 
@@ -19,8 +19,8 @@ describe('ValueSync', () => {
     v1 = trackValue(1);
     v2 = trackValue(2);
     v3 = trackValue(3);
-    ei1 = sync.sync('out', v1);
-    ei2 = sync.sync(v2);
+    es1 = sync.sync('out', v1);
+    es2 = sync.sync(v2);
     sync.sync(v3);
   });
 
@@ -53,8 +53,8 @@ describe('ValueSync', () => {
     expect(v3.it).toBe(11);
     expect(sync.it).toBe(11);
   });
-  it('stops synchronization when interest lost', () => {
-    ei2.off();
+  it('stops synchronization once supply is cut off', () => {
+    es2.off();
     v1.it = 11;
     v2.it = 13;
     expect(v1.it).toBe(11);
@@ -86,7 +86,7 @@ describe('ValueSync', () => {
       const mockWhenDone = jest.fn();
       const reason = 'some reason';
 
-      ei1.whenDone(mockWhenDone);
+      es1.whenOff(mockWhenDone);
       sync.done(reason);
       expect(mockWhenDone).toHaveBeenCalledWith(reason);
 

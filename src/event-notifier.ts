@@ -1,19 +1,19 @@
 /**
  * @module fun-events
  */
-import { eventInterest, EventInterest } from './event-interest';
+import { eventSupply, EventSupply } from './event-supply';
 import { EventReceiver } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
 
-type ReceiverInfo<E extends any[]> = [EventReceiver<E>, EventInterest];
+type ReceiverInfo<E extends any[]> = [EventReceiver<E>, EventSupply];
 
 /**
  * Event notifier can be used to register event receivers and send events to them.
  *
- * It does not implement an [[OnEvent]] interface though. Use an `EventEmitter` if you need one.
+ * It does not implement an [[OnEvent]] interface though. Use an [[EventEmitter]] if you need one.
  *
- * Manages a list of registered event receivers, and removes them from the list once they lose their interest
- * (i.e. the [[EventInterest.off]] is called on the returned event interest instance).
+ * Manages a list of registered event receivers, and removes them from the list once their supplies
+ * are {@link EventSupply.off cut off}.
  *
  * Can be used as [[EventSender]].
  *
@@ -41,44 +41,42 @@ export class EventNotifier<E extends any[]> implements EventSender<E> {
     return this._rcvs.size;
   }
 
-  [OnEvent__symbol](receiver: EventReceiver<E>): EventInterest {
+  [OnEvent__symbol](receiver: EventReceiver<E>): EventSupply {
     return this.on(receiver);
   }
 
   /**
    * Registers an event receiver.
    *
-   * Receivers registered with this method will receive the emitted events.
+   * Receivers registered with this method will receive the {@link send emitted} events.
    *
    * The `[OnEvent__symbol]` method is an alias of this one.
    *
-   * @param receiver  A receiver of events.
+   * @param receiver  A receiver of events to register.
    *
-   * @returns An event interest. The events will be sent to `receiver` until the [[EventInterest.off]] method
-   * of returned event interest is called.
+   * @returns A supply of events to the given `receiver`.
    */
-  on(receiver: EventReceiver<E>): EventInterest {
+  on(receiver: EventReceiver<E>): EventSupply {
 
-    const interest = eventInterest();
-    const rcv: ReceiverInfo<E> = [receiver, interest];
+    const supply = eventSupply();
+    const rcv: ReceiverInfo<E> = [receiver, supply];
 
     this._rcvs.add(rcv);
 
-    return interest.whenDone(() => this._rcvs.delete(rcv));
+    return supply.whenOff(() => this._rcvs.delete(rcv));
   }
 
   /**
-   * Removes all registered event receivers.
+   * Removes all registered event receivers and cuts off corresponding event supplies.
    *
-   * After this method call they won't receive events. Informs all corresponding event interests on that by calling
-   * the callbacks registered with [[EventInterest.whenDone]].
+   * After this method call they won't receive any events.
    *
-   * @param reason  A reason to stop sending events to receivers.
+   * @param reason  A reason to stop sending events.
    *
    * @returns `this` instance.
    */
   done(reason?: any): this {
-    this._rcvs.forEach(([, interest]) => interest.off(reason));
+    this._rcvs.forEach(([, supply]) => supply.off(reason));
     this._rcvs.clear();
     return this;
   }

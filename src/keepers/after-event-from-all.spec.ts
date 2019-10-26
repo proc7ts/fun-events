@@ -1,5 +1,5 @@
 import { AfterEvent, afterEventBy, afterNever } from '../after-event';
-import { eventInterest } from '../event-interest';
+import { eventSupply } from '../event-supply';
 import { EventReceiver } from '../event-receiver';
 import { trackValue, ValueTracker } from '../value';
 import { afterEventFromAll } from './after-event-from-all';
@@ -36,34 +36,34 @@ describe('afterEventFromAll', () => {
     source2.it = 2;
     expect(mockReceiver).toHaveBeenCalledWith({ source1: ['update'], source2: [2] });
   });
-  it('stops sending updates when interest is lost', () => {
+  it('stops sending updates once their supply is cut off', () => {
 
-    const interest = fromAll(mockReceiver);
+    const supply = fromAll(mockReceiver);
 
     mockReceiver.mockClear();
-    interest.off();
+    supply.off();
     source1.it = 'update';
     expect(mockReceiver).not.toHaveBeenCalled();
   });
-  it('stops sending updates when interest is lost during registration', () => {
+  it('stops sending updates if their supply is cut off during registration', () => {
 
     const reason = 'some reason';
     const stopper = afterEventBy<[string]>(() => {
 
-      const stop = eventInterest();
+      const stop = eventSupply();
 
       stop.off(reason);
 
       return stop;
     });
 
-    const mockDone = jest.fn();
+    const mockOff = jest.fn();
 
     fromAll = afterEventFromAll({ source1: stopper, source2 });
-    fromAll(mockReceiver).whenDone(mockDone);
+    fromAll(mockReceiver).whenOff(mockOff);
 
     expect(mockReceiver).not.toHaveBeenCalled();
-    expect(mockDone).toHaveBeenCalledWith(reason);
+    expect(mockOff).toHaveBeenCalledWith(reason);
   });
   it('sends recurrent event sent during registration to recurrent receiver', () => {
 

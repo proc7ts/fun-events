@@ -1,4 +1,4 @@
-import { EventInterest } from '../event-interest';
+import { EventSupply } from '../event-supply';
 import { EventNotifier } from '../event-notifier';
 import { OnEvent, onNever } from '../on-event';
 import { onEventFromAny } from './on-event-from-any';
@@ -10,14 +10,14 @@ describe('onEventFromAny', () => {
   let source2: EventNotifier<[string]>;
   let fromAny: OnEvent<[string]>;
   let mockReceiver: Mock<void, [string]>;
-  let interest: EventInterest;
+  let supply: EventSupply;
 
   beforeEach(() => {
     source1 = new EventNotifier();
     source2 = new EventNotifier();
     fromAny = onEventFromAny(source1, source2);
     mockReceiver = jest.fn();
-    interest = fromAny(mockReceiver);
+    supply = fromAny(mockReceiver);
   });
 
   it('receives events from any source', () => {
@@ -29,25 +29,25 @@ describe('onEventFromAny', () => {
   it('does not send any events without sources', () => {
     expect(onEventFromAny()).toBe(onNever);
   });
-  it('stops sending events when interest is lost', () => {
-    interest.off();
+  it('stops sending events once their supply is cut off', () => {
+    supply.off();
     source1.send('1');
     expect(mockReceiver).not.toHaveBeenCalled();
   });
-  it('keeps sending events when some of the sources exhausts', () => {
+  it('keeps sending events when some of source supplies are cut off', () => {
     source1.done('reason1');
     source2.send('2');
     expect(mockReceiver).toHaveBeenCalledWith('2');
   });
-  it('exhausts when all sources exhaust', () => {
+  it('cuts off events supply when all source supplies are cut off', () => {
 
-    const mockDone = jest.fn();
+    const mockOff = jest.fn();
 
-    interest.whenDone(mockDone);
+    supply.whenOff(mockOff);
     source1.done('reason1');
     source2.done('reason2');
 
-    expect(mockDone).toHaveBeenCalledWith('reason2');
+    expect(mockOff).toHaveBeenCalledWith('reason2');
 
     source1.send('3');
     expect(mockReceiver).not.toHaveBeenCalled();

@@ -8,7 +8,7 @@ import { EventNotifier } from '../event-notifier';
 import { EventReceiver } from '../event-receiver';
 
 /**
- * Builds an [[AfterEvent]] registrar of receivers of events sent by all event keepers in `source` map.
+ * Builds an [[AfterEvent]] keeper of events sent by all event keepers in `sources` map.
  *
  * @category Core
  * @typeparam S  A type of `sources` map.
@@ -32,23 +32,23 @@ export function afterEventFromAll<S extends { readonly [key: string]: EventKeepe
   function registerReceiver(receiver: EventReceiver<[{ readonly [K in keyof S]: EventKeeper.Event<S[K]> }]>) {
 
     const notifier = new EventNotifier<[{ readonly [K in keyof S]: EventKeeper.Event<S[K]> }]>();
-    const interest = notifier.on(receiver);
+    const supply = notifier.on(receiver);
     let send: () => void = noop;
     const result: { [K in keyof S]: EventKeeper.Event<S[K]> } = {} as any;
 
     keys.forEach(readFrom);
 
-    if (!interest.done) {
+    if (!supply.isOff) {
       send = () => notifier.send(result);
     }
 
-    return interest;
+    return supply;
 
     function readFrom(key: keyof S) {
-      interest.needs(sources[key][AfterEvent__symbol]((...event) => {
+      supply.needs(sources[key][AfterEvent__symbol]((...event) => {
         result[key] = event;
         send();
-      }).needs(interest));
+      }).needs(supply));
     }
   }
 

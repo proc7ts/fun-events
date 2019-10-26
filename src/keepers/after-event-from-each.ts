@@ -8,7 +8,7 @@ import { EventNotifier } from '../event-notifier';
 import { EventReceiver } from '../event-receiver';
 
 /**
- * Builds an [[AfterEvent]] registrar of receivers of events sent by each of the `sources`.
+ * Builds an [[AfterEvent]] keeper of events sent by each of the `sources`.
  *
  * @category Core
  * @typeparam E  A type of events sent by each source.
@@ -27,23 +27,23 @@ export function afterEventFromEach<E extends any[]>(...sources: EventKeeper<E>[]
   function registerReceiver(receiver: EventReceiver<E[]>) {
 
     const notifier = new EventNotifier<E[]>();
-    const interest = notifier.on(receiver);
+    const supply = notifier.on(receiver);
     let send: () => void = noop;
     const result: E[] = [];
 
     sources.forEach(readFrom);
 
-    if (!interest.done) {
+    if (!supply.isOff) {
       send = () => notifier.send(...result);
     }
 
-    return interest;
+    return supply;
 
     function readFrom(source: EventKeeper<E>, index: number) {
-      interest.needs(source[AfterEvent__symbol]((...event) => {
+      supply.needs(source[AfterEvent__symbol]((...event) => {
         result[index] = event;
         send();
-      }).needs(interest));
+      }).needs(supply));
     }
   }
 

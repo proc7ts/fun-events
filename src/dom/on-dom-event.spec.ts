@@ -1,4 +1,4 @@
-import { EventInterest } from '../event-interest';
+import { EventSupply } from '../event-supply';
 import { EventReceiver } from '../event-receiver';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 import Mock = jest.Mock;
@@ -6,19 +6,19 @@ import Mocked = jest.Mocked;
 
 describe('OnDomEvent', () => {
 
-  let mockRegister: Mock<EventInterest, [EventReceiver<[Event]>, (AddEventListenerOptions | boolean)?]>;
+  let mockRegister: Mock<EventSupply, [EventReceiver<[Event]>, (AddEventListenerOptions | boolean)?]>;
   let onDomEvent: OnDomEvent<Event>;
   let mockListener: Mock<void, [Event]>;
-  let mockInterest: Mocked<EventInterest>;
+  let mockSupply: Mocked<EventSupply>;
   let registeredListener: (event: Event) => void;
 
   beforeEach(() => {
-    mockInterest = {
+    mockSupply = {
       off: jest.fn(),
     } as any;
     mockRegister = jest.fn((listener, _opts?) => {
       registeredListener = listener;
-      return mockInterest;
+      return mockSupply;
     });
     onDomEvent = onDomEventBy<Event>((c, opts) => mockRegister(c, opts));
     mockListener = jest.fn();
@@ -29,7 +29,7 @@ describe('OnDomEvent', () => {
       expect(onDomEvent.capture).toBeInstanceOf(OnDomEvent);
     });
     it('registers event listener', () => {
-      expect(onDomEvent.capture(mockListener)).toBe(mockInterest);
+      expect(onDomEvent.capture(mockListener)).toBe(mockSupply);
       expect(mockRegister).toHaveBeenCalled();
     });
     it('captures events by default', () => {
@@ -67,7 +67,7 @@ describe('OnDomEvent', () => {
       expect(onDomEvent.passive).toBeInstanceOf(OnDomEvent);
     });
     it('registers event listener', () => {
-      expect(onDomEvent.passive(mockListener)).toBe(mockInterest);
+      expect(onDomEvent.passive(mockListener)).toBe(mockSupply);
       expect(mockRegister).toHaveBeenCalled();
     });
     it('passivates event listener by default', () => {
@@ -109,7 +109,7 @@ describe('OnDomEvent', () => {
       expect(onDomEvent.instead).toBeInstanceOf(OnDomEvent);
     });
     it('registers event listener', () => {
-      expect(onDomEvent.instead(mockListener)).toBe(mockInterest);
+      expect(onDomEvent.instead(mockListener)).toBe(mockSupply);
       expect(mockRegister).toHaveBeenCalled();
     });
     it('prevents default', () => {
@@ -130,7 +130,7 @@ describe('OnDomEvent', () => {
       expect(onDomEvent.just).toBeInstanceOf(OnDomEvent);
     });
     it('registers event listener', () => {
-      expect(onDomEvent.just(mockListener)).toBe(mockInterest);
+      expect(onDomEvent.just(mockListener)).toBe(mockSupply);
       expect(mockRegister).toHaveBeenCalled();
     });
     it('prevents default', () => {
@@ -151,7 +151,7 @@ describe('OnDomEvent', () => {
       expect(onDomEvent.last).toBeInstanceOf(OnDomEvent);
     });
     it('registers event listener', () => {
-      expect(onDomEvent.last(mockListener)).toBe(mockInterest);
+      expect(onDomEvent.last(mockListener)).toBe(mockSupply);
       expect(mockRegister).toHaveBeenCalled();
     });
     it('prevents default', () => {

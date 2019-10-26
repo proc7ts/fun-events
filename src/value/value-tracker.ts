@@ -2,7 +2,7 @@
  * @module fun-events
  */
 import { AfterEvent, afterEventOr } from '../after-event';
-import { EventInterest, noEventInterest } from '../event-interest';
+import { EventSupply, noEventSupply } from '../event-supply';
 import { AfterEvent__symbol, EventKeeper, isEventKeeper } from '../event-keeper';
 import { EventReceiver } from '../event-receiver';
 import { EventSender, OnEvent__symbol } from '../event-sender';
@@ -11,7 +11,7 @@ import { OnEvent, onEventFrom } from '../on-event';
 /**
  * Value accessor and changes tracker.
  *
- * Can be used as [[EventSender]] and [[EventKeeper]]. Events originated from them never exhaust.
+ * Can be used as [[EventSender]] or [[EventKeeper]].
  *
  * @category Value Tracking
  * @typeparam T  Tracked value type.
@@ -22,7 +22,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
   /**
    * @internal
    */
-  private _by = noEventInterest();
+  private _by = noEventSupply();
 
   /**
    * Registers value changes receiver. The new value is sent as first argument, and the old value as a second one.
@@ -119,11 +119,11 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
         return;
       });
     }
-    this._by.whenDone(() => this._by = noEventInterest());
+    this._by.whenOff(() => this._by = noEventSupply());
 
     return this;
 
-    function acceptValuesFrom(sender: EventSender<[T]> | EventKeeper<[T]>): EventInterest {
+    function acceptValuesFrom(sender: EventSender<[T]> | EventKeeper<[T]>): EventSupply {
 
       const registrar = isEventKeeper(sender) ? sender[AfterEvent__symbol] : sender[OnEvent__symbol];
 
@@ -146,12 +146,11 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
   }
 
   /**
-   * Removes all registered event receivers.
+   * Removes all registered event receivers and cuts off corresponding event supplies.
    *
-   * After this method call they won't receive events. Informs all corresponding event interests on that by calling
-   * the callbacks registered with [[EventInterest.whenDone]].
+   * After this method call they won't receive events.
 
-   * @param reason  A reason to stop sending events to receivers.
+   * @param reason  A reason to stop sending events.
    *
    * @returns `this` instance.
    */

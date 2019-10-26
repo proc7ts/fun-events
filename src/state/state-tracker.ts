@@ -3,8 +3,8 @@
  */
 import { noop } from 'call-thru';
 import { EventEmitter } from '../event-emitter';
-import { eventInterest, EventInterest } from '../event-interest';
 import { EventSender, OnEvent__symbol } from '../event-sender';
+import { eventSupply, EventSupply } from '../event-supply';
 import { OnEvent, onEventBy } from '../on-event';
 import { StatePath, statePath, StateUpdateReceiver } from './state-events';
 
@@ -15,9 +15,9 @@ import { StatePath, statePath, StateUpdateReceiver } from './state-events';
  */
 export interface OnStateUpdate extends OnEvent<[StatePath, any, any]> {
 
-  (receiver: StateUpdateReceiver): EventInterest;
+  (receiver: StateUpdateReceiver): EventSupply;
 
-  once(receiver: StateUpdateReceiver): EventInterest;
+  once(receiver: StateUpdateReceiver): EventSupply;
 
 }
 
@@ -39,15 +39,15 @@ class PathEntry {
     });
   }
 
-  on(receiver: StateUpdateReceiver): EventInterest {
+  on(receiver: StateUpdateReceiver): EventSupply {
 
     const entry = this;
-    const interest = this.emitter.on(receiver);
+    const supply = this.emitter.on(receiver);
 
-    return eventInterest(reason => {
-      interest.off(reason);
+    return eventSupply(reason => {
+      supply.off(reason);
       entry._dropIfEmpty();
-    }).needs(interest);
+    }).needs(supply);
   }
 
   nest(key: PropertyKey): PathEntry;
@@ -95,7 +95,7 @@ class Trackers {
 
   private readonly _root = new PathEntry(noop);
 
-  on(path: StatePath.Normalized, receiver: StateUpdateReceiver): EventInterest {
+  on(path: StatePath.Normalized, receiver: StateUpdateReceiver): EventSupply {
     return this._entry(path).on(receiver);
   }
 
@@ -182,7 +182,7 @@ class SubStateTracker implements StateTracker {
  * A state is a tree-like structure of sub-states (nodes) available under [[StatePath]].
  *
  * When node modified a [[StateTracker.update]] should be called. Then all state update receivers registered by
- * [[StateTracker.onUpdate]] registrar will receive this update.
+ * [[StateTracker.onUpdate]] will receive this update.
  *
  * @category State Tracking
  */
@@ -193,15 +193,10 @@ export class StateTracker implements EventSender<[StatePath, any, any]> {
    */
   readonly _tracker: SubStateTracker = new SubStateTracker(new Trackers(), []);
 
-  // noinspection JSCommentMatchesSignature
   /**
-   * Registers component state updates listener.
+   * A {@link OnStateUpdate state updates sender}.
    *
    * A state update will be sent to it whenever an `update()` function is called.
-   *
-   * @param listener  A state updates receiver to register.
-   *
-   * @return An event interest instance.
    */
   get onUpdate(): OnStateUpdate {
     return this._tracker.onUpdate;
@@ -215,7 +210,7 @@ export class StateTracker implements EventSender<[StatePath, any, any]> {
   /**
    * Updates the component state.
    *
-   * All receivers registered with `onUpdate()` will receive this update.
+   * All receivers registered with [[onUpdate]] will receive this update.
    *
    * @typeparam V  A type of changed value.
    * @param key  Changed value key.
@@ -246,10 +241,9 @@ export class StateTracker implements EventSender<[StatePath, any, any]> {
   }
 
   /**
-   * Stops changes tracking and notifies event interests on events exhausting.
+   * Unregisters updates receivers and cuts off their supplies.
    *
-   * After this method call the listeners registered in for this partial state and all nested states won't receive
-   * any updates.
+   * After this method call the updates receivers of this partial state and all nested states won't receive any updates.
    *
    * @param reason  An optional reason to stop tracking.
    */

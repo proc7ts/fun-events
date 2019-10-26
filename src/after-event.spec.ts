@@ -1,11 +1,11 @@
 import { noop, passIf } from 'call-thru';
 import { AfterEvent, afterEventBy, afterEventFrom, afterEventOf, afterEventOr, afterNever } from './after-event';
 import { EventEmitter } from './event-emitter';
-import { eventInterest, EventInterest, noEventInterest } from './event-interest';
 import { AfterEvent__symbol } from './event-keeper';
 import { EventNotifier } from './event-notifier';
 import { EventReceiver } from './event-receiver';
 import { OnEvent__symbol } from './event-sender';
+import { eventSupply, EventSupply, noEventSupply } from './event-supply';
 import { trackValue, ValueTracker } from './value';
 import Mock = jest.Mock;
 import Mocked = jest.Mocked;
@@ -14,24 +14,24 @@ describe('AfterEvent', () => {
   describe('by', () => {
 
     let emitter: EventNotifier<[string]>;
-    let mockInterest: EventInterest;
-    let mockRegister: Mock<EventInterest, [EventReceiver<[string]>]>;
+    let mockSupply: EventSupply;
+    let mockRegister: Mock<EventSupply, [EventReceiver<[string]>]>;
     let afterEvent: AfterEvent<[string]>;
     let mockReceiver: Mock<void, [string]>;
 
     beforeEach(() => {
       emitter = new EventNotifier();
-      mockInterest = eventInterest();
+      mockSupply = eventSupply();
       mockRegister = jest.fn(rcv => {
         emitter.on(rcv);
-        return mockInterest;
+        return mockSupply;
       });
       afterEvent = afterEventBy(mockRegister, ['initial']);
       mockReceiver = jest.fn();
     });
 
-    it('builds an `AfterEvent` registrar by arbitrary function', () => {
-      expect(afterEvent(mockReceiver)).toBe(mockInterest);
+    it('builds an `AfterEvent` keeper by arbitrary function', () => {
+      expect(afterEvent(mockReceiver)).toBe(mockSupply);
       expect(mockRegister).toHaveBeenCalled();
       expect(mockReceiver).toHaveBeenCalledWith('initial');
 
@@ -47,7 +47,7 @@ describe('AfterEvent', () => {
         emitter.send('recurrent');
       });
 
-      expect(afterEvent(mockReceiver)).toBe(mockInterest);
+      expect(afterEvent(mockReceiver)).toBe(mockSupply);
       expect(mockReceiver).toHaveBeenCalledWith('initial');
       expect(recurrentReceiver).toHaveBeenCalledWith('recurrent');
     });
@@ -56,26 +56,26 @@ describe('AfterEvent', () => {
   describe('or', () => {
 
     let emitter: EventNotifier<[string]>;
-    let mockInterest: EventInterest;
+    let mockSupply: EventSupply;
     let mockFallback: Mock<[string], []>;
-    let mockRegister: Mock<EventInterest, [EventReceiver<[string]>]>;
+    let mockRegister: Mock<EventSupply, [EventReceiver<[string]>]>;
     let afterEvent: AfterEvent<[string]>;
     let mockReceiver: Mock<void, [string]>;
 
     beforeEach(() => {
       emitter = new EventNotifier();
-      mockInterest = eventInterest();
+      mockSupply = eventSupply();
       mockFallback = jest.fn(() => ['fallback']);
-      mockRegister = jest.fn<EventInterest, [EventReceiver<[string]>]>(rcv => {
+      mockRegister = jest.fn<EventSupply, [EventReceiver<[string]>]>(rcv => {
         emitter.on(rcv);
-        return mockInterest;
+        return mockSupply;
       });
       afterEvent = afterEventOr(mockRegister, mockFallback);
       mockReceiver = jest.fn();
     });
 
-    it('builds an `AfterEvent` registrar', () => {
-      expect(afterEvent(mockReceiver)).toBe(mockInterest);
+    it('builds an `AfterEvent` keeper', () => {
+      expect(afterEvent(mockReceiver)).toBe(mockSupply);
       expect(mockRegister).toHaveBeenCalled();
       expect(mockReceiver).toHaveBeenCalledWith('fallback');
       expect(mockReceiver).toHaveBeenCalledTimes(1);
@@ -88,7 +88,7 @@ describe('AfterEvent', () => {
       mockRegister.mockImplementation(rcv => {
         emitter.on(rcv);
         emitter.send('event');
-        return mockInterest;
+        return mockSupply;
       });
 
       afterEvent(mockReceiver);
@@ -96,11 +96,11 @@ describe('AfterEvent', () => {
       expect(mockReceiver).toHaveBeenCalledWith('event');
       expect(mockReceiver).toHaveBeenCalledTimes(1);
     });
-    it('does not send an event sent by registration function if receiver lost the interest already', () => {
+    it('does not send an event sent by registration function if receiver supply is cut off already', () => {
       mockRegister.mockImplementation(rcv => {
         emitter.on(rcv);
         emitter.send('event');
-        return noEventInterest();
+        return noEventSupply();
       });
 
       afterEvent(mockReceiver);
@@ -116,7 +116,7 @@ describe('AfterEvent', () => {
         emitter.send('recurrent');
       });
 
-      expect(afterEvent(mockReceiver)).toBe(mockInterest);
+      expect(afterEvent(mockReceiver)).toBe(mockSupply);
       expect(mockReceiver).toHaveBeenCalledWith('fallback');
       expect(recurrentReceiver).toHaveBeenCalledWith('recurrent');
     });
@@ -137,16 +137,16 @@ describe('AfterEvent', () => {
           return emitter.on(rcv);
         });
 
-        const interest1 = afterEvent(mockReceiver);
-        const interest2 = afterEvent(mockReceiver);
+        const supply1 = afterEvent(mockReceiver);
+        const supply2 = afterEvent(mockReceiver);
 
         emitter.send('event');
         expect(afterEvent.kept).toEqual(['event']);
 
-        interest1.off();
+        supply1.off();
         expect(afterEvent.kept).toEqual(['event']);
 
-        interest2.off();
+        supply2.off();
         expect(afterEvent.kept).toEqual(['fallback']);
       });
     });
@@ -157,7 +157,7 @@ describe('AfterEvent', () => {
     let keeper: ValueTracker<string>;
     let afterEvent: AfterEvent<[string]>;
     let mockReceiver: EventReceiver<[string]>;
-    let interest: EventInterest;
+    let supply: EventSupply;
 
     beforeEach(() => {
       keeper = trackValue('initial');
@@ -167,7 +167,7 @@ describe('AfterEvent', () => {
         }
       });
       mockReceiver = jest.fn();
-      interest = afterEvent(mockReceiver);
+      supply = afterEvent(mockReceiver);
     });
 
     it('sends the kept event upon receiver registration', () => {
@@ -184,8 +184,8 @@ describe('AfterEvent', () => {
       expect(mockReceiver).toHaveBeenCalledWith(event);
       expect(afterEvent.kept).toEqual([event]);
     });
-    it('does not send events once interest lost', () => {
-      interest.off();
+    it('does not send events once their supply is cut off', () => {
+      supply.off();
 
       keeper.it = 'other';
       expect(mockReceiver).not.toHaveBeenCalledWith('other');
@@ -207,13 +207,13 @@ describe('AfterEvent', () => {
     let sender: EventEmitter<[string]>;
     let afterEvent: AfterEvent<[string]>;
     let mockReceiver: EventReceiver<[string]>;
-    let interest: EventInterest;
+    let supply: EventSupply;
 
     beforeEach(() => {
       sender = new EventEmitter();
       afterEvent = afterEventFrom(sender, ['initial']);
       mockReceiver = jest.fn();
-      interest = afterEvent(mockReceiver);
+      supply = afterEvent(mockReceiver);
     });
 
     it('sends the initial event upon receiver registration', () => {
@@ -230,8 +230,8 @@ describe('AfterEvent', () => {
       expect(mockReceiver).toHaveBeenCalledWith(event);
       expect(afterEvent.kept).toEqual([event]);
     });
-    it('does not send events once interest lost', () => {
-      interest.off();
+    it('does not send events once their supply is cut off', () => {
+      supply.off();
 
       sender.send('other');
       expect(mockReceiver).not.toHaveBeenCalledWith('other');
@@ -302,7 +302,7 @@ describe('AfterEvent', () => {
 
     let initial: [string, string];
     let mockRegister: Mock;
-    let mockInterest: Mocked<EventInterest>;
+    let mockSupply: Mocked<EventSupply>;
     let registeredReceiver: (event1: string, event2: string) => void;
     let afterEvent: AfterEvent<[string, string]>;
     let mockReceiver: Mock<void, [string, string]>;
@@ -310,14 +310,14 @@ describe('AfterEvent', () => {
 
     beforeEach(() => {
       initial = ['init1', 'init2'];
-      mockInterest = {
+      mockSupply = {
         off: jest.fn(),
-        whenDone: jest.fn(),
+        whenOff: jest.fn(),
       } as any;
-      mockInterest.off.mockName('interest.off()');
+      mockSupply.off.mockName('supply.off()');
       mockRegister = jest.fn(receiver => {
         registeredReceiver = receiver;
-        return mockInterest;
+        return mockSupply;
       });
       afterEvent = afterEventBy(mockRegister, initial);
       mockReceiver = jest.fn();
@@ -371,7 +371,7 @@ describe('AfterEvent', () => {
         result(receiver);
       });
 
-      it('returns `AfterEvent` registrar', () => {
+      it('returns `AfterEvent` keeper', () => {
         expect(result).toBeInstanceOf(AfterEvent);
       });
       it('receives nested events', () => {
@@ -387,21 +387,21 @@ describe('AfterEvent', () => {
 
       let initial: [string, string];
       let mockRegister: Mock;
-      let mockInterest: Mocked<EventInterest>;
+      let mockSupply: Mocked<EventSupply>;
       let registeredReceiver: (event1: string, event2: string) => void;
       let afterEvent: AfterEvent<[string, string]>;
       let mockReceiver: Mock<void, [string]>;
 
       beforeEach(() => {
         initial = ['init1', 'init2'];
-        mockInterest = {
+        mockSupply = {
           off: jest.fn(),
-          whenDone: jest.fn(),
+          whenOff: jest.fn(),
         } as any;
-        mockInterest.off.mockName('interest.off()');
+        mockSupply.off.mockName('supply.off()');
         mockRegister = jest.fn(receiver => {
           registeredReceiver = receiver;
-          return mockInterest;
+          return mockSupply;
         });
         afterEvent = afterEventBy(mockRegister, initial);
         mockReceiver = jest.fn();
@@ -416,19 +416,19 @@ describe('AfterEvent', () => {
         transforming(mockReceiver);
         expect(mockRegister).toHaveBeenCalled();
       });
-      it('unregisters event receiver when interest lost', () => {
+      it('unregisters event receiver when supply is cut off', () => {
 
         const transforming = afterEvent.keep.thru(
             (event1: string, event2: string) => `${event1}, ${event2}`
         );
 
-        const interest1 = transforming(mockReceiver);
-        const interest2 = transforming(jest.fn());
+        const supply1 = transforming(mockReceiver);
+        const supply2 = transforming(jest.fn());
 
-        interest1.off();
-        expect(mockInterest.off).not.toHaveBeenCalled();
-        interest2.off();
-        expect(mockInterest.off).toHaveBeenCalled();
+        supply1.off();
+        expect(mockSupply.off).not.toHaveBeenCalled();
+        supply2.off();
+        expect(mockSupply.off).toHaveBeenCalled();
       });
       it('transforms original event', () => {
 
@@ -459,19 +459,19 @@ describe('AfterEvent', () => {
         mockReceiver.mockClear();
         expect(mockReceiver).not.toHaveBeenCalled();
       });
-      it('exhausts when original sender exhausts', () => {
+      it('cuts off events supply when original sender cuts it off', () => {
 
-        const mockDone = jest.fn();
+        const mockOff = jest.fn();
         const transforming = afterEvent.keep.thru(
             (event1: string, event2: string) => `${event1}, ${event2}`
         );
 
-        transforming(mockReceiver).whenDone(mockDone);
+        transforming(mockReceiver).whenOff(mockOff);
 
         const reason = 'some reason';
 
-        mockInterest.whenDone.mock.calls[0][0](reason);
-        expect(mockDone).toHaveBeenCalledWith(reason);
+        mockSupply.whenOff.mock.calls[0][0](reason);
+        expect(mockOff).toHaveBeenCalledWith(reason);
       });
     });
   });
@@ -479,7 +479,7 @@ describe('AfterEvent', () => {
   describe('[OnEvent__symbol]', () => {
     it('refers to itself', () => {
 
-      const afterEvent = afterEventBy(() => noEventInterest());
+      const afterEvent = afterEventBy(() => noEventSupply());
 
       expect(afterEvent[OnEvent__symbol]).toBe(afterEvent);
     });
@@ -488,7 +488,7 @@ describe('AfterEvent', () => {
   describe('[AfterEvent__symbol]', () => {
     it('refers to itself', () => {
 
-      const afterEvent = afterEventBy(() => noEventInterest());
+      const afterEvent = afterEventBy(() => noEventSupply());
 
       expect(afterEvent[AfterEvent__symbol]).toBe(afterEvent);
     });
@@ -496,7 +496,7 @@ describe('AfterEvent', () => {
 });
 
 describe('afterNever', () => {
-  it('returns no event interest', () => {
-    expect(afterNever(noop)).toBe(noEventInterest());
+  it('returns a no-event supply', () => {
+    expect(afterNever(noop)).toBe(noEventSupply());
   });
 });

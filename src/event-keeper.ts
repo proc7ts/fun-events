@@ -1,7 +1,7 @@
 /**
  * @module fun-events
  */
-import { EventInterest } from './event-interest';
+import { EventSupply } from './event-supply';
 import { EventReceiver } from './event-receiver';
 
 /**
@@ -25,12 +25,11 @@ export interface EventKeeper<E extends any[]> {
   /**
    * Registers a receiver of events kept and sent by this keeper.
    *
-   * @param receiver  A receiver of events.
+   * @param receiver  A receiver of events to register.
    *
-   * @returns An event interest. The events will be sent to `receiver` until the [[EventInterest.off]] method
-   * of the returned event interest is called.
+   * @returns A supply of events from this keeper to the given `receiver`.
    */
-  [AfterEvent__symbol](receiver: EventReceiver<E>): EventInterest;
+  [AfterEvent__symbol](receiver: EventReceiver<E>): EventSupply;
 
 }
 

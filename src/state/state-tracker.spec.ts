@@ -21,7 +21,7 @@ describe('StateTracker', () => {
   });
   it('notifies on state update', () => {
 
-    const interest = tracker.onUpdate(mockReceiver);
+    const supply = tracker.onUpdate(mockReceiver);
 
     const path = ['some', 'path'];
     const newValue = 'new';
@@ -31,44 +31,44 @@ describe('StateTracker', () => {
     expect(mockReceiver).toHaveBeenCalledWith(path, newValue, oldValue);
 
     mockReceiver.mockClear();
-    interest.off();
+    supply.off();
 
     tracker.update(path, newValue, oldValue);
     expect(mockReceiver).not.toHaveBeenCalled();
   });
 
   describe('done', () => {
-    it('notifies interests', () => {
+    it('cuts off update supplies', () => {
 
-      const mockDone = jest.fn();
+      const mockOff = jest.fn();
       const reason = 'some reason';
 
-      tracker.onUpdate(mockReceiver).whenDone(mockDone);
+      tracker.onUpdate(mockReceiver).whenOff(mockOff);
 
       tracker.done(reason);
-      expect(mockDone).toHaveBeenCalledWith(reason);
+      expect(mockOff).toHaveBeenCalledWith(reason);
     });
-    it('does not notify lost interests', () => {
+    it('does not cut off the supplies already cut off', () => {
 
-      const mockDone = jest.fn();
+      const mockOff = jest.fn();
       const reason1 = 'first reason';
       const reason2 = 'second reason';
 
-      tracker.onUpdate(mockReceiver).whenDone(mockDone).off(reason1);
+      tracker.onUpdate(mockReceiver).whenOff(mockOff).off(reason1);
 
       tracker.done(reason2);
-      expect(mockDone).toHaveBeenCalledWith(reason1);
-      expect(mockDone).not.toHaveBeenCalledWith(reason2);
+      expect(mockOff).toHaveBeenCalledWith(reason1);
+      expect(mockOff).not.toHaveBeenCalledWith(reason2);
     });
     it('stops nested state tracking', () => {
 
       const nested = tracker.track('some');
-      const mockDone = jest.fn();
+      const mockOff = jest.fn();
       const reason = 'some reason';
 
-      nested.onUpdate(noop).whenDone(mockDone);
+      nested.onUpdate(noop).whenOff(mockOff);
       tracker.done(reason);
-      expect(mockDone).toHaveBeenCalledWith(reason);
+      expect(mockOff).toHaveBeenCalledWith(reason);
     });
   });
 
@@ -83,7 +83,7 @@ describe('StateTracker', () => {
       mockPartReceiver = jest.fn();
     });
 
-    describe('[onEventKey]', () => {
+    describe('[OnEvent__symbol]', () => {
       it('refers `onUpdate`', () => {
         expect(part[OnEvent__symbol]).toBe(part.onUpdate);
       });
@@ -98,7 +98,7 @@ describe('StateTracker', () => {
     it('notifies on partial state update', () => {
       tracker.onUpdate(mockReceiver);
 
-      const interest = part.onUpdate(mockPartReceiver);
+      const supply = part.onUpdate(mockPartReceiver);
 
       const path = ['some', 'path'];
       const fullPath = [...partPath, ...path];
@@ -111,7 +111,7 @@ describe('StateTracker', () => {
 
       mockReceiver.mockClear();
       mockPartReceiver.mockClear();
-      interest.off();
+      supply.off();
 
       part.update(path, newValue, oldValue);
       expect(mockReceiver).toHaveBeenCalledWith(fullPath, newValue, oldValue);
@@ -120,7 +120,7 @@ describe('StateTracker', () => {
     it('is notified on partial state update', () => {
       tracker.onUpdate(mockReceiver);
 
-      const interest = part.onUpdate(mockPartReceiver);
+      const supply = part.onUpdate(mockPartReceiver);
 
       const subPath = ['some'];
       const path = [...partPath, ...subPath];
@@ -133,7 +133,7 @@ describe('StateTracker', () => {
 
       mockReceiver.mockClear();
       mockPartReceiver.mockClear();
-      interest.off();
+      supply.off();
 
       tracker.update(path, newValue, oldValue);
       expect(mockReceiver).toHaveBeenCalledWith(path, newValue, oldValue);
@@ -158,7 +158,7 @@ describe('StateTracker', () => {
       const parent = tracker.track(partPath[0]);
       const parentSpy = jest.fn();
 
-      const parentInterest = parent.onUpdate(parentSpy);
+      const parentSupply = parent.onUpdate(parentSpy);
 
       const subPath = ['some'];
       const fullPath = [...partPath, ...subPath];
@@ -174,7 +174,7 @@ describe('StateTracker', () => {
       mockReceiver.mockClear();
       parentSpy.mockClear();
       mockPartReceiver.mockClear();
-      parentInterest.off();
+      parentSupply.off();
 
       parent.update(parentPath, newValue, oldValue);
       expect(mockReceiver).toHaveBeenCalledWith(fullPath, newValue, oldValue);
@@ -183,27 +183,27 @@ describe('StateTracker', () => {
     });
 
     describe('done', () => {
-      it('notifies interests', () => {
+      it('cuts off update supplies', () => {
 
-        const mockDone = jest.fn();
+        const mockOff = jest.fn();
         const reason = 'some reason';
 
-        part.onUpdate(mockPartReceiver).whenDone(mockDone);
+        part.onUpdate(mockPartReceiver).whenOff(mockOff);
 
         part.done(reason);
-        expect(mockDone).toHaveBeenCalledWith(reason);
+        expect(mockOff).toHaveBeenCalledWith(reason);
       });
-      it('does not notify lost interests', () => {
+      it('does not cut off the supplies already cut off', () => {
 
-        const mockDone = jest.fn();
+        const mockOff = jest.fn();
         const reason1 = 'first reason';
         const reason2 = 'second reason';
 
-        part.onUpdate(mockPartReceiver).whenDone(mockDone).off(reason1);
+        part.onUpdate(mockPartReceiver).whenOff(mockOff).off(reason1);
 
         part.done(reason2);
-        expect(mockDone).toHaveBeenCalledWith(reason1);
-        expect(mockDone).not.toHaveBeenCalledWith(reason2);
+        expect(mockOff).toHaveBeenCalledWith(reason1);
+        expect(mockOff).not.toHaveBeenCalledWith(reason2);
       });
     });
   });

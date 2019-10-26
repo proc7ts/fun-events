@@ -1,27 +1,26 @@
 /**
  * @module fun-events
  */
-import { eventInterest } from '../event-interest';
 import { EventNotifier } from '../event-notifier';
+import { eventSupply } from '../event-supply';
 import { OnEvent, onEventBy } from '../on-event';
 
 /**
  * Represents a promise as event sender.
  *
  * When the `promise` resolves successfully the resolved value is sent to registered event receivers. The events
- * are exhausted after that. I.e. the [[EventInterest.whenDone]] callbacks are called without any reason specified.
+ * supply is {@link EventSupply.off cut off} immediately after that without any reason specified.
  *
- * When the `promise` is rejected the events are exhausted, and the [[EventInterest.whenDone]] callbacks are called
- * with rejection reason.
+ * When the `promise` is rejected the events supply is {@link EventSupply.off cut off} with promise rejection reason.
  *
  * @param promise  The promise to represent as event sender.
  *
- * @returns An [[OnEvent]] registrar of receivers of the given `promise` resolution.
+ * @returns An [[OnEvent]] sender of the given `promise` settlement event.
  */
 export function onPromise<T>(promise: Promise<T>): OnEvent<[T]> {
   return onEventBy(receiver => {
 
-    const interest = eventInterest();
+    const supply = eventSupply();
 
     promise.then(
         value => {
@@ -30,12 +29,12 @@ export function onPromise<T>(promise: Promise<T>): OnEvent<[T]> {
 
           dispatcher.on(receiver);
           dispatcher.send(value);
-          interest.off();
+          supply.off();
         }
     ).catch(
-        e => interest.off(e)
+        e => supply.off(e)
     );
 
-    return interest;
+    return supply;
   });
 }

@@ -2,7 +2,7 @@
  * @module fun-events
  */
 import { noop } from 'call-thru';
-import { eventInterest } from '../event-interest';
+import { eventSupply } from '../event-supply';
 import { EventReceiver } from '../event-receiver';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 
@@ -32,18 +32,18 @@ export class DomEventDispatcher {
   }
 
   /**
-   * Returns a DOM event listener registrar for the given event type.
+   * Returns a sender of DOM events of the given `type`.
    *
-   * The returned DOM event listener registrar calls an `EventTarget.addEventListener()` to register listeners.
+   * The returned DOM event sender calls an `EventTarget.addEventListener()` to register listeners.
    * But, in contrast, it allows to register the same listener many times.
    *
-   * The [[EventInterest]] returned upon event listener registration, unregisters the given event listener with
-   * `EventTarget.removeEventListener()` when its [[EventInterest.off]] method is called.
+   * The {@link EventSupply event supply} returned upon event listener registration unregisters it with
+   * `EventTarget.removeEventListener()` once {@link EventSupply.off cut off}.
    *
-   * @typeparam E  DOM event type.
+   * @typeparam E  Supported DOM event type.
    * @param type  DOM event type name.
    *
-   * @returns [[OnDomEvent]] registrar of DOM event listeners of the given `type`.
+   * @returns [[OnDomEvent]] sender of DOM events of the given `type`.
    */
   on<E extends Event>(type: string): OnDomEvent<E> {
     return onDomEventBy<E>((listener, opts) => {
@@ -53,7 +53,7 @@ export class DomEventDispatcher {
 
       this._target.addEventListener(type, domListener, opts);
 
-      return eventInterest(() => this._target.removeEventListener(type, domListener));
+      return eventSupply(() => this._target.removeEventListener(type, domListener));
     });
   }
 

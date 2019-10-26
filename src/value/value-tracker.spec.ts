@@ -1,6 +1,6 @@
 import { noop } from 'call-thru';
 import { EventEmitter } from '../event-emitter';
-import { EventInterest } from '../event-interest';
+import { EventSupply } from '../event-supply';
 import { AfterEvent__symbol, EventKeeper } from '../event-keeper';
 import { EventSender, OnEvent__symbol } from '../event-sender';
 import { trackValue } from './track-value';
@@ -47,11 +47,11 @@ describe('ValueTracker', () => {
   describe('read', () => {
 
     let mockReceiver: Mock<void, [string]>;
-    let interest: EventInterest;
+    let supply: EventSupply;
 
     beforeEach(() => {
       mockReceiver = jest.fn();
-      interest = v1.read(mockReceiver);
+      supply = v1.read(mockReceiver);
     });
 
     it('sends initial value', () => {
@@ -61,9 +61,9 @@ describe('ValueTracker', () => {
       v1.it = 'new';
       expect(mockReceiver).toHaveBeenCalledWith('new');
     });
-    it('does not send values after interest is off', () => {
+    it('does not send values after their supply is cut off', () => {
       mockReceiver.mockReset();
-      interest.off();
+      supply.off();
       v1.it = 'new';
       expect(mockReceiver).not.toHaveBeenCalled();
     });
@@ -153,7 +153,7 @@ describe('ValueTracker', () => {
       expect(v2.it).toBe('old');
       expect(listener).not.toBeCalled();
     });
-    it('is unbound when events exhausted', () => {
+    it('is unbound when value supply is cut off', () => {
       v1.done();
 
       const listener = jest.fn();
