@@ -3,7 +3,7 @@ import { EventEmitter } from '../event-emitter';
 import { AfterEvent__symbol, EventKeeper } from '../event-keeper';
 import { EventSender, OnEvent__symbol } from '../event-sender';
 import { EventSupply } from '../event-supply';
-import { trackValue } from './track-value';
+import { trackValue, trackValueBy } from './track-value';
 import { ValueTracker } from './value-tracker';
 import Mock = jest.Mock;
 
@@ -162,6 +162,22 @@ describe('ValueTracker', () => {
       v1.it = 'new';
       expect(v2.it).toBe('old');
       expect(listener).not.toBeCalled();
+    });
+
+    describe('trackValueBy', () => {
+      it('mirrors another value', () => {
+
+        const v3 = trackValueBy(v1);
+        const mockReceiver2 = jest.fn();
+
+        v3.on(mockReceiver2);
+        expect(v3.it).toBe('old');
+        expect(mockReceiver2).not.toHaveBeenCalled();
+
+        v1.it = 'new';
+        expect(v3.it).toBe('new');
+        expect(mockReceiver2).toHaveBeenCalledWith('new', 'old');
+      });
     });
   });
 

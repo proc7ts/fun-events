@@ -71,7 +71,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
    *
    * @returns `this` instance.
    */
-  by(supplier: EventKeeper<[T]> | EventSender<[T]>): this;
+  by(supplier: EventSupplier<[T]>): this;
 
   /**
    * Updates the tracked value by value suppliers extracted from events sent by the given `supplier`.
