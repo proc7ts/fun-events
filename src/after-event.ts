@@ -1129,7 +1129,7 @@ export function afterSent<E extends any[]>(
  *
  * @returns An [[AfterEvent]] keeper that always sends the given `event`.
  */
-export function afterJust<E extends any[]>(...event: E): AfterEvent<E> {
+export function afterThe<E extends any[]>(...event: E): AfterEvent<E> {
   return afterSupplied(new EventEmitter<E>(), valueProvider(event));
 }
 
