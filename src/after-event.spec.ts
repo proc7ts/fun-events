@@ -120,36 +120,6 @@ describe('AfterEvent', () => {
       expect(mockReceiver).toHaveBeenCalledWith('fallback');
       expect(recurrentReceiver).toHaveBeenCalledWith('recurrent');
     });
-
-    describe('kept', () => {
-      it('returns fallback without receivers', () => {
-        expect(afterEvent.kept).toEqual(['fallback']);
-        mockFallback.mockImplementation(() => ['other fallback']);
-        expect(afterEvent.kept).toEqual(['other fallback']);
-      });
-      it('returns the last event sent while there are receivers', () => {
-        afterEvent(mockReceiver);
-        emitter.send('event');
-        expect(afterEvent.kept).toEqual(['event']);
-      });
-      it('returns fallback when last receiver removed there are receivers', () => {
-        mockRegister.mockImplementation(rcv => {
-          return emitter.on(rcv);
-        });
-
-        const supply1 = afterEvent(mockReceiver);
-        const supply2 = afterEvent(mockReceiver);
-
-        emitter.send('event');
-        expect(afterEvent.kept).toEqual(['event']);
-
-        supply1.off();
-        expect(afterEvent.kept).toEqual(['event']);
-
-        supply2.off();
-        expect(afterEvent.kept).toEqual(['fallback']);
-      });
-    });
   });
 
   describe('from event keeper', () => {
@@ -173,23 +143,18 @@ describe('AfterEvent', () => {
     it('sends the kept event upon receiver registration', () => {
       expect(mockReceiver).toHaveBeenCalledWith('initial');
     });
-    it('has initial event as the kept one', () => {
-      expect(afterEvent.kept).toEqual(['initial']);
-    });
     it('sends events from the given keeper', () => {
 
       const event = 'other';
 
       keeper.it = event;
       expect(mockReceiver).toHaveBeenCalledWith(event);
-      expect(afterEvent.kept).toEqual([event]);
     });
     it('does not send events once their supply is cut off', () => {
       supply.off();
 
       keeper.it = 'other';
       expect(mockReceiver).not.toHaveBeenCalledWith('other');
-      expect(afterEvent.kept).toEqual(['initial']);
     });
   });
 
@@ -219,23 +184,19 @@ describe('AfterEvent', () => {
     it('sends the initial event upon receiver registration', () => {
       expect(mockReceiver).toHaveBeenCalledWith('initial');
     });
-    it('has initial event as the kept one', () => {
-      expect(afterEvent.kept).toEqual(['initial']);
-    });
     it('sends events from the given sender', () => {
 
       const event = 'other';
 
       sender.send(event);
       expect(mockReceiver).toHaveBeenCalledWith(event);
-      expect(afterEvent.kept).toEqual([event]);
     });
     it('does not send events once their supply is cut off', () => {
       supply.off();
 
       sender.send('other');
       expect(mockReceiver).not.toHaveBeenCalledWith('other');
-      expect(afterEvent.kept).toEqual(['initial']);
+      afterEvent.once(event => expect(event).toEqual('initial'));
     });
   });
 
@@ -253,7 +214,7 @@ describe('AfterEvent', () => {
       expect(() => afterEvent(noop)).toThrow('No events to send');
     });
     it('throws an exception when requesting the last event', () => {
-      expect(() => afterEvent.kept).toThrow('No events to send');
+      expect(() => afterEvent.once(noop)).toThrow('No events to send');
     });
   });
 
@@ -270,31 +231,6 @@ describe('AfterEvent', () => {
 
       expect(mockReceiver1).toHaveBeenCalledWith(...event);
       expect(mockReceiver2).toHaveBeenCalledWith(...event);
-    });
-  });
-
-  describe('kept', () => {
-    it('returns initial event', () => {
-      expect(afterEventOf('abc').kept).toEqual(['abc']);
-    });
-    it('returns initial event without receivers', () => {
-
-      const emitter = new EventEmitter<[string]>();
-      const afterEvent = afterEventFrom(emitter, ['initial']);
-
-      emitter.send('updated');
-
-      expect(afterEvent.kept).toEqual(['initial']);
-    });
-    it('returns the last event sent', () => {
-
-      const emitter = new EventEmitter<[string]>();
-      const afterEvent = afterEventFrom(emitter, ['initial']);
-
-      afterEvent(noop);
-      emitter.send('updated');
-
-      expect(afterEvent.kept).toEqual(['updated']);
     });
   });
 
@@ -337,7 +273,7 @@ describe('AfterEvent', () => {
 
       const shared = afterEvent.share();
 
-      expect(shared.kept).toEqual(initial);
+      shared.once((...received) => expect(received).toEqual(initial));
     });
     it('sends events from the source', () => {
 
