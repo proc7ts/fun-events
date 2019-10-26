@@ -1,5 +1,5 @@
 import { noop, passIf } from 'call-thru';
-import { AfterEvent, afterEventBy, afterEventOf, afterNever, afterSupplied } from './after-event';
+import { AfterEvent, afterEventBy, afterJust, afterNever, afterSupplied } from './after-event';
 import { EventEmitter } from './event-emitter';
 import { AfterEvent__symbol } from './event-keeper';
 import { EventNotifier } from './event-notifier';
@@ -371,13 +371,13 @@ describe('afterSupplied', () => {
   });
 });
 
-describe('afterEventOf', () => {
+describe('afterJust', () => {
   it('always sends the same event', () => {
 
     const event = ['foo', 'bar'];
     const mockReceiver1 = jest.fn();
     const mockReceiver2 = jest.fn();
-    const afterEvent = afterEventOf(...event);
+    const afterEvent = afterJust(...event);
 
     afterEvent(mockReceiver1);
     afterEvent(mockReceiver2);

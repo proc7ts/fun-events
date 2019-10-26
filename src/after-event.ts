@@ -1127,9 +1127,9 @@ export function afterSent<E extends any[]>(
  * @category Core
  * @param event  An event that will be sent to all receivers upon registration.
  *
- * @returns An [[AfterEvent]] keeper of `event`.
+ * @returns An [[AfterEvent]] keeper that always sends the given `event`.
  */
-export function afterEventOf<E extends any[]>(...event: E): AfterEvent<E> {
+export function afterJust<E extends any[]>(...event: E): AfterEvent<E> {
   return afterSupplied(new EventEmitter<E>(), valueProvider(event));
 }
 
