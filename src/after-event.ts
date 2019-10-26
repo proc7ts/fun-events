@@ -60,7 +60,7 @@ export class AfterEventKeep<E extends any[]> {
    * supply do.
    */
   dig_<F extends any[]>(extract: (this: void, ...event: E) => EventKeeper<F>): AfterEvent<F> {
-    return afterEventFrom(this._keeper.dig_((...event) => afterEventFrom(extract(...event))));
+    return afterSupplied(this._keeper.dig_((...event) => afterSupplied(extract(...event))));
   }
 
   /**
@@ -945,7 +945,7 @@ export class AfterEventKeep<E extends any[]> {
   ): AfterEvent<[R13]>;
 
   thru_(...fns: any[]): AfterEvent<any[]> {
-    return afterEventFrom((this._keeper as any).thru_(...fns));
+    return afterSupplied((this._keeper as any).thru_(...fns));
   }
 
 }
@@ -1062,7 +1062,7 @@ export function afterEventBy<E extends any[]>(
  *
  * @returns An [[AfterEvent]] keeper of events originated from the given `keeper`.
  */
-export function afterEventFrom<E extends any[]>(keeper: EventKeeper<E>): AfterEvent<E>;
+export function afterSupplied<E extends any[]>(keeper: EventKeeper<E>): AfterEvent<E>;
 
 /**
  * Builds an [[AfterEvent]] keeper of events sent by the given `sender`.
@@ -1077,12 +1077,12 @@ export function afterEventFrom<E extends any[]>(keeper: EventKeeper<E>): AfterEv
  *
  * @returns An [[AfterEvent]] keeper of events either originated from the given `sender`, or `initial` one.
  */
-export function afterEventFrom<E extends any[]>(
+export function afterSupplied<E extends any[]>(
     sender: EventSender<E>,
     fallback?: (this: void) => E,
 ): AfterEvent<E>;
 
-export function afterEventFrom<E extends any[]>(
+export function afterSupplied<E extends any[]>(
     supplier: EventSupplier<E>,
     fallback?: (this: void) => E,
 ): AfterEvent<E> {
@@ -1108,7 +1108,7 @@ export function afterEventFrom<E extends any[]>(
  * @returns An [[AfterEvent]] keeper of `event`.
  */
 export function afterEventOf<E extends any[]>(...event: E): AfterEvent<E> {
-  return afterEventFrom(new EventEmitter<E>(), valueProvider(event));
+  return afterSupplied(new EventEmitter<E>(), valueProvider(event));
 }
 
 /**

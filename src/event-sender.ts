@@ -1,8 +1,8 @@
 /**
  * @module fun-events
  */
-import { EventSupply } from './event-supply';
 import { EventReceiver } from './event-receiver';
+import { EventSupply } from './event-supply';
 
 /**
  * A key of event receiver registration method of [[EventSender]].

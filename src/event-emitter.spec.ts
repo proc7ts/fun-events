@@ -1,7 +1,7 @@
 import { EventEmitter } from './event-emitter';
-import { EventSupply } from './event-supply';
 import { EventReceiver } from './event-receiver';
 import { OnEvent__symbol } from './event-sender';
+import { EventSupply } from './event-supply';
 import Mock = jest.Mock;
 
 describe('EventEmitter', () => {

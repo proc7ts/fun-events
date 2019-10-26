@@ -1,7 +1,7 @@
 /**
  * @module fun-events
  */
-import { afterEventFrom } from '../after-event';
+import { afterSupplied } from '../after-event';
 import { EventEmitter } from '../event-emitter';
 import { EventKeeper, isEventKeeper } from '../event-keeper';
 import { EventSender } from '../event-sender';
@@ -144,7 +144,7 @@ export class ValueSync<T> extends ValueTracker<T> {
 
     const supplier = source as EventSupplier<U>;
 
-    return (isEventKeeper(supplier) ? afterEventFrom(supplier) : onSupplied(supplier)).consume((...event) => {
+    return (isEventKeeper(supplier) ? afterSupplied(supplier) : onSupplied(supplier)).consume((...event) => {
 
       const tracker = extractTracker(...event);
 

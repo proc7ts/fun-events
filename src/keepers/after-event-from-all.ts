@@ -2,7 +2,7 @@
  * @module fun-events
  */
 import { noop } from 'call-thru';
-import { AfterEvent, afterEventBy, afterEventFrom, afterNever } from '../after-event';
+import { AfterEvent, afterEventBy, afterNever, afterSupplied } from '../after-event';
 import { AfterEvent__symbol, EventKeeper } from '../event-keeper';
 import { EventNotifier } from '../event-notifier';
 import { EventReceiver } from '../event-receiver';
@@ -57,7 +57,7 @@ export function afterEventFromAll<S extends { readonly [key: string]: EventKeepe
     const result: { [K in keyof S]: EventKeeper.Event<S[K]> } = {} as any;
 
     keys.forEach(key =>
-        afterEventFrom(sources[key])
+        afterSupplied(sources[key])
             .once((...event) => result[key as keyof S] = event));
 
     return [result];

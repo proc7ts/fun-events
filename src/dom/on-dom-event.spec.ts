@@ -1,5 +1,5 @@
-import { EventSupply } from '../event-supply';
 import { EventReceiver } from '../event-receiver';
+import { EventSupply } from '../event-supply';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 import Mock = jest.Mock;
 import Mocked = jest.Mocked;

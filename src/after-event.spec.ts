@@ -1,5 +1,5 @@
 import { noop, passIf } from 'call-thru';
-import { AfterEvent, afterEventBy, afterEventFrom, afterEventOf, afterNever } from './after-event';
+import { AfterEvent, afterEventBy, afterEventOf, afterNever, afterSupplied } from './after-event';
 import { EventEmitter } from './event-emitter';
 import { AfterEvent__symbol } from './event-keeper';
 import { EventNotifier } from './event-notifier';
@@ -273,7 +273,7 @@ describe('afterEventBy', () => {
   });
 });
 
-describe('afterEventFrom', () => {
+describe('afterSupplied', () => {
   describe('from event keeper', () => {
 
     let keeper: ValueTracker<string>;
@@ -283,7 +283,7 @@ describe('afterEventFrom', () => {
 
     beforeEach(() => {
       keeper = trackValue('initial');
-      afterEvent = afterEventFrom({
+      afterEvent = afterSupplied({
         [AfterEvent__symbol](receiver) {
           return keeper.read(receiver);
         }
@@ -315,7 +315,7 @@ describe('afterEventFrom', () => {
 
       const keeper = trackValue('initial');
 
-      expect(afterEventFrom(keeper)).toBe(keeper[AfterEvent__symbol]);
+      expect(afterSupplied(keeper)).toBe(keeper[AfterEvent__symbol]);
     });
   });
 
@@ -328,7 +328,7 @@ describe('afterEventFrom', () => {
 
     beforeEach(() => {
       sender = new EventEmitter();
-      afterEvent = afterEventFrom(sender, () => ['initial']);
+      afterEvent = afterSupplied(sender, () => ['initial']);
       mockReceiver = jest.fn();
       supply = afterEvent(mockReceiver);
     });
@@ -359,7 +359,7 @@ describe('afterEventFrom', () => {
 
     beforeEach(() => {
       sender = new EventEmitter();
-      afterEvent = afterEventFrom(sender);
+      afterEvent = afterSupplied(sender);
     });
 
     it('throws an exception upon receiver registration', () => {

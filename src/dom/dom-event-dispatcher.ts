@@ -2,8 +2,8 @@
  * @module fun-events
  */
 import { noop } from 'call-thru';
-import { eventSupply } from '../event-supply';
 import { EventReceiver } from '../event-receiver';
+import { eventSupply } from '../event-supply';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 
 const domEventContext: EventReceiver.Context<any> = {

@@ -1,8 +1,8 @@
 import { noop } from 'call-thru';
 import { EventEmitter } from '../event-emitter';
-import { EventSupply } from '../event-supply';
 import { AfterEvent__symbol, EventKeeper } from '../event-keeper';
 import { EventSender, OnEvent__symbol } from '../event-sender';
+import { EventSupply } from '../event-supply';
 import { trackValue } from './track-value';
 import { ValueTracker } from './value-tracker';
 import Mock = jest.Mock;

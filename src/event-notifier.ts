@@ -1,9 +1,9 @@
 /**
  * @module fun-events
  */
-import { eventSupply, EventSupply } from './event-supply';
 import { EventReceiver } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
+import { eventSupply, EventSupply } from './event-supply';
 
 type ReceiverInfo<E extends any[]> = [EventReceiver<E>, EventSupply];
 
