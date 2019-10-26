@@ -7,7 +7,7 @@ import { EventKeeper, isEventKeeper } from '../event-keeper';
 import { EventSender } from '../event-sender';
 import { EventSupplier } from '../event-supplier';
 import { eventSupply, EventSupply } from '../event-supply';
-import { OnEvent, onEventFrom } from '../on-event';
+import { OnEvent, onSupplied } from '../on-event';
 import { ValueTracker } from './value-tracker';
 
 /**
@@ -144,7 +144,7 @@ export class ValueSync<T> extends ValueTracker<T> {
 
     const supplier = source as EventSupplier<U>;
 
-    return (isEventKeeper(supplier) ? afterEventFrom(supplier) : onEventFrom(supplier)).consume((...event) => {
+    return (isEventKeeper(supplier) ? afterEventFrom(supplier) : onSupplied(supplier)).consume((...event) => {
 
       const tracker = extractTracker(...event);
 

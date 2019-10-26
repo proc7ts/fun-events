@@ -2,12 +2,12 @@
  * @module fun-events
  */
 import { callThru, NextCall } from 'call-thru';
-import { EventSupplier } from './event-supplier';
-import { eventSupply, EventSupply, noEventSupply } from './event-supply';
-import { AfterEvent__symbol, EventKeeper } from './event-keeper';
+import { AfterEvent__symbol } from './event-keeper';
 import { EventNotifier } from './event-notifier';
 import { EventReceiver } from './event-receiver';
 import { EventSender, isEventSender, OnEvent__symbol } from './event-sender';
+import { EventSupplier } from './event-supplier';
+import { eventSupply, EventSupply, noEventSupply } from './event-supply';
 import Result = NextCall.CallResult;
 
 /**
@@ -93,7 +93,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
         const extracted = extract(...event);
 
         try {
-          nestedSupply = extracted ? onEventFrom(extracted)(receiver) : noEventSupply();
+          nestedSupply = extracted ? onSupplied(extracted)(receiver) : noEventSupply();
         } finally {
           prevSupply.off();
         }
@@ -1077,7 +1077,7 @@ export function onEventBy<E extends any[]>(
 }
 
 /**
- * Builds an [[OnEvent]] sender of events sent by the given supplier.
+ * Builds an [[OnEvent]] sender of events supplied by the given `supplier`.
  *
  * @category Core
  * @typeparam E  An event type. This is a list of event receiver parameter types.
@@ -1085,7 +1085,7 @@ export function onEventBy<E extends any[]>(
  *
  * @returns An [[OnEvent]] sender of events originated from the given `supplier`.
  */
-export function onEventFrom<E extends any[]>(supplier: EventSender<E> | EventKeeper<E>): OnEvent<E> {
+export function onSupplied<E extends any[]>(supplier: EventSupplier<E>): OnEvent<E> {
 
   const onEvent = isEventSender(supplier) ? supplier[OnEvent__symbol] : supplier[AfterEvent__symbol];
 

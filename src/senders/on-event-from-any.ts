@@ -4,7 +4,7 @@
 import { EventKeeper } from '../event-keeper';
 import { EventSender } from '../event-sender';
 import { eventSupply, EventSupply } from '../event-supply';
-import { OnEvent, onEventBy, onEventFrom, onNever } from '../on-event';
+import { OnEvent, onEventBy, onSupplied, onNever } from '../on-event';
 
 /**
  * Builds an [[OnEvent]] sender of events sent by any of the given `suppliers`.
@@ -28,7 +28,7 @@ export function onEventFromAny<E extends any[]>(...suppliers: (EventSender<E> | 
     let supplies: EventSupply[] = [];
     const supply = eventSupply(cutOff);
 
-    supplies = suppliers.map(source => onEventFrom(source)(receiver).whenOff(sourceDone));
+    supplies = suppliers.map(source => onSupplied(source)(receiver).whenOff(sourceDone));
 
     return supply;
 
