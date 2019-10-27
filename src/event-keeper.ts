@@ -12,7 +12,7 @@ import { EventSupply } from './event-supply';
 export const AfterEvent__symbol = /*#__PURE__*/ Symbol('after-event');
 
 /**
- * A sender of events that keeps the last event sent.
+ * An event supplier that keeps the last event sent.
  *
  * The registered event receiver would receive the kept event immediately upon registration, and all upcoming events
  * after that.
