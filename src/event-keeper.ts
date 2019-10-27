@@ -1,8 +1,8 @@
 /**
  * @module fun-events
  */
-import { EventInterest } from './event-interest';
 import { EventReceiver } from './event-receiver';
+import { EventSupply } from './event-supply';
 
 /**
  * A key of event receiver registration method of [[EventKeeper]].
@@ -12,7 +12,7 @@ import { EventReceiver } from './event-receiver';
 export const AfterEvent__symbol = /*#__PURE__*/ Symbol('after-event');
 
 /**
- * A sender of events that keeps the last event sent.
+ * An event supplier that keeps the last event sent.
  *
  * The registered event receiver would receive the kept event immediately upon registration, and all upcoming events
  * after that.
@@ -25,12 +25,11 @@ export interface EventKeeper<E extends any[]> {
   /**
    * Registers a receiver of events kept and sent by this keeper.
    *
-   * @param receiver  A receiver of events.
+   * @param receiver  A receiver of events to register.
    *
-   * @returns An event interest. The events will be sent to `receiver` until the [[EventInterest.off]] method
-   * of the returned event interest is called.
+   * @returns A supply of events from this keeper to the given `receiver`.
    */
-  [AfterEvent__symbol](receiver: EventReceiver<E>): EventInterest;
+  [AfterEvent__symbol](receiver: EventReceiver<E>): EventSupply;
 
 }
 

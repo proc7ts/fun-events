@@ -1,8 +1,8 @@
 /**
  * @module fun-events
  */
-import { EventInterest } from './event-interest';
 import { EventReceiver } from './event-receiver';
+import { EventSupply } from './event-supply';
 
 /**
  * A key of event receiver registration method of [[EventSender]].
@@ -24,12 +24,11 @@ export interface EventSender<E extends any[]> {
   /**
    * Registers a receiver of events sent by this sender.
    *
-   * @param receiver  A receiver of events.
+   * @param receiver  A receiver of events to register.
    *
-   * @returns An event interest. The events will be sent to `receiver` until the [[EventInterest.off]] method
-   * of the returned event interest is called.
+   * @returns A supply of events from this sender to the given `receiver`.
    */
-  [OnEvent__symbol](receiver: EventReceiver<E>): EventInterest;
+  [OnEvent__symbol](receiver: EventReceiver<E>): EventSupply;
 
 }
 

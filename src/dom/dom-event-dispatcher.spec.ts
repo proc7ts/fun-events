@@ -43,9 +43,9 @@ describe('DomEventDispatcher', () => {
     });
     it('unregisters listener', () => {
 
-      const interest = dispatcher.on('click').capture(listenerSpy);
+      const supply = dispatcher.on('click').capture(listenerSpy);
 
-      interest.off();
+      supply.off();
 
       expect(targetSpy.removeEventListener).toHaveBeenCalledWith('click', registeredListener);
     });

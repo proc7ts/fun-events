@@ -1,4 +1,4 @@
-import { statePath } from './state-events';
+import { statePath } from './state-path';
 
 describe('statePath', () => {
   it('normalizes non-compound state value key', () => {

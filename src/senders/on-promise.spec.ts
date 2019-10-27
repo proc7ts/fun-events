@@ -13,25 +13,25 @@ describe('onPromise', () => {
 
     expect(receiver).toHaveBeenCalledWith(value);
   });
-  it('exhausts after resolution', async () => {
+  it('cuts off events supply after resolution', async () => {
 
     const on = onPromise(Promise.resolve('test'));
-    const whenDone = jest.fn();
+    const whenOff = jest.fn();
 
-    on(noop).whenDone(whenDone);
+    on(noop).whenOff(whenOff);
     await Promise.resolve();
 
-    expect(whenDone).toHaveBeenCalledWith(undefined);
+    expect(whenOff).toHaveBeenCalledWith(undefined);
   });
-  it('exhausts with promise rejection reason', async () => {
+  it('cuts off events supply with promise rejection reason', async () => {
 
     const error = new Error('test');
     const on = onPromise(Promise.reject(error));
-    const whenDone = jest.fn();
+    const whenOff = jest.fn();
 
-    on(noop).whenDone(whenDone);
+    on(noop).whenOff(whenOff);
     await Promise.resolve();
 
-    expect(whenDone).toHaveBeenCalledWith(error);
+    expect(whenOff).toHaveBeenCalledWith(error);
   });
 });

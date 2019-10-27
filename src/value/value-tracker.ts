@@ -1,17 +1,21 @@
 /**
  * @module fun-events
  */
-import { AfterEvent, afterEventOr } from '../after-event';
-import { EventInterest, noEventInterest } from '../event-interest';
+import { AfterEvent, afterEventBy } from '../after-event';
 import { AfterEvent__symbol, EventKeeper, isEventKeeper } from '../event-keeper';
 import { EventReceiver } from '../event-receiver';
 import { EventSender, OnEvent__symbol } from '../event-sender';
-import { OnEvent, onEventFrom } from '../on-event';
+import { EventSupplier } from '../event-supplier';
+import { EventSupply, noEventSupply } from '../event-supply';
+import { OnEvent, onSupplied } from '../on-event';
 
 /**
  * Value accessor and changes tracker.
  *
- * Can be used as [[EventSender]] and [[EventKeeper]]. Events originated from them never exhaust.
+ * Implements an [[EventSender]] interface by sending value changes to registered receivers as a pair of new and old
+ * values.
+ *
+ * Implements an [[EventKeeper]] interface by sending current value and its updates.
  *
  * @category Value Tracking
  * @typeparam T  Tracked value type.
@@ -22,17 +26,21 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
   /**
    * @internal
    */
-  private _by = noEventInterest();
+  private _by = noEventSupply();
 
   /**
-   * Registers value changes receiver. The new value is sent as first argument, and the old value as a second one.
+   * An [[OnEvent]] sender of value changes. The new value is sent as first argument, and the old value as a second one.
+   *
+   * The `[OnEvent__symbol]` property is an alias of this one.
    */
   abstract readonly on: OnEvent<[N, T]>;
 
   /**
-   * Registers current and updated values receiver.
+   * An [[AfterEvent]] keeper of current value.
+   *
+   * The `[AfterEvent__symbol]` property is an alias of this one.
    */
-  readonly read: AfterEvent<[T]> = afterEventOr<[T]>(
+  readonly read: AfterEvent<[T]> = afterEventBy<[T]>(
       receiver => this.on(receiveNewValue(receiver)),
       () => [this.it],
   );
@@ -51,64 +59,60 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
   abstract it: T;
 
   /**
-   * Binds the tracked value to the given `source` value sender or keeper.
+   * Updates the tracked value by the given value `supplier`.
    *
-   * Updates the value when the `source` sends another value.
-   *
-   * If the value is already bound to another value source, then unbinds from the old one first.
+   * If the value is already updated by another supplier, then unbinds from the old one first.
    *
    * Call the [[ValueTracker.off]] method to unbind the tracked value from the `source`.
    *
    * Note that explicitly updating the value would override the value received from the `source`.
    *
-   * @param source  The source value sender or keeper.
+   * @param supplier  The source value sender or keeper.
    *
    * @returns `this` instance.
    */
-  by(source: EventKeeper<[T]> | EventSender<[T]>): this;
+  by(supplier: EventSupplier<[T]>): this;
 
   /**
-   * Binds the tracked value to the value sender or keeper extracted from the events sent by the given `source`.
+   * Updates the tracked value by value suppliers extracted from events sent by the given `supplier`.
    *
-   * Updates the value when extracted sender or keeper sends another value.
-   *
-   * If the value is already bound to another value source, then unbinds from the old one first.
+   * If the value is already updated by another value supplier, then unbinds from the old one first.
    *
    * Call the [[ValueTracker.off]] method to unbind the tracked value from the `source`.
    *
    * Note that explicitly updating the value would override the value received from the `source`.
    *
    * @typeparam S  Source value type.
-   * @param source  The event sender or keeper to extract value senders or keepers from.
-   * @param extract  A function extracting value senders or keepers from events received from the `source`.
+   * @param supplier  The event supplier to extract value suppliers from.
+   * @param extract  A function extracting value supplier from event received from `supplier`.
    * May return `undefined` to suspend receiving values.
    *
    * @returns `this` instance.
    */
   by<S extends any[]>(
-      source: EventKeeper<S> | EventSender<S>,
-      extract: (this: void, ...event: S) => EventKeeper<[T]> | EventSender<[T]> | undefined,
+      supplier: EventSupplier<S>,
+      extract: (this: void, ...event: S) => EventSupplier<[T]> | undefined,
   ): this;
 
   by<S extends any[]>(
-      source: EventKeeper<S> | EventSender<S> | EventKeeper<[T]> | EventSender<[T]>,
-      extract?: (this: void, ...event: S) => EventKeeper<[T]> | EventSender<[T]> | undefined,
+      supplier: EventSupplier<S> | EventSupplier<[T]>,
+      extract?: (this: void, ...event: S) => EventSupplier<[T]> | undefined,
   ): this {
 
     const self = this;
 
-    this.off();
+    this.byNone();
 
     if (!extract) {
 
-      const sender = source as EventKeeper<[T]> | EventSender<[T]>;
+      const sender = supplier as EventSupplier<[T]>;
 
       this._by = acceptValuesFrom(sender);
     } else {
 
-      const container = source as EventKeeper<S> | EventSender<S>;
+      const container = supplier as EventSupplier<S>;
 
-      this._by = onEventFrom(container).consume((...event: S) => {
+      this._by = onSupplied(container).consume((...event: S) => {
 
         const sender = extract(...event);
 
@@ -119,11 +123,11 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
         return;
       });
     }
-    this._by.whenDone(() => this._by = noEventInterest());
+    this._by.whenOff(() => this._by = noEventSupply());
 
     return this;
 
-    function acceptValuesFrom(sender: EventSender<[T]> | EventKeeper<[T]>): EventInterest {
+    function acceptValuesFrom(sender: EventSupplier<[T]>): EventSupply {
 
       const registrar = isEventKeeper(sender) ? sender[AfterEvent__symbol] : sender[OnEvent__symbol];
 
@@ -132,7 +136,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
   }
 
   /**
-   * Unbinds the tracked value from the value sender or keeper this tracker is bound to with [[ValueTracker.by]] method.
+   * Unbinds the tracked value from any value supplier this tracker is {@link ValueTracker.by updated by}.
    *
    * If the tracker is not bound then does nothing.
    *
@@ -140,18 +144,17 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
    *
    * @returns `this` instance.
    */
-  off(reason?: any): this {
+  byNone(reason?: any): this {
     this._by.off(reason);
     return this;
   }
 
   /**
-   * Removes all registered event receivers.
+   * Removes all registered event receivers and cuts off corresponding event supplies.
    *
-   * After this method call they won't receive events. Informs all corresponding event interests on that by calling
-   * the callbacks registered with [[EventInterest.whenDone]].
+   * After this method call they won't receive events.
 
-   * @param reason  A reason to stop sending events to receivers.
+   * @param reason  A reason to stop sending events.
    *
    * @returns `this` instance.
    */
@@ -159,18 +162,20 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
 
 }
 
-function receiveNewValue<T, N extends T>(valueReceiver: EventReceiver<[T]>): EventReceiver<[N, T]> {
-  return function(newValue) {
-
-    const context = this;
-
-    valueReceiver.call(
-        {
-          afterRecurrent(recurrentReceiver) {
-            context.afterRecurrent(receiveNewValue(recurrentReceiver));
+function receiveNewValue<T, N extends T>(
+    valueReceiver: EventReceiver.Generic<[T]>,
+): EventReceiver.Generic<[N, T]> {
+  return {
+    supply: valueReceiver.supply,
+    receive(context, newValue) {
+      valueReceiver.receive(
+          {
+            onRecurrent(recurrentReceiver) {
+              context.onRecurrent(recurrentValue => recurrentReceiver(recurrentValue));
+            },
           },
-        },
-        newValue,
-    );
+          newValue,
+      );
+    }
   };
 }

@@ -1,24 +1,19 @@
-import { EventInterest } from '../event-interest';
+import { EventNotifier } from '../event-notifier';
 import { EventReceiver } from '../event-receiver';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 import Mock = jest.Mock;
-import Mocked = jest.Mocked;
 
 describe('OnDomEvent', () => {
 
-  let mockRegister: Mock<EventInterest, [EventReceiver<[Event]>, (AddEventListenerOptions | boolean)?]>;
+  let mockRegister: Mock<void, [EventReceiver.Generic<[Event]>, (AddEventListenerOptions | boolean)?]>;
   let onDomEvent: OnDomEvent<Event>;
   let mockListener: Mock<void, [Event]>;
-  let mockInterest: Mocked<EventInterest>;
-  let registeredListener: (event: Event) => void;
+  let events: EventNotifier<[Event]>;
 
   beforeEach(() => {
-    mockInterest = {
-      off: jest.fn(),
-    } as any;
+    events = new EventNotifier();
     mockRegister = jest.fn((listener, _opts?) => {
-      registeredListener = listener;
-      return mockInterest;
+      events.on(listener);
     });
     onDomEvent = onDomEventBy<Event>((c, opts) => mockRegister(c, opts));
     mockListener = jest.fn();
@@ -29,16 +24,16 @@ describe('OnDomEvent', () => {
       expect(onDomEvent.capture).toBeInstanceOf(OnDomEvent);
     });
     it('registers event listener', () => {
-      expect(onDomEvent.capture(mockListener)).toBe(mockInterest);
+      onDomEvent.capture(mockListener);
       expect(mockRegister).toHaveBeenCalled();
     });
     it('captures events by default', () => {
       onDomEvent.capture(mockListener);
-      expect(mockRegister).toHaveBeenCalledWith(registeredListener, true);
+      expect(mockRegister).toHaveBeenCalledWith(jasmine.anything(), true);
     });
     it('respects non-capturing registration', () => {
       onDomEvent.capture(mockListener, false);
-      expect(mockRegister).toHaveBeenCalledWith(registeredListener, false);
+      expect(mockRegister).toHaveBeenCalledWith(jasmine.anything(), false);
     });
     it('captures events by default when options passed', () => {
 
@@ -48,7 +43,7 @@ describe('OnDomEvent', () => {
       };
 
       onDomEvent.capture(mockListener, opts);
-      expect(mockRegister).toHaveBeenCalledWith(registeredListener, { ...opts, capture: true });
+      expect(mockRegister).toHaveBeenCalledWith(jasmine.anything(), { ...opts, capture: true });
     });
     it('respects non-capturing options', () => {
 
@@ -58,7 +53,7 @@ describe('OnDomEvent', () => {
       };
 
       onDomEvent.capture(mockListener, opts);
-      expect(mockRegister).toHaveBeenCalledWith(registeredListener, opts);
+      expect(mockRegister).toHaveBeenCalledWith(jasmine.anything(), opts);
     });
   });
 
@@ -67,16 +62,16 @@ describe('OnDomEvent', () => {
       expect(onDomEvent.passive).toBeInstanceOf(OnDomEvent);
     });
     it('registers event listener', () => {
-      expect(onDomEvent.passive(mockListener)).toBe(mockInterest);
+      onDomEvent.passive(mockListener);
       expect(mockRegister).toHaveBeenCalled();
     });
     it('passivates event listener by default', () => {
       onDomEvent.passive(mockListener);
-      expect(mockRegister).toHaveBeenCalledWith(registeredListener, { passive: true });
+      expect(mockRegister).toHaveBeenCalledWith(expect.anything(), { passive: true });
     });
     it('respects capturing registration', () => {
       onDomEvent.passive(mockListener, false);
-      expect(mockRegister).toHaveBeenCalledWith(registeredListener, { passive: true, capture: false });
+      expect(mockRegister).toHaveBeenCalledWith(expect.anything(), { passive: true, capture: false });
     });
     it('passivates event listener by default when options passed', () => {
 
@@ -86,7 +81,7 @@ describe('OnDomEvent', () => {
       };
 
       onDomEvent.passive(mockListener, opts);
-      expect(mockRegister).toHaveBeenCalledWith(registeredListener, { ...opts, passive: true });
+      expect(mockRegister).toHaveBeenCalledWith(expect.anything(), { ...opts, passive: true });
     });
     it('respects non-passive options', () => {
 
@@ -96,11 +91,11 @@ describe('OnDomEvent', () => {
       };
 
       onDomEvent.passive(mockListener, opts);
-      expect(mockRegister).toHaveBeenCalledWith(registeredListener, opts);
+      expect(mockRegister).toHaveBeenCalledWith(expect.anything(), opts);
     });
     it('combines with `capture`', () => {
       onDomEvent.capture.passive(mockListener);
-      expect(mockRegister).toHaveBeenCalledWith(registeredListener, { capture: true, passive: true });
+      expect(mockRegister).toHaveBeenCalledWith(expect.anything(), { capture: true, passive: true });
     });
   });
 
@@ -109,7 +104,7 @@ describe('OnDomEvent', () => {
       expect(onDomEvent.instead).toBeInstanceOf(OnDomEvent);
     });
     it('registers event listener', () => {
-      expect(onDomEvent.instead(mockListener)).toBe(mockInterest);
+      onDomEvent.instead(mockListener);
       expect(mockRegister).toHaveBeenCalled();
     });
     it('prevents default', () => {
@@ -118,7 +113,7 @@ describe('OnDomEvent', () => {
       const event = new KeyboardEvent('click');
       const preventDefaultSpy = jest.spyOn(event, 'preventDefault');
 
-      registeredListener(event);
+      events.send(event);
 
       expect(preventDefaultSpy).toHaveBeenCalledWith();
       expect(mockListener).toHaveBeenCalledWith(event);
@@ -130,7 +125,7 @@ describe('OnDomEvent', () => {
       expect(onDomEvent.just).toBeInstanceOf(OnDomEvent);
     });
     it('registers event listener', () => {
-      expect(onDomEvent.just(mockListener)).toBe(mockInterest);
+      onDomEvent.just(mockListener);
       expect(mockRegister).toHaveBeenCalled();
     });
     it('prevents default', () => {
@@ -139,7 +134,7 @@ describe('OnDomEvent', () => {
       const event = new KeyboardEvent('click');
       const stopPropagationSpy = jest.spyOn(event, 'stopPropagation');
 
-      registeredListener(event);
+      events.send(event);
 
       expect(stopPropagationSpy).toHaveBeenCalledWith();
       expect(mockListener).toHaveBeenCalledWith(event);
@@ -151,7 +146,7 @@ describe('OnDomEvent', () => {
       expect(onDomEvent.last).toBeInstanceOf(OnDomEvent);
     });
     it('registers event listener', () => {
-      expect(onDomEvent.last(mockListener)).toBe(mockInterest);
+      onDomEvent.last(mockListener);
       expect(mockRegister).toHaveBeenCalled();
     });
     it('prevents default', () => {
@@ -160,7 +155,7 @@ describe('OnDomEvent', () => {
       const event = new KeyboardEvent('click');
       const stopImmediatePropagationSpy = jest.spyOn(event, 'stopImmediatePropagation');
 
-      registeredListener(event);
+      events.send(event);
 
       expect(stopImmediatePropagationSpy).toHaveBeenCalledWith();
       expect(mockListener).toHaveBeenCalledWith(event);

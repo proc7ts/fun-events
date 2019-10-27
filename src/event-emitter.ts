@@ -6,7 +6,7 @@ import { EventSender, OnEvent__symbol } from './event-sender';
 import { OnEvent, onEventBy } from './on-event';
 
 /**
- * Event emitter is a handy implementation of [[OnEvent]] registrar along with methods for sending events.
+ * Event emitter is a handy implementation of [[OnEvent]] sender.
  *
  * Extends [[EventNotifier]] by making its [[EventNotifier.on]] method implement an [[OnEvent]] interface.
  *
@@ -16,19 +16,12 @@ import { OnEvent, onEventBy } from './on-event';
 export class EventEmitter<E extends any[]> extends EventNotifier<E> implements EventSender<E> {
 
   /**
-   * An [[OnEvent]] registrar of events sent by this sender.
+   * An [[OnEvent]] sender.
    *
-   * An `[OnEvent__symbol]` property is an alias of this one.
-   *
-   * @param receiver  A receiver of events.
-   *
-   * @returns An event interest. The events will be sent to `receiver` until the [[EventInterest.off]] method of the
-   * returned event interest is called.
+   * The `[OnEvent__symbol]` property is an alias of this one.
    */
   readonly on = onEventBy<E>(receiver => super.on(receiver));
 
-  get [OnEvent__symbol](): OnEvent<E> {
-    return this.on;
-  }
+  readonly [OnEvent__symbol]: OnEvent<E> = this.on;
 
 }

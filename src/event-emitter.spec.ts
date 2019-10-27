@@ -1,7 +1,6 @@
 import { EventEmitter } from './event-emitter';
-import { EventInterest } from './event-interest';
-import { EventReceiver } from './event-receiver';
 import { OnEvent__symbol } from './event-sender';
+import { EventSupply } from './event-supply';
 import Mock = jest.Mock;
 
 describe('EventEmitter', () => {
@@ -30,10 +29,10 @@ describe('EventEmitter', () => {
 
   describe('on', () => {
 
-    let interest: EventInterest;
+    let supply: EventSupply;
 
     beforeEach(() => {
-      interest = emitter.on(mockReceiver);
+      supply = emitter.on(mockReceiver);
     });
 
     it('registers event receiver', () => {
@@ -46,9 +45,9 @@ describe('EventEmitter', () => {
       expect(mockReceiver).toHaveBeenCalledWith('event');
       expect(mockReceiver2).toHaveBeenCalledWith('event');
     });
-    it('unregisters receiver when its interest is lost', () => {
+    it('unregisters receiver when its supply is cut off', () => {
       emitter.on(mockReceiver2);
-      interest.off();
+      supply.off();
 
       emitter.send('event');
 
@@ -57,7 +56,7 @@ describe('EventEmitter', () => {
     });
     it('registers event receiver again', () => {
 
-      const interest2 = emitter.on(mockReceiver);
+      const supply2 = emitter.on(mockReceiver);
 
       expect(emitter.size).toBe(2);
 
@@ -67,7 +66,7 @@ describe('EventEmitter', () => {
       expect(mockReceiver).toHaveBeenCalledTimes(2);
 
       mockReceiver.mockClear();
-      interest2.off();
+      supply2.off();
 
       expect(emitter.size).toBe(1);
 
@@ -84,13 +83,15 @@ describe('EventEmitter', () => {
 
     beforeEach(() => {
       records = [];
-      emitter.on(mockReceiver.mockImplementation(function (this: EventReceiver.Context<[string]>, event: string) {
-        records.push([event, 1]);
-        emitter.send(event + '!');
-        this.afterRecurrent(recurrent => {
-          records.push([recurrent, 11]);
-        });
-      }));
+      emitter.on({
+        receive(context, event) {
+          records.push([event, 1]);
+          emitter.send(event + '!');
+          context.onRecurrent(recurrent => {
+            records.push([recurrent, 11]);
+          });
+        }
+      });
       emitter.on(mockReceiver2.mockImplementation(event => {
         records.push([event, 2]);
       }));
@@ -115,18 +116,18 @@ describe('EventEmitter', () => {
       expect(mockReceiver).not.toHaveBeenCalled();
       expect(mockReceiver2).not.toHaveBeenCalled();
     });
-    it('notifies `whenDone` callbacks', () => {
+    it('notifies cut off callbacks', () => {
 
       const reason = 'some reason';
-      const whenDone1 = jest.fn();
-      const whenDone2 = jest.fn();
+      const whenOff1 = jest.fn();
+      const whenOff2 = jest.fn();
 
-      emitter.on(mockReceiver).whenDone(whenDone1);
-      emitter.on(mockReceiver2).whenDone(whenDone2);
+      emitter.on(mockReceiver).whenOff(whenOff1);
+      emitter.on(mockReceiver2).whenOff(whenOff2);
       emitter.done(reason);
 
-      expect(whenDone1).toHaveBeenCalledWith(reason);
-      expect(whenDone2).toHaveBeenCalledWith(reason);
+      expect(whenOff1).toHaveBeenCalledWith(reason);
+      expect(whenOff2).toHaveBeenCalledWith(reason);
     });
   });
 });

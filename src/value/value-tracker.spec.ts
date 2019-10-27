@@ -1,9 +1,9 @@
 import { noop } from 'call-thru';
 import { EventEmitter } from '../event-emitter';
-import { EventInterest } from '../event-interest';
 import { AfterEvent__symbol, EventKeeper } from '../event-keeper';
 import { EventSender, OnEvent__symbol } from '../event-sender';
-import { trackValue } from './track-value';
+import { EventSupply } from '../event-supply';
+import { trackValue, trackValueBy } from './track-value';
 import { ValueTracker } from './value-tracker';
 import Mock = jest.Mock;
 
@@ -47,11 +47,11 @@ describe('ValueTracker', () => {
   describe('read', () => {
 
     let mockReceiver: Mock<void, [string]>;
-    let interest: EventInterest;
+    let supply: EventSupply;
 
     beforeEach(() => {
       mockReceiver = jest.fn();
-      interest = v1.read(mockReceiver);
+      supply = v1.read(mockReceiver);
     });
 
     it('sends initial value', () => {
@@ -61,9 +61,9 @@ describe('ValueTracker', () => {
       v1.it = 'new';
       expect(mockReceiver).toHaveBeenCalledWith('new');
     });
-    it('does not send values after interest is off', () => {
+    it('does not send values after their supply is cut off', () => {
       mockReceiver.mockReset();
-      interest.off();
+      supply.off();
       v1.it = 'new';
       expect(mockReceiver).not.toHaveBeenCalled();
     });
@@ -71,17 +71,21 @@ describe('ValueTracker', () => {
 
   describe('recurrent update', () => {
     it('is supported', () => {
-      v1.read(function (value) {
-        v1.it = value + '!';
-        this.afterRecurrent(noop);
+      v1.read({
+        receive(context, value) {
+          v1.it = value + '!';
+          context.onRecurrent(noop);
+        },
       });
       v1.it = 'new';
       expect(v1.it).toBe('new!');
     });
     it('is supported for initial value', () => {
-      v1.read.once(function (value) {
-        this.afterRecurrent(noop);
-        v1.it = value + '!';
+      v1.read.once({
+        receive(context, value) {
+          context.onRecurrent(noop);
+          v1.it = value + '!';
+        },
       });
       expect(v1.it).toBe('old!');
     });
@@ -143,8 +147,8 @@ describe('ValueTracker', () => {
       v1.it = 'value';
       expect(v2.it).toBe(v3.it);
     });
-    it('is unbound with `off()`', () => {
-      expect(v2.off()).toBe(v2);
+    it('is unbound with `byNone()`', () => {
+      expect(v2.byNone()).toBe(v2);
 
       const listener = jest.fn();
 
@@ -153,7 +157,7 @@ describe('ValueTracker', () => {
       expect(v2.it).toBe('old');
       expect(listener).not.toBeCalled();
     });
-    it('is unbound when events exhausted', () => {
+    it('is unbound when value supply is cut off', () => {
       v1.done();
 
       const listener = jest.fn();
@@ -162,6 +166,22 @@ describe('ValueTracker', () => {
       v1.it = 'new';
       expect(v2.it).toBe('old');
       expect(listener).not.toBeCalled();
+    });
+
+    describe('trackValueBy', () => {
+      it('mirrors another value', () => {
+
+        const v3 = trackValueBy(v1);
+        const mockReceiver2 = jest.fn();
+
+        v3.on(mockReceiver2);
+        expect(v3.it).toBe('old');
+        expect(mockReceiver2).not.toHaveBeenCalled();
+
+        v1.it = 'new';
+        expect(v3.it).toBe('new');
+        expect(mockReceiver2).toHaveBeenCalledWith('new', 'old');
+      });
     });
   });
 
@@ -210,11 +230,11 @@ describe('ValueTracker', () => {
       v3.send('new');
       expect(v1.it).toBe('new');
     });
-    it('is unbound with `off()`', () => {
+    it('is unbound with `byNone()`', () => {
 
       const v3 = trackValue('3');
 
-      v1.off();
+      v1.byNone();
 
       const listener = jest.fn();
 
