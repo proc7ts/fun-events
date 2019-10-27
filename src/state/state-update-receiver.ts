@@ -59,5 +59,3 @@ export namespace StateUpdateReceiver {
   }
 
 }
-
-
