@@ -1027,7 +1027,7 @@ export function afterEventBy<E extends any[]>(
       receiver.apply(
           {
             onRecurrent(recurrent) {
-              dest = recurrent;
+              dest = (...event) => recurrent(...event);
             },
           },
           lastEvent ? lastEvent : (lastEvent = fallback()),

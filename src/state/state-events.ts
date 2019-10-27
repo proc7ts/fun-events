@@ -4,7 +4,7 @@
 import { EventReceiver } from '../event-receiver';
 
 /**
- * A state updates receiver function.
+ * A state updates receiver.
  *
  * It is called whenever the value with at given `path` changes.
  *
@@ -28,9 +28,20 @@ export namespace StateUpdateReceiver {
 
   export interface Context extends EventReceiver.Context<[StatePath, any, any]> {
 
-    onRecurrent(receiver: StateUpdateReceiver): void;
+    onRecurrent(receiver: Recurrent): void;
 
   }
+
+  /**
+   * Recurrent state updates receiver.
+   */
+  export type Recurrent =
+      <V>(
+          this: void,
+          path: StatePath,
+          newValue: V,
+          oldValue: V,
+      ) => void;
 
 }
 

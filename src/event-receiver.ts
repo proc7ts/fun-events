@@ -27,6 +27,8 @@ export namespace EventReceiver {
 
   /**
    * Event processing context passed to each event receiver as `this` parameter.
+   *
+   * @typeparam E  An event type. This is a tuple of event receiver parameter types.
    */
   export interface Context<E extends any[]> {
 
@@ -45,8 +47,21 @@ export namespace EventReceiver {
      *
      * @param receiver  Recurrent events receiver.
      */
-    onRecurrent(receiver: EventReceiver<E>): void;
+    onRecurrent(receiver: Recurrent<E>): void;
 
   }
+
+  /**
+   * Recurrent event receiver.
+   *
+   * Recurrent event processing context is the one of original event.
+   *
+   * @typeparam E  An event type. This is a tuple of event receiver parameter types.
+   */
+  export type Recurrent<E extends any[]> =
+  /**
+   * @param event  An event represented by function call arguments.
+   */
+      (this: void, ...event: E) => void;
 
 }
