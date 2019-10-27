@@ -2,7 +2,6 @@
  * @module fun-events
  */
 import { EventNotifier } from '../event-notifier';
-import { eventSupply } from '../event-supply';
 import { OnEvent, onEventBy } from '../on-event';
 
 /**
@@ -20,7 +19,7 @@ import { OnEvent, onEventBy } from '../on-event';
 export function onPromise<T>(promise: Promise<T>): OnEvent<[T]> {
   return onEventBy(receiver => {
 
-    const supply = eventSupply();
+    const { supply } = receiver;
 
     promise.then(
         value => {
@@ -34,7 +33,5 @@ export function onPromise<T>(promise: Promise<T>): OnEvent<[T]> {
     ).catch(
         e => supply.off(e)
     );
-
-    return supply;
   });
 }

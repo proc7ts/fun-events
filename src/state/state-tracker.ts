@@ -5,21 +5,10 @@ import { noop } from 'call-thru';
 import { EventEmitter } from '../event-emitter';
 import { EventSender, OnEvent__symbol } from '../event-sender';
 import { eventSupply, EventSupply } from '../event-supply';
-import { OnEvent, onEventBy } from '../on-event';
-import { StatePath, statePath, StateUpdateReceiver } from './state-events';
-
-/**
- * A state update receivers registration function interface.
- *
- * @category State Tracking
- */
-export interface OnStateUpdate extends OnEvent<[StatePath, any, any]> {
-
-  (receiver: StateUpdateReceiver): EventSupply;
-
-  once(receiver: StateUpdateReceiver): EventSupply;
-
-}
+import { onEventBy } from '../on-event';
+import { OnStateUpdate } from './on-state-update';
+import { statePath, StatePath } from './state-path';
+import { StateUpdateReceiver } from './state-update-receiver';
 
 class PathEntry {
 

@@ -162,18 +162,20 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
 
 }
 
-function receiveNewValue<T, N extends T>(valueReceiver: EventReceiver<[T]>): EventReceiver<[N, T]> {
-  return function(newValue) {
-
-    const context = this;
-
-    valueReceiver.call(
-        {
-          onRecurrent(recurrentReceiver) {
-            context.onRecurrent(recurrentValue => recurrentReceiver(recurrentValue));
+function receiveNewValue<T, N extends T>(
+    valueReceiver: EventReceiver.Generic<[T]>,
+): EventReceiver.Generic<[N, T]> {
+  return {
+    supply: valueReceiver.supply,
+    receive(context, newValue) {
+      valueReceiver.receive(
+          {
+            onRecurrent(recurrentReceiver) {
+              context.onRecurrent(recurrentValue => recurrentReceiver(recurrentValue));
+            },
           },
-        },
-        newValue,
-    );
+          newValue,
+      );
+    }
   };
 }

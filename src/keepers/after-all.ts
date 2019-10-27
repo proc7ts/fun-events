@@ -29,7 +29,9 @@ export function afterAll<S extends { readonly [key: string]: EventKeeper<any> }>
 
   return afterEventBy(registerReceiver, latestEvent).share();
 
-  function registerReceiver(receiver: EventReceiver<[{ readonly [K in keyof S]: EventKeeper.Event<S[K]> }]>) {
+  function registerReceiver(
+      receiver: EventReceiver.Generic<[{ readonly [K in keyof S]: EventKeeper.Event<S[K]> }]>,
+  ): void {
 
     const notifier = new EventNotifier<[{ readonly [K in keyof S]: EventKeeper.Event<S[K]> }]>();
     const supply = notifier.on(receiver);
@@ -41,8 +43,6 @@ export function afterAll<S extends { readonly [key: string]: EventKeeper<any> }>
     if (!supply.isOff) {
       send = () => notifier.send(result);
     }
-
-    return supply;
 
     function readFrom(key: keyof S) {
       supply.needs(sources[key][AfterEvent__symbol]((...event) => {

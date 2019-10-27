@@ -4,7 +4,7 @@
 import { callThru, NextCall } from 'call-thru';
 import { AfterEvent__symbol } from './event-keeper';
 import { EventNotifier } from './event-notifier';
-import { EventReceiver } from './event-receiver';
+import { eventReceiver, EventReceiver } from './event-receiver';
 import { EventSender, isEventSender, OnEvent__symbol } from './event-sender';
 import { EventSupplier } from './event-supplier';
 import { eventSupply, EventSupply, noEventSupply } from './event-supply';
@@ -39,16 +39,16 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
    */
   once(receiver: EventReceiver<E>): EventSupply {
 
-    let supply = eventSupply();
+    const generic = eventReceiver(receiver);
+    const { supply } = generic;
 
-    const wrapper: EventReceiver<E> = function (...args: E) {
-      if (!supply.isOff) {
+    return this({
+      supply,
+      receive: (context, ...event) => {
+        generic.receive(context, ...event);
         supply.off();
-        receiver.apply(this, args);
-      }
-    };
-
-    return supply = this(wrapper).needs(supply);
+      },
+    });
   }
 
   /**
@@ -84,25 +84,31 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   dig_<F extends any[]>(
       extract: (this: void, ...event: E) => EventSupplier<F> | void | undefined,
   ): OnEvent<F> {
-    return onEventBy((receiver: EventReceiver<F>) => {
+    return onEventBy((receiver: EventReceiver.Generic<F>) => {
 
       let nestedSupply = noEventSupply();
-      const senderSupply = this((...event: E) => {
 
-        const prevSupply = nestedSupply;
-        const extracted = extract(...event);
+      this({
+        supply: receiver.supply,
+        receive(_context, ...event: E)  {
 
-        try {
-          nestedSupply = extracted ? onSupplied(extracted)(receiver) : noEventSupply();
-        } finally {
-          prevSupply.off();
-        }
+          const prevSupply = nestedSupply;
+          const extracted = extract(...event);
+
+          try {
+            nestedSupply = extracted
+                ? onSupplied(extracted)({
+                  supply: eventSupply().needs(receiver.supply),
+                  receive(context, ...nestedEvent) {
+                    receiver.receive(context, ...nestedEvent);
+                  },
+                })
+                : noEventSupply();
+          } finally {
+            prevSupply.off();
+          }
+        },
       });
-
-      return eventSupply(reason => {
-        nestedSupply.off(reason);
-        senderSupply.off(reason);
-      }).needs(senderSupply);
     });
   }
 
@@ -1033,11 +1039,14 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
     const thru = callThru as any;
 
     return onEventBy(receiver =>
-        this(function (...event) {
-          return thru(
-              ...fns,
-              (...transformed: any[]) => receiver.apply(this, transformed),
-          )(...event);
+        this({
+          supply: receiver.supply,
+          receive(context, ...event) {
+            thru(
+                ...fns,
+                (...transformed: any[]) => receiver.receive(context, ...transformed),
+            )(...event);
+          }
         }));
   }
 
@@ -1061,15 +1070,26 @@ export interface OnEvent<E extends any[]> {
  *
  * @category Core
  * @typeparam E  An event type. This is a list of event receiver parameter types.
- * @param register  An event receiver registration function returning an event supply.
+ * @param register  Generic event receiver registration function. It will be called on each receiver registration,
+ * unless the receiver's {@link EventReceiver.Generic.supply event supply} is cut off already.
  *
  * @returns An [[OnEvent]] sender registering event receivers with the given `register` function.
  */
 export function onEventBy<E extends any[]>(
-    register: (this: void, receiver: EventReceiver<E>) => EventSupply,
+    register: (this: void, receiver: EventReceiver.Generic<E>) => void,
 ): OnEvent<E> {
 
-  const onEvent = ((receiver: EventReceiver<E>) => register(receiver)) as OnEvent<E>;
+  const onEvent = ((receiver: EventReceiver<E>) => {
+
+    const generic = eventReceiver(receiver);
+    const { supply } = generic;
+
+    if (!supply.isOff) {
+      register(generic);
+    }
+
+    return supply;
+  }) as OnEvent<E>;
 
   Object.setPrototypeOf(onEvent, OnEvent.prototype);
 
@@ -1101,18 +1121,26 @@ export function onSupplied<E extends any[]>(supplier: EventSupplier<E>): OnEvent
  *
  * @category Core
  */
-export const onNever: OnEvent<any> = /*#__PURE__*/ onEventBy(noEventSupply);
+export const onNever: OnEvent<any> = /*#__PURE__*/ onEventBy(({ supply }) => supply.off());
 
 function shareSupplyTo<E extends any[]>(onEvent: OnEvent<E>): OnEvent<E> {
 
   const shared = new EventNotifier<E>();
-  let sourceSupply = noEventSupply();
+  let sharedSupply = noEventSupply();
   let initialEvents: E[] | undefined = [];
   let hasReceivers = false;
+  const removeReceiver = (reason?: any) => {
+    if (!shared.size) {
+      sharedSupply.off(reason);
+      sharedSupply = noEventSupply();
+      initialEvents = [];
+      hasReceivers = false;
+    }
+  };
 
   return onEventBy(receiver => {
     if (!shared.size) {
-      sourceSupply = onEvent((...event) => {
+      sharedSupply = onEvent((...event) => {
         if (initialEvents) {
           if (hasReceivers) {
             // More events received
@@ -1128,16 +1156,8 @@ function shareSupplyTo<E extends any[]>(onEvent: OnEvent<E>): OnEvent<E> {
       });
     }
 
-    const supply = shared.on(receiver).whenOff(reason => {
-      if (!shared.size) {
-        sourceSupply.off(reason);
-        sourceSupply = noEventSupply();
-        initialEvents = [];
-        hasReceivers = false;
-      }
-    }).needs(sourceSupply);
-
     hasReceivers = true;
+    shared.on(receiver).whenOff(removeReceiver).needs(sharedSupply);
 
     if (initialEvents) {
       // Send initial events to just registered receiver
@@ -1145,10 +1165,7 @@ function shareSupplyTo<E extends any[]>(onEvent: OnEvent<E>): OnEvent<E> {
       const dispatcher = new EventNotifier<E>();
 
       dispatcher.on(receiver);
-
       initialEvents.forEach(event => dispatcher.send(...event));
     }
-
-    return supply;
   });
 }

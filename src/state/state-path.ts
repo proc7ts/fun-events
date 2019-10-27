@@ -1,50 +1,6 @@
 /**
  * @module fun-events
  */
-import { EventReceiver } from '../event-receiver';
-
-/**
- * A state updates receiver.
- *
- * It is called whenever the value with at given `path` changes.
- *
- * @category State Tracking
- */
-export type StateUpdateReceiver =
-/**
- * @typeparam V  A type of changed value.
- * @param path  A path to changed state part.
- * @param newValue  New value.
- * @param oldValue  Previous value.
- */
-    <V>(
-        this: StateUpdateReceiver.Context,
-        path: StatePath,
-        newValue: V,
-        oldValue: V,
-    ) => void;
-
-export namespace StateUpdateReceiver {
-
-  export interface Context extends EventReceiver.Context<[StatePath, any, any]> {
-
-    onRecurrent(receiver: Recurrent): void;
-
-  }
-
-  /**
-   * Recurrent state updates receiver.
-   */
-  export type Recurrent =
-      <V>(
-          this: void,
-          path: StatePath,
-          newValue: V,
-          oldValue: V,
-      ) => void;
-
-}
-
 /**
  * A path to state or its part. E.g. property value.
  *

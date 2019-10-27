@@ -1,12 +1,12 @@
 /**
  * @module fun-events
  */
-import { EventReceiver } from '../event-receiver';
+import { eventReceiver, EventReceiver } from '../event-receiver';
 import { EventSupply } from '../event-supply';
 import { OnEvent } from '../on-event';
 
 /**
- * DOM event listener signature.
+ * DOM event listener.
  *
  * DOM events are never recurrent.
  *
@@ -54,12 +54,19 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean,
     ) => {
+
+      const receiver = eventReceiver(listener);
+
       return this(
-          function(event) {
-            event.preventDefault();
-            listener.call(this, event);
+          {
+            supply: receiver.supply,
+            receive(context, event) {
+              event.preventDefault();
+              receiver.receive(context, event);
+            },
           },
-          opts);
+          opts,
+      );
     });
   }
 
@@ -74,12 +81,19 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean,
     ) => {
+
+      const receiver = eventReceiver(listener);
+
       return this(
-          function (event) {
-            event.stopPropagation();
-            listener.call(this, event);
+          {
+            supply: receiver.supply,
+            receive(context, event) {
+              event.stopPropagation();
+              receiver.receive(context, event);
+            },
           },
-          opts);
+          opts,
+      );
     });
   }
 
@@ -93,12 +107,19 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean,
     ) => {
+
+      const receiver = eventReceiver(listener);
+
       return this(
-          function (event) {
-            event.stopImmediatePropagation();
-            listener.call(this, event);
+          {
+            supply: receiver.supply,
+            receive(context, event) {
+              event.stopImmediatePropagation();
+              receiver.receive(context, event);
+            },
           },
-          opts);
+          opts,
+      );
     });
   }
 
@@ -147,23 +168,23 @@ export interface OnDomEvent<E extends Event> {
  *
  * @category DOM
  * @typeparam E  Supported DOM event type.
- * @param register  A DOM event listener registration function returning an event supply.
+ * @param register  A generic DOM event listener registration function.
  *
  * @returns An [[OnDomEvent]] sender registering event listeners with the given `register` function.
  */
 export function onDomEventBy<E extends Event>(
     register: (
         this: void,
-        listener: DomEventListener<E>,
+        listener: EventReceiver.Generic<[E]>,
         opts?: AddEventListenerOptions | boolean,
-    ) => EventSupply,
+    ) => void,
 ): OnDomEvent<E> {
 
   const onDomEvent = (
       (
-          listener: (this: void, event: E) => void,
+          listener: DomEventListener<E>,
           opts?: AddEventListenerOptions | boolean,
-      ) => register(listener, opts)
+      ) => register(eventReceiver(listener), opts)
   ) as OnDomEvent<E>;
 
   Object.setPrototypeOf(onDomEvent, OnDomEvent.prototype);

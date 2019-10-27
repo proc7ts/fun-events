@@ -3,10 +3,10 @@
  */
 import { NextCall, noop, valueProvider } from 'call-thru';
 import { AfterEvent__symbol, EventKeeper, isEventKeeper } from './event-keeper';
-import { EventReceiver } from './event-receiver';
+import { eventReceiver, EventReceiver } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
 import { EventSupplier } from './event-supplier';
-import { eventSupply, EventSupply, noEventSupply } from './event-supply';
+import { eventSupply } from './event-supply';
 import { OnEvent } from './on-event';
 import Result = NextCall.CallResult;
 
@@ -1000,54 +1000,62 @@ export abstract class AfterEvent<E extends any[]> extends OnEvent<E> implements 
  *
  * @category Core
  * @typeparam E  An event type. This is a list of event receiver parameter types.
- * @param register  An event receiver registration function returning an event supply.
+ * @param register  Generic event receiver registration function. It will be called on each receiver registration,
+ * unless the receiver's {@link EventReceiver.Generic.supply event supply} is cut off already.
  * @param fallback  A function creating fallback event. When omitted, the initial event is expected to be sent by
  * `register` function. A receiver registration would lead to an error otherwise.
  *
  * @returns An [[AfterEvent]] keeper registering event receivers with the given `register` function.
  */
 export function afterEventBy<E extends any[]>(
-    register: (this: void, receiver: EventReceiver<E>) => EventSupply,
+    register: (this: void, receiver: EventReceiver.Generic<E>) => void,
     fallback: (this: void) => E = noEvent,
 ): AfterEvent<E> {
 
   let lastEvent: E | undefined;
   let numReceivers = 0;
 
-  class After extends AfterEvent<E> {}
-
   const afterEvent = ((receiver: EventReceiver<E>) => {
 
-    let dest: EventReceiver<E> = noop;
-    const supply = register(dispatch);
+    let dest: (context: EventReceiver.Context<E>, ...event: E) => void = noop;
+    const generic = eventReceiver(receiver);
+    const { supply } = generic;
 
+    if (supply.isOff) {
+      return supply;
+    }
+
+    register({
+      supply,
+      receive(context, ...event: E) {
+        lastEvent = event;
+        dest(context, ...event);
+      }
+    });
     ++numReceivers;
 
     if (!supply.isOff) {
-      receiver.apply(
+      generic.receive(
           {
             onRecurrent(recurrent) {
-              dest = (...event) => recurrent(...event);
+              dest = (_context, ...event) => recurrent(...event);
             },
           },
-          lastEvent ? lastEvent : (lastEvent = fallback()),
+          ...(lastEvent || (lastEvent = fallback())),
       );
-      dest = receiver;
+      dest = (context, ...event) => generic.receive(context, ...event);
     }
 
-    return supply.whenOff(() => {
+    supply.whenOff(() => {
       if (!--numReceivers) {
         lastEvent = undefined;
       }
     });
 
-    function dispatch(this: EventReceiver.Context<E>, ...event: E) {
-      lastEvent = event;
-      dest.apply(this, event);
-    }
+    return supply;
   }) as AfterEvent<E>;
 
-  Object.setPrototypeOf(afterEvent, After.prototype);
+  Object.setPrototypeOf(afterEvent, AfterEvent.prototype);
 
   return afterEvent;
 }
@@ -1137,7 +1145,7 @@ export function afterThe<E extends any[]>(...event: E): AfterEvent<E> {
  *
  * @category Core
  */
-export const afterNever: AfterEvent<any> = /*#__PURE__*/ afterEventBy(noEventSupply);
+export const afterNever: AfterEvent<any> = /*#__PURE__*/ afterEventBy(({ supply }) => supply.off());
 
 function noEvent(): never {
   throw new Error('No events to send');

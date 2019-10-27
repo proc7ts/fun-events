@@ -24,7 +24,7 @@ export function afterEach<E extends any[]>(...sources: EventKeeper<E>[]): AfterE
 
   return afterEventBy(registerReceiver, latestEvent).share();
 
-  function registerReceiver(receiver: EventReceiver<E[]>) {
+  function registerReceiver(receiver: EventReceiver.Generic<E[]>): void {
 
     const notifier = new EventNotifier<E[]>();
     const supply = notifier.on(receiver);
@@ -36,8 +36,6 @@ export function afterEach<E extends any[]>(...sources: EventKeeper<E>[]): AfterE
     if (!supply.isOff) {
       send = () => notifier.send(...result);
     }
-
-    return supply;
 
     function readFrom(source: EventKeeper<E>, index: number) {
       supply.needs(source[AfterEvent__symbol]((...event) => {

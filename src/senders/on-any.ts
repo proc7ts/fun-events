@@ -1,8 +1,9 @@
 /**
  * @module fun-events
  */
+import { EventReceiver } from '../event-receiver';
 import { EventSupplier } from '../event-supplier';
-import { eventSupply, EventSupply } from '../event-supply';
+import { eventSupply } from '../event-supply';
 import { OnEvent, onEventBy, onNever, onSupplied } from '../on-event';
 
 /**
@@ -23,23 +24,22 @@ export function onAny<E extends any[]>(...suppliers: EventSupplier<E>[]): OnEven
 
   return onEventBy<E>(receiver => {
 
+    const { supply } = receiver;
     let remained = suppliers.length;
-    let supplies: EventSupply[] = [];
-    const supply = eventSupply(cutOff);
-
-    supplies = suppliers.map(source => onSupplied(source)(receiver).whenOff(sourceDone));
-
-    return supply;
-
-    function cutOff(reason: any) {
-      supplies.forEach(i => i.off(reason));
-    }
-
-    function sourceDone(reason: any) {
+    const removeSupplier = (reason?: any) => {
       if (!--remained) {
         supply.off(reason);
-        supplies = [];
       }
-    }
+    };
+    const receive = (context: EventReceiver.Context<E>, ...event: E) => {
+      receiver.receive(context, ...event);
+    };
+
+    suppliers.forEach(
+        supplier => onSupplied(supplier)({
+          supply: eventSupply(removeSupplier).needs(supply),
+          receive,
+        }),
+    );
   }).share();
 }

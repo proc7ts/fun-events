@@ -5,7 +5,7 @@ import { AfterEvent__symbol } from './event-keeper';
 import { EventNotifier } from './event-notifier';
 import { EventReceiver } from './event-receiver';
 import { OnEvent__symbol } from './event-sender';
-import { eventSupply, EventSupply, noEventSupply } from './event-supply';
+import { EventSupply, noEventSupply } from './event-supply';
 import { trackValue, ValueTracker } from './value';
 import Mock = jest.Mock;
 
@@ -13,17 +13,17 @@ describe('AfterEvent', () => {
   describe('share', () => {
 
     let fallback: [string, string];
-    let mockRegister: Mock;
-    let registeredReceiver: (event1: string, event2: string) => void;
+    let mockRegister: Mock<void, [EventReceiver.Generic<[string, string]>]>;
+    let emitter: EventNotifier<[string, string]>;
     let afterEvent: AfterEvent<[string, string]>;
     let mockReceiver: Mock<void, [string, string]>;
     let mockReceiver2: Mock<void, [string, string]>;
 
     beforeEach(() => {
       fallback = ['init1', 'init2'];
+      emitter = new EventNotifier();
       mockRegister = jest.fn(receiver => {
-        registeredReceiver = receiver;
-        return eventSupply();
+        emitter.on(receiver);
       });
       afterEvent = afterEventBy(mockRegister, () => fallback);
       mockReceiver = jest.fn();
@@ -51,7 +51,7 @@ describe('AfterEvent', () => {
 
       shared(mockReceiver);
       shared(mockReceiver2);
-      registeredReceiver('a', 'b');
+      emitter.send('a', 'b');
       expect(mockReceiver).toHaveBeenCalledWith('a', 'b');
       expect(mockReceiver2).toHaveBeenCalledWith('a', 'b');
     });
@@ -92,19 +92,19 @@ describe('AfterEvent', () => {
     describe('thru', () => {
 
       let fallback: [string, string];
-      let mockRegister: Mock;
-      let registeredSupply: EventSupply;
+      let mockRegister: Mock<void, [EventReceiver.Generic<[string, string]>]>;
       let mockOff: Mock<void, [any?]>;
-      let registeredReceiver: (event1: string, event2: string) => void;
+      let emitter: EventNotifier<[string, string]>;
       let afterEvent: AfterEvent<[string, string]>;
       let mockReceiver: Mock<void, [string]>;
 
       beforeEach(() => {
+        emitter = new EventNotifier();
         fallback = ['init1', 'init2'];
         mockOff = jest.fn();
         mockRegister = jest.fn(receiver => {
-          registeredReceiver = receiver;
-          return registeredSupply = eventSupply(mockOff);
+          emitter.on(receiver);
+          receiver.supply.whenOff(mockOff);
         });
         afterEvent = afterEventBy(mockRegister, () => fallback);
         mockReceiver = jest.fn();
@@ -141,7 +141,7 @@ describe('AfterEvent', () => {
 
         transforming(mockReceiver);
 
-        registeredReceiver('a', 'bb');
+        emitter.send('a', 'bb');
 
         expect(mockReceiver).toHaveBeenCalledWith('init1, init2');
         expect(mockReceiver).toHaveBeenCalledWith('a, bb');
@@ -155,7 +155,7 @@ describe('AfterEvent', () => {
 
         transforming(mockReceiver);
 
-        registeredReceiver('a', 'bb');
+        emitter.send('a', 'bb');
         expect(mockReceiver).toHaveBeenCalledWith('init1, init2');
         expect(mockReceiver).toHaveBeenCalledWith('a, bb');
 
@@ -173,7 +173,7 @@ describe('AfterEvent', () => {
 
         const reason = 'some reason';
 
-        registeredSupply.off(reason);
+        emitter.done(reason);
         expect(mockOff2).toHaveBeenCalledWith(reason);
       });
     });
@@ -200,33 +200,30 @@ describe('AfterEvent', () => {
 
 describe('afterNever', () => {
   it('returns a no-event supply', () => {
-    expect(afterNever(noop)).toBe(noEventSupply());
+    expect(afterNever(noop).isOff).toBe(true);
   });
 });
 
 describe('afterEventBy', () => {
 
   let emitter: EventNotifier<[string]>;
-  let mockSupply: EventSupply;
   let mockFallback: Mock<[string], []>;
-  let mockRegister: Mock<EventSupply, [EventReceiver<[string]>]>;
+  let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
   let afterEvent: AfterEvent<[string]>;
   let mockReceiver: Mock<void, [string]>;
 
   beforeEach(() => {
     emitter = new EventNotifier();
-    mockSupply = eventSupply();
     mockFallback = jest.fn(() => ['fallback']);
-    mockRegister = jest.fn<EventSupply, [EventReceiver<[string]>]>(rcv => {
+    mockRegister = jest.fn(rcv => {
       emitter.on(rcv);
-      return mockSupply;
     });
     afterEvent = afterEventBy(mockRegister, mockFallback);
     mockReceiver = jest.fn();
   });
 
   it('builds an `AfterEvent` keeper', () => {
-    expect(afterEvent(mockReceiver)).toBe(mockSupply);
+    afterEvent(mockReceiver);
     expect(mockRegister).toHaveBeenCalled();
     expect(mockReceiver).toHaveBeenCalledWith('fallback');
     expect(mockReceiver).toHaveBeenCalledTimes(1);
@@ -239,7 +236,6 @@ describe('afterEventBy', () => {
     mockRegister.mockImplementation(rcv => {
       emitter.on(rcv);
       emitter.send('event');
-      return mockSupply;
     });
 
     afterEvent(mockReceiver);
@@ -251,10 +247,14 @@ describe('afterEventBy', () => {
     mockRegister.mockImplementation(rcv => {
       emitter.on(rcv);
       emitter.send('event');
-      return noEventSupply();
     });
 
-    afterEvent(mockReceiver);
+    afterEvent({
+      supply: noEventSupply(),
+      receive(_context, ...event) {
+        mockReceiver(...event);
+      },
+    });
 
     expect(mockReceiver).not.toHaveBeenCalled();
   });
@@ -262,12 +262,14 @@ describe('afterEventBy', () => {
 
     const recurrentReceiver = jest.fn();
 
-    mockReceiver.mockImplementation(function (this: EventReceiver.Context<[string]>) {
-      this.onRecurrent(recurrentReceiver);
-      emitter.send('recurrent');
+    afterEvent({
+      receive(context, ...event) {
+        context.onRecurrent(recurrentReceiver);
+        mockReceiver(...event);
+        emitter.send('recurrent');
+      }
     });
 
-    expect(afterEvent(mockReceiver)).toBe(mockSupply);
     expect(mockReceiver).toHaveBeenCalledWith('fallback');
     expect(recurrentReceiver).toHaveBeenCalledWith('recurrent');
   });

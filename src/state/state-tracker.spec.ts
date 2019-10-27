@@ -1,7 +1,8 @@
 import { noop } from 'call-thru';
 import { OnEvent__symbol } from '../event-sender';
-import { StateUpdateReceiver } from './state-events';
+import { onSupplied } from '../on-event';
 import { StateTracker } from './state-tracker';
+import { StateUpdateReceiver } from './state-update-receiver';
 import Mock = jest.Mock;
 
 describe('StateTracker', () => {
@@ -85,7 +86,7 @@ describe('StateTracker', () => {
 
     describe('[OnEvent__symbol]', () => {
       it('refers `onUpdate`', () => {
-        expect(part[OnEvent__symbol]).toBe(part.onUpdate);
+        expect(onSupplied(part)).toBe(part.onUpdate);
       });
     });
     it('refers itself', () => {

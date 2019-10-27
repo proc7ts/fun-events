@@ -49,7 +49,7 @@ export class DomEventDispatcher {
     return onDomEventBy<E>((listener, opts) => {
 
       // Create unique DOM listener instance
-      const domListener: EventListener = listener.bind(domEventContext) as EventListener;
+      const domListener: EventListener = event => listener.receive(domEventContext, event as E);
 
       this._target.addEventListener(type, domListener, opts);
 

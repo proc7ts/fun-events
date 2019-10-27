@@ -1,5 +1,4 @@
 import { EventEmitter } from './event-emitter';
-import { EventReceiver } from './event-receiver';
 import { OnEvent__symbol } from './event-sender';
 import { EventSupply } from './event-supply';
 import Mock = jest.Mock;
@@ -84,13 +83,15 @@ describe('EventEmitter', () => {
 
     beforeEach(() => {
       records = [];
-      emitter.on(mockReceiver.mockImplementation(function (this: EventReceiver.Context<[string]>, event: string) {
-        records.push([event, 1]);
-        emitter.send(event + '!');
-        this.onRecurrent(recurrent => {
-          records.push([recurrent, 11]);
-        });
-      }));
+      emitter.on({
+        receive(context, event) {
+          records.push([event, 1]);
+          emitter.send(event + '!');
+          context.onRecurrent(recurrent => {
+            records.push([recurrent, 11]);
+          });
+        }
+      });
       emitter.on(mockReceiver2.mockImplementation(event => {
         records.push([event, 2]);
       }));
