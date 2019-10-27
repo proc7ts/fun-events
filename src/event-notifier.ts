@@ -149,7 +149,7 @@ function processEvent<E extends any[]>(receivers: Iterable<EventReceiver<E>>, ev
     recurrentReceivers.push(receiver);
     receiver.call(
         {
-          afterRecurrent(recurrentReceiver) {
+          onRecurrent(recurrentReceiver) {
             recurrentReceivers[idx] = recurrentReceiver;
           },
         },

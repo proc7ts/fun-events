@@ -7,7 +7,7 @@ import { eventSupply } from '../event-supply';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 
 const domEventContext: EventReceiver.Context<any> = {
-  afterRecurrent: noop,
+  onRecurrent: noop,
 };
 
 /**

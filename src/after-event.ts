@@ -1026,7 +1026,7 @@ export function afterEventBy<E extends any[]>(
     if (!supply.isOff) {
       receiver.apply(
           {
-            afterRecurrent(recurrent) {
+            onRecurrent(recurrent) {
               dest = recurrent;
             },
           },

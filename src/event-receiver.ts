@@ -45,7 +45,7 @@ export namespace EventReceiver {
      *
      * @param receiver  Recurrent events receiver.
      */
-    afterRecurrent(receiver: EventReceiver<E>): void;
+    onRecurrent(receiver: EventReceiver<E>): void;
 
   }
 

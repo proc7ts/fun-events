@@ -87,7 +87,7 @@ describe('EventEmitter', () => {
       emitter.on(mockReceiver.mockImplementation(function (this: EventReceiver.Context<[string]>, event: string) {
         records.push([event, 1]);
         emitter.send(event + '!');
-        this.afterRecurrent(recurrent => {
+        this.onRecurrent(recurrent => {
           records.push([recurrent, 11]);
         });
       }));

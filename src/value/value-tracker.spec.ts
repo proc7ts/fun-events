@@ -73,14 +73,14 @@ describe('ValueTracker', () => {
     it('is supported', () => {
       v1.read(function (value) {
         v1.it = value + '!';
-        this.afterRecurrent(noop);
+        this.onRecurrent(noop);
       });
       v1.it = 'new';
       expect(v1.it).toBe('new!');
     });
     it('is supported for initial value', () => {
       v1.read.once(function (value) {
-        this.afterRecurrent(noop);
+        this.onRecurrent(noop);
         v1.it = value + '!';
       });
       expect(v1.it).toBe('old!');

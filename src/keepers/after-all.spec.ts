@@ -71,7 +71,7 @@ describe('afterAll', () => {
 
     mockReceiver.mockImplementation(
         function (this: EventReceiver.Context<[{ source1: [string], source2: [number] }]>) {
-          this.afterRecurrent(recurrentReceiver);
+          this.onRecurrent(recurrentReceiver);
           source1.it = 'recurrent';
         });
 

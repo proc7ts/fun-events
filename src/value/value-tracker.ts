@@ -169,8 +169,8 @@ function receiveNewValue<T, N extends T>(valueReceiver: EventReceiver<[T]>): Eve
 
     valueReceiver.call(
         {
-          afterRecurrent(recurrentReceiver) {
-            context.afterRecurrent(receiveNewValue(recurrentReceiver));
+          onRecurrent(recurrentReceiver) {
+            context.onRecurrent(receiveNewValue(recurrentReceiver));
           },
         },
         newValue,

@@ -263,7 +263,7 @@ describe('afterEventBy', () => {
     const recurrentReceiver = jest.fn();
 
     mockReceiver.mockImplementation(function (this: EventReceiver.Context<[string]>) {
-      this.afterRecurrent(recurrentReceiver);
+      this.onRecurrent(recurrentReceiver);
       emitter.send('recurrent');
     });
 
