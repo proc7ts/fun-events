@@ -115,6 +115,7 @@ export namespace EventReceiver {
  *
  * The returned event receiver would never send events to original receiver after event supply is cut off.
  *
+ * @category Core
  * @typeparam E  An event type. This is a tuple of event receiver parameter types.
  * @param receiver  An event receiver to convert.
  *
@@ -138,7 +139,9 @@ export function eventReceiver<E extends any[]>(receiver: EventReceiver<E>): Even
     generic = {
       supply: receiver.supply || eventSupply(),
       receive(context, ...event) {
-        receiver.receive(context, ...event);
+        if (!this.supply.isOff) {
+          receiver.receive(context, ...event);
+        }
       },
     };
   }
