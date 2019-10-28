@@ -1128,13 +1128,10 @@ function shareSupplyTo<E extends any[]>(onEvent: OnEvent<E>): OnEvent<E> {
   const shared = new EventNotifier<E>();
   let sharedSupply = noEventSupply();
   let initialEvents: E[] | undefined = [];
-  let hasReceivers = false;
   const removeReceiver = (reason?: any) => {
     if (!shared.size) {
       sharedSupply.off(reason);
-      sharedSupply = noEventSupply();
       initialEvents = [];
-      hasReceivers = false;
     }
   };
 
@@ -1142,7 +1139,7 @@ function shareSupplyTo<E extends any[]>(onEvent: OnEvent<E>): OnEvent<E> {
     if (!shared.size) {
       sharedSupply = onEvent((...event) => {
         if (initialEvents) {
-          if (hasReceivers) {
+          if (shared.size) {
             // More events received
             // Stop sending initial ones
             initialEvents = undefined;
@@ -1156,7 +1153,6 @@ function shareSupplyTo<E extends any[]>(onEvent: OnEvent<E>): OnEvent<E> {
       });
     }
 
-    hasReceivers = true;
     shared.on(receiver).whenOff(removeReceiver).needs(sharedSupply);
 
     if (initialEvents) {
