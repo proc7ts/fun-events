@@ -69,24 +69,21 @@ export abstract class EventSupply {
  */
 export function eventSupply(off: (this: void, reason?: any) => void = noop): EventSupply {
 
-  let cutOffCallback: (reason?: any) => void = off;
-  let whenOff: (callback: (reason?: any) => void) => void = callback => {
+  let whenOff: (callback: (reason?: any) => void) => void;
+  let cutOff: (reason?: any) => void = reason => {
+    whenOff = callback => callback(reason);
+    cutOff = noop;
+    off(reason);
+  };
 
-    const prev = cutOffCallback;
+  whenOff = callback => {
 
-    cutOffCallback = reason => {
+    const prev = cutOff;
+
+    cutOff = reason => {
       prev(reason);
       callback(reason);
     };
-  };
-  let cutOff: (reason?: any) => void = reason => {
-    cutOff = noop;
-    whenOff = callback => callback(reason);
-
-    const prevCallback = cutOffCallback;
-
-    cutOffCallback = noop;
-    prevCallback(reason);
   };
 
   class Supply extends EventSupply {
