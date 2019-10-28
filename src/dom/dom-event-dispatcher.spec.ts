@@ -49,6 +49,34 @@ describe('DomEventDispatcher', () => {
 
       expect(targetSpy.removeEventListener).toHaveBeenCalledWith('click', registeredListener);
     });
+
+    describe('once', () => {
+      it('registers listener', () => {
+        dispatcher.on('click').once(listenerSpy);
+        expect(targetSpy.addEventListener).toHaveBeenCalledWith('click', registeredListener, undefined);
+      });
+      it('registers capturing listener', () => {
+        dispatcher.on('click').capture.once(listenerSpy);
+        expect(targetSpy.addEventListener).toHaveBeenCalledWith('click', registeredListener, true);
+      });
+      it('unregisters listener', () => {
+
+        const supply = dispatcher.on('click').capture.once(listenerSpy);
+
+        supply.off();
+
+        expect(targetSpy.removeEventListener).toHaveBeenCalledWith('click', registeredListener);
+      });
+      it('unregisters listener after receiving event', () => {
+
+        const supply = dispatcher.on('click').capture.once(listenerSpy);
+
+        registeredListener(new KeyboardEvent('click'));
+
+        expect(supply.isOff).toBe(true);
+        expect(targetSpy.removeEventListener).toHaveBeenCalledWith('click', registeredListener);
+      });
+    });
   });
 
   describe('dispatch', () => {

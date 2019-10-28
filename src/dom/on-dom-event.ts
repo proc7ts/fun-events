@@ -184,7 +184,14 @@ export function onDomEventBy<E extends Event>(
       (
           listener: DomEventListener<E>,
           opts?: AddEventListenerOptions | boolean,
-      ) => register(eventReceiver(listener), opts)
+      ) => {
+
+        const receiver = eventReceiver(listener);
+
+        register(receiver, opts);
+
+        return receiver.supply;
+      }
   ) as OnDomEvent<E>;
 
   Object.setPrototypeOf(onDomEvent, OnDomEvent.prototype);

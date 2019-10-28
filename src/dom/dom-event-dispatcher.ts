@@ -3,7 +3,6 @@
  */
 import { noop } from 'call-thru';
 import { EventReceiver } from '../event-receiver';
-import { eventSupply } from '../event-supply';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 
 const domEventContext: EventReceiver.Context<any> = {
@@ -52,8 +51,7 @@ export class DomEventDispatcher {
       const domListener: EventListener = event => listener.receive(domEventContext, event as E);
 
       this._target.addEventListener(type, domListener, opts);
-
-      return eventSupply(() => this._target.removeEventListener(type, domListener));
+      listener.supply.whenOff(() => this._target.removeEventListener(type, domListener));
     });
   }
 
