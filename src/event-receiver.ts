@@ -140,12 +140,16 @@ export function eventReceiver<E extends any[]>(receiver: EventReceiver<E>): Even
       supply: receiver.supply || eventSupply(),
       receive(context, ...event) {
         if (!this.supply.isOff) {
+          // Supply cut off callback may be called before the receiver disabled.
+          // Such callback may send an event that should not be received.
           receiver.receive(context, ...event);
         }
       },
     };
   }
 
+  // Disable receiver when event supply is cut off. But see the comment above.
+  // For function receiver this callback is always the first one.
   generic.supply.whenOff(() => generic.receive = noop);
 
   return generic;
