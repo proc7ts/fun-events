@@ -71,7 +71,7 @@
 					</div>
 					<p>A state is a tree-like structure of sub-states (nodes) available under <a href="../modules/statepath.html">StatePath</a>.</p>
 					<p>When node modified a <a href="statetracker.html#update">StateTracker.update</a> should be called. Then all state update receivers registered by
-					<a href="statetracker.html#onupdate">StateTracker.onUpdate</a> registrar will receive this update.</p>
+					<a href="statetracker.html#onupdate">StateTracker.onUpdate</a> will receive this update.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -124,7 +124,7 @@
 					<div class="tsd-signature tsd-kind-icon">_tracker<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">SubStateTracker</span><span class="tsd-signature-symbol"> =&nbsp;new SubStateTracker(new Trackers(), [])</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/state/state-tracker.ts#L194">state/state-tracker.ts:194</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/state/state-tracker.ts#L183">state/state-tracker.ts:183</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -147,7 +147,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/state/state-tracker.ts#L210">state/state-tracker.ts:210</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/state/state-tracker.ts#L194">state/state-tracker.ts:194</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/onstateupdate.html" class="tsd-signature-type">OnStateUpdate</a></h4>
@@ -164,17 +164,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/state/state-tracker.ts#L206">state/state-tracker.ts:206</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/state/state-tracker.ts#L190">state/state-tracker.ts:190</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Registers component state updates listener.</p>
+									<p>A <a href="../interfaces/onstateupdate.html">state updates sender</a>.</p>
 								</div>
 								<p>A state update will be sent to it whenever an <code>update()</code> function is called.</p>
 							</div>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/onstateupdate.html" class="tsd-signature-type">OnStateUpdate</a></h4>
-							<p>An event interest instance.</p>
 						</li>
 					</ul>
 				</section>
@@ -188,14 +187,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/state/state-tracker.ts#L225">state/state-tracker.ts:225</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/state/state-tracker.ts#L209">state/state-tracker.ts:209</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Updates the component state.</p>
 								</div>
-								<p>All receivers registered with <code>onUpdate()</code> will receive this update.</p>
+								<p>All receivers registered with <a href="statetracker.html#onupdate">onUpdate</a> will receive this update.</p>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">function</span></h4>
 							<ul class="tsd-parameters">
@@ -256,15 +255,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/state/state-tracker.ts#L256">state/state-tracker.ts:256</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/state/state-tracker.ts#L239">state/state-tracker.ts:239</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Stops changes tracking and notifies event interests on events exhausting.</p>
+									<p>Unregisters updates receivers and cuts off their supplies.</p>
 								</div>
-								<p>After this method call the listeners registered in for this partial state and all nested states won&#39;t receive
-								any updates.</p>
+								<p>After this method call the updates receivers of this partial state and all nested states won&#39;t receive any updates.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -289,7 +287,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/state/state-tracker.ts#L241">state/state-tracker.ts:241</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/state/state-tracker.ts#L225">state/state-tracker.ts:225</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

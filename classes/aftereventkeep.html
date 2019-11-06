@@ -67,8 +67,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>A subset of <a href="afterevent.html">AfterEvent</a> transformation methods inherited that return <a href="afterevent.html">AfterEvent</a> registrar instances instead
-						of <a href="onevent.html">OnEvent</a> ones.</p>
+						<p>A subset of <a href="afterevent.html">AfterEvent</a> transformation methods inherited that return <a href="afterevent.html">AfterEvent</a> keepers instead of
+						<a href="onevent.html">OnEvent</a> senders.</p>
 					</div>
 					<p>This can not be done automatically, as not every transformation results to <a href="../modules/eventkeeper.html">EventKeeper</a>. E.g. when some events
 					are filtered out.</p>
@@ -131,7 +131,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L29">after-event.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L29">after-event.ts:29</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -153,7 +153,7 @@
 					<div class="tsd-signature tsd-kind-icon">_keeper<span class="tsd-signature-symbol">:</span> <a href="afterevent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L29">after-event.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L29">after-event.ts:29</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -176,7 +176,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L44">after-event.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L44">after-event.ts:44</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -224,8 +224,8 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="afterevent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>An <a href="afterevent.html">AfterEvent</a> registrar of extracted events receivers. The events exhaust once the incoming events do.
-							The returned registrar shares the interest to extracted events among receivers.</p>
+							<p>An <a href="afterevent.html">AfterEvent</a> keeper of extracted events. The events supply is cut off once the incoming events supply
+							do. The returned keeper shares the supply of extracted events among receivers.</p>
 						</li>
 					</ul>
 				</section>
@@ -239,16 +239,16 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L60">after-event.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L61">after-event.ts:61</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Extracts event keepers from incoming events.</p>
+									<p>Extracts event keepers from incoming events without sharing extracted events supply.</p>
 								</div>
-								<p>This method does the same as <a href="aftereventkeep.html#dig">AfterEventKeep.dig</a> one, except it does not share the interest to extracted events
-									among receivers. This may be useful e.g. when the result will be further transformed. It is wise to share the
-								interest to final result in this case.</p>
+								<p>This method does the same as <a href="aftereventkeep.html#dig">AfterEventKeep.dig</a> one, except it does not share the supply of extracted events
+									among receivers. This may be useful e.g. when the result will be further transformed. It is wise to
+								<a href="afterevent.html#share">share</a> the supply of events from the final result in this case.</p>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
@@ -290,7 +290,8 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="afterevent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>An <a href="afterevent.html">AfterEvent</a> registrar of extracted events receivers. The events exhaust once the incoming events do.</p>
+							<p>An <a href="afterevent.html">AfterEvent</a> keeper of extracted events. The events supply is cut off once the incoming events
+							supply do.</p>
 						</li>
 					</ul>
 				</section>
@@ -328,14 +329,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L73">after-event.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L74">after-event.ts:74</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Constructs an <a href="afterevent.html">AfterEvent</a> registrar of original events passed trough the chain of transformations.</p>
+									<p>Constructs an <a href="afterevent.html">AfterEvent</a> keeper of original events passed trough the chain of transformations.</p>
 								</div>
-								<p>The passes are preformed by <code>callThru()</code> function. The event receivers registered by resulting registrar
+								<p>The passes are preformed by <code>callThru()</code> function. The event receivers registered by resulting event keeper
 								are called by the last pass in chain. Thus they can be e.g. filtered out or called multiple times.</p>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -372,13 +373,13 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="afterevent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R1</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>An <a href="afterevent.html">AfterEvent</a> registrar of receivers of events transformed with provided passes.
-							The returned registrar shares the interest to transformed events among receivers.</p>
+							<p>An <a href="afterevent.html">AfterEvent</a> keeper of events transformed with provided passes. The returned keeper shares the supply
+							of transformed events among receivers.</p>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L77">after-event.ts:77</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L78">after-event.ts:78</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -419,7 +420,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L81">after-event.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L82">after-event.ts:82</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -490,7 +491,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L88">after-event.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L89">after-event.ts:89</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -561,7 +562,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L95">after-event.ts:95</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L96">after-event.ts:96</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -662,7 +663,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L104">after-event.ts:104</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L105">after-event.ts:105</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -763,7 +764,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L113">after-event.ts:113</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L114">after-event.ts:114</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -894,7 +895,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L124">after-event.ts:124</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L125">after-event.ts:125</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1055,7 +1056,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L137">after-event.ts:137</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L138">after-event.ts:138</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1216,7 +1217,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L150">after-event.ts:150</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L151">after-event.ts:151</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1407,7 +1408,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L165">after-event.ts:165</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L166">after-event.ts:166</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1598,7 +1599,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L180">after-event.ts:180</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L181">after-event.ts:181</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1819,7 +1820,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L197">after-event.ts:197</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L198">after-event.ts:198</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2040,7 +2041,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L214">after-event.ts:214</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L215">after-event.ts:215</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2291,7 +2292,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L233">after-event.ts:233</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L234">after-event.ts:234</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2542,7 +2543,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L252">after-event.ts:252</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L253">after-event.ts:253</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2823,7 +2824,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L273">after-event.ts:273</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L274">after-event.ts:274</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3104,7 +3105,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L294">after-event.ts:294</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L295">after-event.ts:295</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3415,7 +3416,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L317">after-event.ts:317</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L318">after-event.ts:318</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3726,7 +3727,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L340">after-event.ts:340</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L341">after-event.ts:341</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -4067,7 +4068,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L365">after-event.ts:365</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L366">after-event.ts:366</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -4408,7 +4409,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L390">after-event.ts:390</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L391">after-event.ts:391</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -4779,7 +4780,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L417">after-event.ts:417</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L418">after-event.ts:418</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -5150,7 +5151,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L444">after-event.ts:444</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L445">after-event.ts:445</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -5551,7 +5552,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L473">after-event.ts:473</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L474">after-event.ts:474</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -5985,17 +5986,17 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L516">after-event.ts:516</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L517">after-event.ts:517</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Constructs an <a href="afterevent.html">AfterEvent</a> registrar of receivers of original events passed trough the chain of transformations
-									without sharing the result.</p>
+									<p>Constructs an <a href="afterevent.html">AfterEvent</a> keeper of original events passed trough the chain of transformations without sharing
+									the transformed events supply.</p>
 								</div>
-								<p>This method does the same as <a href="aftereventkeep.html#thru">AfterEventKeep.thru</a> one, except it does not share the interest to transformed
+								<p>This method does the same as <a href="aftereventkeep.html#thru">AfterEventKeep.thru</a> one, except it does not share the supply of transformed
 									events among receivers. This may be useful e.g. when the result will be further transformed anyway.
-								It is wise to share the interest to final result in this case.</p>
+								It is wise to <a href="afterevent.html#share">share</a> the supply of events from final result in this case.</p>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
@@ -6031,12 +6032,12 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="afterevent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R1</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>An <a href="afterevent.html">AfterEvent</a> registrar of receivers of events transformed with provided passes.</p>
+							<p>An <a href="afterevent.html">AfterEvent</a> keeper of events transformed with provided passes.</p>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L520">after-event.ts:520</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L521">after-event.ts:521</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -6077,7 +6078,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L524">after-event.ts:524</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L525">after-event.ts:525</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -6148,7 +6149,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L531">after-event.ts:531</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L532">after-event.ts:532</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -6219,7 +6220,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L538">after-event.ts:538</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L539">after-event.ts:539</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -6320,7 +6321,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L547">after-event.ts:547</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L548">after-event.ts:548</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -6421,7 +6422,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L556">after-event.ts:556</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L557">after-event.ts:557</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -6552,7 +6553,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L567">after-event.ts:567</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L568">after-event.ts:568</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -6713,7 +6714,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L580">after-event.ts:580</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L581">after-event.ts:581</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -6874,7 +6875,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L593">after-event.ts:593</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L594">after-event.ts:594</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -7065,7 +7066,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L608">after-event.ts:608</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L609">after-event.ts:609</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -7256,7 +7257,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L623">after-event.ts:623</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L624">after-event.ts:624</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -7477,7 +7478,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L640">after-event.ts:640</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L641">after-event.ts:641</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -7698,7 +7699,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L657">after-event.ts:657</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L658">after-event.ts:658</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -7949,7 +7950,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L676">after-event.ts:676</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L677">after-event.ts:677</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -8200,7 +8201,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L695">after-event.ts:695</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L696">after-event.ts:696</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -8481,7 +8482,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L716">after-event.ts:716</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L717">after-event.ts:717</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -8762,7 +8763,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L737">after-event.ts:737</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L738">after-event.ts:738</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -9073,7 +9074,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L760">after-event.ts:760</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L761">after-event.ts:761</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -9384,7 +9385,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L783">after-event.ts:783</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L784">after-event.ts:784</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -9725,7 +9726,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L808">after-event.ts:808</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L809">after-event.ts:809</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -10066,7 +10067,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L833">after-event.ts:833</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L834">after-event.ts:834</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -10437,7 +10438,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L860">after-event.ts:860</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L861">after-event.ts:861</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -10808,7 +10809,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L887">after-event.ts:887</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L888">after-event.ts:888</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -11209,7 +11210,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/after-event.ts#L916">after-event.ts:916</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/after-event.ts#L917">after-event.ts:917</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>

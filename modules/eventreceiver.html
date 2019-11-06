@@ -67,13 +67,17 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Event receiver is a function that is called on each event sent by <a href="eventsender.html">EventSender</a> when registered.</p>
+						<p>Event receiver is called on each event sent by <a href="eventsender.html">EventSender</a> when registered.</p>
 					</div>
+					<p>A receiver may be represented either by <a href="eventreceiver.html#function">function</a>, or by
+						<a href="../interfaces/eventreceiver.object.html">object</a>. The former is a simplest form. The latter allows control all aspects of event
+					processing.</p>
 					<p>To register an event receiver just call the event sender&#39;s <code>[OnEvent__symbol]</code> or event keeper&#39;s
 					<code>[AfterEvent__symbol]</code> method with this event receiver as argument.</p>
 					<p>A <em>recurrent event</em> is an event sent from inside event receiver and targeted the same receiver. Recurrent event
 						processing is scheduled until after the current event processing finishes. To handle recurrent events in a specific
-					way the event receiver may utilize an event processing context available as <code>this</code> parameter.</p>
+						way the event receiver may utilize an <a href="../interfaces/eventreceiver.context.html">event processing context</a> available as
+					a first parameter of <a href="../interfaces/eventreceiver.object.html#receive">EventReceiver.Object.receive</a> method.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -97,8 +101,77 @@
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter"><a href="../interfaces/eventreceiver.context.html" class="tsd-kind-icon">Context</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter"><a href="../interfaces/eventreceiver.generic.html" class="tsd-kind-icon">Generic</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter"><a href="../interfaces/eventreceiver.object.html" class="tsd-kind-icon">Object</a></li>
 							</ul>
 						</section>
+						<section class="tsd-index-section ">
+							<h3>Type aliases</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="eventreceiver.html#function" class="tsd-kind-icon">Function</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="function" class="tsd-anchor"></a>
+					<h3>Function</h3>
+					<div class="tsd-signature tsd-kind-icon">Function&lt;E&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/event-receiver.ts#L36">event-receiver.ts:36</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Event receiver function signature.</p>
+						</div>
+						<p>It never receives event processing context.</p>
+					</div>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>An event type. This is a tuple of event receiver parameter types.</p>
+								</div>
+							</div>
+						</li>
+					</ul>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-siganture">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-is-not-exported">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<div class="tsd-comment tsd-typography">
+										</div>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>this: <span class="tsd-signature-type">void</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>event: <span class="tsd-signature-type">E</span></h5>
+												<div class="tsd-comment tsd-typography">
+													<div class="lead">
+														<p>An event represented by function call arguments.</p>
+													</div>
+												</div>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</div>
 				</section>
 			</section>
@@ -130,6 +203,15 @@
 				<ul class="before-current">
 					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="../interfaces/eventreceiver.context.html" class="tsd-kind-icon">Context</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../interfaces/eventreceiver.generic.html" class="tsd-kind-icon">Generic</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../interfaces/eventreceiver.object.html" class="tsd-kind-icon">Object</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="eventreceiver.html#function" class="tsd-kind-icon">Function</a>
 					</li>
 				</ul>
 			</nav>

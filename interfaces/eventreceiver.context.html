@@ -70,8 +70,9 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Event processing context passed to each event receiver as <code>this</code> parameter.</p>
+						<p>Event processing context.</p>
 					</div>
+					<p>It is passed to <a href="eventreceiver.object.html">Object</a> receivers.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -79,6 +80,11 @@
 				<ul class="tsd-type-parameters">
 					<li>
 						<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
+						<div class="tsd-comment tsd-typography">
+							<div class="lead">
+								<p>An event type. This is a tuple of event receiver parameter types.</p>
+							</div>
+						</div>
 					</li>
 				</ul>
 			</section>
@@ -102,7 +108,7 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="eventreceiver.context.html#afterrecurrent" class="tsd-kind-icon">after<wbr>Recurrent</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="eventreceiver.context.html#onrecurrent" class="tsd-kind-icon">on<wbr>Recurrent</a></li>
 							</ul>
 						</section>
 					</div>
@@ -111,16 +117,16 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="afterrecurrent" class="tsd-anchor"></a>
-					<h3>after<wbr>Recurrent</h3>
+					<a name="onrecurrent" class="tsd-anchor"></a>
+					<h3>on<wbr>Recurrent</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">after<wbr>Recurrent<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="../modules/eventreceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Recurrent<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="../modules/eventreceiver.html#function" class="tsd-signature-type">Function</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/event-receiver.ts#L48">event-receiver.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/event-receiver.ts#L107">event-receiver.ts:107</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -139,9 +145,9 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>receiver: <a href="../modules/eventreceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>receiver: <a href="../modules/eventreceiver.html#function" class="tsd-signature-type">Function</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Recurrent events receiver.</p>
+										<p>Recurrent events receiver function.</p>
 									</div>
 								</li>
 							</ul>
@@ -182,12 +188,21 @@
 						<a href="eventreceiver.context.html" class="tsd-kind-icon">Context</a>
 						<ul>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="eventreceiver.context.html#afterrecurrent" class="tsd-kind-icon">after<wbr>Recurrent</a>
+								<a href="eventreceiver.context.html#onrecurrent" class="tsd-kind-icon">on<wbr>Recurrent</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="eventreceiver.generic.html" class="tsd-kind-icon">Generic</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="eventreceiver.object.html" class="tsd-kind-icon">Object</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../modules/eventreceiver.html#function" class="tsd-kind-icon">Function</a>
+					</li>
 				</ul>
 			</nav>
 		</div>

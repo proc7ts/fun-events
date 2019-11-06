@@ -93,14 +93,14 @@
 			<section class="tsd-panel">
 				<h3 class="tsd-before-signature">Callable</h3>
 				<ul class="tsd-signatures tsd-kind-interface">
-					<li class="tsd-signature tsd-kind-icon">__call<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="../modules/stateupdatereceiver.html" class="tsd-signature-type">StateUpdateReceiver</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/eventinterest.html" class="tsd-signature-type">EventInterest</a></li>
-					<li class="tsd-signature tsd-kind-icon">__call<span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">: </span><a href="../modules/eventreceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/eventinterest.html" class="tsd-signature-type">EventInterest</a></li>
+					<li class="tsd-signature tsd-kind-icon">__call<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="../modules/stateupdatereceiver.html" class="tsd-signature-type">StateUpdateReceiver</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/eventsupply.html" class="tsd-signature-type">EventSupply</a></li>
+					<li class="tsd-signature tsd-kind-icon">__call<span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">: </span><a href="../modules/eventreceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/eventsupply.html" class="tsd-signature-type">EventSupply</a></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/state/state-tracker.ts#L16">state/state-tracker.ts:16</a></li>
+								<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/state/on-state-update.ts#L14">state/on-state-update.ts:14</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -114,17 +114,17 @@
 								<h5>receiver: <a href="../modules/stateupdatereceiver.html" class="tsd-signature-type">StateUpdateReceiver</a></h5>
 							</li>
 						</ul>
-						<h4 class="tsd-returns-title">Returns <a href="../classes/eventinterest.html" class="tsd-signature-type">EventInterest</a></h4>
+						<h4 class="tsd-returns-title">Returns <a href="../classes/eventsupply.html" class="tsd-signature-type">EventSupply</a></h4>
 					</li>
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L1044">on-event.ts:1044</a></li>
+								<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L1055">on-event.ts:1055</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
-								<p>Registers a receiver of events.</p>
+								<p>Registers a receiver of events sent by this sender.</p>
 							</div>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
@@ -135,13 +135,12 @@
 							<li>
 								<h5>receiver: <a href="../modules/eventreceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								<div class="tsd-comment tsd-typography">
-									<p>A receiver of events.</p>
+									<p>A receiver of events to register.</p>
 								</div>
 							</li>
 						</ul>
-						<h4 class="tsd-returns-title">Returns <a href="../classes/eventinterest.html" class="tsd-signature-type">EventInterest</a></h4>
-						<p>An event interest. The events will be sent to <code>receiver</code> until the <a href="../classes/eventinterest.html#off">EventInterest.off</a> method
-						of the returned event interest is called.</p>
+						<h4 class="tsd-returns-title">Returns <a href="../classes/eventsupply.html" class="tsd-signature-type">EventSupply</a></h4>
+						<p>A supply of events from this sender to the given <code>receiver</code>.</p>
 					</li>
 				</ul>
 			</section>
@@ -261,7 +260,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#__computed">__computed</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L27">on-event.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L29">on-event.ts:29</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
@@ -431,14 +430,14 @@
 					<a name="consume" class="tsd-anchor"></a>
 					<h3>consume</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">consume<span class="tsd-signature-symbol">(</span>consume<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/eventinterest.html" class="tsd-signature-type">EventInterest</a></li>
+						<li class="tsd-signature tsd-kind-icon">consume<span class="tsd-signature-symbol">(</span>consume<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/eventsupply.html" class="tsd-signature-type">EventSupply</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#consume">consume</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L115">on-event.ts:115</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L123">on-event.ts:123</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -451,13 +450,13 @@
 								<li>
 									<h5>consume: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>A function consuming events. This function may return an <a href="../classes/eventinterest.html">EventInterest</a> instance when registers
-										a nested event receiver. This interest will be lost on new event.</p>
+										<p>A function consuming events. This function may return an <a href="../classes/eventsupply.html">event supply</a> instance
+										when registers a nested event receiver. This supply will be cut of on new event.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/eventinterest.html" class="tsd-signature-type">EventInterest</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/eventsupply.html" class="tsd-signature-type">EventSupply</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
@@ -467,7 +466,7 @@
 															<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>event: <span class="tsd-signature-symbol">[</span><a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span></h5>
 														</li>
 													</ul>
-													<h4 class="tsd-returns-title">Returns <a href="../classes/eventinterest.html" class="tsd-signature-type">EventInterest</a>
+													<h4 class="tsd-returns-title">Returns <a href="../classes/eventsupply.html" class="tsd-signature-type">EventSupply</a>
 														<span class="tsd-signature-symbol"> | </span>
 														<span class="tsd-signature-type">void</span>
 														<span class="tsd-signature-symbol"> | </span>
@@ -479,8 +478,8 @@
 									</ul>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../classes/eventinterest.html" class="tsd-signature-type">EventInterest</a></h4>
-							<p>An event interest that will stop consuming events once lost.</p>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/eventsupply.html" class="tsd-signature-type">EventSupply</a></h4>
+							<p>An event supply that will stop consuming events once <a href="../classes/eventsupply.html#off">cut off</a>.</p>
 						</li>
 					</ul>
 				</section>
@@ -495,12 +494,12 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#dig">dig</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L63">on-event.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L64">on-event.ts:64</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Extracts event senders from incoming events.</p>
+									<p>Extracts event suppliers from incoming events.</p>
 								</div>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -517,13 +516,13 @@
 								<li>
 									<h5>extract: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>A function extracting event sender or event keeper from incoming event. May return <code>undefined</code> when
-										nothing extracted.</p>
+										<p>A function extracting event supplier from incoming event. May return <code>undefined</code> when nothing
+										extracted.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../modules/eventkeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#eventsupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
@@ -536,9 +535,7 @@
 															<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>event: <span class="tsd-signature-symbol">[</span><a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span></h5>
 														</li>
 													</ul>
-													<h4 class="tsd-returns-title">Returns <a href="../modules/eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span>
-														<span class="tsd-signature-symbol"> | </span>
-														<a href="../modules/eventkeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span>
+													<h4 class="tsd-returns-title">Returns <a href="../globals.html#eventsupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span>
 														<span class="tsd-signature-symbol"> | </span>
 														<span class="tsd-signature-type">void</span>
 														<span class="tsd-signature-symbol"> | </span>
@@ -551,8 +548,8 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../classes/onevent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>An <a href="../classes/onevent.html">OnEvent</a> registrar of extracted events receivers. The events exhaust once the incoming events do.
-							The returned registrar shares the interest to extracted events among receivers.</p>
+							<p>An <a href="../classes/onevent.html">OnEvent</a> sender of events from extracted suppliers. The events supply is cut off once the incoming
+							events supply do. The returned sender shares the supply of extracted events among receivers.</p>
 						</li>
 					</ul>
 				</section>
@@ -567,16 +564,16 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#dig_">dig_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L82">on-event.ts:82</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L84">on-event.ts:84</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Extracts event senders from incoming events.</p>
+									<p>Extracts event suppliers from incoming events without sharing extracted events supply.</p>
 								</div>
-								<p>This method does the same as <a href="../classes/onevent.html#dig">OnEvent.dig</a> one, except it does not share the interest to extracted events among
-									receivers. This may be useful e.g. when the result will be further transformed. It is wise to share the
-								interest to final result in this case.</p>
+								<p>This method does the same as <a href="../classes/onevent.html#dig">OnEvent.dig</a> one, except it does not share the supply of extracted events among
+									receivers. This may be useful e.g. when the result will be further transformed. It is wise to <a href="onstateupdate.html#share">share</a>
+								the supply of events from final result in this case.</p>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
@@ -592,13 +589,13 @@
 								<li>
 									<h5>extract: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>A function extracting event sender or event keeper from incoming event. May return <code>undefined</code> when
+										<p>A function extracting event supplier from incoming event. May return <code>undefined</code> when
 										nothing extracted.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../modules/eventkeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#eventsupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
@@ -611,9 +608,7 @@
 															<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>event: <span class="tsd-signature-symbol">[</span><a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span></h5>
 														</li>
 													</ul>
-													<h4 class="tsd-returns-title">Returns <a href="../modules/eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span>
-														<span class="tsd-signature-symbol"> | </span>
-														<a href="../modules/eventkeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span>
+													<h4 class="tsd-returns-title">Returns <a href="../globals.html#eventsupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span>
 														<span class="tsd-signature-symbol"> | </span>
 														<span class="tsd-signature-type">void</span>
 														<span class="tsd-signature-symbol"> | </span>
@@ -626,7 +621,8 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../classes/onevent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>An <a href="../classes/onevent.html">OnEvent</a> registrar of extracted events receivers. The events exhaust once the incoming events do.</p>
+							<p>An <a href="../classes/onevent.html">OnEvent</a> sender of events from extracted suppliers. The events supply is cut off once the incoming
+							events supply do.</p>
 						</li>
 					</ul>
 				</section>
@@ -634,14 +630,14 @@
 					<a name="once" class="tsd-anchor"></a>
 					<h3>once</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">once<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="../modules/stateupdatereceiver.html" class="tsd-signature-type">StateUpdateReceiver</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/eventinterest.html" class="tsd-signature-type">EventInterest</a></li>
+						<li class="tsd-signature tsd-kind-icon">once<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="../modules/stateupdatereceiver.html" class="tsd-signature-type">StateUpdateReceiver</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/eventsupply.html" class="tsd-signature-type">EventSupply</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#once">once</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/state/state-tracker.ts#L20">state/state-tracker.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/state/on-state-update.ts#L18">state/on-state-update.ts:18</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -650,7 +646,7 @@
 									<h5>receiver: <a href="../modules/stateupdatereceiver.html" class="tsd-signature-type">StateUpdateReceiver</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../classes/eventinterest.html" class="tsd-signature-type">EventInterest</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/eventsupply.html" class="tsd-signature-type">EventSupply</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -665,19 +661,19 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#share">share</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L144">on-event.ts:144</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L152">on-event.ts:152</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Constructs an event receiver registrar that shares an event interest among all registered receivers.</p>
+									<p>Constructs an <a href="../classes/onevent.html">OnEvent</a> sender that shares events supply among all registered receivers.</p>
 								</div>
-								<p>The created registrar receives events from this one and sends them to receivers. The shared registrar registers
-									a receiver in this one only once, when first receiver registered. And loses its interest when all receivers lost
-								their interest.</p>
+								<p>The created sender receives events from this one and sends to registered receivers. The shared sender registers
+									a receiver in this one only once, when first receiver registered. And cuts off original events supply once all
+								supplies do.</p>
 							</div>
 							<h4 class="tsd-returns-title">Returns <a href="../classes/onevent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>An <a href="../classes/onevent.html">OnEvent</a> registrar of receivers sharing a common interest to events sent by this sender.</p>
+							<p>An <a href="../classes/onevent.html">OnEvent</a> sender sharing a common supply of events originated from this sender.</p>
 						</li>
 					</ul>
 				</section>
@@ -716,15 +712,15 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L157">on-event.ts:157</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L165">on-event.ts:165</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Constructs an <a href="../classes/onevent.html">OnEvent</a> registrar of receivers of original events passed trough the chain of transformations.</p>
+									<p>Constructs an <a href="../classes/onevent.html">OnEvent</a> sender of original events passed trough the chain of transformations.</p>
 								</div>
-								<p>The passes are preformed by <code>callThru()</code> function. The event receivers registered by resulting <a href="../classes/onevent.html">OnEvent</a>
-								registrar are called by the last pass in chain. Thus they can be e.g. filtered out or called multiple times.</p>
+								<p>The passes are preformed by <code>callThru()</code> function. The event receivers registered by resulting event sender
+								are called by the last pass in chain. Thus they can be e.g. filtered out or called multiple times.</p>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
@@ -760,14 +756,14 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../classes/onevent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R1</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>An <a href="../classes/onevent.html">OnEvent</a> registrar of receivers of events transformed with provided passes. The returned registrar
-							shares the interest to transformed events among receivers.</p>
+							<p>An <a href="../classes/onevent.html">OnEvent</a> sender of events transformed with provided passes. The returned sender shares the supply
+							of transformed events among receivers.</p>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L161">on-event.ts:161</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L169">on-event.ts:169</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -809,7 +805,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L165">on-event.ts:165</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L173">on-event.ts:173</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -881,7 +877,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L172">on-event.ts:172</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L180">on-event.ts:180</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -953,7 +949,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L179">on-event.ts:179</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L187">on-event.ts:187</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1055,7 +1051,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L188">on-event.ts:188</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L196">on-event.ts:196</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1157,7 +1153,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L197">on-event.ts:197</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L205">on-event.ts:205</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1289,7 +1285,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L208">on-event.ts:208</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L216">on-event.ts:216</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1451,7 +1447,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L221">on-event.ts:221</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L229">on-event.ts:229</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1613,7 +1609,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L234">on-event.ts:234</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L242">on-event.ts:242</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1805,7 +1801,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L249">on-event.ts:249</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L257">on-event.ts:257</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1997,7 +1993,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L264">on-event.ts:264</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L272">on-event.ts:272</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2219,7 +2215,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L281">on-event.ts:281</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L289">on-event.ts:289</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2441,7 +2437,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L298">on-event.ts:298</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L306">on-event.ts:306</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2693,7 +2689,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L317">on-event.ts:317</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L325">on-event.ts:325</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2945,7 +2941,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L336">on-event.ts:336</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L344">on-event.ts:344</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3227,7 +3223,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L357">on-event.ts:357</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L365">on-event.ts:365</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3509,7 +3505,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L378">on-event.ts:378</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L386">on-event.ts:386</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -3821,7 +3817,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L401">on-event.ts:401</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L409">on-event.ts:409</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -4133,7 +4129,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L424">on-event.ts:424</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L432">on-event.ts:432</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -4475,7 +4471,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L449">on-event.ts:449</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L457">on-event.ts:457</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -4817,7 +4813,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L474">on-event.ts:474</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L482">on-event.ts:482</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -5189,7 +5185,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L501">on-event.ts:501</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L509">on-event.ts:509</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -5561,7 +5557,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L528">on-event.ts:528</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L536">on-event.ts:536</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -5963,7 +5959,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru">thru</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L557">on-event.ts:557</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L565">on-event.ts:565</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -6398,17 +6394,17 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L600">on-event.ts:600</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L608">on-event.ts:608</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Constructs an <a href="../classes/onevent.html">OnEvent</a> registrar of receivers of original events passed trough the chain of transformations
-									without sharing the result.</p>
+									<p>Constructs an <a href="../classes/onevent.html">OnEvent</a> sender of original events passed trough the chain of transformations without sharing
+									the transformed events supply.</p>
 								</div>
-								<p>This method does the same as <a href="../classes/onevent.html#thru">OnEvent.thru</a> one, except it does not share the interest to transformed events
-									among receivers. This may be useful e.g. when the result will be further transformed anyway. It is wise to share
-								the interest to final result in this case.</p>
+								<p>This method does the same as <a href="../classes/onevent.html#thru">OnEvent.thru</a> one, except it does not share the supply of transformed events
+									among receivers. This may be useful e.g. when the result will be further transformed anyway. It is wise to
+								<a href="onstateupdate.html#share">share</a> the supply of events from final result in this case.</p>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
@@ -6444,13 +6440,13 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../classes/onevent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">R1</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>An <a href="../classes/onevent.html">OnEvent</a> registrar of receivers of events transformed with provided passes.</p>
+							<p>An <a href="../classes/onevent.html">OnEvent</a> sender of events transformed with provided passes.</p>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L604">on-event.ts:604</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L612">on-event.ts:612</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -6492,7 +6488,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L608">on-event.ts:608</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L616">on-event.ts:616</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -6564,7 +6560,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L615">on-event.ts:615</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L623">on-event.ts:623</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -6636,7 +6632,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L622">on-event.ts:622</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L630">on-event.ts:630</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -6738,7 +6734,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L631">on-event.ts:631</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L639">on-event.ts:639</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -6840,7 +6836,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L640">on-event.ts:640</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L648">on-event.ts:648</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -6972,7 +6968,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L651">on-event.ts:651</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L659">on-event.ts:659</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -7134,7 +7130,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L664">on-event.ts:664</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L672">on-event.ts:672</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -7296,7 +7292,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L677">on-event.ts:677</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L685">on-event.ts:685</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -7488,7 +7484,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L692">on-event.ts:692</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L700">on-event.ts:700</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -7680,7 +7676,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L707">on-event.ts:707</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L715">on-event.ts:715</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -7902,7 +7898,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L724">on-event.ts:724</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L732">on-event.ts:732</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -8124,7 +8120,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L741">on-event.ts:741</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L749">on-event.ts:749</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -8376,7 +8372,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L760">on-event.ts:760</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L768">on-event.ts:768</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -8628,7 +8624,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L779">on-event.ts:779</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L787">on-event.ts:787</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -8910,7 +8906,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L800">on-event.ts:800</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L808">on-event.ts:808</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -9192,7 +9188,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L821">on-event.ts:821</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L829">on-event.ts:829</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -9504,7 +9500,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L844">on-event.ts:844</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L852">on-event.ts:852</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -9816,7 +9812,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L867">on-event.ts:867</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L875">on-event.ts:875</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -10158,7 +10154,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L892">on-event.ts:892</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L900">on-event.ts:900</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -10500,7 +10496,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L917">on-event.ts:917</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L925">on-event.ts:925</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -10872,7 +10868,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L944">on-event.ts:944</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L952">on-event.ts:952</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -11244,7 +11240,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L971">on-event.ts:971</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L979">on-event.ts:979</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -11646,7 +11642,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="../classes/onevent.html">OnEvent</a>.<a href="../classes/onevent.html#thru_">thru_</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/on-event.ts#L1000">on-event.ts:1000</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/on-event.ts#L1008">on-event.ts:1008</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>

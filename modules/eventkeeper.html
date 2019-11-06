@@ -67,7 +67,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>A sender of events that keeps the last event sent.</p>
+						<p>An event supplier that keeps the last event sent.</p>
 					</div>
 					<p>The registered event receiver would receive the kept event immediately upon registration, and all upcoming events
 					after that.</p>
@@ -129,7 +129,7 @@
 					<div class="tsd-signature tsd-kind-icon">Event&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Event&lt;T&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/event-keeper.ts#L44">event-keeper.ts:44</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/event-keeper.ts#L43">event-keeper.ts:43</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -156,13 +156,13 @@
 					<a name="__computed" class="tsd-anchor"></a>
 					<h3>__computed</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">__computed<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="eventreceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/eventinterest.html" class="tsd-signature-type">EventInterest</a></li>
+						<li class="tsd-signature tsd-kind-icon">__computed<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="eventreceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/eventsupply.html" class="tsd-signature-type">EventSupply</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/event-keeper.ts#L33">event-keeper.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/event-keeper.ts#L32">event-keeper.ts:32</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -175,13 +175,12 @@
 								<li>
 									<h5>receiver: <a href="eventreceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>A receiver of events.</p>
+										<p>A receiver of events to register.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../classes/eventinterest.html" class="tsd-signature-type">EventInterest</a></h4>
-							<p>An event interest. The events will be sent to <code>receiver</code> until the <a href="../classes/eventinterest.html#off">EventInterest.off</a> method
-							of the returned event interest is called.</p>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/eventsupply.html" class="tsd-signature-type">EventSupply</a></h4>
+							<p>A supply of events from this keeper to the given <code>receiver</code>.</p>
 						</li>
 					</ul>
 				</section>

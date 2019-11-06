@@ -71,7 +71,7 @@
 					<a href="https://github.com/surol/fun-events"><img src="https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational" alt="GitHub Project"></a>
 				<a href="https://surol.github.io/fun-events/"><img src="https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational" alt="API Documentation"></a></p>
 				<p>A simple protocol for sending events to receivers registered in senders:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EventIterest, OnEvent } <span class="hljs-keyword">from</span> <span class="hljs-string">'fun-events'</span>;
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EventSupply, OnEvent } <span class="hljs-keyword">from</span> <span class="hljs-string">'fun-events'</span>;
 
 <span class="hljs-comment">// API supports arbitrary event receiver signatures</span>
 <span class="hljs-comment">// An event is a tuple of event receiver arguments</span>
@@ -79,75 +79,108 @@
   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Event of type '</span>, <span class="hljs-keyword">type</span>, event);
 }
 
-<span class="hljs-comment">// An `OnEvent` registrar function accepts event receivers with event interface </span>
+<span class="hljs-comment">// An `OnEvent` registrar function accepts event receivers with compatible event signature </span>
 <span class="hljs-keyword">const</span> onEvent: OnEvent&lt;[<span class="hljs-built_in">string</span>, Event]&gt;;
 
 <span class="hljs-comment">// Call an `OnEvent` registrar to register receiver</span>
-<span class="hljs-comment">// An event interest returned can be used to unregister</span>
-<span class="hljs-keyword">const</span> interest: EventIterest = onEvent(eventReceiver);
+<span class="hljs-comment">// An event supply returned can be cut off to unregister the receiver</span>
+<span class="hljs-keyword">const</span> supply: EventSupply = onEvent(eventReceiver);
 
 <span class="hljs-comment">// Generate some events</span>
 
-interest.off(); <span class="hljs-comment">// The eventReceiver will no longer receive events after this call</span></code></pre>
+supply.off(); <span class="hljs-comment">// The eventReceiver will no longer receive events after this call</span></code></pre>
 				<a href="#codeeventreceivercode" id="codeeventreceivercode" style="color: inherit; text-decoration: none;">
 					<h2><code>EventReceiver</code></h2>
 				</a>
 				<p>Event receiver is a function that is called on each event sent by event sender when registered.</p>
-				<p>To register an event receiver in event receiver just call the registration function with this receiver as argument.</p>
+				<p>To register an event receiver in event supplier just call the registration function with this receiver as argument.</p>
+				<p>An event receiver can also be in object form:</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EventReceiver, EventSupply, OnEvent } <span class="hljs-keyword">from</span> <span class="hljs-string">'fun-events'</span>;
+
+<span class="hljs-comment">// API supports arbitrary event receiver signatures</span>
+<span class="hljs-comment">// An event is a tuple of event receiver arguments</span>
+<span class="hljs-keyword">const</span> eventReceiver: EventReceiver&lt;[<span class="hljs-built_in">string</span>, Event]&gt; = {
+  receive(context, <span class="hljs-keyword">type</span>, event) {
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Event of type '</span>, <span class="hljs-keyword">type</span>, event);
+  }
+};
+
+<span class="hljs-comment">// An `OnEvent` registrar function accepts event receivers with compatible event signature </span>
+<span class="hljs-keyword">const</span> onEvent: OnEvent&lt;[<span class="hljs-built_in">string</span>, Event]&gt;;
+
+<span class="hljs-comment">// Call an `OnEvent` registrar to register receiver</span>
+<span class="hljs-comment">// An event supply returned can be cut off to unregister the receiver</span>
+<span class="hljs-keyword">const</span> supply: EventSupply = onEvent(eventReceiver);
+
+<span class="hljs-comment">// Generate some events</span>
+
+supply.off(); <span class="hljs-comment">// The eventReceiver will no longer receive events after this call</span></code></pre>
+				<p>In this form event receiver method accepts <em>event processing context</em> as first parameter.</p>
 				<a href="#recurrent-events" id="recurrent-events" style="color: inherit; text-decoration: none;">
 					<h3>Recurrent Events</h3>
 				</a>
 				<p>A <em>recurrent event</em> is an event sent from inside event receiver and targeted the same receiver. Recurrent event
 					processing is scheduled until after the current event processing finishes. To handle recurrent events in a specific
-				way the event receiver may utilize an event processing context available as <code>this</code> parameter.</p>
-				<p>This context has an <code>afterRecurrent()</code> method. It schedules the given event receiver to be called to process recurrent
-					event(s). If this method is called during event processing, the recurrent events will be sent to the given <code>receiver</code>
-				after current event processed instead of original one:</p>
+				way the event receiver may utilize an <em>event processing context</em> available as first parameter of event receiver method.</p>
+				<p>This context has an <code>onRecurrent()</code> method. It schedules the given event receiver function to be called to process
+					recurrent event(s). If this method is called during event processing, the recurrent events will be sent to the given
+				<code>receiver</code> after current event processed instead of original one:</p>
 				<p>The event receiver then can look like this:</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EventReceiver } <span class="hljs-keyword">from</span> <span class="hljs-string">'fun-events'</span>;
 
 <span class="hljs-comment">// API supports arbitrary event receiver signatures</span>
 <span class="hljs-comment">// An event is a tuple of event receiver arguments</span>
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">eventReceiver</span>(<span class="hljs-params"><span class="hljs-keyword">this</span>: EventReceiver.Context&lt;[<span class="hljs-built_in">string</span>, Event]&gt;, <span class="hljs-keyword">type</span>: <span class="hljs-built_in">string</span>, event: Event</span>) </span>{ 
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Event of type '</span>, <span class="hljs-keyword">type</span>, event);
-  <span class="hljs-comment">// Event processing potentially leading to sending event to this receiver again</span>
-  <span class="hljs-keyword">this</span>.afterRecurrent(<span class="hljs-function">(<span class="hljs-params">recurrentType, recurrentEvent</span>) =&gt;</span> {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Recurrent event of type '</span>, <span class="hljs-keyword">type</span>, event);
-  });
-}</code></pre>
+<span class="hljs-keyword">const</span> eventReceiver: EventReceiver&lt;[<span class="hljs-built_in">string</span>, Event]&gt; = {
+  receive(context, <span class="hljs-keyword">type</span>, event) { 
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Event of type '</span>, <span class="hljs-keyword">type</span>, event);
+    <span class="hljs-comment">// Event processing potentially leading to sending event to this receiver again</span>
+    <span class="hljs-keyword">this</span>.onRecurrent(<span class="hljs-function">(<span class="hljs-params">recurrentType, recurrentEvent</span>) =&gt;</span> {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Recurrent event of type '</span>, recurrentType, recurrentEvent);
+    });
+  }
+};</code></pre>
 				<a href="#codeeventsendercode" id="codeeventsendercode" style="color: inherit; text-decoration: none;">
 					<h2><code>EventSender</code></h2>
 				</a>
 				<p>An event sender interface has only one method accepting an event receiver to register. Once this method called, the
-				receiver will start receiving the events while still interested.</p>
-				<p>The event receiver registrar method is typically implements an <code>OnEvent</code> interface - a function augmented with handy
-				methods. To convert a plain event receiver registration function to <code>OnEvent</code> an <code>onEventBy()</code> function can be used.</p>
+				receiver will start receiving the events until their supply is cut off.</p>
+				<p>The event receiver registrar method typically implements an <code>OnEvent</code> interface - a function augmented with handy
+				methods. To convert a plain event receiver registration function to <code>OnEvent</code>, an <code>onEventBy()</code> function can be used.</p>
 				<a href="#codeoneventoncecode" id="codeoneventoncecode" style="color: inherit; text-decoration: none;">
 					<h3><code>OnEvent.once()</code></h3>
 				</a>
 				<p>Registers the next event receiver. It won&#39;t receive any events after receiving the first one.</p>
-				<a href="#codeeventiterestcode" id="codeeventiterestcode" style="color: inherit; text-decoration: none;">
-					<h2><code>EventIterest</code></h2>
+				<a href="#codeeventkeepercode" id="codeeventkeepercode" style="color: inherit; text-decoration: none;">
+					<h2><code>EventKeeper</code></h2>
 				</a>
-				<p>An interest for receiving the events.</p>
-				<p>This is what returned when registering an event receiver.</p>
-				<p>Once the receiver is no longer interested in receiving events, an <code>off()</code> method should be called to indicate the
-				lost of interest in receiving events.</p>
-				<p>By convenience, <code>EventInterest</code> instances should be constructed using <code>eventInterest()</code> function.</p>
+				<p>An event supplier that keeps the last event sent.</p>
+				<p>It has only one method that registers an event receiver, just like an <code>EventSender</code>. The registered event receiver
+				would receive the kept event immediately upon registration, and all upcoming events after that.</p>
+				<p>The event keeper <em>always</em> has event to send, unless it is closed. This is handy when tracking some state: the registered
+				receiver would receive current state, and all updates after that.</p>
+				<p>The event keeper registrar method typically implements an <code>AfterEvent</code> interface - a function extending <code>OnEvent</code>
+					interface and augmented with methods specific to event keeper. To convert a plain event receiver registration function
+				to <code>AfterEvent</code>, an <code>afterEventBy()</code> function can be used.</p>
+				<a href="#codeeventsupplycode" id="codeeventsupplycode" style="color: inherit; text-decoration: none;">
+					<h2><code>EventSupply</code></h2>
+				</a>
+				<p>A supply of events from event supplier to event receiver. It is returned from event receiver registration functions.</p>
+				<p>When events are no longer needed (or just exhausted) the supply may be cut off by calling the <code>off()</code> method.</p>
+				<p>It also notifies on supply cut off by calling callback functions registered by <code>whenOff()</code> method. </p>
+				<p>An event supply may be constructed using <code>eventSupply()</code> function.</p>
 				<a href="#codeeventemittercode" id="codeeventemittercode" style="color: inherit; text-decoration: none;">
 					<h2><code>EventEmitter</code></h2>
 				</a>
-				<p>Event emitter is a handy implementation of <code>OnEvent</code> registrar along with methods for sending events.</p>
-				<p>Manages a list of registered event receivers, and removes them from the list once they lose their interest
-				(i.e. the <code>off()</code> is called on the returned event interest instance).</p>
+				<p>Event emitter is a handy implementation of <code>OnEvent</code> sender.</p>
+				<p>Manages a list of registered event receivers, and removes them from the list once their supplies are cut off.</p>
 				<p>Can be used as <code>EventSender</code>.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EventEmitter } <span class="hljs-keyword">from</span> <span class="hljs-string">'fun-events'</span>;
 
 <span class="hljs-keyword">const</span> emitter = <span class="hljs-keyword">new</span> EventEmitter&lt;[<span class="hljs-built_in">string</span>]&gt;();
 
 <span class="hljs-comment">// Register receivers</span>
-emitter.on(<span class="hljs-function"><span class="hljs-params">event</span> =&gt;</span> <span class="hljs-string">`<span class="hljs-subst">${event}</span>-`</span>);
-emitter.on(<span class="hljs-function"><span class="hljs-params">event</span> =&gt;</span> <span class="hljs-string">`-<span class="hljs-subst">${event}</span>`</span>);
+emitter.on(<span class="hljs-function"><span class="hljs-params">event</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${event}</span>-`</span>));
+emitter.on(<span class="hljs-function"><span class="hljs-params">event</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`-<span class="hljs-subst">${event}</span>`</span>));
 
 <span class="hljs-comment">// Send an event</span>
 emitter.send(<span class="hljs-string">'listen'</span>);</code></pre>
@@ -235,7 +268,7 @@ sync.it = <span class="hljs-number">22</span>;
 				</a>
 				<p>DOM events are supported by <code>OnDomEvent</code> and <code>DomEventDispatcher</code>. The former extends an <code>OnEvent</code> event receiver
 					registrar interface with DOM-specific functionality. The latter can be attached to arbitrary <code>EventTarget</code>. It provides
-				a <code>OnDomEvent</code> registrars for each event type and dispatches DOM events.</p>
+				an <code>OnDomEvent</code> registrars for each event type and dispatches DOM events.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { DomEventDispatcher } <span class="hljs-keyword">from</span> <span class="hljs-string">'fun-events'</span>;
 
 <span class="hljs-keyword">const</span> dispatcher = <span class="hljs-keyword">new</span> DomEventDispatcher(<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'my-button'</span>));
@@ -245,11 +278,11 @@ dispatcher.dispatch(<span class="hljs-keyword">new</span> KeyboardEvent(<span cl
 				<a href="#codeondomeventcode" id="codeondomeventcode" style="color: inherit; text-decoration: none;">
 					<h3><code>OnDomEvent</code></h3>
 				</a>
-				<p>A DOM event listener registration function interface. It extends <code>OnEvent</code> interface with the following properties:</p>
+				<p>A DOM event listener registrar function interface. It extends <code>OnEvent</code> interface with the following properties:</p>
 				<a href="#codecapturecode" id="codecapturecode" style="color: inherit; text-decoration: none;">
 					<h4><code>capture</code></h4>
 				</a>
-				<p>A DOM event listener registrar derived from this one that enables event capturing by default.</p>
+				<p>An <code>OnDomEvent</code> sender derived from this one that enables event capturing by default.</p>
 				<p>This corresponds to specifying <code>true</code> or <code>{ capture: true }</code> as a second argument to <code>EventTarget.addEventListener()</code>.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { DomEventDispatcher } <span class="hljs-keyword">from</span> <span class="hljs-string">'fun-events'</span>;
 
@@ -263,7 +296,7 @@ container.addEventListener(<span class="hljs-string">'click'</span>, handleConta
 				<a href="#codeinsteadcode" id="codeinsteadcode" style="color: inherit; text-decoration: none;">
 					<h4><code>instead</code></h4>
 				</a>
-				<p>A DOM event listener registrar derived from this one that registers listeners to invoke instead of default action.</p>
+				<p>An <code>OnDomEvent</code> sender derived from this one that registers listeners to invoke instead of the default action.</p>
 				<p>It invokes an <code>Event.preventDefault()</code> method prior to calling the registered listeners. </p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { DomEventDispatcher } <span class="hljs-keyword">from</span> <span class="hljs-string">'fun-events'</span>;
 
@@ -272,7 +305,7 @@ container.addEventListener(<span class="hljs-string">'click'</span>, handleConta
 				<a href="#codejustcode" id="codejustcode" style="color: inherit; text-decoration: none;">
 					<h4><code>just</code></h4>
 				</a>
-				<p>A DOM event listener registrar derived from this one that registers listeners preventing further propagation of
+				<p>An <code>OnDomEvent</code> sender derived from this one that registers listeners preventing further propagation of
 				current event in the capturing and bubbling phases.</p>
 				<p>It invokes an <code>Event.stopPropagation()</code> method prior to calling the registered listeners.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { DomEventDispatcher } <span class="hljs-keyword">from</span> <span class="hljs-string">'fun-events'</span>;
@@ -282,7 +315,7 @@ container.addEventListener(<span class="hljs-string">'click'</span>, handleConta
 				<a href="#codelastcode" id="codelastcode" style="color: inherit; text-decoration: none;">
 					<h4><code>last</code></h4>
 				</a>
-				<p>A DOM event listener registrar derived from this one that registers the last event listener.</p>
+				<p>An <code>OnDomEvent</code> sender derived from this one that registers the last event listener.</p>
 				<p>It invokes an <code>Event.stopImmediatePropagation()</code> method prior to calling the registered listeners.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { DomEventDispatcher } <span class="hljs-keyword">from</span> <span class="hljs-string">'fun-events'</span>;
 
@@ -297,7 +330,7 @@ dispatcher.dispatch(<span class="hljs-keyword">new</span> KeyboardEvent(<span cl
 				<a href="#codepassivecode" id="codepassivecode" style="color: inherit; text-decoration: none;">
 					<h4><code>passive</code></h4>
 				</a>
-				<p>A DOM event listener registrar derived from this one that accepts listeners never calling <code>Event.preventDefault()</code>.</p>
+				<p>An <code>OnDomEvent</code> sender derived from this one that accepts listeners never calling <code>Event.preventDefault()</code>.</p>
 				<p>This corresponds to specifying <code>{ passive: true }</code> as a second argument to <code>EventTarget.addEventListener()</code>.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { DomEventDispatcher } <span class="hljs-keyword">from</span> <span class="hljs-string">'fun-events'</span>;
 
@@ -345,11 +378,11 @@ dispatcher.dispatch(<span class="hljs-keyword">new</span> KeyboardEvent(<span cl
 					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/eventemitter.html" class="tsd-kind-icon">Event<wbr>Emitter</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="classes/eventinterest.html" class="tsd-kind-icon">Event<wbr>Interest</a>
-					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/eventnotifier.html" class="tsd-kind-icon">Event<wbr>Notifier</a>
+					</li>
+					<li class=" tsd-kind-class">
+						<a href="classes/eventsupply.html" class="tsd-kind-icon">Event<wbr>Supply</a>
 					</li>
 					<li class=" tsd-kind-class tsd-has-type-parameter">
 						<a href="classes/ondomevent.html" class="tsd-kind-icon">On<wbr>Dom<wbr>Event</a>
@@ -372,6 +405,9 @@ dispatcher.dispatch(<span class="hljs-keyword">new</span> KeyboardEvent(<span cl
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="globals.html#domeventlistener" class="tsd-kind-icon">Dom<wbr>Event<wbr>Listener</a>
 					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="globals.html#eventsupplier" class="tsd-kind-icon">Event<wbr>Supplier</a>
+					</li>
 					<li class=" tsd-kind-variable">
 						<a href="globals.html#afterevent__symbol" class="tsd-kind-icon">After<wbr>Event__symbol</a>
 					</li>
@@ -385,25 +421,28 @@ dispatcher.dispatch(<span class="hljs-keyword">new</span> KeyboardEvent(<span cl
 						<a href="globals.html#onnever" class="tsd-kind-icon">on<wbr>Never</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#afterall" class="tsd-kind-icon">after<wbr>All</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#aftereach" class="tsd-kind-icon">after<wbr>Each</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#aftereventby" class="tsd-kind-icon">after<wbr>Event<wbr>By</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#aftereventfrom" class="tsd-kind-icon">after<wbr>Event<wbr>From</a>
+						<a href="globals.html#aftersent" class="tsd-kind-icon">after<wbr>Sent</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#aftereventfromall" class="tsd-kind-icon">after<wbr>Event<wbr>From<wbr>All</a>
+						<a href="globals.html#aftersupplied" class="tsd-kind-icon">after<wbr>Supplied</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#aftereventfromeach" class="tsd-kind-icon">after<wbr>Event<wbr>From<wbr>Each</a>
+						<a href="globals.html#afterthe" class="tsd-kind-icon">after<wbr>The</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#aftereventof" class="tsd-kind-icon">after<wbr>Event<wbr>Of</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#aftereventor" class="tsd-kind-icon">after<wbr>Event<wbr>Or</a>
+						<a href="globals.html#eventreceiver" class="tsd-kind-icon">event<wbr>Receiver</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#eventinterest" class="tsd-kind-icon">event<wbr>Interest</a>
+						<a href="globals.html#eventsupply" class="tsd-kind-icon">event<wbr>Supply</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#iseventkeeper" class="tsd-kind-icon">is<wbr>Event<wbr>Keeper</a>
@@ -412,7 +451,10 @@ dispatcher.dispatch(<span class="hljs-keyword">new</span> KeyboardEvent(<span cl
 						<a href="globals.html#iseventsender" class="tsd-kind-icon">is<wbr>Event<wbr>Sender</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#noeventinterest" class="tsd-kind-icon">no<wbr>Event<wbr>Interest</a>
+						<a href="globals.html#noeventsupply" class="tsd-kind-icon">no<wbr>Event<wbr>Supply</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#onany" class="tsd-kind-icon">on<wbr>Any</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#ondomeventby" class="tsd-kind-icon">on<wbr>Dom<wbr>Event<wbr>By</a>
@@ -421,25 +463,19 @@ dispatcher.dispatch(<span class="hljs-keyword">new</span> KeyboardEvent(<span cl
 						<a href="globals.html#oneventby" class="tsd-kind-icon">on<wbr>Event<wbr>By</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#oneventfrom" class="tsd-kind-icon">on<wbr>Event<wbr>From</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#oneventfromany" class="tsd-kind-icon">on<wbr>Event<wbr>From<wbr>Any</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#onpromise" class="tsd-kind-icon">on<wbr>Promise</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#receiveeventsby" class="tsd-kind-icon">receive<wbr>Events<wbr>By</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#receiveeventsbyeach" class="tsd-kind-icon">receive<wbr>Events<wbr>ByEach</a>
+						<a href="globals.html#onsupplied" class="tsd-kind-icon">on<wbr>Supplied</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#statepath" class="tsd-kind-icon">state<wbr>Path</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#trackvalue" class="tsd-kind-icon">track<wbr>Value</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#trackvalueby" class="tsd-kind-icon">track<wbr>Value<wbr>By</a>
 					</li>
 				</ul>
 			</nav>

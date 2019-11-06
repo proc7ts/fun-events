@@ -133,8 +133,8 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="valuesync.html#by" class="tsd-kind-icon">by</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="valuesync.html#bynone" class="tsd-kind-icon">by<wbr>None</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="valuesync.html#done" class="tsd-kind-icon">done</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="valuesync.html#off" class="tsd-kind-icon">off</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="valuesync.html#sync" class="tsd-kind-icon">sync</a></li>
 							</ul>
 						</section>
@@ -153,7 +153,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/value/value-sync.ts#L29">value/value-sync.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/value/value-sync.ts#L30">value/value-sync.ts:30</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -175,7 +175,7 @@
 					<div class="tsd-signature tsd-kind-icon">_it<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/value/value-sync.ts#L29">value/value-sync.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/value/value-sync.ts#L30">value/value-sync.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -191,7 +191,7 @@
 					<div class="tsd-signature tsd-kind-icon">_on<span class="tsd-signature-symbol">:</span> <a href="eventemitter.html" class="tsd-signature-type">EventEmitter</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new EventEmitter&lt;[T, T]&gt;()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/value/value-sync.ts#L24">value/value-sync.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/value/value-sync.ts#L25">value/value-sync.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -204,17 +204,18 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="read" class="tsd-anchor"></a>
 					<h3>read</h3>
-					<div class="tsd-signature tsd-kind-icon">read<span class="tsd-signature-symbol">:</span> <a href="afterevent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;afterEventOr&lt;[T]&gt;(receiver &#x3D;&gt; this.on(receiveNewValue(receiver)),() &#x3D;&gt; [this.it],)</span></div>
+					<div class="tsd-signature tsd-kind-icon">read<span class="tsd-signature-symbol">:</span> <a href="afterevent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;afterEventBy&lt;[T]&gt;(receiver &#x3D;&gt; this.on(receiveNewValue(receiver)),() &#x3D;&gt; [this.it],)</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="valuetracker.html">ValueTracker</a>.<a href="valuetracker.html#read">read</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/value/value-tracker.ts#L35">value/value-tracker.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/value/value-tracker.ts#L43">value/value-tracker.ts:43</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Registers current and updated values receiver.</p>
+							<p>An <a href="afterevent.html">AfterEvent</a> keeper of current value.</p>
 						</div>
+						<p>The <code>[AfterEvent__symbol]</code> property is an alias of this one.</p>
 					</div>
 				</section>
 			</section>
@@ -231,7 +232,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="valuetracker.html">ValueTracker</a>.<a href="valuetracker.html#__computed">__computed</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/value/value-tracker.ts#L44">value/value-tracker.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/value/value-tracker.ts#L52">value/value-tracker.ts:52</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="afterevent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -250,7 +251,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="valuetracker.html">ValueTracker</a>.<a href="valuetracker.html#it">it</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/value/value-sync.ts#L40">value/value-sync.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/value/value-sync.ts#L41">value/value-sync.ts:41</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
@@ -259,7 +260,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="valuetracker.html">ValueTracker</a>.<a href="valuetracker.html#it">it</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/value/value-sync.ts#L44">value/value-sync.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/value/value-sync.ts#L45">value/value-sync.ts:45</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -283,7 +284,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="valuetracker.html">ValueTracker</a>.<a href="valuetracker.html#on">on</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/value/value-sync.ts#L36">value/value-sync.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/value/value-sync.ts#L37">value/value-sync.ts:37</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="onevent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -297,30 +298,29 @@
 					<a name="by" class="tsd-anchor"></a>
 					<h3>by</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">by<span class="tsd-signature-symbol">(</span>source<span class="tsd-signature-symbol">: </span><a href="../modules/eventkeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../modules/eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
-						<li class="tsd-signature tsd-kind-icon">by&lt;S&gt;<span class="tsd-signature-symbol">(</span>source<span class="tsd-signature-symbol">: </span><a href="../modules/eventkeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../modules/eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span>, extract<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">by<span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="../globals.html#eventsupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">by&lt;S&gt;<span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="../globals.html#eventsupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span>, extract<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="valuetracker.html">ValueTracker</a>.<a href="valuetracker.html#by">by</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/value/value-tracker.ts#L68">value/value-tracker.ts:68</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/value/value-tracker.ts#L74">value/value-tracker.ts:74</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Binds the tracked value to the given <code>source</code> value sender or keeper.</p>
+									<p>Updates the tracked value by the given value <code>supplier</code>.</p>
 								</div>
-								<p>Updates the value when the <code>source</code> sends another value.</p>
-								<p>If the value is already bound to another value source, then unbinds from the old one first.</p>
-								<p>Call the <a href="valuetracker.html#off">ValueTracker.off</a> method to unbind the tracked value from the <code>source</code>.</p>
+								<p>If the value is already updated by another supplier, then unbinds from the old one first.</p>
+								<p>Call the [[ValueTracker.off]] method to unbind the tracked value from the <code>source</code>.</p>
 								<p>Note that explicitly updating the value would override the value received from the <code>source</code>.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>source: <a href="../modules/eventkeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../modules/eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>supplier: <a href="../globals.html#eventsupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>The source value sender or keeper.</p>
 									</div>
@@ -333,16 +333,15 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="valuetracker.html">ValueTracker</a>.<a href="valuetracker.html#by">by</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/value/value-tracker.ts#L88">value/value-tracker.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/value/value-tracker.ts#L92">value/value-tracker.ts:92</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Binds the tracked value to the value sender or keeper extracted from the events sent by the given <code>source</code>.</p>
+									<p>Updates the tracked value by value suppliers extracted from events sent by the given <code>supplier</code>.</p>
 								</div>
-								<p>Updates the value when extracted sender or keeper sends another value.</p>
-								<p>If the value is already bound to another value source, then unbinds from the old one first.</p>
-								<p>Call the <a href="valuetracker.html#off">ValueTracker.off</a> method to unbind the tracked value from the <code>source</code>.</p>
+								<p>If the value is already updated by another value supplier, then unbinds from the old one first.</p>
+								<p>Call the [[ValueTracker.off]] method to unbind the tracked value from the <code>source</code>.</p>
 								<p>Note that explicitly updating the value would override the value received from the <code>source</code>.</p>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -357,21 +356,21 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>source: <a href="../modules/eventkeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../modules/eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>supplier: <a href="../globals.html#eventsupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The event sender or keeper to extract value senders or keepers from.</p>
+										<p>The event supplier to extract value suppliers from.</p>
 									</div>
 								</li>
 								<li>
 									<h5>extract: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>A function extracting value senders or keepers from events received from the <code>source</code>.
+										<p>A function extracting value supplier from event received from <code>supplier</code>.
 										May return <code>undefined</code> to suspend receiving values.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-siganture">
 											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/eventkeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../modules/eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../globals.html#eventsupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
@@ -384,9 +383,7 @@
 															<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>event: <span class="tsd-signature-type">S</span></h5>
 														</li>
 													</ul>
-													<h4 class="tsd-returns-title">Returns <a href="../modules/eventkeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>
-														<span class="tsd-signature-symbol"> | </span>
-														<a href="../modules/eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>
+													<h4 class="tsd-returns-title">Returns <a href="../globals.html#eventsupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>
 														<span class="tsd-signature-symbol"> | </span>
 														<span class="tsd-signature-type">undefined</span>
 													</h4>
@@ -394,6 +391,40 @@
 											</ul>
 										</li>
 									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+							<p><code>this</code> instance.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="bynone" class="tsd-anchor"></a>
+					<h3>by<wbr>None</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">by<wbr>None<span class="tsd-signature-symbol">(</span>reason<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="valuetracker.html">ValueTracker</a>.<a href="valuetracker.html#bynone">byNone</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/value/value-tracker.ts#L147">value/value-tracker.ts:147</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Unbinds the tracked value from any value supplier this tracker is <a href="valuetracker.html#by">updated by</a>.</p>
+								</div>
+								<p>If the tracker is not bound then does nothing.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> reason: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Arbitrary reason of unbinding the value.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
@@ -412,7 +443,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="valuetracker.html">ValueTracker</a>.<a href="valuetracker.html#done">done</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/value/value-sync.ts#L169">value/value-sync.ts:169</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/value/value-sync.ts#L170">value/value-sync.ts:170</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -422,40 +453,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-					<a name="off" class="tsd-anchor"></a>
-					<h3>off</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">off<span class="tsd-signature-symbol">(</span>reason<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="valuetracker.html">ValueTracker</a>.<a href="valuetracker.html#off">off</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/value/value-tracker.ts#L143">value/value-tracker.ts:143</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Unbinds the tracked value from the value sender or keeper this tracker is bound to with <a href="valuetracker.html#by">ValueTracker.by</a> method.</p>
-								</div>
-								<p>If the tracker is not bound then does nothing.</p>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> reason: <span class="tsd-signature-type">any</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Arbitrary reason of unbinding the value.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-							<p><code>this</code> instance.</p>
 						</li>
 					</ul>
 				</section>
@@ -463,16 +460,16 @@
 					<a name="sync" class="tsd-anchor"></a>
 					<h3>sync</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">sync<span class="tsd-signature-symbol">(</span>tracker<span class="tsd-signature-symbol">: </span><a href="valuetracker.html" class="tsd-signature-type">ValueTracker</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="eventinterest.html" class="tsd-signature-type">EventInterest</a></li>
-						<li class="tsd-signature tsd-kind-icon">sync<span class="tsd-signature-symbol">(</span>direction<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"in"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"out"</span>, tracker<span class="tsd-signature-symbol">: </span><a href="valuetracker.html" class="tsd-signature-type">ValueTracker</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="eventinterest.html" class="tsd-signature-type">EventInterest</a></li>
-						<li class="tsd-signature tsd-kind-icon">sync&lt;U&gt;<span class="tsd-signature-symbol">(</span>source<span class="tsd-signature-symbol">: </span><a href="../modules/eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../modules/eventkeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span>, extract<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="eventinterest.html" class="tsd-signature-type">EventInterest</a></li>
-						<li class="tsd-signature tsd-kind-icon">sync&lt;U&gt;<span class="tsd-signature-symbol">(</span>direction<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"in"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"out"</span>, source<span class="tsd-signature-symbol">: </span><a href="../modules/eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../modules/eventkeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span>, extract<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="eventinterest.html" class="tsd-signature-type">EventInterest</a></li>
+						<li class="tsd-signature tsd-kind-icon">sync<span class="tsd-signature-symbol">(</span>tracker<span class="tsd-signature-symbol">: </span><a href="valuetracker.html" class="tsd-signature-type">ValueTracker</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="eventsupply.html" class="tsd-signature-type">EventSupply</a></li>
+						<li class="tsd-signature tsd-kind-icon">sync<span class="tsd-signature-symbol">(</span>direction<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"in"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"out"</span>, tracker<span class="tsd-signature-symbol">: </span><a href="valuetracker.html" class="tsd-signature-type">ValueTracker</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="eventsupply.html" class="tsd-signature-type">EventSupply</a></li>
+						<li class="tsd-signature tsd-kind-icon">sync&lt;U&gt;<span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="../globals.html#eventsupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span>, extract<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="eventsupply.html" class="tsd-signature-type">EventSupply</a></li>
+						<li class="tsd-signature tsd-kind-icon">sync&lt;U&gt;<span class="tsd-signature-symbol">(</span>direction<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"in"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"out"</span>, supplier<span class="tsd-signature-symbol">: </span><a href="../globals.html#eventsupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span>, extract<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="eventsupply.html" class="tsd-signature-type">EventSupply</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/value/value-sync.ts#L63">value/value-sync.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/value/value-sync.ts#L64">value/value-sync.ts:64</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -490,13 +487,13 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="eventinterest.html" class="tsd-signature-type">EventInterest</a></h4>
-							<p>An event interest instance. Call its <a href="eventinterest.html#off">EventInterest.off</a> method to break the synchronization.</p>
+							<h4 class="tsd-returns-title">Returns <a href="eventsupply.html" class="tsd-signature-type">EventSupply</a></h4>
+							<p>An event supply. <a href="eventsupply.html#off">Cut it off</a> to break synchronization.</p>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/value/value-sync.ts#L74">value/value-sync.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/value/value-sync.ts#L75">value/value-sync.ts:75</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -520,18 +517,18 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="eventinterest.html" class="tsd-signature-type">EventInterest</a></h4>
-							<p>An event interest instance. Call its <a href="eventinterest.html#off">EventInterest.off</a> method to break the synchronization.</p>
+							<h4 class="tsd-returns-title">Returns <a href="eventsupply.html" class="tsd-signature-type">EventSupply</a></h4>
+							<p>An event supply. <a href="eventsupply.html#off">Cut it off</a> to break synchronization.</p>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/value/value-sync.ts#L89">value/value-sync.ts:89</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/value/value-sync.ts#L90">value/value-sync.ts:90</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Synchronizes the tracked value with the ones extracted from the events sent by the given <code>source</code> sender or keeper.</p>
+									<p>Synchronizes the tracked value with the ones extracted from the events sent by the given <code>supplier</code>.</p>
 								</div>
 								<p>Once next value tracker extracted the previous one becomes out of sync.</p>
 								<p>Applies the value from this sync to extracted trackers.</p>
@@ -545,15 +542,15 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>source: <a href="../modules/eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../modules/eventkeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>supplier: <a href="../globals.html#eventsupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The event sender or keeper to extract value trackers from.</p>
+										<p>The event supplier to extract value trackers from.</p>
 									</div>
 								</li>
 								<li>
 									<h5>extract: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>A function extracting the value tracker to keep in sync from the event received from <code>sender</code>.
+										<p>A function extracting the value tracker to keep in sync from the event received from <code>supplier</code>.
 										May return <code>undefined</code> to just break the sync with previous tracker.</p>
 									</div>
 									<ul class="tsd-parameters">
@@ -582,18 +579,18 @@
 									</ul>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="eventinterest.html" class="tsd-signature-type">EventInterest</a></h4>
-							<p>An event interest instance. Call its <a href="eventinterest.html#off">EventInterest.off</a> method to break the synchronization.</p>
+							<h4 class="tsd-returns-title">Returns <a href="eventsupply.html" class="tsd-signature-type">EventSupply</a></h4>
+							<p>An event supply. <a href="eventsupply.html#off">Cut it off</a> to break synchronization.</p>
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/987c5e5/src/value/value-sync.ts#L108">value/value-sync.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/value/value-sync.ts#L109">value/value-sync.ts:109</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Synchronizes the tracked value with the ones extracted from the events sent by the given <code>source</code> sender or keeper
+									<p>Synchronizes the tracked value with the ones extracted from the events sent by the given <code>supplier</code>
 									in the given direction.</p>
 								</div>
 								<p>Once next value tracker extracted the previous one becomes out of sync.</p>
@@ -614,15 +611,15 @@
 									</div>
 								</li>
 								<li>
-									<h5>source: <a href="../modules/eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../modules/eventkeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>supplier: <a href="../globals.html#eventsupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The event sender or keeper to extract value trackers from.</p>
+										<p>The event supplier to extract value trackers from.</p>
 									</div>
 								</li>
 								<li>
 									<h5>extract: <span class="tsd-signature-type">function</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>A function extracting the value tracker to keep in sync from the event received from <code>sender</code>.
+										<p>A function extracting the value tracker to keep in sync from the event received from <code>supplier</code>.
 										May return <code>undefined</code> to just break the sync with previous tracker.</p>
 									</div>
 									<ul class="tsd-parameters">
@@ -651,8 +648,8 @@
 									</ul>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="eventinterest.html" class="tsd-signature-type">EventInterest</a></h4>
-							<p>An event interest instance. Call its <a href="eventinterest.html#off">EventInterest.off</a> method to break the synchronization.</p>
+							<h4 class="tsd-returns-title">Returns <a href="eventsupply.html" class="tsd-signature-type">EventSupply</a></h4>
+							<p>An event supply. <a href="eventsupply.html#off">Cut it off</a> to break synchronization.</p>
 						</li>
 					</ul>
 				</section>
@@ -697,11 +694,11 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited">
 								<a href="valuesync.html#by" class="tsd-kind-icon">by</a>
 							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="valuesync.html#bynone" class="tsd-kind-icon">by<wbr>None</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
 								<a href="valuesync.html#done" class="tsd-kind-icon">done</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="valuesync.html#off" class="tsd-kind-icon">off</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
 								<a href="valuesync.html#sync" class="tsd-kind-icon">sync</a>

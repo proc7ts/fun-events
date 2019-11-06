@@ -67,7 +67,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>A state updates receiver function.</p>
+						<p>A state updates receiver.</p>
 					</div>
 					<p>It is called whenever the value with at given <code>path</code> changes.</p>
 				</div>
@@ -80,8 +80,83 @@
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/stateupdatereceiver.context.html" class="tsd-kind-icon">Context</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/stateupdatereceiver.object.html" class="tsd-kind-icon">Object</a></li>
 							</ul>
 						</section>
+						<section class="tsd-index-section ">
+							<h3>Type aliases</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="stateupdatereceiver.html#function" class="tsd-kind-icon">Function</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="function" class="tsd-anchor"></a>
+					<h3>Function</h3>
+					<div class="tsd-signature tsd-kind-icon">Function<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/37b5421/src/state/state-update-receiver.ts#L35">state/state-update-receiver.ts:35</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>State updates receiver function signature.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>param</dt>
+							<dd><p>A path to changed state part.</p>
+							</dd>
+							<dt>param</dt>
+							<dd><p>New value.</p>
+							</dd>
+							<dt>param</dt>
+							<dd><p>Previous value.</p>
+							</dd>
+						</dl>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-siganture">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias tsd-has-type-parameter tsd-is-not-exported">
+									<li class="tsd-signature tsd-kind-icon">&lt;V&gt;<span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, path<span class="tsd-signature-symbol">: </span><a href="statepath.html" class="tsd-signature-type">StatePath</a>, newValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, oldValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-type-parameters-title">Type parameters</h4>
+										<ul class="tsd-type-parameters">
+											<li>
+												<h4>V</h4>
+												<div class="tsd-comment tsd-typography">
+													<p>A type of changed value.</p>
+												</div>
+											</li>
+										</ul>
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>this: <span class="tsd-signature-type">void</span></h5>
+											</li>
+											<li>
+												<h5>path: <a href="statepath.html" class="tsd-signature-type">StatePath</a></h5>
+											</li>
+											<li>
+												<h5>newValue: <span class="tsd-signature-type">V</span></h5>
+											</li>
+											<li>
+												<h5>oldValue: <span class="tsd-signature-type">V</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
 					</div>
 				</section>
 			</section>
@@ -113,6 +188,12 @@
 				<ul class="before-current">
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="../interfaces/stateupdatereceiver.context.html" class="tsd-kind-icon">Context</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/stateupdatereceiver.object.html" class="tsd-kind-icon">Object</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="stateupdatereceiver.html#function" class="tsd-kind-icon">Function</a>
 					</li>
 				</ul>
 			</nav>
