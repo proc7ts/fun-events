@@ -176,6 +176,6 @@ function receiveNewValue<T, N extends T>(
           },
           newValue,
       );
-    }
+    },
   };
 }

@@ -1030,7 +1030,7 @@ export function afterEventBy<E extends any[]>(
       receive(context, ...event: E) {
         lastEvent = event;
         dest(context, ...event);
-      }
+      },
     });
     ++numReceivers;
 

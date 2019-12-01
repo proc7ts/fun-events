@@ -29,9 +29,9 @@ export function onPromise<T>(promise: Promise<T>): OnEvent<[T]> {
           dispatcher.on(receiver);
           dispatcher.send(value);
           supply.off();
-        }
+        },
     ).catch(
-        e => supply.off(e)
+        e => supply.off(e),
     );
   });
 }

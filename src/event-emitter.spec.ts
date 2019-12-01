@@ -90,7 +90,7 @@ describe('EventEmitter', () => {
           context.onRecurrent(recurrent => {
             records.push([recurrent, 11]);
           });
-        }
+        },
       });
       emitter.on(mockReceiver2.mockImplementation(event => {
         records.push([event, 2]);

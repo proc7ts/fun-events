@@ -1046,7 +1046,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
                 ...fns,
                 (...transformed: any[]) => receiver.receive(context, ...transformed),
             )(...event);
-          }
+          },
         }));
   }
 

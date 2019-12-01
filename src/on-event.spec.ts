@@ -429,7 +429,7 @@ describe('OnEvent', () => {
     it('registers event receiver', () => {
 
       const transforming = onEvent.thru(
-          (event1: string, event2: string) => `${event1}, ${event2}`
+          (event1: string, event2: string) => `${event1}, ${event2}`,
       );
 
       transforming(mockReceiver);
@@ -438,7 +438,7 @@ describe('OnEvent', () => {
     it('unregisters event receiver once events supply cut off', () => {
 
       const transforming = onEvent.thru(
-          (event1: string, event2: string) => `${event1}, ${event2}`
+          (event1: string, event2: string) => `${event1}, ${event2}`,
       );
 
       const supply1 = transforming(mockReceiver);
@@ -452,7 +452,7 @@ describe('OnEvent', () => {
     it('transforms original event', () => {
 
       const transforming = onEvent.thru(
-          (event1: string, event2: string) => `${event1}, ${event2}`
+          (event1: string, event2: string) => `${event1}, ${event2}`,
       );
 
       transforming(mockReceiver);
@@ -481,7 +481,7 @@ describe('OnEvent', () => {
 
       const mockOff = jest.fn();
       const transforming = onEvent.thru(
-          (event1: string, event2: string) => `${event1}, ${event2}`
+          (event1: string, event2: string) => `${event1}, ${event2}`,
       );
 
       transforming(mockReceiver).whenOff(mockOff);
@@ -513,7 +513,7 @@ describe('onSupplied', () => {
       onEvent = onSupplied({
         [OnEvent__symbol](receiver) {
           return sender.on(receiver);
-        }
+        },
       });
       mockReceiver = jest.fn();
       supply = onEvent(mockReceiver);

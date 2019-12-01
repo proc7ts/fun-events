@@ -91,7 +91,6 @@ describe('AfterEvent', () => {
 
     describe('thru', () => {
 
-      let fallback: [string, string];
       let mockRegister: Mock<void, [EventReceiver.Generic<[string, string]>]>;
       let mockOff: Mock<void, [any?]>;
       let emitter: EventNotifier<[string, string]>;
@@ -100,20 +99,19 @@ describe('AfterEvent', () => {
 
       beforeEach(() => {
         emitter = new EventNotifier();
-        fallback = ['init1', 'init2'];
         mockOff = jest.fn();
         mockRegister = jest.fn(receiver => {
           emitter.on(receiver);
           receiver.supply.whenOff(mockOff);
         });
-        afterEvent = afterEventBy(mockRegister, () => fallback);
+        afterEvent = afterEventBy(mockRegister, () => ['init1', 'init2']);
         mockReceiver = jest.fn();
       });
 
       it('registers event receiver', () => {
 
         const transforming = afterEvent.keep.thru(
-            (event1: string, event2: string) => `${event1}, ${event2}`
+            (event1: string, event2: string) => `${event1}, ${event2}`,
         );
 
         transforming(mockReceiver);
@@ -122,7 +120,7 @@ describe('AfterEvent', () => {
       it('unregisters event receiver when supply is cut off', () => {
 
         const transforming = afterEvent.keep.thru(
-            (event1: string, event2: string) => `${event1}, ${event2}`
+            (event1: string, event2: string) => `${event1}, ${event2}`,
         );
 
         const supply1 = transforming(mockReceiver);
@@ -136,7 +134,7 @@ describe('AfterEvent', () => {
       it('transforms original event', () => {
 
         const transforming = afterEvent.keep.thru(
-            (event1: string, event2: string) => `${event1}, ${event2}`
+            (event1: string, event2: string) => `${event1}, ${event2}`,
         );
 
         transforming(mockReceiver);
@@ -166,7 +164,7 @@ describe('AfterEvent', () => {
 
         const mockOff2 = jest.fn();
         const transforming = afterEvent.keep.thru(
-            (event1: string, event2: string) => `${event1}, ${event2}`
+            (event1: string, event2: string) => `${event1}, ${event2}`,
         );
 
         transforming(mockReceiver).whenOff(mockOff2);
@@ -267,7 +265,7 @@ describe('afterEventBy', () => {
         context.onRecurrent(recurrentReceiver);
         mockReceiver(...event);
         emitter.send('recurrent');
-      }
+      },
     });
 
     expect(mockReceiver).toHaveBeenCalledWith('fallback');
@@ -288,7 +286,7 @@ describe('afterSupplied', () => {
       afterEvent = afterSupplied({
         [AfterEvent__symbol](receiver) {
           return keeper.read(receiver);
-        }
+        },
       });
       mockReceiver = jest.fn();
       supply = afterEvent(mockReceiver);
