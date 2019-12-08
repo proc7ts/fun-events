@@ -14,7 +14,8 @@ import { StateUpdateReceiver } from './state-update-receiver';
 export interface OnStateUpdate extends OnEvent<[StatePath, any, any]> {
 
   /**
-   * An [[OnStateUpdate]] sender derived from this one, that stops sending updates to registered receiver after the first one.
+   * An [[OnStateUpdate]] sender derived from this one that stops sending updates to registered receiver after the
+   * first one.
    */
   readonly once: OnStateUpdate;
 
