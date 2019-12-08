@@ -1,43 +1,47 @@
 import { EventNotifier } from '../event-notifier';
 import { EventReceiver } from '../event-receiver';
-import { EventSupply, noEventSupply } from '../event-supply';
+import { eventSupply, EventSupply, noEventSupply } from '../event-supply';
 
 /**
  * @internal
  */
 export function share<E extends any[]>(
-    register: (receiver: EventReceiver<E>) => EventSupply,
+    register: (receiver: EventReceiver.Generic<E>) => EventSupply,
 ): (receiver: EventReceiver.Generic<E>) => void {
 
   const shared = new EventNotifier<E>();
   let sharedSupply = noEventSupply();
-  let initialEvents: E[] | undefined = [];
-  const removeReceiver = (reason?: any) => {
-    if (!shared.size) {
-      sharedSupply.off(reason);
-      initialEvents = [];
-    }
-  };
+  let initialEvents: E[] | undefined;
 
   return receiver => {
     if (!shared.size) {
-      sharedSupply = register((...event) => {
-        if (initialEvents) {
-          if (shared.size) {
-            // More events received
-            // Stop sending initial ones
-            initialEvents = undefined;
-          } else {
-            // Record events received during first receiver registration
-            // to send them to all receivers until more event received
-            initialEvents.push(event);
+      initialEvents = [];
+      sharedSupply = eventSupply(() => initialEvents = undefined);
+
+      register({
+        supply: sharedSupply,
+        receive(_ctx, ...event) {
+          if (initialEvents) {
+            if (shared.size) {
+              // More events received
+              // Stop sending initial ones
+              initialEvents = undefined;
+            } else {
+              // Record events received during first receiver registration
+              // to send them to all receivers until more event received
+              initialEvents.push(event);
+            }
           }
-        }
-        shared.send(...event);
+          shared.send(...event);
+        },
       });
     }
 
-    shared.on(receiver).whenOff(removeReceiver).needs(sharedSupply);
+    shared.on(receiver).whenOff((reason?: any) => {
+      if (!shared.size) {
+        sharedSupply.off(reason);
+      }
+    }).needs(sharedSupply);
 
     if (initialEvents) {
       // Send initial events to just registered receiver
