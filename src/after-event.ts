@@ -978,6 +978,14 @@ export abstract class AfterEvent<E extends any[]> extends OnEvent<E> implements 
   }
 
   /**
+   * An [[AfterEvent]] keeper derived from this one that sends currently the kept event to registered receiver
+   * and stops sending them after that.
+   */
+  get once(): AfterEvent<E> {
+    return afterEventBy(super.once);
+  }
+
+  /**
    * Constructs an [[AfterEvent]] keeper that shares events supply among all registered receivers.
    *
    * The created keeper receives events from this one and sends to registered receivers. The shared keeper registers
@@ -1019,22 +1027,25 @@ export function afterEventBy<E extends any[]>(
 
     let dest: (context: EventReceiver.Context<E>, ...event: E) => void = noop;
     const generic = eventReceiver(receiver);
-    const { supply } = generic;
 
-    if (supply.isOff) {
-      return supply;
+    if (generic.supply.isOff) {
+      return generic.supply;
     }
+
+    const supply = eventSupply().needs(generic.supply);
+    let reported = false;
 
     register({
       supply,
       receive(context, ...event: E) {
+        reported = true;
         lastEvent = event;
         dest(context, ...event);
       },
     });
     ++numReceivers;
 
-    if (!supply.isOff) {
+    if (!supply.isOff || reported) {
       generic.receive(
           {
             onRecurrent(recurrent) {
@@ -1046,10 +1057,11 @@ export function afterEventBy<E extends any[]>(
       dest = (context, ...event) => generic.receive(context, ...event);
     }
 
-    supply.whenOff(() => {
+    supply.whenOff(reason => {
       if (!--numReceivers) {
         lastEvent = undefined;
       }
+      generic.supply.off(reason);
     });
 
     return supply;

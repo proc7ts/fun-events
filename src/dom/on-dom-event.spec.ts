@@ -1,7 +1,9 @@
 import { EventNotifier } from '../event-notifier';
 import { EventReceiver } from '../event-receiver';
+import { EventSupply, noEventSupply } from '../event-supply';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 import Mock = jest.Mock;
+import SpyInstance = jest.SpyInstance;
 
 describe('OnDomEvent', () => {
 
@@ -17,6 +19,75 @@ describe('OnDomEvent', () => {
     });
     onDomEvent = onDomEventBy<Event>((c, opts) => mockRegister(c, opts));
     mockListener = jest.fn();
+  });
+
+  describe('once', () => {
+
+    let supply: EventSupply;
+    let offSpy: SpyInstance;
+
+    beforeEach(() => {
+      mockRegister = jest.fn(receiver => {
+        events.on(receiver);
+        supply = receiver.supply;
+        offSpy = jest.spyOn(supply, 'off');
+      });
+    });
+
+    it('registers event receiver', () => {
+      expect(onDomEvent.once(mockListener)).toBe(supply);
+      expect(mockRegister).toHaveBeenCalled();
+    });
+    it('unregisters notified event receiver', () => {
+      onDomEvent.once(mockListener);
+      expect(offSpy).not.toHaveBeenCalled();
+
+      const event = new KeyboardEvent('click');
+
+      events.send(event);
+      expect(mockListener).toHaveBeenCalledWith(event);
+      expect(offSpy).toHaveBeenCalled();
+    });
+    it('unregisters immediately notified event receiver', () => {
+
+      const event = new KeyboardEvent('click');
+
+      mockRegister.mockImplementation(receiver => {
+        events.on(receiver);
+        supply = receiver.supply;
+        offSpy = jest.spyOn(supply, 'off');
+        events.send(event);
+      });
+
+      onDomEvent.once(mockListener);
+
+      expect(offSpy).toHaveBeenCalled();
+      expect(mockListener).toHaveBeenCalledWith(event);
+    });
+    it('never sends events if their supply is initially cut off', () => {
+
+      const event = new KeyboardEvent('click');
+
+      supply = noEventSupply();
+      onDomEvent.once({ supply, receive: (_context, e) => mockListener(e) });
+      events.send(event);
+      expect(mockListener).not.toHaveBeenCalled();
+    });
+    it('never sends events after their supply is cut off', () => {
+      onDomEvent.once(mockListener).off();
+      events.send(new KeyboardEvent('click'));
+      expect(mockListener).not.toHaveBeenCalled();
+    });
+    it('sends only one event', () => {
+      onDomEvent.once(mockListener);
+
+      const event1 = new KeyboardEvent('keydown');
+
+      events.send(event1);
+      events.send(new KeyboardEvent('keyup'));
+      expect(mockListener).toHaveBeenCalledTimes(1);
+      expect(mockListener).toHaveBeenLastCalledWith(event1);
+    });
   });
 
   describe('capture', () => {

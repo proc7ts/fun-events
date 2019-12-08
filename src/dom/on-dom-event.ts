@@ -24,6 +24,14 @@ export type DomEventListener<E extends Event> = EventReceiver<[E]>;
 export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
 
   /**
+   * An [[OnDomEvent]] sender derived from this one that stops sending events to registered listener after the first
+   * one.
+   */
+  get once(): OnDomEvent<E> {
+    return onDomEventBy(super.once);
+  }
+
+  /**
    * An [[OnDomEvent]] sender derived from this one that enables event capturing by default.
    *
    * This corresponds to specifying `true` or `{ capture: true }` as a second argument to

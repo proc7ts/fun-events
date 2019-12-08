@@ -31,24 +31,16 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   }
 
   /**
-   * Registers the next event receiver. It won't receive any events after receiving the first one.
-   *
-   * @param receiver  Next event receiver.
-   *
-   * @returns A supply of the next event.
+   * An [[OnEvent]] sender derived from this one that stops sending events to registered receiver after the first one.
    */
-  once(receiver: EventReceiver<E>): EventSupply {
-
-    const generic = eventReceiver(receiver);
-    const { supply } = generic;
-
-    return this({
-      supply,
+  get once(): OnEvent<E> {
+    return onEventBy(receiver => this({
+      supply: receiver.supply,
       receive: (context, ...event) => {
-        generic.receive(context, ...event);
-        supply.off();
+        receiver.receive(context, ...event);
+        receiver.supply.off();
       },
-    });
+    }));
   }
 
   /**
