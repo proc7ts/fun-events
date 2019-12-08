@@ -991,7 +991,7 @@ export abstract class AfterEvent<E extends any[]> extends OnEvent<E> implements 
    *
    * @param supply  The required event supply.
    *
-   * @returns New event sender.
+   * @returns New event keeper.
    */
   tillOff(supply: EventSupply): AfterEvent<E> {
     return afterEventBy(tillOff(this, supply));

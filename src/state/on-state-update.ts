@@ -19,6 +19,15 @@ export interface OnStateUpdate extends OnEvent<[StatePath, any, any]> {
    */
   readonly once: OnStateUpdate;
 
+  /**
+   * Builds an [[OnStateEvent]] sender that sends updated from this one until the required `supply` is cut off.
+   *
+   * @param supply  The required event supply.
+   *
+   * @returns New updates sender.
+   */
+  tillOff(supply: EventSupply): OnStateUpdate;
+
   (receiver: StateUpdateReceiver): EventSupply;
 
 }
