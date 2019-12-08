@@ -115,7 +115,16 @@ describe('OnEvent', () => {
       expect(mockReceiver).toHaveBeenCalledWith('event1');
       expect(mockReceiver).toHaveBeenLastCalledWith('event2');
     });
-    it('no longer not sends events after original supply is cut off', () => {
+    it('does not send any events if required supply is initially cut off', () => {
+
+      const whenOff = jest.fn();
+
+      onEvent.tillOff(noEventSupply())(mockReceiver).whenOff(whenOff);
+      emitter.send('event1');
+      expect(mockReceiver).not.toHaveBeenCalled();
+      expect(whenOff).toHaveBeenCalled();
+    });
+    it('no longer sends events after original supply is cut off', () => {
 
       const whenOff = jest.fn();
 
@@ -129,7 +138,7 @@ describe('OnEvent', () => {
       expect(whenOff).toHaveBeenCalledWith('reason');
       expect(offSpy).toHaveBeenCalledWith('reason');
     });
-    it('no longer not sends events after required supply is cut off', () => {
+    it('no longer sends events after required supply is cut off', () => {
 
       const whenOff = jest.fn();
 

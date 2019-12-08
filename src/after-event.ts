@@ -6,8 +6,8 @@ import { AfterEvent__symbol, EventKeeper, isEventKeeper } from './event-keeper';
 import { eventReceiver, EventReceiver } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
 import { EventSupplier } from './event-supplier';
-import { eventSupply } from './event-supply';
-import { once, share } from './impl';
+import { EventSupply, eventSupply } from './event-supply';
+import { once, share, tillOff } from './impl';
 import { OnEvent } from './on-event';
 import Result = NextCall.CallResult;
 
@@ -984,6 +984,17 @@ export abstract class AfterEvent<E extends any[]> extends OnEvent<E> implements 
    */
   get once(): AfterEvent<E> {
     return afterEventBy(once(this));
+  }
+
+  /**
+   * Builds an [[AfterEvent]] keeper that sends events from this one until the required `supply` is cut off.
+   *
+   * @param supply  The required event supply.
+   *
+   * @returns New event sender.
+   */
+  tillOff(supply: EventSupply): AfterEvent<E> {
+    return afterEventBy(tillOff(this, supply));
   }
 
   /**
