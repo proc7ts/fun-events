@@ -2,7 +2,7 @@
  * @module fun-events
  */
 import { EventEmitter } from '../event-emitter';
-import { EventSupplier } from '../event-supplier';
+import { EventKeeper } from '../event-keeper';
 import { ValueTracker } from './value-tracker';
 
 class TrackedValue<T> extends ValueTracker<T> {
@@ -66,41 +66,40 @@ export function trackValue<T>(initial: T): ValueTracker<T> {
  *
  * If the value is already updated by another supplier, then unbinds from the old one first.
  *
- * Call the [[ValueTracker.off]] method to unbind the tracked value from the `source`.
+ * Call the [[ValueTracker.byNone]] method to unbind the tracked value from the `source`.
  *
  * Note that explicitly updating the value would override the value received from the `source`.
  *
  * @category Value Tracking
- * @param supplier  The source value sender or keeper.
+ * @param supplier  The source value keeper.
  *
  * @returns `this` instance.
  */
-export function trackValueBy<T>(supplier: EventSupplier<[T]>): ValueTracker<T>;
+export function trackValueBy<T>(supplier: EventKeeper<[T]>): ValueTracker<T>;
 
 /**
- * Constructs a tracked value updated by value suppliers extracted from events sent by the given `supplier`.
+ * Constructs a tracked value updated by value keepers extracted from events sent by the given `supplier`.
  *
  * If the value is already updated by another value supplier, then unbinds from the old one first.
  *
- * Call the [[ValueTracker.off]] method to unbind the tracked value from the `source`.
+ * Call the [[ValueTracker.byNone]] method to unbind the tracked value from the `source`.
  *
  * Note that explicitly updating the value would override the value received from the `source`.
  *
  * @typeparam S  Source value type.
- * @param supplier  The event supplier to extract value suppliers from.
- * @param extract  A function extracting value supplier from event received from `supplier`.
- * May return `undefined` to suspend receiving values.
+ * @param supplier  The event keeper to extract value keepers from.
+ * @param extract  A function extracting value keeper from event received from `supplier`.
  *
  * @returns `this` instance.
  */
 export function trackValueBy<T, S extends any[]>(
-    supplier: EventSupplier<S>,
-    extract: (this: void, ...event: S) => EventSupplier<[T]> | undefined,
+    supplier: EventKeeper<S>,
+    extract: (this: void, ...event: S) => EventKeeper<[T]>,
 ): ValueTracker<T>;
 
 export function trackValueBy<T, S extends any[]>(
-    supplier: EventSupplier<S> | EventSupplier<[T]>,
-    extract?: (this: void, ...event: S) => EventSupplier<[T]> | undefined,
+    supplier: EventKeeper<S> | EventKeeper<[T]>,
+    extract?: (this: void, ...event: S) => EventKeeper<[T]>,
 ): ValueTracker<T> {
   return (trackValue() as any).by(supplier, extract);
 }
