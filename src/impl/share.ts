@@ -1,6 +1,6 @@
 import { EventNotifier } from '../event-notifier';
 import { EventReceiver } from '../event-receiver';
-import { eventSupply, EventSupply, noEventSupply } from '../event-supply';
+import { eventSupply, EventSupply } from '../event-supply';
 
 /**
  * @internal
@@ -10,7 +10,7 @@ export function share<E extends any[]>(
 ): (receiver: EventReceiver.Generic<E>) => void {
 
   const shared = new EventNotifier<E>();
-  let sharedSupply = noEventSupply();
+  let sharedSupply: EventSupply;
   let initialEvents: E[] | undefined;
 
   return receiver => {
@@ -37,11 +37,12 @@ export function share<E extends any[]>(
       });
     }
 
+    receiver.supply.needs(sharedSupply);
     shared.on(receiver).whenOff((reason?: any) => {
       if (!shared.size) {
         sharedSupply.off(reason);
       }
-    }).needs(sharedSupply);
+    });
 
     if (initialEvents) {
       // Send initial events to just registered receiver
