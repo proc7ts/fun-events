@@ -4,7 +4,7 @@ import { AfterEvent__symbol } from './event-keeper';
 import { EventNotifier } from './event-notifier';
 import { EventReceiver } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
-import { EventSupply, noEventSupply } from './event-supply';
+import { eventSupply, EventSupply, noEventSupply } from './event-supply';
 import { OnEvent, onEventBy, onNever, onSupplied } from './on-event';
 import { trackValue } from './value';
 import Mock = jest.Mock;
@@ -82,6 +82,66 @@ describe('OnEvent', () => {
       emitter.send('event2');
       expect(mockReceiver).toHaveBeenCalledTimes(1);
       expect(mockReceiver).toHaveBeenLastCalledWith('event1');
+    });
+  });
+
+  describe('tillOff', () => {
+
+    let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
+    let onEvent: OnEvent<[string]>;
+    let supply: EventSupply;
+    let offSpy: SpyInstance;
+    let emitter: EventNotifier<[string]>;
+    let mockReceiver: Mock<void, [string]>;
+    let requiredSupply: EventSupply;
+
+    beforeEach(() => {
+      emitter = new EventNotifier();
+      mockRegister = jest.fn(receiver => {
+        emitter.on(receiver);
+        supply = receiver.supply;
+        offSpy = jest.spyOn(supply, 'off');
+      });
+      onEvent = onEventBy(mockRegister);
+      mockReceiver = jest.fn();
+      requiredSupply = eventSupply();
+    });
+
+    it('sends original events', () => {
+      onEvent.tillOff(requiredSupply)(mockReceiver);
+      emitter.send('event1');
+      emitter.send('event2');
+
+      expect(mockReceiver).toHaveBeenCalledWith('event1');
+      expect(mockReceiver).toHaveBeenLastCalledWith('event2');
+    });
+    it('no longer not sends events after original supply is cut off', () => {
+
+      const whenOff = jest.fn();
+
+      onEvent.tillOff(requiredSupply)(mockReceiver).whenOff(whenOff);
+      emitter.send('event1');
+      supply.off('reason');
+      emitter.send('event2');
+
+      expect(mockReceiver).toHaveBeenLastCalledWith('event1');
+      expect(mockReceiver).not.toHaveBeenCalledWith('event2');
+      expect(whenOff).toHaveBeenCalledWith('reason');
+      expect(offSpy).toHaveBeenCalledWith('reason');
+    });
+    it('no longer not sends events after required supply is cut off', () => {
+
+      const whenOff = jest.fn();
+
+      onEvent.tillOff(requiredSupply)(mockReceiver).whenOff(whenOff);
+      emitter.send('event1');
+      requiredSupply.off('reason');
+      emitter.send('event2');
+
+      expect(mockReceiver).toHaveBeenLastCalledWith('event1');
+      expect(mockReceiver).not.toHaveBeenCalledWith('event2');
+      expect(whenOff).toHaveBeenCalledWith('reason');
+      expect(offSpy).toHaveBeenCalledWith('reason');
     });
   });
 

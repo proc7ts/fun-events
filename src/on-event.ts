@@ -7,7 +7,7 @@ import { eventReceiver, EventReceiver } from './event-receiver';
 import { EventSender, isEventSender, OnEvent__symbol } from './event-sender';
 import { EventSupplier } from './event-supplier';
 import { eventSupply, EventSupply, noEventSupply } from './event-supply';
-import { once, share } from './impl';
+import { once, share, tillOff } from './impl';
 import Result = NextCall.CallResult;
 
 /**
@@ -35,6 +35,17 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
    */
   get once(): OnEvent<E> {
     return onEventBy(once(this));
+  }
+
+  /**
+   * Builds an [[OnEvent]] sender that sends events from this one until the required `supply` is cut off.
+   *
+   * @param supply  The required event supply.
+   *
+   * @returns New event sender.
+   */
+  tillOff(supply: EventSupply): OnEvent<E> {
+    return onEventBy(tillOff(this, supply));
   }
 
   /**
