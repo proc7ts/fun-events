@@ -3,7 +3,7 @@
  */
 import { eventReceiver, EventReceiver } from '../event-receiver';
 import { EventSupply } from '../event-supply';
-import { once } from '../impl';
+import { once, tillOff } from '../impl';
 import { OnEvent } from '../on-event';
 
 /**
@@ -30,6 +30,17 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
    */
   get once(): OnDomEvent<E> {
     return onDomEventBy(once(this));
+  }
+
+  /**
+   * Builds an [[OnDomEvent]] sender that sends events from this one until the required `supply` is cut off.
+   *
+   * @param supply  The required event supply.
+   *
+   * @returns New DOM event sender.
+   */
+  tillOff(supply: EventSupply): OnDomEvent<E> {
+    return onDomEventBy(tillOff(this, supply));
   }
 
   /**

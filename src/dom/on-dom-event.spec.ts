@@ -1,6 +1,6 @@
 import { EventNotifier } from '../event-notifier';
 import { EventReceiver } from '../event-receiver';
-import { EventSupply, noEventSupply } from '../event-supply';
+import { eventSupply, EventSupply, noEventSupply } from '../event-supply';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 import Mock = jest.Mock;
 import SpyInstance = jest.SpyInstance;
@@ -87,6 +87,77 @@ describe('OnDomEvent', () => {
       events.send(new KeyboardEvent('keyup'));
       expect(mockListener).toHaveBeenCalledTimes(1);
       expect(mockListener).toHaveBeenLastCalledWith(event1);
+    });
+  });
+
+  describe('tillOff', () => {
+
+    let supply: EventSupply;
+    let offSpy: SpyInstance;
+    let requiredSupply: EventSupply;
+
+    beforeEach(() => {
+      mockRegister = jest.fn(receiver => {
+        events.on(receiver);
+        supply = receiver.supply;
+        offSpy = jest.spyOn(supply, 'off');
+      });
+      requiredSupply = eventSupply();
+    });
+
+    it('sends original events', () => {
+
+      const event1 = new KeyboardEvent('keydown');
+      const event2 = new KeyboardEvent('keyup');
+
+      onDomEvent.tillOff(requiredSupply)(mockListener);
+      events.send(event1);
+      events.send(event2);
+
+      expect(mockListener).toHaveBeenCalledWith(event1);
+      expect(mockListener).toHaveBeenLastCalledWith(event2);
+    });
+    it('does not send any events if required supply is initially cut off', () => {
+
+      const event = new KeyboardEvent('click');
+      const whenOff = jest.fn();
+
+      onDomEvent.tillOff(noEventSupply())(mockListener).whenOff(whenOff);
+      events.send(event);
+      expect(mockListener).not.toHaveBeenCalled();
+      expect(whenOff).toHaveBeenCalled();
+    });
+    it('no longer sends events after original supply is cut off', () => {
+
+      const event1 = new KeyboardEvent('keydown');
+      const event2 = new KeyboardEvent('keyup');
+      const whenOff = jest.fn();
+
+      onDomEvent.tillOff(requiredSupply)(mockListener).whenOff(whenOff);
+      events.send(event1);
+      supply.off('reason');
+      events.send(event2);
+
+      expect(mockListener).toHaveBeenLastCalledWith(event1);
+      expect(mockListener).toHaveBeenCalledTimes(1);
+      expect(whenOff).toHaveBeenCalledWith('reason');
+      expect(offSpy).toHaveBeenCalledWith('reason');
+    });
+    it('no longer sends events after required supply is cut off', () => {
+
+      const event1 = new KeyboardEvent('keydown');
+      const event2 = new KeyboardEvent('keyup');
+      const whenOff = jest.fn();
+
+      onDomEvent.tillOff(requiredSupply)(mockListener).whenOff(whenOff);
+      events.send(event1);
+      requiredSupply.off('reason');
+      events.send(event2);
+
+      expect(mockListener).toHaveBeenLastCalledWith(event1);
+      expect(mockListener).toHaveBeenCalledTimes(1);
+      expect(whenOff).toHaveBeenCalledWith('reason');
+      expect(offSpy).toHaveBeenCalledWith('reason');
     });
   });
 
