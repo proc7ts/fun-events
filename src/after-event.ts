@@ -7,6 +7,7 @@ import { eventReceiver, EventReceiver } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
 import { EventSupplier } from './event-supplier';
 import { eventSupply } from './event-supply';
+import { once, share } from './impl';
 import { OnEvent } from './on-event';
 import Result = NextCall.CallResult;
 
@@ -982,7 +983,7 @@ export abstract class AfterEvent<E extends any[]> extends OnEvent<E> implements 
    * and stops sending them after that.
    */
   get once(): AfterEvent<E> {
-    return afterEventBy(super.once);
+    return afterEventBy(once(this));
   }
 
   /**
@@ -995,7 +996,7 @@ export abstract class AfterEvent<E extends any[]> extends OnEvent<E> implements 
    * @returns An [[AfterEvent]] keeper sharing a common supply of events originating from this keeper.
    */
   share(): AfterEvent<E> {
-    return afterEventBy(super.share());
+    return afterEventBy(share(this));
   }
 
 }

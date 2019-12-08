@@ -3,6 +3,7 @@
  */
 import { eventReceiver, EventReceiver } from '../event-receiver';
 import { EventSupply } from '../event-supply';
+import { once } from '../impl';
 import { OnEvent } from '../on-event';
 
 /**
@@ -28,7 +29,7 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
    * one.
    */
   get once(): OnDomEvent<E> {
-    return onDomEventBy(super.once);
+    return onDomEventBy(once(this));
   }
 
   /**

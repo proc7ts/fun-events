@@ -3,11 +3,11 @@
  */
 import { callThru, NextCall } from 'call-thru';
 import { AfterEvent__symbol } from './event-keeper';
-import { EventNotifier } from './event-notifier';
 import { eventReceiver, EventReceiver } from './event-receiver';
 import { EventSender, isEventSender, OnEvent__symbol } from './event-sender';
 import { EventSupplier } from './event-supplier';
 import { eventSupply, EventSupply, noEventSupply } from './event-supply';
+import { once, share } from './impl';
 import Result = NextCall.CallResult;
 
 /**
@@ -34,13 +34,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
    * An [[OnEvent]] sender derived from this one that stops sending events to registered receiver after the first one.
    */
   get once(): OnEvent<E> {
-    return onEventBy(receiver => this({
-      supply: receiver.supply,
-      receive: (context, ...event) => {
-        receiver.receive(context, ...event);
-        receiver.supply.off();
-      },
-    }));
+    return onEventBy(once(this));
   }
 
   /**
@@ -56,7 +50,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   dig<F extends any[]>(
       extract: (this: void, ...event: E) => EventSupplier<F> | void | undefined,
   ): OnEvent<F> {
-    return shareSupplyTo(this.dig_(extract));
+    return onEventBy(share(this.dig_(extract)));
   }
 
   /**
@@ -142,7 +136,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
    * @returns An [[OnEvent]] sender sharing a common supply of events originated from this sender.
    */
   share(): OnEvent<E> {
-    return shareSupplyTo(this);
+    return onEventBy(share(this));
   }
 
   /**
@@ -584,7 +578,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   ): OnEvent<[R13]>;
 
   thru(...fns: any[]): OnEvent<any[]> {
-    return shareSupplyTo((this as any).thru_(...fns));
+    return onEventBy(share((this as any).thru_(...fns)));
   }
 
   /**
@@ -1114,46 +1108,3 @@ export function onSupplied<E extends any[]>(supplier: EventSupplier<E>): OnEvent
  * @category Core
  */
 export const onNever: OnEvent<any> = /*#__PURE__*/ onEventBy(({ supply }) => supply.off());
-
-function shareSupplyTo<E extends any[]>(onEvent: OnEvent<E>): OnEvent<E> {
-
-  const shared = new EventNotifier<E>();
-  let sharedSupply = noEventSupply();
-  let initialEvents: E[] | undefined = [];
-  const removeReceiver = (reason?: any) => {
-    if (!shared.size) {
-      sharedSupply.off(reason);
-      initialEvents = [];
-    }
-  };
-
-  return onEventBy(receiver => {
-    if (!shared.size) {
-      sharedSupply = onEvent((...event) => {
-        if (initialEvents) {
-          if (shared.size) {
-            // More events received
-            // Stop sending initial ones
-            initialEvents = undefined;
-          } else {
-            // Record events received during first receiver registration
-            // to send them to all receivers until more event received
-            initialEvents.push(event);
-          }
-        }
-        shared.send(...event);
-      });
-    }
-
-    shared.on(receiver).whenOff(removeReceiver).needs(sharedSupply);
-
-    if (initialEvents) {
-      // Send initial events to just registered receiver
-
-      const dispatcher = new EventNotifier<E>();
-
-      dispatcher.on(receiver);
-      initialEvents.forEach(event => dispatcher.send(...event));
-    }
-  });
-}
