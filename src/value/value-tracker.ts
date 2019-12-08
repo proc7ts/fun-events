@@ -63,7 +63,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
    *
    * If the value is already updated by another supplier, then unbinds from the old one first.
    *
-   * Call the [[ValueTracker.off]] method to unbind the tracked value from the `source`.
+   * Call the [[ValueTracker.byNone]] method to unbind the tracked value from the `source`.
    *
    * Note that explicitly updating the value would override the value received from the `source`.
    *
@@ -78,7 +78,7 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
    *
    * If the value is already updated by another value supplier, then unbinds from the old one first.
    *
-   * Call the [[ValueTracker.off]] method to unbind the tracked value from the `source`.
+   * Call the [[ValueTracker.byNone]] method to unbind the tracked value from the `source`.
    *
    * Note that explicitly updating the value would override the value received from the `source`.
    *
