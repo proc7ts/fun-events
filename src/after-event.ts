@@ -73,7 +73,7 @@ export class AfterEventKeep<E extends any[]> {
    * of transformed events among receivers.
    */
   thru<R1 extends any[]>(
-      fn1: (this: void, ...args: E) => NextCall<any, R1, any, any, any>,
+      fn1: (this: void, ...args: E) => NextCall<any, R1, void, void, void>,
   ): AfterEvent<R1>;
 
   thru<R1>(
@@ -84,7 +84,7 @@ export class AfterEventKeep<E extends any[]> {
       R1 extends Result<P2>,
       P2 extends any[], R2 extends any[]>(
       fn1: (this: void, ...args: E) => R1,
-      fn2: (this: void, ...args: P2) => NextCall<any, R2, any, any, any>,
+      fn2: (this: void, ...args: P2) => NextCall<any, R2, void, void, void>,
   ): AfterEvent<R2>;
 
   thru<
@@ -133,7 +133,7 @@ export class AfterEventKeep<E extends any[]> {
       fn2: (this: void, ...args: P2) => R2,
       fn3: (this: void, ...args: P3) => R3,
       fn4: (this: void, ...args: P4) => R4,
-      fn5: (this: void, ...args: P5) => NextCall<any, R5, any, any, any>,
+      fn5: (this: void, ...args: P5) => NextCall<any, R5, void, void, void>,
   ): AfterEvent<R5>;
 
   thru<
@@ -161,7 +161,7 @@ export class AfterEventKeep<E extends any[]> {
       fn3: (this: void, ...args: P3) => R3,
       fn4: (this: void, ...args: P4) => R4,
       fn5: (this: void, ...args: P5) => R5,
-      fn6: (this: void, ...args: P6) => NextCall<any, R6, any, any, any>,
+      fn6: (this: void, ...args: P6) => NextCall<any, R6, void, void, void>,
   ): AfterEvent<R6>;
 
   thru<
@@ -193,7 +193,7 @@ export class AfterEventKeep<E extends any[]> {
       fn4: (this: void, ...args: P4) => R4,
       fn5: (this: void, ...args: P5) => R5,
       fn6: (this: void, ...args: P6) => R6,
-      fn7: (this: void, ...args: P7) => NextCall<any, R7, any, any, any>,
+      fn7: (this: void, ...args: P7) => NextCall<any, R7, void, void, void>,
   ): AfterEvent<R7>;
 
   thru<
@@ -229,7 +229,7 @@ export class AfterEventKeep<E extends any[]> {
       fn5: (this: void, ...args: P5) => R5,
       fn6: (this: void, ...args: P6) => R6,
       fn7: (this: void, ...args: P7) => R7,
-      fn8: (this: void, ...args: P8) => NextCall<any, R8, any, any, any>,
+      fn8: (this: void, ...args: P8) => NextCall<any, R8, void, void, void>,
   ): AfterEvent<R8>;
 
   thru<
@@ -269,7 +269,7 @@ export class AfterEventKeep<E extends any[]> {
       fn6: (this: void, ...args: P6) => R6,
       fn7: (this: void, ...args: P7) => R7,
       fn8: (this: void, ...args: P8) => R8,
-      fn9: (this: void, ...args: P9) => NextCall<any, R9, any, any, any>,
+      fn9: (this: void, ...args: P9) => NextCall<any, R9, void, void, void>,
   ): AfterEvent<R9>;
 
   thru<
@@ -313,7 +313,7 @@ export class AfterEventKeep<E extends any[]> {
       fn7: (this: void, ...args: P7) => R7,
       fn8: (this: void, ...args: P8) => R8,
       fn9: (this: void, ...args: P9) => R9,
-      fn10: (this: void, ...args: P10) => NextCall<any, R10, any, any, any>,
+      fn10: (this: void, ...args: P10) => NextCall<any, R10, void, void, void>,
   ): AfterEvent<R10>;
 
   thru<
@@ -361,7 +361,7 @@ export class AfterEventKeep<E extends any[]> {
       fn8: (this: void, ...args: P8) => R8,
       fn9: (this: void, ...args: P9) => R9,
       fn10: (this: void, ...args: P10) => R10,
-      fn11: (this: void, ...args: P11) => NextCall<any, R11, any, any, any>,
+      fn11: (this: void, ...args: P11) => NextCall<any, R11, void, void, void>,
   ): AfterEvent<R11>;
 
   thru<
@@ -413,7 +413,7 @@ export class AfterEventKeep<E extends any[]> {
       fn9: (this: void, ...args: P9) => R9,
       fn10: (this: void, ...args: P10) => R10,
       fn11: (this: void, ...args: P11) => R11,
-      fn12: (this: void, ...args: P12) => NextCall<any, R12, any, any, any>,
+      fn12: (this: void, ...args: P12) => NextCall<any, R12, void, void, void>,
   ): AfterEvent<R12>;
 
   thru<
@@ -469,7 +469,7 @@ export class AfterEventKeep<E extends any[]> {
       fn10: (this: void, ...args: P10) => R10,
       fn11: (this: void, ...args: P11) => R11,
       fn12: (this: void, ...args: P12) => R12,
-      fn13: (this: void, ...args: P13) => NextCall<any, R13, any, any, any>,
+      fn13: (this: void, ...args: P13) => NextCall<any, R13, void, void, void>,
   ): AfterEvent<R13>;
 
   thru<
@@ -516,7 +516,7 @@ export class AfterEventKeep<E extends any[]> {
    * @returns An [[AfterEvent]] keeper of events transformed with provided passes.
    */
   thru_<R1 extends any[]>(
-      fn1: (this: void, ...args: E) => NextCall<any, R1, any, any, any>,
+      fn1: (this: void, ...args: E) => NextCall<any, R1, void, void, void>,
   ): AfterEvent<R1>;
 
   thru_<R1>(
@@ -527,7 +527,7 @@ export class AfterEventKeep<E extends any[]> {
       R1 extends Result<P2>,
       P2 extends any[], R2 extends any[]>(
       fn1: (this: void, ...args: E) => R1,
-      fn2: (this: void, ...args: P2) => NextCall<any, R2, any, any, any>,
+      fn2: (this: void, ...args: P2) => NextCall<any, R2, void, void, void>,
   ): AfterEvent<R2>;
 
   thru_<
@@ -576,7 +576,7 @@ export class AfterEventKeep<E extends any[]> {
       fn2: (this: void, ...args: P2) => R2,
       fn3: (this: void, ...args: P3) => R3,
       fn4: (this: void, ...args: P4) => R4,
-      fn5: (this: void, ...args: P5) => NextCall<any, R5, any, any, any>,
+      fn5: (this: void, ...args: P5) => NextCall<any, R5, void, void, void>,
   ): AfterEvent<R5>;
 
   thru_<
@@ -604,7 +604,7 @@ export class AfterEventKeep<E extends any[]> {
       fn3: (this: void, ...args: P3) => R3,
       fn4: (this: void, ...args: P4) => R4,
       fn5: (this: void, ...args: P5) => R5,
-      fn6: (this: void, ...args: P6) => NextCall<any, R6, any, any, any>,
+      fn6: (this: void, ...args: P6) => NextCall<any, R6, void, void, void>,
   ): AfterEvent<R6>;
 
   thru_<
@@ -636,7 +636,7 @@ export class AfterEventKeep<E extends any[]> {
       fn4: (this: void, ...args: P4) => R4,
       fn5: (this: void, ...args: P5) => R5,
       fn6: (this: void, ...args: P6) => R6,
-      fn7: (this: void, ...args: P7) => NextCall<any, R7, any, any, any>,
+      fn7: (this: void, ...args: P7) => NextCall<any, R7, void, void, void>,
   ): AfterEvent<R7>;
 
   thru_<
@@ -672,7 +672,7 @@ export class AfterEventKeep<E extends any[]> {
       fn5: (this: void, ...args: P5) => R5,
       fn6: (this: void, ...args: P6) => R6,
       fn7: (this: void, ...args: P7) => R7,
-      fn8: (this: void, ...args: P8) => NextCall<any, R8, any, any, any>,
+      fn8: (this: void, ...args: P8) => NextCall<any, R8, void, void, void>,
   ): AfterEvent<R8>;
 
   thru_<
@@ -712,7 +712,7 @@ export class AfterEventKeep<E extends any[]> {
       fn6: (this: void, ...args: P6) => R6,
       fn7: (this: void, ...args: P7) => R7,
       fn8: (this: void, ...args: P8) => R8,
-      fn9: (this: void, ...args: P9) => NextCall<any, R9, any, any, any>,
+      fn9: (this: void, ...args: P9) => NextCall<any, R9, void, void, void>,
   ): AfterEvent<R9>;
 
   thru_<
@@ -756,7 +756,7 @@ export class AfterEventKeep<E extends any[]> {
       fn7: (this: void, ...args: P7) => R7,
       fn8: (this: void, ...args: P8) => R8,
       fn9: (this: void, ...args: P9) => R9,
-      fn10: (this: void, ...args: P10) => NextCall<any, R10, any, any, any>,
+      fn10: (this: void, ...args: P10) => NextCall<any, R10, void, void, void>,
   ): AfterEvent<R10>;
 
   thru_<
@@ -804,7 +804,7 @@ export class AfterEventKeep<E extends any[]> {
       fn8: (this: void, ...args: P8) => R8,
       fn9: (this: void, ...args: P9) => R9,
       fn10: (this: void, ...args: P10) => R10,
-      fn11: (this: void, ...args: P11) => NextCall<any, R11, any, any, any>,
+      fn11: (this: void, ...args: P11) => NextCall<any, R11, void, void, void>,
   ): AfterEvent<R11>;
 
   thru_<
@@ -856,7 +856,7 @@ export class AfterEventKeep<E extends any[]> {
       fn9: (this: void, ...args: P9) => R9,
       fn10: (this: void, ...args: P10) => R10,
       fn11: (this: void, ...args: P11) => R11,
-      fn12: (this: void, ...args: P12) => NextCall<any, R12, any, any, any>,
+      fn12: (this: void, ...args: P12) => NextCall<any, R12, void, void, void>,
   ): AfterEvent<R12>;
 
   thru_<
@@ -912,7 +912,7 @@ export class AfterEventKeep<E extends any[]> {
       fn10: (this: void, ...args: P10) => R10,
       fn11: (this: void, ...args: P11) => R11,
       fn12: (this: void, ...args: P12) => R12,
-      fn13: (this: void, ...args: P13) => NextCall<any, R13, any, any, any>,
+      fn13: (this: void, ...args: P13) => NextCall<any, R13, void, void, void>,
   ): AfterEvent<R13>;
 
   thru_<
