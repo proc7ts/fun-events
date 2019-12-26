@@ -1118,4 +1118,5 @@ export function onSupplied<E extends any[]>(supplier: EventSupplier<E>): OnEvent
  *
  * @category Core
  */
-export const onNever: OnEvent<any> = /*#__PURE__*/ onEventBy(({ supply }) => supply.off());
+export const onNever: OnEvent<any> =
+    /*#__PURE__*/ onEventBy(({ supply }) => supply.off());

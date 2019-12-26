@@ -124,7 +124,8 @@ class NoSupply extends EventSupply {
 
 }
 
-const noSupply = /*#__PURE__*/ new NoSupply();
+const noSupply =
+    /*#__PURE__*/ new NoSupply();
 
 /**
  * Returns a no-event supply.
