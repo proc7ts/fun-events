@@ -30,7 +30,7 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.1",
     "@rollup/plugin-node-resolve": "^7.0.0",
-    "@surol/eslint-config": "^1.0.0",
+    "@surol/eslint-config": "^1.0.1",
     "@types/jest": "^24.9.0",
     "@typescript-eslint/eslint-plugin": "^2.16.0",
     "@typescript-eslint/parser": "^2.16.0",
