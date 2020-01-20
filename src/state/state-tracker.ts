@@ -30,12 +30,11 @@ class PathEntry {
 
   on(receiver: StateUpdateReceiver): EventSupply {
 
-    const entry = this;
     const supply = this.emitter.on(receiver);
 
     return eventSupply(reason => {
       supply.off(reason);
-      entry._dropIfEmpty();
+      this._dropIfEmpty();
     }).needs(supply);
   }
 
@@ -60,19 +59,19 @@ class PathEntry {
     return created;
   }
 
-  done(reason?: any) {
+  done(reason?: any): void {
     for (const nested of this._nested.values()) {
       nested.done(reason);
     }
     this.emitter.done(reason);
   }
 
-  private _remove(key: PropertyKey) {
+  private _remove(key: PropertyKey): void {
     this._nested.delete(key);
     this._dropIfEmpty();
   }
 
-  private _dropIfEmpty() {
+  private _dropIfEmpty(): void {
     if (!this._nested.size && this.emitter.size <= 1) {
       this._drop();
     }
@@ -88,11 +87,11 @@ class Trackers {
     return this._entry(path).on(receiver);
   }
 
-  send<V>(path: StatePath.Normalized, newValue: V, oldValue: V) {
+  send<V>(path: StatePath.Normalized, newValue: V, oldValue: V): void {
     this._root.emitter.send(path, newValue, oldValue);
   }
 
-  done(path: StatePath.Normalized, reason?: any) {
+  done(path: StatePath.Normalized, reason?: any): void {
 
     const entry = this._entry(path, true);
 
@@ -143,7 +142,7 @@ class SubStateTracker implements StateTracker {
   }
 
   // noinspection JSUnusedGlobalSymbols
-  get _tracker() {
+  get _tracker(): this {
     return this;
   }
 
@@ -159,7 +158,7 @@ class SubStateTracker implements StateTracker {
     return new SubStateTracker(this._trackers, [...this._path, ...path]);
   }
 
-  done(reason?: any) {
+  done(reason?: any): void {
     this._trackers.done(this._path, reason);
   }
 
@@ -236,7 +235,7 @@ export class StateTracker implements EventSender<[StatePath, any, any]> {
    *
    * @param reason  An optional reason to stop tracking.
    */
-  done(reason?: any) {
+  done(reason?: any): void {
     this._tracker.done(reason);
   }
 

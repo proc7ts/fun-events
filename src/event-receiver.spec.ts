@@ -53,6 +53,7 @@ describe('EventReceiver', () => {
     });
     it('prevents event reception during event supply cut off', () => {
 
+      // eslint-disable-next-line prefer-const
       let generic: EventReceiver.Generic<[string, string]>;
       const receiver = {
         supply: eventSupply(() => generic.receive(context, 'foo', 'bar')),

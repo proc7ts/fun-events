@@ -31,21 +31,19 @@ export function afterEach<E extends any[]>(...sources: EventKeeper<E>[]): AfterE
     let send: () => void = noop;
     const result: E[] = [];
 
-    sources.forEach(readFrom);
-
-    if (!supply.isOff) {
-      send = () => notifier.send(...result);
-    }
-
-    function readFrom(source: EventKeeper<E>, index: number) {
+    sources.forEach((source, index) => {
       supply.needs(source[AfterEvent__symbol]((...event) => {
         result[index] = event;
         send();
       }).needs(supply));
+    });
+
+    if (!supply.isOff) {
+      send = () => notifier.send(...result);
     }
   }
 
-  function latestEvent() {
+  function latestEvent(): E[] {
 
     const result: E[] = [];
 

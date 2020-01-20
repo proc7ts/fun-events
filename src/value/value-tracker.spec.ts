@@ -27,7 +27,7 @@ describe('ValueTracker', () => {
 
     v1.on(listener);
     // noinspection SillyAssignmentJS
-    v1.it = v1.it;
+    v1.it = v1.it; // eslint-disable-line no-self-assign
 
     expect(listener).not.toHaveBeenCalled();
   });
@@ -155,7 +155,7 @@ describe('ValueTracker', () => {
       v2.on(listener);
       v1.it = 'new';
       expect(v2.it).toBe('old');
-      expect(listener).not.toBeCalled();
+      expect(listener).not.toHaveBeenCalled();
     });
     it('is unbound when value supply is cut off', () => {
       v1.done();
@@ -165,7 +165,7 @@ describe('ValueTracker', () => {
       v2.on(listener);
       v1.it = 'new';
       expect(v2.it).toBe('old');
-      expect(listener).not.toBeCalled();
+      expect(listener).not.toHaveBeenCalled();
     });
 
     describe('trackValueBy', () => {
@@ -241,7 +241,7 @@ describe('ValueTracker', () => {
       v1.on(listener);
       sender.send(v3);
       expect(v1.it).toBe('old');
-      expect(listener).not.toBeCalled();
+      expect(listener).not.toHaveBeenCalled();
     });
   });
 });

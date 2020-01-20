@@ -1169,8 +1169,7 @@ export function afterThe<E extends any[]>(...event: E): AfterEvent<E> {
  *
  * @category Core
  */
-export const afterNever: AfterEvent<any> =
-    /*#__PURE__*/ afterEventBy(({ supply }) => supply.off());
+export const afterNever: AfterEvent<any> = (/*#__PURE__*/ afterEventBy(({ supply }) => supply.off()));
 
 function noEvent(): never {
   throw new Error('No events to send');

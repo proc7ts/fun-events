@@ -88,7 +88,7 @@ export function eventSupply(off: (this: void, reason?: any) => void = noop): Eve
 
   class Supply extends EventSupply {
 
-    get isOff() {
+    get isOff(): boolean {
       return cutOff === noop;
     }
 
@@ -107,13 +107,16 @@ export function eventSupply(off: (this: void, reason?: any) => void = noop): Eve
   return new Supply();
 }
 
+/**
+ * @internal
+ */
 class NoSupply extends EventSupply {
 
-  get isOff() {
+  get isOff(): true {
     return true;
   }
 
-  off() {
+  off(): this {
     return this;
   }
 
@@ -124,8 +127,10 @@ class NoSupply extends EventSupply {
 
 }
 
-const noSupply =
-    /*#__PURE__*/ new NoSupply();
+/**
+ * @internal
+ */
+const noSupply = (/*#__PURE__*/ new NoSupply());
 
 /**
  * Returns a no-event supply.

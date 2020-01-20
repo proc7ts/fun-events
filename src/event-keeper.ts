@@ -9,7 +9,7 @@ import { EventSupply } from './event-supply';
  *
  * @category Core
  */
-export const AfterEvent__symbol = /*#__PURE__*/ Symbol('after-event');
+export const AfterEvent__symbol = (/*#__PURE__*/ Symbol('after-event'));
 
 /**
  * An event supplier that keeps the last event sent.

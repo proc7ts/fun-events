@@ -95,12 +95,12 @@ function receiveEventsByEach<E extends any[]>(
 
   return (...event) => send(event);
 
-  function sendNonRecurrent(event: E) {
+  function sendNonRecurrent(event: E): void {
 
     let actualReceivers = receivers;
     const received: E[] = [];
 
-    send = sendRecurrent;
+    send = (recurrent: E) => received.push(recurrent);
 
     try {
       for (; ;) {
@@ -116,10 +116,6 @@ function receiveEventsByEach<E extends any[]>(
       }
     } finally {
       send = sendNonRecurrent;
-    }
-
-    function sendRecurrent(recurrent: E) {
-      received.push(recurrent);
     }
   }
 }

@@ -178,7 +178,7 @@ export interface OnDomEvent<E extends Event> {
    *
    * @return A DOM events supply.
    */
-  // tslint:disable-next-line:callable-types
+  // eslint-disable-next-line @typescript-eslint/prefer-function-type
   (this: void, listener: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): EventSupply;
 
 }

@@ -99,10 +99,14 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
       extract?: (this: void, ...event: S) => EventSupplier<[T]> | undefined,
   ): this {
 
-    const self = this;
+    const acceptValuesFrom = (sender: EventSupplier<[T]>): EventSupply => {
+
+      const registrar = isEventKeeper(sender) ? sender[AfterEvent__symbol] : sender[OnEvent__symbol];
+
+      return registrar(value => this.it = value);
+    };
 
     this.byNone();
-
     if (!extract) {
 
       const sender = supplier as EventSupplier<[T]>;
@@ -123,16 +127,10 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
         return;
       });
     }
+
     this._by.whenOff(() => this._by = noEventSupply());
 
     return this;
-
-    function acceptValuesFrom(sender: EventSupplier<[T]>): EventSupply {
-
-      const registrar = isEventKeeper(sender) ? sender[AfterEvent__symbol] : sender[OnEvent__symbol];
-
-      return registrar(value => self.it = value);
-    }
   }
 
   /**

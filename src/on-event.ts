@@ -1058,7 +1058,7 @@ export interface OnEvent<E extends any[]> {
    *
    * @returns A supply of events from this sender to the given `receiver`.
    */
-  (this: void, receiver: EventReceiver<E>): EventSupply; // tslint:disable-line:callable-types
+  (this: void, receiver: EventReceiver<E>): EventSupply;// eslint-disable-line @typescript-eslint/prefer-function-type
 
 }
 
@@ -1118,5 +1118,4 @@ export function onSupplied<E extends any[]>(supplier: EventSupplier<E>): OnEvent
  *
  * @category Core
  */
-export const onNever: OnEvent<any> =
-    /*#__PURE__*/ onEventBy(({ supply }) => supply.off());
+export const onNever: OnEvent<any> = (/*#__PURE__*/ onEventBy(({ supply }) => supply.off()));

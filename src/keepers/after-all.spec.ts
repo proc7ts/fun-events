@@ -8,8 +8,8 @@ describe('afterAll', () => {
 
   let source1: ValueTracker<string>;
   let source2: ValueTracker<number>;
-  let fromAll: AfterEvent<[{ source1: [string], source2: [number] }]>;
-  let mockReceiver: Mock<void, [{ source1: [string], source2: [number] }]>;
+  let fromAll: AfterEvent<[{ source1: [string]; source2: [number] }]>;
+  let mockReceiver: Mock<void, [{ source1: [string]; source2: [number] }]>;
 
   beforeEach(() => {
     source1 = trackValue('init');
@@ -59,7 +59,7 @@ describe('afterAll', () => {
   it('sends recurrent event sent during registration to recurrent receiver', () => {
 
     const recurrentReceiver = jest.fn();
-    const receiver: EventReceiver.Object<[{ source1: [string], source2: [number] }]> = {
+    const receiver: EventReceiver.Object<[{ source1: [string]; source2: [number] }]> = {
        receive: jest.fn(context => {
          context.onRecurrent(recurrentReceiver);
          source1.it = 'recurrent';

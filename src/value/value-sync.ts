@@ -121,7 +121,7 @@ export class ValueSync<T> extends ValueTracker<T> {
       third?: (this: void, ...event: U) => ValueTracker<T, any> | undefined,
   ): EventSupply {
 
-    let syncWithTracker = (tracker: ValueTracker<T, any>) => syncTrackers(this, tracker);
+    let syncWithTracker = (tracker: ValueTracker<T, any>): EventSupply => syncTrackers(this, tracker);
     let source: ValueTracker<T, any> | EventSupplier<U>;
     let extract: ((this: void, ...event: U) => ValueTracker<T, any> | undefined) | undefined;
 
@@ -151,7 +151,7 @@ export class ValueSync<T> extends ValueTracker<T> {
       return tracker && syncWithTracker(tracker);
     });
 
-    function syncTrackers(tracker1: ValueTracker<T, any>, tracker2: ValueTracker<T, any>) {
+    function syncTrackers(tracker1: ValueTracker<T, any>, tracker2: ValueTracker<T, any>): EventSupply {
 
       const supply1 = tracker1.read(value => {
         tracker2.it = value;

@@ -26,12 +26,12 @@ export function onAny<E extends any[]>(...suppliers: EventSupplier<E>[]): OnEven
 
     const { supply } = receiver;
     let remained = suppliers.length;
-    const removeSupplier = (reason?: any) => {
+    const removeSupplier = (reason?: any): void => {
       if (!--remained) {
         supply.off(reason);
       }
     };
-    const receive = (context: EventReceiver.Context<E>, ...event: E) => {
+    const receive = (context: EventReceiver.Context<E>, ...event: E): void => {
       receiver.receive(context, ...event);
     };
 

@@ -38,17 +38,15 @@ export function afterAll<S extends { readonly [key: string]: EventKeeper<any> }>
     let send: () => void = noop;
     const result: { [K in keyof S]: EventKeeper.Event<S[K]> } = {} as any;
 
-    keys.forEach(readFrom);
-
-    if (!supply.isOff) {
-      send = () => notifier.send(result);
-    }
-
-    function readFrom(key: keyof S) {
+    keys.forEach((key: keyof S) => {
       supply.needs(sources[key][AfterEvent__symbol]((...event) => {
         result[key] = event;
         send();
       }).needs(supply));
+    });
+
+    if (!supply.isOff) {
+      send = () => notifier.send(result);
     }
   }
 

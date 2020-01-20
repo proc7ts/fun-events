@@ -9,7 +9,7 @@ import { EventSupply } from './event-supply';
  *
  * @category Core
  */
-export const OnEvent__symbol = /*#__PURE__*/ Symbol('on-event');
+export const OnEvent__symbol = (/*#__PURE__*/ Symbol('on-event'));
 
 /**
  * A sender of events.

@@ -171,11 +171,11 @@ describe('OnDomEvent', () => {
     });
     it('captures events by default', () => {
       onDomEvent.capture(mockListener);
-      expect(mockRegister).toHaveBeenCalledWith(jasmine.anything(), true);
+      expect(mockRegister).toHaveBeenCalledWith(expect.anything(), true);
     });
     it('respects non-capturing registration', () => {
       onDomEvent.capture(mockListener, false);
-      expect(mockRegister).toHaveBeenCalledWith(jasmine.anything(), false);
+      expect(mockRegister).toHaveBeenCalledWith(expect.anything(), false);
     });
     it('captures events by default when options passed', () => {
 
@@ -185,7 +185,7 @@ describe('OnDomEvent', () => {
       };
 
       onDomEvent.capture(mockListener, opts);
-      expect(mockRegister).toHaveBeenCalledWith(jasmine.anything(), { ...opts, capture: true });
+      expect(mockRegister).toHaveBeenCalledWith(expect.anything(), { ...opts, capture: true });
     });
     it('respects non-capturing options', () => {
 
@@ -195,7 +195,7 @@ describe('OnDomEvent', () => {
       };
 
       onDomEvent.capture(mockListener, opts);
-      expect(mockRegister).toHaveBeenCalledWith(jasmine.anything(), opts);
+      expect(mockRegister).toHaveBeenCalledWith(expect.anything(), opts);
     });
   });
 

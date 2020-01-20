@@ -3,8 +3,12 @@
  */
 import { EventEmitter } from '../event-emitter';
 import { EventKeeper } from '../event-keeper';
+import { OnEvent } from '../on-event';
 import { ValueTracker } from './value-tracker';
 
+/**
+ * @internal
+ */
 class TrackedValue<T> extends ValueTracker<T> {
 
   private readonly _on = new EventEmitter<[T, T]>();
@@ -13,7 +17,7 @@ class TrackedValue<T> extends ValueTracker<T> {
     super();
   }
 
-  get on() {
+  get on(): OnEvent<[T, T]> {
     return this._on.on;
   }
 
