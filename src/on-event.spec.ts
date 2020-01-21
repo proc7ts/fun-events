@@ -169,7 +169,7 @@ describe('OnEvent', () => {
       nested1 = new EventNotifier();
       nested2 = new EventNotifier();
       receiver = jest.fn();
-      extract = jest.fn((nested?) => nested);
+      extract = jest.fn((nested?: EventNotifier<[string]>) => nested);
       result = sender.on.dig(extract);
       supply = result(receiver);
     });
@@ -268,7 +268,7 @@ describe('OnEvent', () => {
       nested1 = new EventNotifier();
       nested2 = new EventNotifier();
       receiver = jest.fn();
-      consume = jest.fn((nested?) => nested && nested.on(receiver));
+      consume = jest.fn((nested?: EventNotifier<[string]>) => nested && nested.on(receiver));
       supply = sender.on.consume(consume);
     });
 

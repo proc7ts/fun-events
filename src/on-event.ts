@@ -87,7 +87,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
 
       this({
         supply: receiver.supply,
-        receive(_context, ...event: E)  {
+        receive(_context, ...event: E) {
 
           const prevSupply = nestedSupply;
           const extracted = extract(...event);
@@ -1035,8 +1035,8 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
 
     const thru = callThru as any;
 
-    return onEventBy(receiver =>
-        this({
+    return onEventBy(
+        receiver => this({
           supply: receiver.supply,
           receive(context, ...event) {
             thru(
@@ -1044,7 +1044,8 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
                 (...transformed: any[]) => receiver.receive(context, ...transformed),
             )(...event);
           },
-        }));
+        }),
+    );
   }
 
 }

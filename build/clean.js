@@ -10,7 +10,7 @@ const path = require('path');
       fs.remove(path.resolve(rootDir, 'd.ts')),
       fs.remove(path.resolve(rootDir, 'dist')),
       fs.remove(path.resolve(rootDir, 'target')),
-    ])
+    ]);
   } catch (e) {
     console.error('Failed to clean build artifacts');
     process.exit(1);

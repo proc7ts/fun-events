@@ -187,7 +187,7 @@ describe('ValueTracker', () => {
 
   describe('by nested value sender or keeper', () => {
 
-    let sender: EventEmitter<[EventKeeper<[string]> | EventSender<[string]>  | undefined]>;
+    let sender: EventEmitter<[EventKeeper<[string]> | EventSender<[string]> | undefined]>;
 
     beforeEach(() => {
       sender = new EventEmitter();

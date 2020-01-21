@@ -54,9 +54,11 @@ export function afterAll<S extends { readonly [key: string]: EventKeeper<any> }>
 
     const result: { [K in keyof S]: EventKeeper.Event<S[K]> } = {} as any;
 
-    keys.forEach(key =>
-        afterSupplied(sources[key])
-            .once((...event) => result[key as keyof S] = event));
+    keys.forEach(
+        key => afterSupplied(sources[key]).once(
+            (...event) => result[key as keyof S] = event,
+        ),
+    );
 
     return [result];
   }

@@ -1,4 +1,4 @@
-import { noop, passIf } from 'call-thru';
+import { asis, noop, passIf } from 'call-thru';
 import { AfterEvent, afterEventBy, afterNever, afterSupplied, afterThe } from './after-event';
 import { EventEmitter } from './event-emitter';
 import { AfterEvent__symbol } from './event-keeper';
@@ -201,7 +201,7 @@ describe('AfterEvent', () => {
         nested2 = trackValue('2');
         sender = trackValue(nested1);
         receiver = jest.fn();
-        extract = jest.fn((nested) => nested);
+        extract = jest.fn(asis);
         result = sender.read.keep.dig(extract);
         result(receiver);
       });

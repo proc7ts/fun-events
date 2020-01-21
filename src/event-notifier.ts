@@ -89,7 +89,7 @@ export class EventNotifier<E extends any[]> implements EventSender<E> {
  */
 function receiveEventsByEach<E extends any[]>(
     receivers: Iterable<EventReceiver.Generic<E>>,
-): (this: void, ...event: E) => void  {
+): (this: void, ...event: E) => void {
 
   let send: (this: void, event: E) => void = sendNonRecurrent;
 
