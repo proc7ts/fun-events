@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module fun-events
  */
 import { NextCall, noop, valueProvider } from 'call-thru';

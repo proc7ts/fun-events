@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module fun-events
  */
 import { EventKeeper } from './event-keeper';

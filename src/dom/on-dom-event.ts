@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module fun-events
  */
 import { eventReceiver, EventReceiver } from '../event-receiver';

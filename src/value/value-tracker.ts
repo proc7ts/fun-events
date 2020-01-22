@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module fun-events
  */
 import { AfterEvent, afterEventBy } from '../after-event';
