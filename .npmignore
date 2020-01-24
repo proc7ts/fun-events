@@ -31,6 +31,11 @@ node_modules
 
 # Include distribution dir
 !/dist
+# ...but exclude unnecessary chunks
+/dist/.*
 
 # Include type definitions
 !/d.ts
+# ...but exclude implementation typings
+/d.ts/impl
+/d.ts/**/*.impl.d.ts
