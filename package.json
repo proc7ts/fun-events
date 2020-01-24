@@ -1,6 +1,6 @@
 {
   "name": "fun-events",
-  "version": "7.1.0-dev.0",
+  "version": "7.1.0",
   "description": "Functional event processor",
   "keywords": [
     "dom-events",
