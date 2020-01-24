@@ -38,4 +38,4 @@ node_modules
 !/d.ts
 # ...but exclude implementation typings
 /d.ts/impl
-/d.ts/**/*.impl.d.ts
+/d.ts/**/*.impl.*
