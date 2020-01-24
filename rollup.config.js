@@ -20,7 +20,7 @@ export default {
     sourcemaps(),
   ],
   input: {
-    '.fun-events': './src/index.ts',
+    'fun-events': './src/index.ts',
     'fun-events.dom': './src/dom/index.ts',
   },
   external: Object.keys(pkg.peerDependencies),
@@ -35,14 +35,14 @@ export default {
       sourcemap: true,
       dir: './dist',
       entryFileNames: '[name].js',
-      chunkFileNames: `[name].js`,
+      chunkFileNames: '_[name].js',
     },
     {
       format: 'esm',
       sourcemap: true,
       dir: './dist',
       entryFileNames: '[name].mjs',
-      chunkFileNames: `[name].mjs`,
+      chunkFileNames: '_[name].mjs',
     },
   ],
 };
