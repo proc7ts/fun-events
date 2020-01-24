@@ -3,7 +3,6 @@
  * @module fun-events
  */
 export * from './after-event';
-export * from './dom';
 export * from './event-emitter';
 export * from './event-keeper';
 export * from './event-notifier';
