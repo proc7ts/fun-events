@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>EventEmitter | Functional Event Processor</title>
+	<title>EventNotifier | Functional Event Processor</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,10 +54,13 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="eventemitter.html">EventEmitter</a>
+					<a href="../modules/fun_events.html">fun-events</a>
+				</li>
+				<li>
+					<a href="fun_events.eventnotifier-1.html">EventNotifier</a>
 				</li>
 			</ul>
-			<h1>Class EventEmitter&lt;E&gt;</h1>
+			<h1>Class EventNotifier&lt;E&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -67,9 +70,12 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Event emitter is a handy implementation of <a href="onevent.html">OnEvent</a> sender.</p>
+						<p>Event notifier can be used to register event receivers and send events to them.</p>
 					</div>
-					<p>Extends <a href="eventnotifier.html">EventNotifier</a> by making its <a href="eventnotifier.html#on">EventNotifier.on</a> method implement an <a href="onevent.html">OnEvent</a> interface.</p>
+					<p>It does not implement an <a href="../modules/fun_events.html#onevent">OnEvent</a> interface though. Use an <a href="../modules/fun_events.html#eventemitter">EventEmitter</a> if you need one.</p>
+					<p>Manages a list of registered event receivers, and removes them from the list once their supplies
+					are <a href="fun_events.eventsupply-2.html#off">cut off</a>.</p>
+					<p>Can be used as <a href="../modules/fun_events.html#eventsender">EventSender</a>.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -89,10 +95,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="eventnotifier.html" class="tsd-signature-type">EventNotifier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>
+						<span class="target">EventNotifier</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">EventEmitter</span>
+								<a href="fun_events.eventemitter-1.html" class="tsd-signature-type">EventEmitter</a>
 							</li>
 						</ul>
 					</li>
@@ -101,8 +107,7 @@
 			<section class="tsd-panel">
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../modules/eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
-					<li><a href="../modules/eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<li><a href="../modules/fun_events.eventsender-1.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -112,21 +117,21 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite"><a href="eventemitter.html#_onevent__symbol_" class="tsd-kind-icon">[<wbr>OnEvent__symbol]</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite"><a href="eventemitter.html#on" class="tsd-kind-icon">on</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="eventemitter.html#send" class="tsd-kind-icon">send</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="fun_events.eventnotifier-1.html#send" class="tsd-kind-icon">send</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-inherited">
+						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="eventemitter.html#size" class="tsd-kind-icon">size</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="fun_events.eventnotifier-1.html#size" class="tsd-kind-icon">size</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-inherited">
+						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="eventemitter.html#done" class="tsd-kind-icon">done</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fun_events.eventnotifier-1.html#_onevent__symbol_" class="tsd-kind-icon">[<wbr>OnEvent__symbol]</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fun_events.eventnotifier-1.html#done" class="tsd-kind-icon">done</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fun_events.eventnotifier-1.html#on" class="tsd-kind-icon">on</a></li>
 							</ul>
 						</section>
 					</div>
@@ -134,42 +139,13 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite">
-					<a name="_onevent__symbol_" class="tsd-anchor"></a>
-					<h3>[<wbr>OnEvent__symbol]</h3>
-					<div class="tsd-signature tsd-kind-icon">[<wbr>OnEvent__symbol]<span class="tsd-signature-symbol">:</span> <a href="onevent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;this.on</span></div>
-					<aside class="tsd-sources">
-						<p>Overrides <a href="eventnotifier.html">EventNotifier</a>.<a href="eventnotifier.html#_onevent__symbol_">[OnEvent__symbol]</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/7282730/src/event-emitter.ts#L25">src/event-emitter.ts:25</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite">
-					<a name="on" class="tsd-anchor"></a>
-					<h3>on</h3>
-					<div class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">:</span> <a href="onevent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;onEventBy&lt;E&gt;(receiver &#x3D;&gt; super.on(receiver))</span></div>
-					<aside class="tsd-sources">
-						<p>Overrides <a href="eventnotifier.html">EventNotifier</a>.<a href="eventnotifier.html#on">on</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/7282730/src/event-emitter.ts#L23">src/event-emitter.ts:23</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>An <a href="onevent.html">OnEvent</a> sender.</p>
-						</div>
-						<p>The <code>[OnEvent__symbol]</code> property is an alias of this one.</p>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="send" class="tsd-anchor"></a>
 					<h3>send</h3>
-					<div class="tsd-signature tsd-kind-icon">send<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> =&nbsp;receiveEventsByEach(this._rcvs)</span></div>
+					<div class="tsd-signature tsd-kind-icon">send<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> = receiveEventsByEach(this._rcvs)</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="eventnotifier.html">EventNotifier</a>.<a href="eventnotifier.html#send">send</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/7282730/src/event-notifier.ts#L33">src/event-notifier.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/63f35d1/src/event-notifier.ts#L34">src/event-notifier.ts:34</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -186,7 +162,7 @@
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property tsd-is-not-exported">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property">
 									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
@@ -208,20 +184,19 @@
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Accessors</h2>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
 					<a name="size" class="tsd-anchor"></a>
 					<h3>size</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> size<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="eventnotifier.html">EventNotifier</a>.<a href="eventnotifier.html#size">size</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/7282730/src/event-notifier.ts#L38">src/event-notifier.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/63f35d1/src/event-notifier.ts#L39">src/event-notifier.ts:39</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -234,20 +209,42 @@
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="_onevent__symbol_" class="tsd-anchor"></a>
+					<h3>[<wbr>OnEvent__symbol]</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">[<wbr>OnEvent__symbol]<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="../modules/fun_events.html#eventreceiver" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fun_events.eventsupply-2.html" class="tsd-signature-type">EventSupply</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/63f35d1/src/event-notifier.ts#L43">src/event-notifier.ts:43</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>receiver: <a href="../modules/fun_events.html#eventreceiver" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="fun_events.eventsupply-2.html" class="tsd-signature-type">EventSupply</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="done" class="tsd-anchor"></a>
 					<h3>done</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">done<span class="tsd-signature-symbol">(</span>reason<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="eventnotifier.html">EventNotifier</a>.<a href="eventnotifier.html#done">done</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/7282730/src/event-notifier.ts#L75">src/event-notifier.ts:75</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/63f35d1/src/event-notifier.ts#L76">src/event-notifier.ts:76</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -270,6 +267,40 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="on" class="tsd-anchor"></a>
+					<h3>on</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="../modules/fun_events.html#eventreceiver" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fun_events.eventsupply-2.html" class="tsd-signature-type">EventSupply</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/63f35d1/src/event-notifier.ts#L58">src/event-notifier.ts:58</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Registers an event receiver.</p>
+								</div>
+								<p>Receivers registered with this method will receive the <a href="fun_events.eventnotifier-1.html#send">emitted</a> events.</p>
+								<p>The <code>[OnEvent__symbol]</code> method is an alias of this one.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>receiver: <a href="../modules/fun_events.html#eventreceiver" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A receiver of events to register.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="fun_events.eventsupply-2.html" class="tsd-signature-type">EventSupply</a></h4>
+							<p>A supply of events to the given <code>receiver</code>.</p>
+						</li>
+					</ul>
+				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -278,29 +309,35 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
+					<li class="current tsd-kind-external-module">
+						<a href="../modules/fun_events.html">fun-<wbr>events</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/fun_events_dom.html">fun-<wbr>events/dom</a>
+					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-has-type-parameter">
-						<a href="eventemitter.html" class="tsd-kind-icon">Event<wbr>Emitter</a>
+					<li class="current tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="fun_events.eventnotifier-1.html" class="tsd-kind-icon">Event<wbr>Notifier</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite">
-								<a href="eventemitter.html#_onevent__symbol_" class="tsd-kind-icon">[<wbr>OnEvent__symbol]</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="fun_events.eventnotifier-1.html#send" class="tsd-kind-icon">send</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite">
-								<a href="eventemitter.html#on" class="tsd-kind-icon">on</a>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="fun_events.eventnotifier-1.html#size" class="tsd-kind-icon">size</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="eventemitter.html#send" class="tsd-kind-icon">send</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="fun_events.eventnotifier-1.html#_onevent__symbol_" class="tsd-kind-icon">[<wbr>OnEvent__symbol]</a>
 							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
-								<a href="eventemitter.html#size" class="tsd-kind-icon">size</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="fun_events.eventnotifier-1.html#done" class="tsd-kind-icon">done</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="eventemitter.html#done" class="tsd-kind-icon">done</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="fun_events.eventnotifier-1.html#on" class="tsd-kind-icon">on</a>
 							</li>
 						</ul>
 					</li>

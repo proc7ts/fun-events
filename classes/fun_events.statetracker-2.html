@@ -54,7 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="statetracker.html">StateTracker</a>
+					<a href="../modules/fun_events.html">fun-events</a>
+				</li>
+				<li>
+					<a href="fun_events.statetracker-2.html">StateTracker</a>
 				</li>
 			</ul>
 			<h1>Class StateTracker</h1>
@@ -69,9 +72,9 @@
 					<div class="lead">
 						<p>State changes tracker.</p>
 					</div>
-					<p>A state is a tree-like structure of sub-states (nodes) available under <a href="../modules/statepath.html">StatePath</a>.</p>
-					<p>When node modified a <a href="statetracker.html#update">StateTracker.update</a> should be called. Then all state update receivers registered by
-					<a href="statetracker.html#onupdate">StateTracker.onUpdate</a> will receive this update.</p>
+					<p>A state is a tree-like structure of sub-states (nodes) available under <a href="../modules/fun_events.html#statepath">StatePath</a>.</p>
+					<p>When node modified a <a href="fun_events.statetracker-2.html#update">StateTracker.update</a> should be called. Then all state update receivers registered by
+					<a href="fun_events.statetracker-2.html#onupdate">StateTracker.onUpdate</a> will receive this update.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -85,7 +88,7 @@
 			<section class="tsd-panel">
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../modules/eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<li><a href="../modules/fun_events.eventsender-1.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../modules/fun_events.html#statepath" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -93,45 +96,20 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="statetracker.html#_tracker" class="tsd-kind-icon">_tracker</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="statetracker.html#_onevent__symbol_" class="tsd-kind-icon">[<wbr>OnEvent__symbol]</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="statetracker.html#onupdate" class="tsd-kind-icon">on<wbr>Update</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="statetracker.html#update" class="tsd-kind-icon">update</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="fun_events.statetracker-2.html#_onevent__symbol_" class="tsd-kind-icon">[<wbr>OnEvent__symbol]</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="fun_events.statetracker-2.html#onupdate" class="tsd-kind-icon">on<wbr>Update</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="fun_events.statetracker-2.html#update" class="tsd-kind-icon">update</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="statetracker.html#done" class="tsd-kind-icon">done</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="statetracker.html#track" class="tsd-kind-icon">track</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fun_events.statetracker-2.html#done" class="tsd-kind-icon">done</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fun_events.statetracker-2.html#track" class="tsd-kind-icon">track</a></li>
 							</ul>
 						</section>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="_tracker" class="tsd-anchor"></a>
-					<h3>_tracker</h3>
-					<div class="tsd-signature tsd-kind-icon">_tracker<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">SubStateTracker</span><span class="tsd-signature-symbol"> =&nbsp;new SubStateTracker(new Trackers(), [])</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/7282730/src/state/state-tracker.ts#L183">src/state/state-tracker.ts:183</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<dl class="tsd-comment-tags">
-							<dt>internal</dt>
-							<dd></dd>
-						</dl>
 					</div>
 				</section>
 			</section>
@@ -141,16 +119,16 @@
 					<a name="_onevent__symbol_" class="tsd-anchor"></a>
 					<h3>[<wbr>OnEvent__symbol]</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> [OnEvent__symbol]<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/onstateupdate.html" class="tsd-signature-type">OnStateUpdate</a></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> [OnEvent__symbol]<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/fun_events.onstateupdate-2.html" class="tsd-signature-type">OnStateUpdate</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/7282730/src/state/state-tracker.ts#L194">src/state/state-tracker.ts:194</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/63f35d1/src/state/state-tracker.ts#L194">src/state/state-tracker.ts:194</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/onstateupdate.html" class="tsd-signature-type">OnStateUpdate</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/fun_events.onstateupdate-2.html" class="tsd-signature-type">OnStateUpdate</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -158,22 +136,22 @@
 					<a name="onupdate" class="tsd-anchor"></a>
 					<h3>on<wbr>Update</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> onUpdate<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/onstateupdate.html" class="tsd-signature-type">OnStateUpdate</a></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> onUpdate<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/fun_events.onstateupdate-2.html" class="tsd-signature-type">OnStateUpdate</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/7282730/src/state/state-tracker.ts#L190">src/state/state-tracker.ts:190</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/63f35d1/src/state/state-tracker.ts#L190">src/state/state-tracker.ts:190</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>A <a href="../interfaces/onstateupdate.html">state updates sender</a>.</p>
+									<p>A <a href="../modules/fun_events.html#onstateupdate">state updates sender</a>.</p>
 								</div>
 								<p>A state update will be sent to it whenever an <code>update()</code> function is called.</p>
 							</div>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/onstateupdate.html" class="tsd-signature-type">OnStateUpdate</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/fun_events.onstateupdate-2.html" class="tsd-signature-type">OnStateUpdate</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -181,26 +159,26 @@
 					<a name="update" class="tsd-anchor"></a>
 					<h3>update</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> update<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> update<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span>&lt;V&gt;<span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, path<span class="tsd-signature-symbol">: </span><a href="../modules/fun_events.html#statepath" class="tsd-signature-type">StatePath</a>, newValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, oldValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/7282730/src/state/state-tracker.ts#L209">src/state/state-tracker.ts:209</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/63f35d1/src/state/state-tracker.ts#L209">src/state/state-tracker.ts:209</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Updates the component state.</p>
 								</div>
-								<p>All receivers registered with <a href="statetracker.html#onupdate">onUpdate</a> will receive this update.</p>
+								<p>All receivers registered with <a href="fun_events.statetracker-2.html#onupdate">onUpdate</a> will receive this update.</p>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">function</span></h4>
+							<h4 class="tsd-returns-title">Returns &lt;V&gt;<span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, path<span class="tsd-signature-symbol">: </span><a href="../modules/fun_events.html#statepath" class="tsd-signature-type">StatePath</a>, newValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, oldValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h4>
 							<ul class="tsd-parameters">
 								<li class="tsd-parameter-siganture">
-									<ul class="tsd-signatures tsd-kind-type-literal tsd-has-type-parameter tsd-is-not-exported">
-										<li class="tsd-signature tsd-kind-icon">&lt;V&gt;<span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, path<span class="tsd-signature-symbol">: </span><a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a>, newValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, oldValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+									<ul class="tsd-signatures tsd-kind-type-literal tsd-has-type-parameter">
+										<li class="tsd-signature tsd-kind-icon">&lt;V&gt;<span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, path<span class="tsd-signature-symbol">: </span><a href="../modules/fun_events.html#statepath" class="tsd-signature-type">StatePath</a>, newValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, oldValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 									</ul>
 									<ul class="tsd-descriptions">
 										<li class="tsd-description">
@@ -219,7 +197,7 @@
 													<h5>this: <span class="tsd-signature-type">void</span></h5>
 												</li>
 												<li>
-													<h5>path: <a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a></h5>
+													<h5>path: <a href="../modules/fun_events.html#statepath" class="tsd-signature-type">StatePath</a></h5>
 												</li>
 												<li>
 													<h5>newValue: <span class="tsd-signature-type">V</span></h5>
@@ -255,7 +233,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/7282730/src/state/state-tracker.ts#L239">src/state/state-tracker.ts:239</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/63f35d1/src/state/state-tracker.ts#L239">src/state/state-tracker.ts:239</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -281,13 +259,13 @@
 					<a name="track" class="tsd-anchor"></a>
 					<h3>track</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">track<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="statetracker.html" class="tsd-signature-type">StateTracker</a></li>
+						<li class="tsd-signature tsd-kind-icon">track<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><a href="../modules/fun_events.html#statepath" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fun_events.statetracker-2.html" class="tsd-signature-type">StateTracker</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/7282730/src/state/state-tracker.ts#L225">src/state/state-tracker.ts:225</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/63f35d1/src/state/state-tracker.ts#L225">src/state/state-tracker.ts:225</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -298,13 +276,13 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>path: <a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a></h5>
+									<h5>path: <a href="../modules/fun_events.html#statepath" class="tsd-signature-type">StatePath</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>A path to state part.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="statetracker.html" class="tsd-signature-type">StateTracker</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="fun_events.statetracker-2.html" class="tsd-signature-type">StateTracker</a></h4>
 							<p>New partial state tracker.</p>
 						</li>
 					</ul>
@@ -317,32 +295,35 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
+					<li class="current tsd-kind-external-module">
+						<a href="../modules/fun_events.html">fun-<wbr>events</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/fun_events_dom.html">fun-<wbr>events/dom</a>
+					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class">
-						<a href="statetracker.html" class="tsd-kind-icon">State<wbr>Tracker</a>
+					<li class="current tsd-kind-class tsd-parent-kind-external-module">
+						<a href="fun_events.statetracker-2.html" class="tsd-kind-icon">State<wbr>Tracker</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="statetracker.html#_tracker" class="tsd-kind-icon">_tracker</a>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="fun_events.statetracker-2.html#_onevent__symbol_" class="tsd-kind-icon">[<wbr>OnEvent__symbol]</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="statetracker.html#_onevent__symbol_" class="tsd-kind-icon">[<wbr>OnEvent__symbol]</a>
+								<a href="fun_events.statetracker-2.html#onupdate" class="tsd-kind-icon">on<wbr>Update</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="statetracker.html#onupdate" class="tsd-kind-icon">on<wbr>Update</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="statetracker.html#update" class="tsd-kind-icon">update</a>
+								<a href="fun_events.statetracker-2.html#update" class="tsd-kind-icon">update</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="statetracker.html#done" class="tsd-kind-icon">done</a>
+								<a href="fun_events.statetracker-2.html#done" class="tsd-kind-icon">done</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="statetracker.html#track" class="tsd-kind-icon">track</a>
+								<a href="fun_events.statetracker-2.html#track" class="tsd-kind-icon">track</a>
 							</li>
 						</ul>
 					</li>

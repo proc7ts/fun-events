@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Object | Functional Event Processor</title>
+	<title>Context | Functional Event Processor</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,16 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/stateupdatereceiver.html">StateUpdateReceiver</a>
+					<a href="../modules/fun_events.html">fun-events</a>
 				</li>
 				<li>
-					<a href="stateupdatereceiver.object.html">Object</a>
+					<a href="../modules/fun_events.stateupdatereceiver-2.html">StateUpdateReceiver</a>
+				</li>
+				<li>
+					<a href="fun_events.stateupdatereceiver-2.context.html">Context</a>
 				</li>
 			</ul>
-			<h1>Interface Object</h1>
+			<h1>Interface Context</h1>
 		</div>
 	</div>
 </header>
@@ -70,7 +73,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>State updates receiver object.</p>
+						<p>State update processing context.</p>
 					</div>
 				</div>
 			</section>
@@ -78,10 +81,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="eventreceiver.object.html" class="tsd-signature-type">Object</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>
+						<a href="fun_events.eventreceiver-2.context.html" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../modules/fun_events.html#statepath" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">Object</span>
+								<span class="target">Context</span>
 							</li>
 						</ul>
 					</li>
@@ -91,97 +94,35 @@
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section tsd-is-inherited">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="stateupdatereceiver.object.html#supply" class="tsd-kind-icon">supply</a></li>
-							</ul>
-						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-overwrite"><a href="stateupdatereceiver.object.html#receive" class="tsd-kind-icon">receive</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="fun_events.stateupdatereceiver-2.context.html#onrecurrent" class="tsd-kind-icon">on<wbr>Recurrent</a></li>
 							</ul>
 						</section>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-					<a name="supply" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> supply</h3>
-					<div class="tsd-signature tsd-kind-icon">supply<span class="tsd-signature-symbol">:</span> <a href="../classes/eventsupply.html" class="tsd-signature-type">EventSupply</a></div>
-					<aside class="tsd-sources">
-						<p>Inherited from <a href="eventreceiver.object.html">Object</a>.<a href="eventreceiver.object.html#supply">supply</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/7282730/src/event-receiver.ts#L56">src/event-receiver.ts:56</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Event supply to this receiver.</p>
-						</div>
-						<p>Events will be supplied to this receiver until this supply is <a href="../classes/eventsupply.html#off">cut off</a>.</p>
-						<p>When omitted a new supply will be created per receiver registration within event supplier.</p>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-overwrite">
-					<a name="receive" class="tsd-anchor"></a>
-					<h3>receive</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">receive&lt;V&gt;<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="stateupdatereceiver.context.html" class="tsd-signature-type">Context</a>, path<span class="tsd-signature-symbol">: </span><a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a>, newValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, oldValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+					<a name="onrecurrent" class="tsd-anchor"></a>
+					<h3>on<wbr>Recurrent</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Recurrent<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="../modules/fun_events.stateupdatereceiver-2.html#function" class="tsd-signature-type">Function</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="eventreceiver.object.html">Object</a>.<a href="eventreceiver.object.html#receive">receive</a></p>
+								<p>Overrides <a href="fun_events.eventreceiver-2.context.html">Context</a>.<a href="fun_events.eventreceiver-2.context.html#onrecurrent">onRecurrent</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/7282730/src/state/state-update-receiver.ts#L57">src/state/state-update-receiver.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/63f35d1/src/state/state-update-receiver.ts#L24">src/state/state-update-receiver.ts:24</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Receives a state update.</p>
-								</div>
-							</div>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>V</h4>
-									<div class="tsd-comment tsd-typography">
-										<p>A type of changed value.</p>
-									</div>
-								</li>
-							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>context: <a href="stateupdatereceiver.context.html" class="tsd-signature-type">Context</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>State update processing context.</p>
-									</div>
-								</li>
-								<li>
-									<h5>path: <a href="../modules/statepath.html" class="tsd-signature-type">StatePath</a></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>A path to changed state part.</p>
-									</div>
-								</li>
-								<li>
-									<h5>newValue: <span class="tsd-signature-type">V</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>New value.</p>
-									</div>
-								</li>
-								<li>
-									<h5>oldValue: <span class="tsd-signature-type">V</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Previous value.</p>
-									</div>
+									<h5>receiver: <a href="../modules/fun_events.stateupdatereceiver-2.html#function" class="tsd-signature-type">Function</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -196,45 +137,27 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-module tsd-has-type-parameter">
-						<a href="../modules/eventkeeper.html">Event<wbr>Keeper</a>
-					</li>
-					<li class=" tsd-kind-module tsd-has-type-parameter">
-						<a href="../modules/eventreceiver.html">Event<wbr>Receiver</a>
-					</li>
-					<li class=" tsd-kind-module tsd-has-type-parameter">
-						<a href="../modules/eventsender.html">Event<wbr>Sender</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/statepath.html">State<wbr>Path</a>
-					</li>
-					<li class="current tsd-kind-module">
-						<a href="../modules/stateupdatereceiver.html">State<wbr>Update<wbr>Receiver</a>
-					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="stateupdatereceiver.context.html" class="tsd-kind-icon">Context</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
-						<a href="stateupdatereceiver.object.html" class="tsd-kind-icon">Object</a>
+						<a href="fun_events.stateupdatereceiver-2.context.html" class="tsd-kind-icon">Context</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="stateupdatereceiver.object.html#supply" class="tsd-kind-icon">supply</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-overwrite">
-								<a href="stateupdatereceiver.object.html#receive" class="tsd-kind-icon">receive</a>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="fun_events.stateupdatereceiver-2.context.html#onrecurrent" class="tsd-kind-icon">on<wbr>Recurrent</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="fun_events.stateupdatereceiver-2.object.html" class="tsd-kind-icon">Object</a>
+					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-						<a href="../modules/stateupdatereceiver.html#function" class="tsd-kind-icon">Function</a>
+						<a href="../modules/fun_events.stateupdatereceiver-2.html#function" class="tsd-kind-icon">Function</a>
 					</li>
 				</ul>
 			</nav>
