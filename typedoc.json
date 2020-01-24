@@ -1,7 +1,10 @@
 {
   "categorizeByGroup": true,
   "categoryOrder": ["Core", "State Tracking", "Value Tracking", "DOM Events", "*"],
-  "exclude": ["**/impl/**/*.ts"],
+  "exclude": [
+    "**/index.ts",
+    "**/impl/**/*.ts"
+  ],
   "excludeNotExported": true,
   "mode": "modules",
   "name": "Functional Event Processor",
