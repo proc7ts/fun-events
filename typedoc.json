@@ -3,7 +3,7 @@
   "categoryOrder": ["Core", "State Tracking", "Value Tracking", "DOM Events", "*"],
   "exclude": ["**/impl/**/*.ts"],
   "excludeNotExported": true,
-  "mode": "file",
+  "mode": "modules",
   "name": "Functional Event Processor",
   "out": "./target/typedoc",
   "tsconfig": "tsconfig.main.json"

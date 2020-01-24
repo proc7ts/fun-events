@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module fun-events
+ * @module fun-events/dom
  */
 import { eventReceiver, EventReceiver } from '../event-receiver';
 import { EventSupply } from '../event-supply';

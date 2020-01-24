@@ -1,5 +1,6 @@
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
+import path from 'path';
 import sourcemaps from 'rollup-plugin-sourcemaps';
 import ts from 'rollup-plugin-typescript2';
 import typescript from 'typescript';
@@ -18,18 +19,30 @@ export default {
     nodeResolve(),
     sourcemaps(),
   ],
-  input: './src/index.ts',
+  input: {
+    '.fun-events': './src/index.ts',
+    'fun-events.dom': './src/dom/index.ts',
+  },
   external: Object.keys(pkg.peerDependencies),
+  manualChunks(id) {
+    if (!id.startsWith(path.join(__dirname, 'src', 'dom') + path.sep)) {
+      return 'fun-events';
+    }
+  },
   output: [
     {
-      file: pkg.main,
       format: 'cjs',
       sourcemap: true,
+      dir: './dist',
+      entryFileNames: '[name].js',
+      chunkFileNames: `[name].js`,
     },
     {
-      file: pkg.module,
       format: 'esm',
       sourcemap: true,
+      dir: './dist',
+      entryFileNames: '[name].mjs',
+      chunkFileNames: `[name].mjs`,
     },
   ],
 };

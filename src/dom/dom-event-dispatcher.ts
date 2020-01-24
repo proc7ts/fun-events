@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module fun-events
+ * @module fun-events/dom
  */
 import { noop } from 'call-thru';
 import { EventReceiver } from '../event-receiver';
