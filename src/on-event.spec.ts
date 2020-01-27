@@ -277,6 +277,58 @@ describe('OnEvent', () => {
       nested1.send('value');
       expect(receiver).toHaveBeenCalledWith('value');
     });
+    it('cuts off previous supply on new event', () => {
+
+      const source = new EventEmitter<[]>();
+      const supply1 = eventSupply();
+      const supply2 = eventSupply();
+      let calls = 0;
+
+      source.on.consume(() => {
+
+        const result = !calls ? supply1 : calls === 1 ? supply2 : undefined;
+
+        ++calls;
+
+        return result;
+      });
+
+      source.send();
+      expect(supply1.isOff).toBe(false);
+      expect(supply2.isOff).toBe(false);
+
+      source.send();
+      expect(supply1.isOff).toBe(true);
+      expect(supply2.isOff).toBe(false);
+
+      source.send();
+      expect(supply1.isOff).toBe(true);
+      expect(supply2.isOff).toBe(true);
+    });
+    it('does not cut off previous supply on new event returning the same supply', () => {
+
+      const source = new EventEmitter<[]>();
+      const supply1 = eventSupply();
+      let calls = 0;
+
+      source.on.consume(() => {
+
+        const result = !calls || calls === 1 ? supply1 : undefined;
+
+        ++calls;
+
+        return result;
+      });
+
+      source.send();
+      expect(supply1.isOff).toBe(false);
+
+      source.send();
+      expect(supply1.isOff).toBe(false);
+
+      source.send();
+      expect(supply1.isOff).toBe(true);
+    });
     it('receives latest event', () => {
       sender.send(nested1);
 

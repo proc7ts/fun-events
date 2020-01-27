@@ -114,7 +114,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
    * Consumes events.
    *
    * @param consume  A function consuming events. This function may return an {@link EventSupply event supply} instance
-   * when registers a nested event receiver. This supply will be cut off on new event.
+   * when registers a nested event receiver. This supply will be cut off on new event, unless returned again.
    *
    * @returns An event supply that will stop consuming events once {@link EventSupply.off cut off}.
    */
@@ -128,7 +128,9 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
       try {
         consumerSupply = consume(...event) || noEventSupply();
       } finally {
-        prevSupply.off();
+        if (consumerSupply !== prevSupply) {
+          prevSupply.off();
+        }
       }
     });
 
