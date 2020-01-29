@@ -3,7 +3,7 @@
  * @module fun-events
  */
 import { noop } from 'call-thru';
-import { AfterEvent, afterEventBy, afterNever, afterSupplied } from '../after-event';
+import { AfterEvent, afterEventBy, afterSupplied } from '../after-event';
 import { AfterEvent__symbol, EventKeeper } from '../event-keeper';
 import { EventNotifier } from '../event-notifier';
 import { EventReceiver } from '../event-receiver';
@@ -15,13 +15,10 @@ import { EventReceiver } from '../event-receiver';
  * @typeparam E  A type of events sent by each source.
  * @param sources  An array of source event keepers.
  *
- * @returns An event keeper sending events received from each event keeper. Each event item is an event tuple originated
- * from event keeper under the same index in `sources` array.
+ * @returns An event keeper sending events received from each source keeper. Each event item is an event tuple
+ * originated from source keeper under its index in `sources` array.
  */
 export function afterEach<E extends any[]>(...sources: EventKeeper<E>[]): AfterEvent<E[]> {
-  if (!sources.length) {
-    return afterNever;
-  }
 
   return afterEventBy(registerReceiver, latestEvent).share();
 

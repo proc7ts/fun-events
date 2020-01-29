@@ -1,4 +1,4 @@
-import { AfterEvent, afterEventBy, afterNever } from '../after-event';
+import { AfterEvent, afterEventBy } from '../after-event';
 import { EventReceiver } from '../event-receiver';
 import { trackValue, ValueTracker } from '../value';
 import { afterEach } from './after-each';
@@ -23,9 +23,13 @@ describe('afterEach', () => {
     expect(mockReceiver).toHaveBeenCalledWith(['init1'], ['init2']);
     expect(mockReceiver).toHaveBeenCalledTimes(1);
   });
-  it('does not send anything without sources', () => {
-    fromEach(mockReceiver);
-    expect(afterEach()).toBe(afterNever);
+  it('sends empty tuple without sources', () => {
+
+    const receiver = jest.fn();
+
+    afterEach()(receiver);
+    expect(receiver).toHaveBeenCalledWith();
+    expect(receiver).toHaveBeenCalledTimes(1);
   });
   it('sends updates', () => {
     fromEach(mockReceiver);
