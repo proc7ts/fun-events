@@ -3,7 +3,7 @@
  * @module fun-events
  */
 import { noop } from 'call-thru';
-import { AfterEvent, afterEventBy, afterNever, afterSupplied } from '../after-event';
+import { AfterEvent, afterEventBy, afterSupplied } from '../after-event';
 import { AfterEvent__symbol, EventKeeper } from '../event-keeper';
 import { EventNotifier } from '../event-notifier';
 import { EventReceiver } from '../event-receiver';
@@ -15,18 +15,14 @@ import { EventReceiver } from '../event-receiver';
  * @typeparam S  A type of `sources` map.
  * @param sources  A map of named event keepers the events are originated from.
  *
- * @returns An event keeper sending a map of events received from each event keeper. Each event in this map has the
- * same name as its originating event keeper in `sources`.
+ * @returns An event keeper sending a map of events received from each source keeper. Each event in this map has the
+ * same key as its source keeper in `sources`.
  */
 export function afterAll<S extends { readonly [key: string]: EventKeeper<any> }>(
     sources: S,
 ): AfterEvent<[{ readonly [K in keyof S]: EventKeeper.Event<S[K]> }]> {
 
   const keys = Object.keys(sources);
-
-  if (!keys.length) {
-    return afterNever;
-  }
 
   return afterEventBy(registerReceiver, latestEvent).share();
 
