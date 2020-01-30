@@ -27,6 +27,7 @@ import { onAnyAsync } from './on-any-async';
 export function onAsync<E>(from: EventSender<[PromiseLike<E> | E]>): OnEvent<[E, ...E[]]> {
   return onEventBy(receiver => {
 
+    const { supply } = receiver;
     const sender = new EventNotifier<[E, ...E[]]>();
 
     sender.on(receiver);
@@ -34,7 +35,7 @@ export function onAsync<E>(from: EventSender<[PromiseLike<E> | E]>): OnEvent<[E,
     const sourceSupply = eventSupply();
     let numInProcess = 0;
     const source = onSupplied(from)
-        .tillOff(receiver.supply, sourceSupply)
+        .tillOff(supply, sourceSupply)
         .thru_(event => {
           ++numInProcess;
           return event;
@@ -49,33 +50,36 @@ export function onAsync<E>(from: EventSender<[PromiseLike<E> | E]>): OnEvent<[E,
       }
     });
 
-    onAnyAsync(source)((event, index) => {
+    onAnyAsync(source)({
+      supply,
+      receive(_ctx, event, index) {
 
-      const i = index - numSent;
+        const i = index - numSent;
 
-      received[i] = event;
-      ++numReceived;
-      if (numReceived > i) {
+        received[i] = event;
+        ++numReceived;
+        if (numReceived > i) {
 
-        let toSend: E[];
+          let toSend: E[];
 
-        if (numReceived === received.length) {
-          // Can send all received events
-          toSend = received;
-          received = [];
-        } else {
-          // Can send events up to `i`
-          toSend = received.splice(0, i + 1);
+          if (numReceived === received.length) {
+            // Can send all received events
+            toSend = received;
+            received = [];
+          } else {
+            // Can send events up to `i`
+            toSend = received.splice(0, i + 1);
+          }
+          numSent += toSend.length;
+          numReceived -= toSend.length;
+          numInProcess -= toSend.length;
+
+          sender.send(...(toSend as [E, ...E[]]));
+          if (!numInProcess && sourceSupply.isOff) {
+            receiver.supply.needs(sourceSupply);
+          }
         }
-        numSent += toSend.length;
-        numReceived -= toSend.length;
-        numInProcess -= toSend.length;
-
-        sender.send(...(toSend as [E, ...E[]]));
-        if (!numInProcess && sourceSupply.isOff) {
-          receiver.supply.needs(sourceSupply);
-        }
-      }
+      },
     });
   });
 }

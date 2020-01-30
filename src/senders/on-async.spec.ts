@@ -9,16 +9,32 @@ describe('onAsync', () => {
   let origin: EventEmitter<[(string | Promise<string>)]>;
   let receiver: Mock<void, string[]>;
   let received: Promise<string[]>[];
+  let resolvers: ((resolved: string[] | PromiseLike<string[]>) => void)[];
   let supply: EventSupply;
 
   beforeEach(() => {
     origin = new EventEmitter<[string | Promise<string>]>();
     received = [];
-    receiver = jest.fn((...batch) => {
-      received.push(Promise.resolve(batch));
+    resolvers = [];
+    receiver = jest.fn((...event) => {
+
+      const resolver = resolvers.shift();
+
+      if (resolver) {
+        resolver(event);
+      } else {
+        received.push(Promise.resolve(event));
+      }
     });
     supply = onAsync(origin)(receiver).whenOff(reason => {
-      received.push(Promise.reject(reason));
+
+      const resolver = resolvers.shift();
+
+      if (resolver) {
+        resolver(Promise.reject(reason));
+      } else {
+        received.push(Promise.reject(reason));
+      }
     });
   });
 
@@ -44,6 +60,23 @@ describe('onAsync', () => {
     expect(await next()).toEqual(['1']);
     expect(await next()).toEqual(['2', '3']);
     expect(supply.isOff).toBe(false);
+  });
+  it('cuts off supply when incoming event resolution failed', async () => {
+
+    const whenOff = jest.fn();
+
+    supply.whenOff(whenOff);
+
+    let rejectFirst!: (reason?: any) => void;
+
+    origin.send(new Promise<string>((_resolve, reject) => rejectFirst = reject));
+    origin.send('2');
+
+    const reason = 'test';
+
+    rejectFirst(reason);
+    expect(await next().catch(asis)).toBe(reason);
+    expect(whenOff).toHaveBeenCalledWith(reason);
   });
   it('cuts off supply when incoming supply cut off and all events resolved', async () => {
 
@@ -114,9 +147,7 @@ describe('onAsync', () => {
       if (r) {
         resolve(r);
       } else {
-        receiver.mockImplementationOnce((...event) => {
-          resolve(event);
-        });
+        resolvers.push(resolve);
       }
     });
   }
