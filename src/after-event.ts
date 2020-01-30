@@ -990,12 +990,16 @@ export abstract class AfterEvent<E extends any[]> extends OnEvent<E> implements 
   /**
    * Builds an [[AfterEvent]] keeper that sends events from this one until the required `supply` is cut off.
    *
-   * @param supply  The required event supply.
+   * The outgoing events supply will be cut off once incoming event supply does. Unless a second supply passed in.
+   * In the latter case that supply will be cut off instead.
+   *
+   * @param requiredSupply  The required event supply.
+   * @param dependentSupply  The supply to cut off on cutting off the incoming events supply.
    *
    * @returns New event keeper.
    */
-  tillOff(supply: EventSupply): AfterEvent<E> {
-    return afterEventBy(tillOff(this, supply));
+  tillOff(requiredSupply: EventSupply, dependentSupply?: EventSupply): AfterEvent<E> {
+    return afterEventBy(tillOff(this, requiredSupply, dependentSupply));
   }
 
   /**

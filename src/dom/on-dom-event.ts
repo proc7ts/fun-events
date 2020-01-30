@@ -36,12 +36,16 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
   /**
    * Builds an [[OnDomEvent]] sender that sends events from this one until the required `supply` is cut off.
    *
-   * @param supply  The required event supply.
+   * The outgoing events supply will be cut off once incoming event supply does. Unless a second supply passed in.
+   * In the latter case that supply will be cut off instead.
+   *
+   * @param requiredSupply  The required event supply.
+   * @param dependentSupply  The supply to cut off on cutting off the incoming events supply.
    *
    * @returns New DOM event sender.
    */
-  tillOff(supply: EventSupply): OnDomEvent<E> {
-    return onDomEventBy(tillOff(this, supply));
+  tillOff(requiredSupply: EventSupply, dependentSupply?: EventSupply): OnDomEvent<E> {
+    return onDomEventBy(tillOff(this, requiredSupply, dependentSupply));
   }
 
   /**
