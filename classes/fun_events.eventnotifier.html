@@ -115,6 +115,12 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="fun_events.eventnotifier.html#constructor" class="tsd-kind-icon">constructor</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="fun_events.eventnotifier.html#send" class="tsd-kind-icon">send</a></li>
@@ -138,6 +144,26 @@
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Event<wbr>Notifier<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fun_events.eventnotifier.html" class="tsd-signature-type">EventNotifier</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/d5366f6/src/event-notifier.ts#L39">src/event-notifier.ts:39</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="fun_events.eventnotifier.html" class="tsd-signature-type">EventNotifier</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="send" class="tsd-anchor"></a>
@@ -145,7 +171,7 @@
 					<div class="tsd-signature tsd-kind-icon">send<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> = receiveEventsByEach(this._rcvs)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/d53974a/src/event-notifier.ts#L34">src/event-notifier.ts:34</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/d5366f6/src/event-notifier.ts#L39">src/event-notifier.ts:39</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -196,7 +222,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/d53974a/src/event-notifier.ts#L39">src/event-notifier.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/d5366f6/src/event-notifier.ts#L50">src/event-notifier.ts:50</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -221,7 +247,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/d53974a/src/event-notifier.ts#L43">src/event-notifier.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/d5366f6/src/event-notifier.ts#L54">src/event-notifier.ts:54</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -244,14 +270,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/d53974a/src/event-notifier.ts#L76">src/event-notifier.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/d5366f6/src/event-notifier.ts#L88">src/event-notifier.ts:88</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Removes all registered event receivers and cuts off corresponding event supplies.</p>
 								</div>
-								<p>After this method call they won&#39;t receive any events.</p>
+								<p>After this method call they won&#39;t receive any events. While new receivers would be cut off immediately upon
+								registration.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -277,7 +304,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/d53974a/src/event-notifier.ts#L58">src/event-notifier.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/d5366f6/src/event-notifier.ts#L69">src/event-notifier.ts:69</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -333,6 +360,9 @@
 					<li class="current tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="fun_events.eventnotifier.html" class="tsd-kind-icon">Event<wbr>Notifier</a>
 						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="fun_events.eventnotifier.html#constructor" class="tsd-kind-icon">constructor</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="fun_events.eventnotifier.html#send" class="tsd-kind-icon">send</a>
 							</li>
@@ -420,6 +450,12 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="../modules/fun_events.html#onany" class="tsd-kind-icon">on<wbr>Any</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="../modules/fun_events.html#onanyasync" class="tsd-kind-icon">on<wbr>Any<wbr>Async</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="../modules/fun_events.html#onasync" class="tsd-kind-icon">on<wbr>Async</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="../modules/fun_events.html#oneventby" class="tsd-kind-icon">on<wbr>Event<wbr>By</a>
