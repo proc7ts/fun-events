@@ -1,0 +1,101 @@
+import { EventEmitter } from '../event-emitter';
+import { EventSupply } from '../event-supply';
+import { onAsync } from './on-async';
+import Mock = jest.Mock;
+
+describe('onAsync', () => {
+
+  let origin: EventEmitter<[(string | Promise<string>)]>;
+  let receiver: Mock<void, string[]>;
+  let received: string[][];
+  let supply: EventSupply;
+
+  beforeEach(() => {
+    origin = new EventEmitter<[string | Promise<string>]>();
+    receiver = jest.fn((...batch) => {
+      received.push(batch);
+    });
+    received = [];
+    supply = onAsync(origin)(receiver);
+  });
+
+  it('resolves original events asynchronously', async () => {
+    origin.send('1');
+    origin.send(Promise.resolve('2'));
+    origin.send('3');
+    expect(await next()).toEqual(['1']);
+    expect(await next()).toEqual(['2', '3']);
+    expect(supply.isOff).toBe(false);
+  });
+  it('sends events in original order in batches', async () => {
+
+    let sendFirst!: (event: string) => void;
+    let sendSecond!: (event: string) => void;
+
+    origin.send(new Promise<string>(resolve => sendFirst = resolve));
+    origin.send(new Promise<string>(resolve => sendSecond = resolve));
+    origin.send('3');
+
+    sendSecond('2');
+    sendFirst('1');
+    expect(await next()).toEqual(['1']);
+    expect(await next()).toEqual(['2', '3']);
+    expect(supply.isOff).toBe(false);
+  });
+  it('cuts off supply when incoming supply cut off and all events resolved', async () => {
+
+    const whenOff = jest.fn();
+
+    supply.whenOff(whenOff);
+
+    let sendSecond!: (event: string) => void;
+
+    origin.send('1');
+    origin.send(new Promise<string>(resolve => sendSecond = resolve));
+    origin.send('3');
+
+    expect(await next()).toEqual(['1']);
+
+    const reason = 'test';
+
+    origin.done(reason);
+    expect(whenOff).not.toHaveBeenCalled();
+
+    sendSecond('2');
+    expect(await next()).toEqual(['2', '3']);
+    expect(whenOff).toHaveBeenCalledWith(reason);
+  });
+  it('cuts off supply when incoming supply cut off and no incoming events', async () => {
+
+    const whenOff = jest.fn();
+
+    supply.whenOff(whenOff);
+
+    const reason = 'test';
+
+    origin.done(reason);
+    expect(whenOff).toHaveBeenCalledWith(reason);
+
+    origin.send('1');
+    await Promise.resolve();
+    expect(received).toHaveLength(0);
+  });
+
+  async function next(): Promise<string[]> {
+    return new Promise((resolve, reject) => {
+      if (supply.isOff) {
+        supply.whenOff(reject);
+      }
+
+      const r = received.shift();
+
+      if (r) {
+        resolve(r);
+      } else {
+        receiver.mockImplementationOnce((...event) => {
+          resolve(event);
+        });
+      }
+    });
+  }
+});
