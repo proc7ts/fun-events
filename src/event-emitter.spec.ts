@@ -129,5 +129,18 @@ describe('EventEmitter', () => {
       expect(whenOff1).toHaveBeenCalledWith(reason);
       expect(whenOff2).toHaveBeenCalledWith(reason);
     });
+    it('immediately cuts off new receiver supplies', () => {
+
+      const reason = 'test';
+
+      emitter.done(reason);
+      emitter.send('event');
+
+      const whenOff = jest.fn();
+
+      emitter.on(mockReceiver).whenOff(whenOff);
+      expect(mockReceiver).not.toHaveBeenCalled();
+      expect(whenOff).toHaveBeenCalledWith(reason);
+    });
   });
 });

@@ -4,7 +4,7 @@
  */
 import { eventReceiver, EventReceiver } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
-import { EventSupply } from './event-supply';
+import { eventSupply, EventSupply } from './event-supply';
 
 /**
  * Event notifier can be used to register event receivers and send events to them.
@@ -27,11 +27,22 @@ export class EventNotifier<E extends any[]> implements EventSender<E> {
   private readonly _rcvs = new Set<EventReceiver.Generic<E>>();
 
   /**
+   * @internal
+   */
+  private readonly _supply: EventSupply;
+
+  /**
    * Sends the given `event` to all registered receivers.
    *
    * @param event  An event to send represented by function call arguments.
    */
   readonly send: (this: this, ...event: E) => void = receiveEventsByEach(this._rcvs);
+
+  constructor() {
+    this._supply = eventSupply(reason => {
+      this._rcvs.forEach(({ supply }) => supply.off(reason));
+    });
+  }
 
   /**
    * The number of currently registered event receivers.
@@ -61,20 +72,21 @@ export class EventNotifier<E extends any[]> implements EventSender<E> {
 
     this._rcvs.add(generic);
 
-    return generic.supply.whenOff(() => this._rcvs.delete(generic));
+    return generic.supply.needs(this._supply).whenOff(() => this._rcvs.delete(generic));
   }
 
   /**
    * Removes all registered event receivers and cuts off corresponding event supplies.
    *
-   * After this method call they won't receive any events.
+   * After this method call they won't receive any events. While new receivers would be cut off immediately upon
+   * registration.
    *
    * @param reason  A reason to stop sending events.
    *
    * @returns `this` instance.
    */
   done(reason?: any): this {
-    this._rcvs.forEach(({ supply }) => supply.off(reason));
+    this._supply.off(reason);
     return this;
   }
 
