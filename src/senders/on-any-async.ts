@@ -16,6 +16,8 @@ import { OnEvent, onEventBy } from '../on-event';
  * The resulting events supply is cut off immediately once unresolved events supply is cut off, or some of incoming
  * event promises rejected. In the latter case the rejection reason is used as a reason to cut off.
  *
+ * @category Core
+ * @typeparam E  Resolved event type.
  * @param from  Unresolved events sender containing either events or their promises.
  *
  * @returns New `OnEvent` sender of resolved events and their indices in original order starting from `1`.
