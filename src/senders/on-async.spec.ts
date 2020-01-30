@@ -1,3 +1,4 @@
+import { asis } from 'call-thru';
 import { EventEmitter } from '../event-emitter';
 import { EventSupply } from '../event-supply';
 import { onAsync } from './on-async';
@@ -7,16 +8,18 @@ describe('onAsync', () => {
 
   let origin: EventEmitter<[(string | Promise<string>)]>;
   let receiver: Mock<void, string[]>;
-  let received: string[][];
+  let received: Promise<string[]>[];
   let supply: EventSupply;
 
   beforeEach(() => {
     origin = new EventEmitter<[string | Promise<string>]>();
-    receiver = jest.fn((...batch) => {
-      received.push(batch);
-    });
     received = [];
-    supply = onAsync(origin)(receiver);
+    receiver = jest.fn((...batch) => {
+      received.push(Promise.resolve(batch));
+    });
+    supply = onAsync(origin)(receiver).whenOff(reason => {
+      received.push(Promise.reject(reason));
+    });
   });
 
   it('resolves original events asynchronously', async () => {
@@ -63,6 +66,7 @@ describe('onAsync', () => {
 
     sendSecond('2');
     expect(await next()).toEqual(['2', '3']);
+    expect(await next().catch(asis)).toBe(reason);
     expect(whenOff).toHaveBeenCalledWith(reason);
   });
   it('cuts off supply when incoming supply cut off and no incoming events', async () => {
@@ -74,18 +78,36 @@ describe('onAsync', () => {
     const reason = 'test';
 
     origin.done(reason);
+    expect(await next().catch(asis)).toBe(reason);
     expect(whenOff).toHaveBeenCalledWith(reason);
 
     origin.send('1');
     await Promise.resolve();
     expect(received).toHaveLength(0);
   });
+  it('sends resolved events if incoming supply already cut off', async () => {
+
+    const whenOff = jest.fn();
+
+    supply.whenOff(whenOff);
+
+    const reason = 'test';
+
+    origin.send(Promise.resolve('1'));
+    origin.send(Promise.resolve('2'));
+    origin.send(Promise.resolve('3'));
+    origin.done(reason);
+
+    expect(whenOff).not.toHaveBeenCalled();
+    expect(await next()).toEqual(['1']);
+    expect(await next()).toEqual(['2']);
+    expect(await next()).toEqual(['3']);
+    expect(await next().catch(asis)).toBe(reason);
+    expect(whenOff).toHaveBeenCalledWith(reason);
+  });
 
   async function next(): Promise<string[]> {
-    return new Promise((resolve, reject) => {
-      if (supply.isOff) {
-        supply.whenOff(reject);
-      }
+    return new Promise(resolve => {
 
       const r = received.shift();
 

@@ -32,13 +32,19 @@ export function onAsync<E>(from: EventSender<[PromiseLike<E> | E]>): OnEvent<[E,
     sender.on(receiver);
 
     const sourceSupply = eventSupply();
-    const source = onSupplied(from).tillOff(receiver.supply, sourceSupply);
+    let numInProcess = 0;
+    const source = onSupplied(from)
+        .tillOff(receiver.supply, sourceSupply)
+        .thru_(event => {
+          ++numInProcess;
+          return event;
+        });
     let received: E[] = [];
     let numSent = 1;
     let numReceived = 0;
 
     sourceSupply.whenOff(reason => {
-      if (!received.length) {
+      if (!numInProcess) {
         receiver.supply.off(reason);
       }
     });
@@ -63,9 +69,10 @@ export function onAsync<E>(from: EventSender<[PromiseLike<E> | E]>): OnEvent<[E,
         }
         numSent += toSend.length;
         numReceived -= toSend.length;
+        numInProcess -= toSend.length;
 
         sender.send(...(toSend as [E, ...E[]]));
-        if (!received.length && sourceSupply.isOff) {
+        if (!numInProcess && sourceSupply.isOff) {
           receiver.supply.needs(sourceSupply);
         }
       }

@@ -8,16 +8,18 @@ describe('onAnyAsync', () => {
 
   let origin: EventEmitter<[(string | Promise<string>)]>;
   let receiver: Mock<void, [string, number]>;
-  let received: [string, number][];
+  let received: Promise<[string, number]>[];
   let supply: EventSupply;
 
   beforeEach(() => {
     origin = new EventEmitter<[string | Promise<string>]>();
-    receiver = jest.fn((event, index) => {
-      received.push([event, index]);
-    });
     received = [];
-    supply = onAnyAsync(origin)(receiver);
+    receiver = jest.fn((event, index) => {
+      received.push(Promise.resolve([event, index]));
+    });
+    supply = onAnyAsync(origin)(receiver).whenOff(reason => {
+      received.push(Promise.reject(reason));
+    });
   });
 
   it('resolves original events asynchronously', async () => {
@@ -52,6 +54,7 @@ describe('onAnyAsync', () => {
     const reason = 'test';
 
     origin.done(reason);
+    expect(await next().catch(asis)).toBe(reason);
 
     const whenOff = jest.fn();
 
@@ -76,10 +79,7 @@ describe('onAnyAsync', () => {
   });
 
   async function next(): Promise<[string, number]> {
-    return new Promise((resolve, reject) => {
-      if (supply.isOff) {
-        supply.whenOff(reject);
-      }
+    return new Promise(resolve => {
 
       const r = received.shift();
 
