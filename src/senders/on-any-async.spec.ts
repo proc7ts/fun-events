@@ -23,10 +23,10 @@ describe('onAnyAsync', () => {
   it('resolves original events asynchronously', async () => {
     origin.send('1');
     origin.send(Promise.resolve('2'));
-    origin.send(Promise.resolve('3'));
+    origin.send('3');
     expect(await next()).toEqual(['1', 1]);
-    expect(await next()).toEqual(['2', 2]);
     expect(await next()).toEqual(['3', 3]);
+    expect(await next()).toEqual(['2', 2]);
   });
   it('sends events in order of their resolution', async () => {
 
@@ -70,13 +70,16 @@ describe('onAnyAsync', () => {
     const reason = 'test';
 
     rejectFirst(reason);
+    await Promise.resolve();
 
     expect(await next().catch(asis)).toBe(reason);
   });
 
   async function next(): Promise<[string, number]> {
     return new Promise((resolve, reject) => {
-      supply.whenOff(reject);
+      if (supply.isOff) {
+        supply.whenOff(reject);
+      }
 
       const r = received.shift();
 
