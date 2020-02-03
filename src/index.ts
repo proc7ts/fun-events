@@ -3,6 +3,7 @@
  * @module fun-events
  */
 export * from './after-event';
+export * from './event-call-chain';
 export * from './event-emitter';
 export * from './event-keeper';
 export * from './event-notifier';

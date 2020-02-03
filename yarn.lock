@@ -894,10 +894,10 @@ cache-base@^1.0.1:
     union-value "^1.0.0"
     unset-value "^1.0.0"
 
-call-thru@^2.5.4:
-  version "2.5.4"
-  resolved "https://registry.yarnpkg.com/call-thru/-/call-thru-2.5.4.tgz#757e9d1fbc122d3ec2f08ae3500c3fb9c64d185a"
-  integrity sha512-XXooAz6cozDtII6R6xd4vhWJAlnPb5rBoOUoRgEpaV9K6SrloPy8wd6WUrrRBhcJ6kFdyY0ltVTFfzVXB6oIjw==
+call-thru@^3.0.0-dev.0:
+  version "3.0.0-dev.0"
+  resolved "https://registry.yarnpkg.com/call-thru/-/call-thru-3.0.0-dev.0.tgz#f11c63b09a04546d105a785db1445c47967db822"
+  integrity sha512-ayajtWHCvtRfU/ddBFGXtZgjadR0XsVlIpR7eeM9t/CFLVhz5pbzSTxWj5VJeP0jjnfPfJjYBIixRCJTXoyR8w==
 
 callsites@^3.0.0:
   version "3.1.0"

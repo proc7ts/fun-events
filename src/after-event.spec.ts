@@ -1,4 +1,4 @@
-import { asis, noop, passIf } from 'call-thru';
+import { asis, nextArgs, nextSkip, noop } from 'call-thru';
 import { AfterEvent, afterEventBy, afterNever, afterSupplied, afterThe } from './after-event';
 import { EventEmitter } from './event-emitter';
 import { AfterEvent__symbol } from './event-keeper';
@@ -239,7 +239,7 @@ describe('AfterEvent', () => {
 
       it('registers event receiver', () => {
 
-        const transforming = afterEvent.keep.thru(
+        const transforming: AfterEvent<[string]> = afterEvent.keep.thru(
             (event1: string, event2: string) => `${event1}, ${event2}`,
         );
 
@@ -276,7 +276,7 @@ describe('AfterEvent', () => {
       it('skips original event', () => {
 
         const transforming = afterEvent.keep.thru(
-            passIf<[string, string], string>((event1: string, event2: string) => event1 < event2),
+            (event1: string, event2: string) => event1 < event2 ? nextArgs(event1, event2) : nextSkip,
             (event1: string, event2: string) => `${event1}, ${event2}`,
         );
 
