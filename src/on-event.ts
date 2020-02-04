@@ -3,15 +3,15 @@
  * @module fun-events
  */
 import { isNextCall, NextCall__symbol, noop } from 'call-thru';
-import { EventCallChain } from './event-call-chain';
 import { AfterEvent__symbol } from './event-keeper';
 import { eventReceiver, EventReceiver } from './event-receiver';
 import { EventSender, isEventSender, OnEvent__symbol } from './event-sender';
 import { EventSupplier } from './event-supplier';
 import { eventSupply, EventSupply, noEventSupply } from './event-supply';
 import { once, share, tillOff } from './impl';
-import Args = EventCallChain.Args;
-import Out = EventCallChain.Out;
+import { OnEventCallChain } from './passes';
+import Args = OnEventCallChain.Args;
+import Out = OnEventCallChain.Out;
 
 /**
  * An event receiver registration function interface.
@@ -231,48 +231,105 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   ): OnEvent<Out<Return3>>;
 
   thru_(...passes: any[]): OnEvent<any[]> {
+
+    interface ChainEntry {
+      readonly chain: OnEventCallChain;
+      supply: EventSupply;
+    }
+
     return onEventBy(
-        receiver => this({
-          supply: receiver.supply,
-          receive(context, ...event) {
+        receiver => {
 
-            const chain = (index: number): EventCallChain => {
+          const chains: ChainEntry[] = [];
 
-              const lastPass = index >= passes.length;
+          this({
+            supply: receiver.supply,
+            receive(context, ...event) {
 
-              ++index;
+              const chain = (index: number, chainSupply: EventSupply): [OnEventCallChain, EventSupply] => {
 
-              const pass = index < passes.length ? passes[index] : noop;
-              const handleResult = (callResult: any, arg: any): void => {
-                if (isNextCall(callResult)) {
-                  callResult[NextCall__symbol](chain(index), pass);
-                } else if (lastPass) {
-                  receiver.receive(context, arg);
-                } else {
-                  chain(index).pass(pass, callResult);
+                const lastPass = index >= passes.length;
+
+                ++index;
+
+                const existing = chains[index];
+
+                if (existing) {
+
+                  const prevSupply = existing.supply;
+
+                  existing.supply = chainSupply;
+
+                  return [existing.chain, prevSupply];
+                }
+
+                const pass = index < passes.length ? passes[index] : noop;
+
+                const entry: ChainEntry = {
+                  chain: {
+                    call<A extends any[]>(fn: (...args: A) => any, args: A): void {
+                      handleResult(fn(...args), args);
+                    },
+                    pass<A>(fn: (arg: A) => any, arg: A): void {
+                      handleResult(fn(arg), [arg]);
+                    },
+                    skip(): void {
+                      entry.supply.off();
+                    },
+                    onEvent<E extends any[]>(
+                        fn: (this: void, ...event: E) => void,
+                        supplier: EventSupplier<E>,
+                    ): void {
+
+                      const supply = eventSupply().needs(entry.supply);
+
+                      onSupplied(supplier)({
+                        supply,
+                        receive(_context, ...event): void {
+                          handleResult(fn(...event), event, supply);
+                        },
+                      });
+                    },
+                  },
+                  supply: chainSupply,
+                };
+
+                chains[index] = entry;
+
+                return [entry.chain, noEventSupply()];
+
+                function handleResult(
+                    callResult: any,
+                    args: any[],
+                    newSupply = eventSupply().needs(entry.supply),
+                ): void {
+
+                  const [nextChain, prevSupply] = chain(index, newSupply);
+
+                  try {
+                    if (isNextCall(callResult)) {
+                      callResult[NextCall__symbol](nextChain, pass);
+                    } else if (lastPass) {
+                      receiver.receive(context, ...args);
+                    } else {
+                      nextChain.pass(pass, callResult);
+                    }
+                  } finally {
+                    prevSupply.off();
+                  }
                 }
               };
 
-              return ({
-                call<A extends any[]>(fn: (...args: A) => void, args: A): void {
-                  handleResult(fn(...args), args);
-                },
-                pass<A>(fn: (arg: A) => void, arg: A): void {
-                  handleResult(fn(arg), arg);
-                },
-                skip(): void {/* skip event */},
-                onEvent<E extends any[], S extends EventSender<E>>(
-                    _pass: (this: void, ...event: E) => void,
-                    _supplier: S,
-                ): void {
-                  /* not implemented */
-                },
-              });
-            };
+              const [firstChain, prevSupply] = chain(0, eventSupply().needs(receiver.supply));
 
-            chain(0).call(passes[0], event);
-          },
-        }),
+              try {
+                firstChain.call(passes[0], event);
+              } finally {
+                prevSupply.off();
+              }
+            },
+          });
+        },
     );
   }
 

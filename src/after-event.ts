@@ -3,7 +3,6 @@
  * @module fun-events
  */
 import { noop, valueProvider } from 'call-thru';
-import { EventCallChain } from './event-call-chain';
 import { AfterEvent__symbol, EventKeeper, isEventKeeper } from './event-keeper';
 import { eventReceiver, EventReceiver } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
@@ -11,8 +10,9 @@ import { EventSupplier } from './event-supplier';
 import { EventSupply, eventSupply } from './event-supply';
 import { once, share, tillOff } from './impl';
 import { OnEvent } from './on-event';
-import Args = EventCallChain.Args;
-import Out = EventCallChain.Out;
+import { OnEventCallChain } from './passes';
+import Args = OnEventCallChain.Args;
+import Out = OnEventCallChain.Out;
 
 /**
  * A subset of [[AfterEvent]] transformation methods inherited that return [[AfterEvent]] keepers instead of
