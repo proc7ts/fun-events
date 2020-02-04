@@ -12,6 +12,7 @@ export * from './event-supplier';
 export * from './event-supply';
 export * from './keepers';
 export * from './on-event';
+export * from './passes';
 export * from './senders';
 export * from './state';
 export * from './value';

@@ -1,4 +1,4 @@
-import { noop, passIf } from 'call-thru';
+import { nextArgs, nextSkip, noop } from 'call-thru';
 import { EventEmitter } from './event-emitter';
 import { AfterEvent__symbol } from './event-keeper';
 import { EventNotifier } from './event-notifier';
@@ -665,7 +665,7 @@ describe('OnEvent', () => {
     it('skips original event', () => {
 
       const transforming = onEvent.thru(
-          passIf<[string, string], string>((event1: string, event2: string) => event1 < event2),
+          (event1: string, event2: string) => event1 < event2 ? nextArgs(event1, event2) : nextSkip,
           (event1: string, event2: string) => `${event1}, ${event2}`,
       );
 

@@ -3,7 +3,9 @@
   "categoryOrder": ["Core", "State Tracking", "Value Tracking", "DOM Events", "*"],
   "exclude": [
     "**/index.ts",
-    "**/impl/**/*.ts"
+    "**/impl/**/*.ts",
+    "**/*.impl.ts",
+    "**/*.spec.ts"
   ],
   "excludeNotExported": true,
   "mode": "modules",
