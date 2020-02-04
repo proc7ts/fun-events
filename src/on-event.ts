@@ -2,14 +2,14 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { isNextCall, NextCall__symbol, noop } from 'call-thru';
+import { nextSkip } from 'call-thru';
 import { AfterEvent__symbol } from './event-keeper';
 import { eventReceiver, EventReceiver } from './event-receiver';
 import { EventSender, isEventSender, OnEvent__symbol } from './event-sender';
 import { EventSupplier } from './event-supplier';
 import { eventSupply, EventSupply, noEventSupply } from './event-supply';
-import { once, share, tillOff } from './impl';
-import { OnEventCallChain } from './passes';
+import { once, share, thru, tillOff } from './impl';
+import { nextOnEvent, OnEventCallChain } from './passes';
 import Args = OnEventCallChain.Args;
 import Out = OnEventCallChain.Out;
 
@@ -58,7 +58,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   /**
    * Extracts event suppliers from incoming events.
    *
-   * @deprecated In favor of [[nextOnEvent]].
+   * @deprecated In favour of [[nextOnEvent]].
    * @typeparam F  Extracted event type.
    * @param extract  A function extracting event supplier from incoming event. May return `undefined` when nothing
    * extracted.
@@ -79,7 +79,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
    * receivers. This may be useful e.g. when the result will be further transformed. It is wise to {@link share share}
    * the supply of events from final result in this case.
    *
-   * @deprecated In favor of [[nextOnEvent]].
+   * @deprecated In favour of [[nextOnEvent]].
    * @typeparam F  Extracted event type.
    * @param extract  A function extracting event supplier from incoming event. May return `undefined` when
    * nothing extracted.
@@ -90,32 +90,19 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   dig_<F extends any[]>(
       extract: (this: void, ...event: E) => EventSupplier<F> | void | undefined,
   ): OnEvent<F> {
-    return onEventBy((receiver: EventReceiver.Generic<F>) => {
+    return thru(
+        this,
+        onEventBy,
+        onSupplied,
+        [
+          (...event: E) => {
 
-      let nestedSupply = noEventSupply();
+            const extracted = extract(...event);
 
-      this({
-        supply: receiver.supply,
-        receive(_context, ...event: E) {
-
-          const prevSupply = nestedSupply;
-          const extracted = extract(...event);
-
-          try {
-            nestedSupply = extracted
-                ? onSupplied(extracted)({
-                  supply: eventSupply().needs(receiver.supply),
-                  receive(context, ...nestedEvent) {
-                    receiver.receive(context, ...nestedEvent);
-                  },
-                })
-                : noEventSupply();
-          } finally {
-            prevSupply.off();
-          }
-        },
-      });
-    });
+            return extracted ? nextOnEvent<F>(extracted) : nextSkip;
+          },
+        ],
+    );
   }
 
   /**
@@ -233,106 +220,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   ): OnEvent<Out<Return3>>;
 
   thru_(...passes: any[]): OnEvent<any[]> {
-
-    interface ChainEntry {
-      readonly chain: OnEventCallChain;
-      supply: EventSupply;
-    }
-
-    return onEventBy(
-        receiver => {
-
-          const chains: ChainEntry[] = [];
-
-          this({
-            supply: receiver.supply,
-            receive(context, ...event) {
-
-              const chain = (index: number, chainSupply: EventSupply): [OnEventCallChain, EventSupply] => {
-
-                const lastPass = index >= passes.length;
-
-                ++index;
-
-                const existing = chains[index];
-
-                if (existing) {
-
-                  const prevSupply = existing.supply;
-
-                  existing.supply = chainSupply;
-
-                  return [existing.chain, prevSupply];
-                }
-
-                const pass = index < passes.length ? passes[index] : noop;
-
-                const entry: ChainEntry = {
-                  chain: {
-                    call<A extends any[]>(fn: (...args: A) => any, args: A): void {
-                      handleResult(fn(...args), args);
-                    },
-                    pass<A>(fn: (arg: A) => any, arg: A): void {
-                      handleResult(fn(arg), [arg]);
-                    },
-                    skip(): void {
-                      entry.supply.off();
-                    },
-                    onEvent<E extends any[]>(
-                        fn: (this: void, ...event: E) => void,
-                        supplier: EventSupplier<E>,
-                    ): void {
-
-                      const supply = eventSupply().needs(entry.supply);
-
-                      onSupplied(supplier)({
-                        supply,
-                        receive(_context, ...event): void {
-                          handleResult(fn(...event), event, supply);
-                        },
-                      });
-                    },
-                  },
-                  supply: chainSupply,
-                };
-
-                chains[index] = entry;
-
-                return [entry.chain, noEventSupply()];
-
-                function handleResult(
-                    callResult: any,
-                    args: any[],
-                    newSupply = eventSupply().needs(entry.supply),
-                ): void {
-
-                  const [nextChain, prevSupply] = chain(index, newSupply);
-
-                  try {
-                    if (isNextCall(callResult)) {
-                      callResult[NextCall__symbol](nextChain, pass);
-                    } else if (lastPass) {
-                      receiver.receive(context, ...args);
-                    } else {
-                      nextChain.pass(pass, callResult);
-                    }
-                  } finally {
-                    prevSupply.off();
-                  }
-                }
-              };
-
-              const [firstChain, prevSupply] = chain(0, eventSupply().needs(receiver.supply));
-
-              try {
-                firstChain.call(passes[0], event);
-              } finally {
-                prevSupply.off();
-              }
-            },
-          });
-        },
-    );
+    return thru(this, onEventBy, onSupplied, passes);
   }
 
 }

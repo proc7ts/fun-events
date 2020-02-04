@@ -39,6 +39,7 @@ export class AfterEventKeep<E extends any[]> {
   /**
    * Extracts event keepers from incoming events.
    *
+   * @deprecated In favour of [[nextOnEvent]].
    * @typeparam F  Extracted event type.
    * @param extract  A function extracting event keeper from incoming event.
    *
@@ -56,6 +57,7 @@ export class AfterEventKeep<E extends any[]> {
    * among receivers. This may be useful e.g. when the result will be further transformed. It is wise to
    * {@link AfterEvent.share share} the supply of events from the final result in this case.
    *
+   * @deprecated In favour of [[nextOnEvent]].
    * @typeparam F  Extracted event type.
    * @param extract  A function extracting event keeper from incoming event.
    *
