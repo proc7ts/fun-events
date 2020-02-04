@@ -101,6 +101,216 @@ export class AfterEventKeep<E extends any[]> {
       pass3: (this: void, ...args: Args3) => Return3,
   ): AfterEvent<Out<Return3>>;
 
+  thru<
+      Return1,
+      Args2 extends Args<Return1>, Return2,
+      Args3 extends Args<Return2>, Return3,
+      Args4 extends Args<Return3>, Return4,
+      >(
+      pass1: (this: void, ...args: E) => Return1,
+      pass2: (this: void, ...args: Args2) => Return2,
+      pass3: (this: void, ...args: Args3) => Return3,
+      pass4: (this: void, ...args: Args4) => Return4,
+  ): AfterEvent<Out<Return3>>;
+
+  thru<
+      Return1,
+      Args2 extends Args<Return1>, Return2,
+      Args3 extends Args<Return2>, Return3,
+      Args4 extends Args<Return3>, Return4,
+      Args5 extends Args<Return4>, Return5,
+      >(
+      pass1: (this: void, ...args: E) => Return1,
+      pass2: (this: void, ...args: Args2) => Return2,
+      pass3: (this: void, ...args: Args3) => Return3,
+      pass4: (this: void, ...args: Args4) => Return4,
+      pass5: (this: void, ...args: Args5) => Return5,
+  ): AfterEvent<Out<Return3>>;
+
+  thru<
+      Return1,
+      Args2 extends Args<Return1>, Return2,
+      Args3 extends Args<Return2>, Return3,
+      Args4 extends Args<Return3>, Return4,
+      Args5 extends Args<Return4>, Return5,
+      Args6 extends Args<Return5>, Return6,
+      >(
+      pass1: (this: void, ...args: E) => Return1,
+      pass2: (this: void, ...args: Args2) => Return2,
+      pass3: (this: void, ...args: Args3) => Return3,
+      pass4: (this: void, ...args: Args4) => Return4,
+      pass5: (this: void, ...args: Args5) => Return5,
+      pass6: (this: void, ...args: Args6) => Return6,
+  ): AfterEvent<Out<Return3>>;
+
+  thru<
+      Return1,
+      Args2 extends Args<Return1>, Return2,
+      Args3 extends Args<Return2>, Return3,
+      Args4 extends Args<Return3>, Return4,
+      Args5 extends Args<Return4>, Return5,
+      Args6 extends Args<Return5>, Return6,
+      Args7 extends Args<Return6>, Return7,
+      >(
+      pass1: (this: void, ...args: E) => Return1,
+      pass2: (this: void, ...args: Args2) => Return2,
+      pass3: (this: void, ...args: Args3) => Return3,
+      pass4: (this: void, ...args: Args4) => Return4,
+      pass5: (this: void, ...args: Args5) => Return5,
+      pass6: (this: void, ...args: Args6) => Return6,
+      pass7: (this: void, ...args: Args7) => Return7,
+  ): AfterEvent<Out<Return3>>;
+
+  thru<
+      Return1,
+      Args2 extends Args<Return1>, Return2,
+      Args3 extends Args<Return2>, Return3,
+      Args4 extends Args<Return3>, Return4,
+      Args5 extends Args<Return4>, Return5,
+      Args6 extends Args<Return5>, Return6,
+      Args7 extends Args<Return6>, Return7,
+      Args8 extends Args<Return7>, Return8,
+      >(
+      pass1: (this: void, ...args: E) => Return1,
+      pass2: (this: void, ...args: Args2) => Return2,
+      pass3: (this: void, ...args: Args3) => Return3,
+      pass4: (this: void, ...args: Args4) => Return4,
+      pass5: (this: void, ...args: Args5) => Return5,
+      pass6: (this: void, ...args: Args6) => Return6,
+      pass7: (this: void, ...args: Args7) => Return7,
+      pass8: (this: void, ...args: Args8) => Return8,
+  ): AfterEvent<Out<Return3>>;
+
+  thru<
+      Return1,
+      Args2 extends Args<Return1>, Return2,
+      Args3 extends Args<Return2>, Return3,
+      Args4 extends Args<Return3>, Return4,
+      Args5 extends Args<Return4>, Return5,
+      Args6 extends Args<Return5>, Return6,
+      Args7 extends Args<Return6>, Return7,
+      Args8 extends Args<Return7>, Return8,
+      Args9 extends Args<Return8>, Return9,
+      >(
+      pass1: (this: void, ...args: E) => Return1,
+      pass2: (this: void, ...args: Args2) => Return2,
+      pass3: (this: void, ...args: Args3) => Return3,
+      pass4: (this: void, ...args: Args4) => Return4,
+      pass5: (this: void, ...args: Args5) => Return5,
+      pass6: (this: void, ...args: Args6) => Return6,
+      pass7: (this: void, ...args: Args7) => Return7,
+      pass8: (this: void, ...args: Args8) => Return8,
+      pass9: (this: void, ...args: Args9) => Return9,
+  ): AfterEvent<Out<Return3>>;
+
+  thru<
+      Return1,
+      Args2 extends Args<Return1>, Return2,
+      Args3 extends Args<Return2>, Return3,
+      Args4 extends Args<Return3>, Return4,
+      Args5 extends Args<Return4>, Return5,
+      Args6 extends Args<Return5>, Return6,
+      Args7 extends Args<Return6>, Return7,
+      Args8 extends Args<Return7>, Return8,
+      Args9 extends Args<Return8>, Return9,
+      Args10 extends Args<Return9>, Return10,
+      >(
+      pass1: (this: void, ...args: E) => Return1,
+      pass2: (this: void, ...args: Args2) => Return2,
+      pass3: (this: void, ...args: Args3) => Return3,
+      pass4: (this: void, ...args: Args4) => Return4,
+      pass5: (this: void, ...args: Args5) => Return5,
+      pass6: (this: void, ...args: Args6) => Return6,
+      pass7: (this: void, ...args: Args7) => Return7,
+      pass8: (this: void, ...args: Args8) => Return8,
+      pass9: (this: void, ...args: Args9) => Return9,
+      pass10: (this: void, ...args: Args10) => Return10,
+  ): AfterEvent<Out<Return3>>;
+
+  thru<
+      Return1,
+      Args2 extends Args<Return1>, Return2,
+      Args3 extends Args<Return2>, Return3,
+      Args4 extends Args<Return3>, Return4,
+      Args5 extends Args<Return4>, Return5,
+      Args6 extends Args<Return5>, Return6,
+      Args7 extends Args<Return6>, Return7,
+      Args8 extends Args<Return7>, Return8,
+      Args9 extends Args<Return8>, Return9,
+      Args10 extends Args<Return9>, Return10,
+      Args11 extends Args<Return10>, Return11,
+      >(
+      pass1: (this: void, ...args: E) => Return1,
+      pass2: (this: void, ...args: Args2) => Return2,
+      pass3: (this: void, ...args: Args3) => Return3,
+      pass4: (this: void, ...args: Args4) => Return4,
+      pass5: (this: void, ...args: Args5) => Return5,
+      pass6: (this: void, ...args: Args6) => Return6,
+      pass7: (this: void, ...args: Args7) => Return7,
+      pass8: (this: void, ...args: Args8) => Return8,
+      pass9: (this: void, ...args: Args9) => Return9,
+      pass10: (this: void, ...args: Args10) => Return10,
+      pass11: (this: void, ...args: Args11) => Return11,
+  ): AfterEvent<Out<Return3>>;
+
+  thru<
+      Return1,
+      Args2 extends Args<Return1>, Return2,
+      Args3 extends Args<Return2>, Return3,
+      Args4 extends Args<Return3>, Return4,
+      Args5 extends Args<Return4>, Return5,
+      Args6 extends Args<Return5>, Return6,
+      Args7 extends Args<Return6>, Return7,
+      Args8 extends Args<Return7>, Return8,
+      Args9 extends Args<Return8>, Return9,
+      Args10 extends Args<Return9>, Return10,
+      Args11 extends Args<Return10>, Return11,
+      Args12 extends Args<Return11>, Return12,
+      >(
+      pass1: (this: void, ...args: E) => Return1,
+      pass2: (this: void, ...args: Args2) => Return2,
+      pass3: (this: void, ...args: Args3) => Return3,
+      pass4: (this: void, ...args: Args4) => Return4,
+      pass5: (this: void, ...args: Args5) => Return5,
+      pass6: (this: void, ...args: Args6) => Return6,
+      pass7: (this: void, ...args: Args7) => Return7,
+      pass8: (this: void, ...args: Args8) => Return8,
+      pass9: (this: void, ...args: Args9) => Return9,
+      pass10: (this: void, ...args: Args10) => Return10,
+      pass11: (this: void, ...args: Args11) => Return11,
+      pass12: (this: void, ...args: Args12) => Return12,
+  ): AfterEvent<Out<Return3>>;
+
+  thru<
+      Return1,
+      Args2 extends Args<Return1>, Return2,
+      Args3 extends Args<Return2>, Return3,
+      Args4 extends Args<Return3>, Return4,
+      Args5 extends Args<Return4>, Return5,
+      Args6 extends Args<Return5>, Return6,
+      Args7 extends Args<Return6>, Return7,
+      Args8 extends Args<Return7>, Return8,
+      Args9 extends Args<Return8>, Return9,
+      Args10 extends Args<Return9>, Return10,
+      Args11 extends Args<Return10>, Return11,
+      Args12 extends Args<Return11>, Return12,
+      Args13 extends Args<Return12>, Return13,
+      >(
+      pass1: (this: void, ...args: E) => Return1,
+      pass2: (this: void, ...args: Args2) => Return2,
+      pass3: (this: void, ...args: Args3) => Return3,
+      pass4: (this: void, ...args: Args4) => Return4,
+      pass5: (this: void, ...args: Args5) => Return5,
+      pass6: (this: void, ...args: Args6) => Return6,
+      pass7: (this: void, ...args: Args7) => Return7,
+      pass8: (this: void, ...args: Args8) => Return8,
+      pass9: (this: void, ...args: Args9) => Return9,
+      pass10: (this: void, ...args: Args10) => Return10,
+      pass11: (this: void, ...args: Args11) => Return11,
+      pass12: (this: void, ...args: Args12) => Return12,
+      pass13: (this: void, ...args: Args13) => Return13,
+  ): AfterEvent<Out<Return3>>;
+
   thru(...fns: any[]): AfterEvent<any[]> {
     return (this as any).thru_(...fns).share();
   }
@@ -137,6 +347,216 @@ export class AfterEventKeep<E extends any[]> {
       pass1: (this: void, ...args: E) => Return1,
       pass2: (this: void, ...args: Args2) => Return2,
       pass3: (this: void, ...args: Args3) => Return3,
+  ): AfterEvent<Out<Return3>>;
+
+  thru_<
+      Return1,
+      Args2 extends Args<Return1>, Return2,
+      Args3 extends Args<Return2>, Return3,
+      Args4 extends Args<Return3>, Return4,
+      >(
+      pass1: (this: void, ...args: E) => Return1,
+      pass2: (this: void, ...args: Args2) => Return2,
+      pass3: (this: void, ...args: Args3) => Return3,
+      pass4: (this: void, ...args: Args4) => Return4,
+  ): AfterEvent<Out<Return3>>;
+
+  thru_<
+      Return1,
+      Args2 extends Args<Return1>, Return2,
+      Args3 extends Args<Return2>, Return3,
+      Args4 extends Args<Return3>, Return4,
+      Args5 extends Args<Return4>, Return5,
+      >(
+      pass1: (this: void, ...args: E) => Return1,
+      pass2: (this: void, ...args: Args2) => Return2,
+      pass3: (this: void, ...args: Args3) => Return3,
+      pass4: (this: void, ...args: Args4) => Return4,
+      pass5: (this: void, ...args: Args5) => Return5,
+  ): AfterEvent<Out<Return3>>;
+
+  thru_<
+      Return1,
+      Args2 extends Args<Return1>, Return2,
+      Args3 extends Args<Return2>, Return3,
+      Args4 extends Args<Return3>, Return4,
+      Args5 extends Args<Return4>, Return5,
+      Args6 extends Args<Return5>, Return6,
+      >(
+      pass1: (this: void, ...args: E) => Return1,
+      pass2: (this: void, ...args: Args2) => Return2,
+      pass3: (this: void, ...args: Args3) => Return3,
+      pass4: (this: void, ...args: Args4) => Return4,
+      pass5: (this: void, ...args: Args5) => Return5,
+      pass6: (this: void, ...args: Args6) => Return6,
+  ): AfterEvent<Out<Return3>>;
+
+  thru_<
+      Return1,
+      Args2 extends Args<Return1>, Return2,
+      Args3 extends Args<Return2>, Return3,
+      Args4 extends Args<Return3>, Return4,
+      Args5 extends Args<Return4>, Return5,
+      Args6 extends Args<Return5>, Return6,
+      Args7 extends Args<Return6>, Return7,
+      >(
+      pass1: (this: void, ...args: E) => Return1,
+      pass2: (this: void, ...args: Args2) => Return2,
+      pass3: (this: void, ...args: Args3) => Return3,
+      pass4: (this: void, ...args: Args4) => Return4,
+      pass5: (this: void, ...args: Args5) => Return5,
+      pass6: (this: void, ...args: Args6) => Return6,
+      pass7: (this: void, ...args: Args7) => Return7,
+  ): AfterEvent<Out<Return3>>;
+
+  thru_<
+      Return1,
+      Args2 extends Args<Return1>, Return2,
+      Args3 extends Args<Return2>, Return3,
+      Args4 extends Args<Return3>, Return4,
+      Args5 extends Args<Return4>, Return5,
+      Args6 extends Args<Return5>, Return6,
+      Args7 extends Args<Return6>, Return7,
+      Args8 extends Args<Return7>, Return8,
+      >(
+      pass1: (this: void, ...args: E) => Return1,
+      pass2: (this: void, ...args: Args2) => Return2,
+      pass3: (this: void, ...args: Args3) => Return3,
+      pass4: (this: void, ...args: Args4) => Return4,
+      pass5: (this: void, ...args: Args5) => Return5,
+      pass6: (this: void, ...args: Args6) => Return6,
+      pass7: (this: void, ...args: Args7) => Return7,
+      pass8: (this: void, ...args: Args8) => Return8,
+  ): AfterEvent<Out<Return3>>;
+
+  thru_<
+      Return1,
+      Args2 extends Args<Return1>, Return2,
+      Args3 extends Args<Return2>, Return3,
+      Args4 extends Args<Return3>, Return4,
+      Args5 extends Args<Return4>, Return5,
+      Args6 extends Args<Return5>, Return6,
+      Args7 extends Args<Return6>, Return7,
+      Args8 extends Args<Return7>, Return8,
+      Args9 extends Args<Return8>, Return9,
+      >(
+      pass1: (this: void, ...args: E) => Return1,
+      pass2: (this: void, ...args: Args2) => Return2,
+      pass3: (this: void, ...args: Args3) => Return3,
+      pass4: (this: void, ...args: Args4) => Return4,
+      pass5: (this: void, ...args: Args5) => Return5,
+      pass6: (this: void, ...args: Args6) => Return6,
+      pass7: (this: void, ...args: Args7) => Return7,
+      pass8: (this: void, ...args: Args8) => Return8,
+      pass9: (this: void, ...args: Args9) => Return9,
+  ): AfterEvent<Out<Return3>>;
+
+  thru_<
+      Return1,
+      Args2 extends Args<Return1>, Return2,
+      Args3 extends Args<Return2>, Return3,
+      Args4 extends Args<Return3>, Return4,
+      Args5 extends Args<Return4>, Return5,
+      Args6 extends Args<Return5>, Return6,
+      Args7 extends Args<Return6>, Return7,
+      Args8 extends Args<Return7>, Return8,
+      Args9 extends Args<Return8>, Return9,
+      Args10 extends Args<Return9>, Return10,
+      >(
+      pass1: (this: void, ...args: E) => Return1,
+      pass2: (this: void, ...args: Args2) => Return2,
+      pass3: (this: void, ...args: Args3) => Return3,
+      pass4: (this: void, ...args: Args4) => Return4,
+      pass5: (this: void, ...args: Args5) => Return5,
+      pass6: (this: void, ...args: Args6) => Return6,
+      pass7: (this: void, ...args: Args7) => Return7,
+      pass8: (this: void, ...args: Args8) => Return8,
+      pass9: (this: void, ...args: Args9) => Return9,
+      pass10: (this: void, ...args: Args10) => Return10,
+  ): AfterEvent<Out<Return3>>;
+
+  thru_<
+      Return1,
+      Args2 extends Args<Return1>, Return2,
+      Args3 extends Args<Return2>, Return3,
+      Args4 extends Args<Return3>, Return4,
+      Args5 extends Args<Return4>, Return5,
+      Args6 extends Args<Return5>, Return6,
+      Args7 extends Args<Return6>, Return7,
+      Args8 extends Args<Return7>, Return8,
+      Args9 extends Args<Return8>, Return9,
+      Args10 extends Args<Return9>, Return10,
+      Args11 extends Args<Return10>, Return11,
+      >(
+      pass1: (this: void, ...args: E) => Return1,
+      pass2: (this: void, ...args: Args2) => Return2,
+      pass3: (this: void, ...args: Args3) => Return3,
+      pass4: (this: void, ...args: Args4) => Return4,
+      pass5: (this: void, ...args: Args5) => Return5,
+      pass6: (this: void, ...args: Args6) => Return6,
+      pass7: (this: void, ...args: Args7) => Return7,
+      pass8: (this: void, ...args: Args8) => Return8,
+      pass9: (this: void, ...args: Args9) => Return9,
+      pass10: (this: void, ...args: Args10) => Return10,
+      pass11: (this: void, ...args: Args11) => Return11,
+  ): AfterEvent<Out<Return3>>;
+
+  thru_<
+      Return1,
+      Args2 extends Args<Return1>, Return2,
+      Args3 extends Args<Return2>, Return3,
+      Args4 extends Args<Return3>, Return4,
+      Args5 extends Args<Return4>, Return5,
+      Args6 extends Args<Return5>, Return6,
+      Args7 extends Args<Return6>, Return7,
+      Args8 extends Args<Return7>, Return8,
+      Args9 extends Args<Return8>, Return9,
+      Args10 extends Args<Return9>, Return10,
+      Args11 extends Args<Return10>, Return11,
+      Args12 extends Args<Return11>, Return12,
+      >(
+      pass1: (this: void, ...args: E) => Return1,
+      pass2: (this: void, ...args: Args2) => Return2,
+      pass3: (this: void, ...args: Args3) => Return3,
+      pass4: (this: void, ...args: Args4) => Return4,
+      pass5: (this: void, ...args: Args5) => Return5,
+      pass6: (this: void, ...args: Args6) => Return6,
+      pass7: (this: void, ...args: Args7) => Return7,
+      pass8: (this: void, ...args: Args8) => Return8,
+      pass9: (this: void, ...args: Args9) => Return9,
+      pass10: (this: void, ...args: Args10) => Return10,
+      pass11: (this: void, ...args: Args11) => Return11,
+      pass12: (this: void, ...args: Args12) => Return12,
+  ): AfterEvent<Out<Return3>>;
+
+  thru_<
+      Return1,
+      Args2 extends Args<Return1>, Return2,
+      Args3 extends Args<Return2>, Return3,
+      Args4 extends Args<Return3>, Return4,
+      Args5 extends Args<Return4>, Return5,
+      Args6 extends Args<Return5>, Return6,
+      Args7 extends Args<Return6>, Return7,
+      Args8 extends Args<Return7>, Return8,
+      Args9 extends Args<Return8>, Return9,
+      Args10 extends Args<Return9>, Return10,
+      Args11 extends Args<Return10>, Return11,
+      Args12 extends Args<Return11>, Return12,
+      Args13 extends Args<Return12>, Return13,
+      >(
+      pass1: (this: void, ...args: E) => Return1,
+      pass2: (this: void, ...args: Args2) => Return2,
+      pass3: (this: void, ...args: Args3) => Return3,
+      pass4: (this: void, ...args: Args4) => Return4,
+      pass5: (this: void, ...args: Args5) => Return5,
+      pass6: (this: void, ...args: Args6) => Return6,
+      pass7: (this: void, ...args: Args7) => Return7,
+      pass8: (this: void, ...args: Args8) => Return8,
+      pass9: (this: void, ...args: Args9) => Return9,
+      pass10: (this: void, ...args: Args10) => Return10,
+      pass11: (this: void, ...args: Args11) => Return11,
+      pass12: (this: void, ...args: Args12) => Return12,
+      pass13: (this: void, ...args: Args13) => Return13,
   ): AfterEvent<Out<Return3>>;
 
   thru_(...fns: any[]): AfterEvent<any[]> {
