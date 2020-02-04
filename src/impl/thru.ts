@@ -80,10 +80,10 @@ export function thru<E extends any[]>(
           function handleResult(
               callResult: any,
               args: any[],
-              newSupply = eventSupply().needs(entry.supply),
+              parentSupply = entry.supply,
           ): void {
 
-            const [nextChain, prevSupply] = chain(index, newSupply);
+            const [nextChain, prevSupply] = chain(index, eventSupply().needs(parentSupply));
 
             try {
               if (isNextCall(callResult)) {

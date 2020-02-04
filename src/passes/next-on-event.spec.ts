@@ -150,8 +150,10 @@ describe('nextOnEvent', () => {
     sender.send(nested1);
     nested1.send('value1');
     nested1.send('value2');
+    nested1.send('value3');
 
     expect(receiver).toHaveBeenCalledWith('value1!');
     expect(receiver).toHaveBeenCalledWith('value2!');
+    expect(receiver).toHaveBeenCalledWith('value3!');
   });
 });
