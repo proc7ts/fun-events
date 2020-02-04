@@ -58,6 +58,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   /**
    * Extracts event suppliers from incoming events.
    *
+   * @deprecated In favor of [[nextOnEvent]].
    * @typeparam F  Extracted event type.
    * @param extract  A function extracting event supplier from incoming event. May return `undefined` when nothing
    * extracted.
@@ -78,6 +79,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
    * receivers. This may be useful e.g. when the result will be further transformed. It is wise to {@link share share}
    * the supply of events from final result in this case.
    *
+   * @deprecated In favor of [[nextOnEvent]].
    * @typeparam F  Extracted event type.
    * @param extract  A function extracting event supplier from incoming event. May return `undefined` when
    * nothing extracted.
