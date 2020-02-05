@@ -13,6 +13,7 @@ import { OnEvent, onEventBy } from '../on-event';
  *
  * When the `promise` is rejected the events supply is {@link EventSupply.off cut off} with promise rejection reason.
  *
+ * @category Core
  * @param promise  The promise to represent as event sender.
  *
  * @returns An [[OnEvent]] sender of the given `promise` settlement event.
