@@ -1,4 +1,4 @@
-import { asis, nextArgs, nextSkip, noop } from 'call-thru';
+import { nextArgs, nextSkip, noop } from 'call-thru';
 import { AfterEvent, afterEventBy, afterNever, afterSupplied, afterThe } from './after-event';
 import { EventEmitter } from './event-emitter';
 import { AfterEvent__symbol } from './event-keeper';
@@ -187,37 +187,6 @@ describe('AfterEvent', () => {
   });
 
   describe('keep', () => {
-    describe('dig', () => {
-
-      let sender: ValueTracker<ValueTracker<string>>;
-      let nested1: ValueTracker<string>;
-      let nested2: ValueTracker<string>;
-      let extract: Mock<ValueTracker<string>, [ValueTracker<string>]>;
-      let result: AfterEvent<[string]>;
-      let receiver: Mock<void, [string]>;
-
-      beforeEach(() => {
-        nested1 = trackValue('1');
-        nested2 = trackValue('2');
-        sender = trackValue(nested1);
-        receiver = jest.fn();
-        extract = jest.fn(asis);
-        result = sender.read.keep.dig(extract);
-        result(receiver);
-      });
-
-      it('returns `AfterEvent` keeper', () => {
-        expect(result).toBeInstanceOf(AfterEvent);
-      });
-      it('receives nested events', () => {
-        expect(receiver).toHaveBeenCalledWith('1');
-        sender.it = nested2;
-        expect(receiver).toHaveBeenCalledWith('2');
-        nested2.it = '3';
-        expect(receiver).toHaveBeenCalledWith('3');
-      });
-    });
-
     describe('thru', () => {
 
       let mockRegister: Mock<void, [EventReceiver.Generic<[string, string]>]>;

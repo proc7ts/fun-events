@@ -37,38 +37,6 @@ export class AfterEventKeep<E extends any[]> {
   }
 
   /**
-   * Extracts event keepers from incoming events.
-   *
-   * @deprecated In favour of [[nextOnEvent]].
-   * @typeparam F  Extracted event type.
-   * @param extract  A function extracting event keeper from incoming event.
-   *
-   * @returns An [[AfterEvent]] keeper of extracted events. The events supply is cut off once the incoming events supply
-   * do. The returned keeper shares the supply of extracted events among receivers.
-   */
-  dig<F extends any[]>(extract: (this: void, ...event: E) => EventKeeper<F>): AfterEvent<F> {
-    return this.dig_(extract).share();
-  }
-
-  /**
-   * Extracts event keepers from incoming events without sharing extracted events supply.
-   *
-   * This method does the same as [[AfterEventKeep.dig]] one, except it does not share the supply of extracted events
-   * among receivers. This may be useful e.g. when the result will be further transformed. It is wise to
-   * {@link AfterEvent.share share} the supply of events from the final result in this case.
-   *
-   * @deprecated In favour of [[nextOnEvent]].
-   * @typeparam F  Extracted event type.
-   * @param extract  A function extracting event keeper from incoming event.
-   *
-   * @returns An [[AfterEvent]] keeper of extracted events. The events supply is cut off once the incoming events
-   * supply do.
-   */
-  dig_<F extends any[]>(extract: (this: void, ...event: E) => EventKeeper<F>): AfterEvent<F> {
-    return afterSupplied(this._keeper.dig_((...event) => afterSupplied(extract(...event))));
-  }
-
-  /**
    * Constructs an [[AfterEvent]] keeper of original events passed trough the chain of transformations.
    *
    * The passes are preformed by `callThru()` function. The event receivers registered by resulting event keeper

@@ -2,14 +2,13 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { nextSkip } from 'call-thru';
 import { AfterEvent__symbol } from './event-keeper';
 import { eventReceiver, EventReceiver } from './event-receiver';
 import { EventSender, isEventSender, OnEvent__symbol } from './event-sender';
 import { EventSupplier } from './event-supplier';
 import { eventSupply, EventSupply, noEventSupply } from './event-supply';
 import { once, share, thru, tillOff } from './impl';
-import { nextOnEvent, OnEventCallChain } from './passes';
+import { OnEventCallChain } from './passes';
 import Args = OnEventCallChain.Args;
 import Out = OnEventCallChain.Out;
 
@@ -53,56 +52,6 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
    */
   tillOff(requiredSupply: EventSupply, dependentSupply?: EventSupply): OnEvent<E> {
     return onEventBy(tillOff(this, requiredSupply, dependentSupply));
-  }
-
-  /**
-   * Extracts event suppliers from incoming events.
-   *
-   * @deprecated In favour of [[nextOnEvent]].
-   * @typeparam F  Extracted event type.
-   * @param extract  A function extracting event supplier from incoming event. May return `undefined` when nothing
-   * extracted.
-   *
-   * @returns An [[OnEvent]] sender of events from extracted suppliers. The events supply is cut off once the incoming
-   * events supply do. The returned sender shares the supply of extracted events among receivers.
-   */
-  dig<F extends any[]>(
-      extract: (this: void, ...event: E) => EventSupplier<F> | void | undefined,
-  ): OnEvent<F> {
-    return onEventBy(share(this.dig_(extract)));
-  }
-
-  /**
-   * Extracts event suppliers from incoming events without sharing extracted events supply.
-   *
-   * This method does the same as [[OnEvent.dig]] one, except it does not share the supply of extracted events among
-   * receivers. This may be useful e.g. when the result will be further transformed. It is wise to {@link share share}
-   * the supply of events from final result in this case.
-   *
-   * @deprecated In favour of [[nextOnEvent]].
-   * @typeparam F  Extracted event type.
-   * @param extract  A function extracting event supplier from incoming event. May return `undefined` when
-   * nothing extracted.
-   *
-   * @returns An [[OnEvent]] sender of events from extracted suppliers. The events supply is cut off once the incoming
-   * events supply do.
-   */
-  dig_<F extends any[]>(
-      extract: (this: void, ...event: E) => EventSupplier<F> | void | undefined,
-  ): OnEvent<F> {
-    return thru(
-        this,
-        onEventBy,
-        onSupplied,
-        [
-          (...event: E) => {
-
-            const extracted = extract(...event);
-
-            return extracted ? nextOnEvent<F>(extracted) : nextSkip;
-          },
-        ],
-    );
   }
 
   /**
