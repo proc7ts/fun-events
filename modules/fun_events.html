@@ -74,6 +74,7 @@
 								<li class="tsd-kind-module tsd-parent-kind-external-module tsd-has-type-parameter"><a href="fun_events.eventkeeper.html" class="tsd-kind-icon">Event<wbr>Keeper</a></li>
 								<li class="tsd-kind-module tsd-parent-kind-external-module tsd-has-type-parameter"><a href="fun_events.eventreceiver.html" class="tsd-kind-icon">Event<wbr>Receiver</a></li>
 								<li class="tsd-kind-module tsd-parent-kind-external-module tsd-has-type-parameter"><a href="fun_events.eventsender.html" class="tsd-kind-icon">Event<wbr>Sender</a></li>
+								<li class="tsd-kind-module tsd-parent-kind-external-module"><a href="fun_events.oneventcallchain.html" class="tsd-kind-icon">On<wbr>Event<wbr>Call<wbr>Chain</a></li>
 							</ul>
 							<h3>State Tracking Modules</h3>
 							<ul class="tsd-index-list">
@@ -134,6 +135,7 @@
 								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="fun_events.html#eventsupply-1" class="tsd-kind-icon">event<wbr>Supply</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter"><a href="fun_events.html#iseventkeeper" class="tsd-kind-icon">is<wbr>Event<wbr>Keeper</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter"><a href="fun_events.html#iseventsender" class="tsd-kind-icon">is<wbr>Event<wbr>Sender</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter"><a href="fun_events.html#nextonevent" class="tsd-kind-icon">next<wbr>OnEvent</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module"><a href="fun_events.html#noeventsupply" class="tsd-kind-icon">no<wbr>Event<wbr>Supply</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter"><a href="fun_events.html#onany" class="tsd-kind-icon">on<wbr>Any</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter"><a href="fun_events.html#onanyasync" class="tsd-kind-icon">on<wbr>Any<wbr>Async</a></li>
@@ -167,7 +169,7 @@
 					<div class="tsd-signature tsd-kind-icon">Event<wbr>Supplier&lt;E&gt;<span class="tsd-signature-symbol">:</span> <a href="fun_events.eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="fun_events.eventkeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/event-supplier.ts#L16">src/event-supplier.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/event-supplier.ts#L16">src/event-supplier.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -197,7 +199,7 @@
 					<div class="tsd-signature tsd-kind-icon">After<wbr>Event__symbol<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">unique symbol</span><span class="tsd-signature-symbol"> = (/*#__PURE__*/ Symbol(&#x27;after-event&#x27;))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/event-keeper.ts#L13">src/event-keeper.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/event-keeper.ts#L13">src/event-keeper.ts:13</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -212,7 +214,7 @@
 					<div class="tsd-signature tsd-kind-icon">On<wbr>Event__symbol<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">unique symbol</span><span class="tsd-signature-symbol"> = (/*#__PURE__*/ Symbol(&#x27;on-event&#x27;))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/event-sender.ts#L13">src/event-sender.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/event-sender.ts#L13">src/event-sender.ts:13</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -227,7 +229,7 @@
 					<div class="tsd-signature tsd-kind-icon">after<wbr>Never<span class="tsd-signature-symbol">:</span> <a href="../classes/fun_events.afterevent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = (/*#__PURE__*/ afterEventBy(({ supply }) &#x3D;&gt; supply.off()))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/after-event.ts#L1177">src/after-event.ts:1177</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/after-event.ts#L759">src/after-event.ts:759</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -242,7 +244,7 @@
 					<div class="tsd-signature tsd-kind-icon">on<wbr>Never<span class="tsd-signature-symbol">:</span> <a href="../classes/fun_events.onevent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = (/*#__PURE__*/ onEventBy(({ supply }) &#x3D;&gt; supply.off()))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/on-event.ts#L1129">src/on-event.ts:1129</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/on-event.ts#L666">src/on-event.ts:666</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -264,7 +266,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/keepers/after-all.ts#L21">src/keepers/after-all.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/keepers/after-all.ts#L21">src/keepers/after-all.ts:21</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -306,7 +308,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/keepers/after-each.ts#L21">src/keepers/after-each.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/keepers/after-each.ts#L21">src/keepers/after-each.ts:21</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -348,7 +350,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/after-event.ts#L1035">src/after-event.ts:1035</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/after-event.ts#L617">src/after-event.ts:617</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -439,7 +441,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/after-event.ts#L1101">src/after-event.ts:1101</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/after-event.ts#L683">src/after-event.ts:683</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -471,7 +473,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/after-event.ts#L1118">src/after-event.ts:1118</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/after-event.ts#L700">src/after-event.ts:700</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -522,7 +524,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/after-event.ts#L1168">src/after-event.ts:1168</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/after-event.ts#L750">src/after-event.ts:750</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -560,7 +562,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/event-receiver.ts#L125">src/event-receiver.ts:125</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/event-receiver.ts#L125">src/event-receiver.ts:125</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -602,7 +604,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/event-supply.ts#L71">src/event-supply.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/event-supply.ts#L71">src/event-supply.ts:71</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -655,7 +657,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/event-keeper.ts#L57">src/event-keeper.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/event-keeper.ts#L57">src/event-keeper.ts:57</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -696,7 +698,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/event-sender.ts#L56">src/event-sender.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/event-sender.ts#L56">src/event-sender.ts:56</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -727,6 +729,49 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
+					<a name="nextonevent" class="tsd-anchor"></a>
+					<h3>next<wbr>OnEvent</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">next<wbr>OnEvent&lt;E&gt;<span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="fun_events.html#eventsupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NextCall</span><span class="tsd-signature-symbol">&lt;</span><a href="fun_events.oneventcallchain.html" class="tsd-signature-type">OnEventCallChain</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/passes/next-on-event.ts#L21">src/passes/next-on-event.ts:21</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Builds a next chained call of <a href="fun_events.oneventcallchain.html">OnEventCallChain</a> that call the next pass with every event supplied by the given
+									supplier.</p>
+								</div>
+								<p>The event supply from the given supplier will be cut off each time the call is applied.</p>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
+									<div class="tsd-comment tsd-typography">
+										<p>An event type. This is a tuple of argument types of the next pass.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>supplier: <a href="fun_events.html#eventsupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A supplier of events to pass down the chain.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">NextCall</span><span class="tsd-signature-symbol">&lt;</span><a href="fun_events.oneventcallchain.html" class="tsd-signature-type">OnEventCallChain</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Next call passing events from the given <code>supplier</code>.</p>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module">
 					<a name="noeventsupply" class="tsd-anchor"></a>
 					<h3>no<wbr>Event<wbr>Supply</h3>
@@ -737,7 +782,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/event-supply.ts#L143">src/event-supply.ts:143</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/event-supply.ts#L143">src/event-supply.ts:143</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -760,7 +805,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/senders/on-any.ts#L21">src/senders/on-any.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/senders/on-any.ts#L21">src/senders/on-any.ts:21</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -802,7 +847,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/senders/on-any-async.ts#L25">src/senders/on-any-async.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/senders/on-any-async.ts#L25">src/senders/on-any-async.ts:25</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -848,7 +893,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/senders/on-async.ts#L27">src/senders/on-async.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/senders/on-async.ts#L27">src/senders/on-async.ts:27</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -894,7 +939,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/on-event.ts#L1083">src/on-event.ts:1083</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/on-event.ts#L620">src/on-event.ts:620</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -957,7 +1002,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/on-event.ts#L1113">src/on-event.ts:1113</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/on-event.ts#L650">src/on-event.ts:650</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1002,7 +1047,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/state/state-path.ts#L37">src/state/state-path.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/state/state-path.ts#L37">src/state/state-path.ts:37</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1031,7 +1076,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/state/state-path.ts#L46">src/state/state-path.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/state/state-path.ts#L46">src/state/state-path.ts:46</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1067,7 +1112,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/value/track-value.ts#L54">src/value/track-value.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/value/track-value.ts#L54">src/value/track-value.ts:54</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1096,7 +1141,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/value/track-value.ts#L63">src/value/track-value.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/value/track-value.ts#L63">src/value/track-value.ts:63</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1135,7 +1180,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/value/track-value.ts#L83">src/value/track-value.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/value/track-value.ts#L83">src/value/track-value.ts:83</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1167,7 +1212,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/value/track-value.ts#L100">src/value/track-value.ts:100</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/value/track-value.ts#L100">src/value/track-value.ts:100</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1244,7 +1289,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/after-event.ts#L1153">src/after-event.ts:1153</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/after-event.ts#L735">src/after-event.ts:735</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1294,7 +1339,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/fa02d74/src/senders/on-promise.ts#L20">src/senders/on-promise.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/08b908a/src/senders/on-promise.ts#L20">src/senders/on-promise.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1417,6 +1462,9 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
 						<a href="fun_events.html#iseventsender" class="tsd-kind-icon">is<wbr>Event<wbr>Sender</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="fun_events.html#nextonevent" class="tsd-kind-icon">next<wbr>OnEvent</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module">
 						<a href="fun_events.html#noeventsupply" class="tsd-kind-icon">no<wbr>Event<wbr>Supply</a>
