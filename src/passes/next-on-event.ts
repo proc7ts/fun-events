@@ -7,8 +7,8 @@ import { EventSupplier } from '../event-supplier';
 import { OnEventCallChain } from './on-event-call-chain';
 
 /**
- * Builds a next chained call of {@link OnEventCallChain} that call the next pass with every event supplied by the given
- * supplier.
+ * Builds a next chained call of {@link OnEventCallChain} that calls the next pass with every event supplied by
+ * the given supplier.
  *
  * The event supply from the given supplier will be cut off each time the call is applied.
  *
