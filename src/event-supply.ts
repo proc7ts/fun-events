@@ -64,12 +64,12 @@ export abstract class EventSupply implements EventSupplyPeer {
    *
    * Once `another` supply is {@link off cut off}, this one is will be cut off with the same reason.
    *
-   * @param another  An event supply this one depends on.
+   * @param another  A peer of event supply this one depends on.
    *
    * @return `this` instance.
    */
-  needs(another: EventSupply): this {
-    another.whenOff(reason => this.off(reason));
+  needs(another: EventSupplyPeer): this {
+    eventSupplyOf(another).whenOff(reason => this.off(reason));
     return this;
   }
 
