@@ -74,14 +74,14 @@ export class DomEventDispatcher implements EventSupplyPeer {
    * @param event  An event to dispatch.
    *
    * @returns `true` if either event's `cancelable` attribute value is `false` or its `preventDefault()` method was not
-   * invoked, or `false` otherwise.
+   * invoked, or `false` otherwise. Also returns `false` after [[done]] method called.
    */
   dispatch(event: Event): boolean {
-    return this._target.dispatchEvent(event);
+    return !eventSupplyOf(this).isOff && this._target.dispatchEvent(event);
   }
 
   /**
-   * Removes all registered event listeners and rejects new listeners.
+   * Removes all registered event listeners and rejects new listeners registration and event dispatching.
    *
    * @param reason  A reason to unregister event listeners.
    *

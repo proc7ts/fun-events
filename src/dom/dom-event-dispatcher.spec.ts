@@ -127,5 +127,10 @@ describe('DomEventDispatcher', () => {
       supply.whenOff(whenOff);
       expect(whenOff).toHaveBeenCalledWith(reason);
     });
+    it('rejects event dispatching', () => {
+      dispatcher.done();
+      expect(dispatcher.dispatch(new KeyboardEvent('click'))).toBe(false);
+      expect(mockTarget.dispatchEvent).not.toHaveBeenCalled();
+    });
   });
 });
