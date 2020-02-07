@@ -7,7 +7,7 @@ import { AfterEvent__symbol, EventKeeper, isEventKeeper } from './event-keeper';
 import { eventReceiver, EventReceiver } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
 import { EventSupplier } from './event-supplier';
-import { EventSupply, eventSupply } from './event-supply';
+import { EventSupply, eventSupply, EventSupplyPeer } from './event-supply';
 import { once, share, tillOff } from './impl';
 import { OnEvent } from './on-event';
 import { OnEventCallChain } from './passes';
@@ -575,13 +575,13 @@ export abstract class AfterEvent<E extends any[]> extends OnEvent<E> implements 
    * The outgoing events supply will be cut off once incoming event supply does. Unless a second supply passed in.
    * In the latter case that supply will be cut off instead.
    *
-   * @param requiredSupply  The required event supply.
+   * @param required  A peer of required event supply.
    * @param dependentSupply  The supply to cut off on cutting off the incoming events supply.
    *
    * @returns New event keeper.
    */
-  tillOff(requiredSupply: EventSupply, dependentSupply?: EventSupply): AfterEvent<E> {
-    return afterEventBy(tillOff(this, requiredSupply, dependentSupply));
+  tillOff(required: EventSupplyPeer, dependentSupply?: EventSupply): AfterEvent<E> {
+    return afterEventBy(tillOff(this, required, dependentSupply));
   }
 
   /**

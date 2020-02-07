@@ -1,14 +1,15 @@
 import { EventReceiver } from '../event-receiver';
-import { eventSupply, EventSupply } from '../event-supply';
+import { eventSupply, EventSupply, eventSupplyOf, EventSupplyPeer } from '../event-supply';
 
 /**
  * @internal
  */
 export function tillOff<E extends any[]>(
     register: (receiver: EventReceiver.Generic<E>) => void,
-    requiredSupply: EventSupply,
+    required: EventSupplyPeer,
     dependentSupply?: EventSupply,
 ): (receiver: EventReceiver.Generic<E>) => void {
+  const requiredSupply = eventSupplyOf(required);
   return receiver => {
     if (dependentSupply) {
 

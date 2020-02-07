@@ -3,7 +3,7 @@
  * @module fun-events/dom
  */
 import { eventReceiver, EventReceiver } from '../event-receiver';
-import { EventSupply } from '../event-supply';
+import { EventSupply, EventSupplyPeer } from '../event-supply';
 import { once, tillOff } from '../impl';
 import { OnEvent } from '../on-event';
 
@@ -39,13 +39,13 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
    * The outgoing events supply will be cut off once incoming event supply does. Unless a second supply passed in.
    * In the latter case that supply will be cut off instead.
    *
-   * @param requiredSupply  The required event supply.
+   * @param required  A peer of required event supply.
    * @param dependentSupply  The supply to cut off on cutting off the incoming events supply.
    *
    * @returns New DOM event sender.
    */
-  tillOff(requiredSupply: EventSupply, dependentSupply?: EventSupply): OnDomEvent<E> {
-    return onDomEventBy(tillOff(this, requiredSupply, dependentSupply));
+  tillOff(required: EventSupplyPeer, dependentSupply?: EventSupply): OnDomEvent<E> {
+    return onDomEventBy(tillOff(this, required, dependentSupply));
   }
 
   /**

@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { EventSupply } from '../event-supply';
+import { EventSupply, EventSupplyPeer } from '../event-supply';
 import { OnEvent } from '../on-event';
 import { StatePath } from './state-path';
 import { StateUpdateReceiver } from './state-update-receiver';
@@ -26,12 +26,12 @@ export interface OnStateUpdate extends OnEvent<[StatePath, any, any]> {
    * The outgoing events supply will be cut off once incoming event supply does. Unless a second supply passed in.
    * In the latter case that supply will be cut off instead.
    *
-   * @param requiredSupply  The required event supply.
+   * @param required  A peer of required event supply.
    * @param dependentSupply  The supply to cut off on cutting off the incoming events supply.
    *
    * @returns New updates sender.
    */
-  tillOff(requiredSupply: EventSupply, dependentSupply?: EventSupply): OnStateUpdate;
+  tillOff(required: EventSupplyPeer, dependentSupply?: EventSupply): OnStateUpdate;
 
   (receiver: StateUpdateReceiver): EventSupply;
 
