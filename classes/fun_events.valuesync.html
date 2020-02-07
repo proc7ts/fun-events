@@ -104,6 +104,7 @@
 				<ul class="tsd-hierarchy">
 					<li><a href="../modules/fun_events.eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					<li><a href="../modules/fun_events.eventkeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<li><a href="../interfaces/fun_events.eventsupplypeer.html" class="tsd-signature-type">EventSupplyPeer</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -126,6 +127,7 @@
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="fun_events.valuesync.html#_afterevent__symbol_" class="tsd-kind-icon">[<wbr>After<wbr>Event__symbol]</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite"><a href="fun_events.valuesync.html#_eventsupply__symbol_" class="tsd-kind-icon">[<wbr>Event<wbr>Supply__symbol]</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="fun_events.valuesync.html#_onevent__symbol_" class="tsd-kind-icon">[<wbr>OnEvent__symbol]</a></li>
 								<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-overwrite"><a href="fun_events.valuesync.html#it" class="tsd-kind-icon">it</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite"><a href="fun_events.valuesync.html#on" class="tsd-kind-icon">on</a></li>
@@ -136,7 +138,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-inherited"><a href="fun_events.valuesync.html#by" class="tsd-kind-icon">by</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="fun_events.valuesync.html#bynone" class="tsd-kind-icon">by<wbr>None</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="fun_events.valuesync.html#done" class="tsd-kind-icon">done</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="fun_events.valuesync.html#done" class="tsd-kind-icon">done</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="fun_events.valuesync.html#sync" class="tsd-kind-icon">sync</a></li>
 							</ul>
 						</section>
@@ -155,7 +157,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/bae62fa/src/value/value-sync.ts#L31">src/value/value-sync.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/value/value-sync.ts#L31">src/value/value-sync.ts:31</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -178,7 +180,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="fun_events.valuetracker.html">ValueTracker</a>.<a href="fun_events.valuetracker.html#read">read</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/bae62fa/src/value/value-tracker.ts#L44">src/value/value-tracker.ts:44</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/value/value-tracker.ts#L45">src/value/value-tracker.ts:45</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -202,10 +204,28 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fun_events.valuetracker.html">ValueTracker</a>.<a href="fun_events.valuetracker.html#_afterevent__symbol_">[AfterEvent__symbol]</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/bae62fa/src/value/value-tracker.ts#L53">src/value/value-tracker.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/value/value-tracker.ts#L54">src/value/value-tracker.ts:54</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="fun_events.afterevent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
+					<a name="_eventsupply__symbol_" class="tsd-anchor"></a>
+					<h3>[<wbr>Event<wbr>Supply__symbol]</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> [EventSupply__symbol]<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fun_events.eventsupply.html" class="tsd-signature-type">EventSupply</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="fun_events.valuetracker.html">ValueTracker</a>.<a href="fun_events.valuetracker.html#_eventsupply__symbol_">[EventSupply__symbol]</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/value/value-sync.ts#L42">src/value/value-sync.ts:42</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <a href="fun_events.eventsupply.html" class="tsd-signature-type">EventSupply</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -220,7 +240,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fun_events.valuetracker.html">ValueTracker</a>.<a href="fun_events.valuetracker.html#_onevent__symbol_">[OnEvent__symbol]</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/bae62fa/src/value/value-tracker.ts#L49">src/value/value-tracker.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/value/value-tracker.ts#L50">src/value/value-tracker.ts:50</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="fun_events.onevent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">N</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -239,7 +259,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="fun_events.valuetracker.html">ValueTracker</a>.<a href="fun_events.valuetracker.html#it">it</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/bae62fa/src/value/value-sync.ts#L42">src/value/value-sync.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/value/value-sync.ts#L46">src/value/value-sync.ts:46</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span></h4>
@@ -248,7 +268,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="fun_events.valuetracker.html">ValueTracker</a>.<a href="fun_events.valuetracker.html#it">it</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/bae62fa/src/value/value-sync.ts#L46">src/value/value-sync.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/value/value-sync.ts#L50">src/value/value-sync.ts:50</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -272,7 +292,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="fun_events.valuetracker.html">ValueTracker</a>.<a href="fun_events.valuetracker.html#on">on</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/bae62fa/src/value/value-sync.ts#L38">src/value/value-sync.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/value/value-sync.ts#L38">src/value/value-sync.ts:38</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="fun_events.onevent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -294,7 +314,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fun_events.valuetracker.html">ValueTracker</a>.<a href="fun_events.valuetracker.html#by">by</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/bae62fa/src/value/value-tracker.ts#L75">src/value/value-tracker.ts:75</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/value/value-tracker.ts#L81">src/value/value-tracker.ts:81</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -321,7 +341,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fun_events.valuetracker.html">ValueTracker</a>.<a href="fun_events.valuetracker.html#by">by</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/bae62fa/src/value/value-tracker.ts#L93">src/value/value-tracker.ts:93</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/value/value-tracker.ts#L99">src/value/value-tracker.ts:99</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -394,7 +414,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="fun_events.valuetracker.html">ValueTracker</a>.<a href="fun_events.valuetracker.html#bynone">byNone</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/bae62fa/src/value/value-tracker.ts#L146">src/value/value-tracker.ts:146</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/value/value-tracker.ts#L152">src/value/value-tracker.ts:152</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -417,27 +437,37 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="done" class="tsd-anchor"></a>
 					<h3>done</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 						<li class="tsd-signature tsd-kind-icon">done<span class="tsd-signature-symbol">(</span>reason<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="fun_events.valuetracker.html">ValueTracker</a>.<a href="fun_events.valuetracker.html#done">done</a></p>
+								<p>Inherited from <a href="fun_events.valuetracker.html">ValueTracker</a>.<a href="fun_events.valuetracker.html#done">done</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/bae62fa/src/value/value-sync.ts#L171">src/value/value-sync.ts:171</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/value/value-tracker.ts#L166">src/value/value-tracker.ts:166</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Removes all registered event receivers and cuts off corresponding event supplies.</p>
+								</div>
+								<p>After this method call they won&#39;t receive events.</p>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> reason: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A reason to stop sending events.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+							<p><code>this</code> instance.</p>
 						</li>
 					</ul>
 				</section>
@@ -454,7 +484,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/bae62fa/src/value/value-sync.ts#L65">src/value/value-sync.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/value/value-sync.ts#L69">src/value/value-sync.ts:69</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -478,7 +508,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/bae62fa/src/value/value-sync.ts#L76">src/value/value-sync.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/value/value-sync.ts#L80">src/value/value-sync.ts:80</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -508,7 +538,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/bae62fa/src/value/value-sync.ts#L91">src/value/value-sync.ts:91</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/value/value-sync.ts#L95">src/value/value-sync.ts:95</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -567,7 +597,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/bae62fa/src/value/value-sync.ts#L110">src/value/value-sync.ts:110</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/value/value-sync.ts#L114">src/value/value-sync.ts:114</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -664,6 +694,9 @@
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
 								<a href="fun_events.valuesync.html#_afterevent__symbol_" class="tsd-kind-icon">[<wbr>After<wbr>Event__symbol]</a>
 							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-overwrite">
+								<a href="fun_events.valuesync.html#_eventsupply__symbol_" class="tsd-kind-icon">[<wbr>Event<wbr>Supply__symbol]</a>
+							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
 								<a href="fun_events.valuesync.html#_onevent__symbol_" class="tsd-kind-icon">[<wbr>OnEvent__symbol]</a>
 							</li>
@@ -679,7 +712,7 @@
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="fun_events.valuesync.html#bynone" class="tsd-kind-icon">by<wbr>None</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="fun_events.valuesync.html#done" class="tsd-kind-icon">done</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">

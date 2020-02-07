@@ -82,6 +82,12 @@
 					</li>
 				</ul>
 			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/fun_events.eventsupplypeer.html" class="tsd-signature-type">EventSupplyPeer</a></li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -93,9 +99,16 @@
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="fun_events_dom.domeventdispatcher.html#_eventsupply__symbol_" class="tsd-kind-icon">[<wbr>Event<wbr>Supply__symbol]</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fun_events_dom.domeventdispatcher.html#dispatch" class="tsd-kind-icon">dispatch</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fun_events_dom.domeventdispatcher.html#done" class="tsd-kind-icon">done</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="fun_events_dom.domeventdispatcher.html#on" class="tsd-kind-icon">on</a></li>
 							</ul>
 						</section>
@@ -114,7 +127,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/bae62fa/src/dom/dom-event-dispatcher.ts#L23">src/dom/dom-event-dispatcher.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/dom/dom-event-dispatcher.ts#L26">src/dom/dom-event-dispatcher.ts:26</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -139,6 +152,20 @@
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="_eventsupply__symbol_" class="tsd-anchor"></a>
+					<h3>[<wbr>Event<wbr>Supply__symbol]</h3>
+					<div class="tsd-signature tsd-kind-icon">[<wbr>Event<wbr>Supply__symbol]<span class="tsd-signature-symbol">:</span> <a href="fun_events.eventsupply.html" class="tsd-signature-type">EventSupply</a><span class="tsd-signature-symbol"> = eventSupply()</span></div>
+					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/fun_events.eventsupplypeer.html">EventSupplyPeer</a>.<a href="../interfaces/fun_events.eventsupplypeer.html#_eventsupply__symbol_">[EventSupply__symbol]</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/dom/dom-event-dispatcher.ts#L21">src/dom/dom-event-dispatcher.ts:21</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="dispatch" class="tsd-anchor"></a>
@@ -150,7 +177,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/bae62fa/src/dom/dom-event-dispatcher.ts#L69">src/dom/dom-event-dispatcher.ts:69</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/dom/dom-event-dispatcher.ts#L79">src/dom/dom-event-dispatcher.ts:79</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -174,6 +201,38 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="done" class="tsd-anchor"></a>
+					<h3>done</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">done<span class="tsd-signature-symbol">(</span>reason<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/dom/dom-event-dispatcher.ts#L90">src/dom/dom-event-dispatcher.ts:90</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Removes all registered event listeners and rejects new listeners.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> reason: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A reason to unregister event listeners.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+							<p><code>this</code> instance.</p>
+						</li>
+					</ul>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
 					<a name="on" class="tsd-anchor"></a>
 					<h3>on</h3>
@@ -184,7 +243,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/bae62fa/src/dom/dom-event-dispatcher.ts#L48">src/dom/dom-event-dispatcher.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/0e0a97a/src/dom/dom-event-dispatcher.ts#L51">src/dom/dom-event-dispatcher.ts:51</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -245,8 +304,14 @@
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="fun_events_dom.domeventdispatcher.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="fun_events_dom.domeventdispatcher.html#_eventsupply__symbol_" class="tsd-kind-icon">[<wbr>Event<wbr>Supply__symbol]</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="fun_events_dom.domeventdispatcher.html#dispatch" class="tsd-kind-icon">dispatch</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="fun_events_dom.domeventdispatcher.html#done" class="tsd-kind-icon">done</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
 								<a href="fun_events_dom.domeventdispatcher.html#on" class="tsd-kind-icon">on</a>
