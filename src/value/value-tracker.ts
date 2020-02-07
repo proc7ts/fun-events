@@ -7,7 +7,7 @@ import { AfterEvent__symbol, EventKeeper, isEventKeeper } from '../event-keeper'
 import { EventReceiver } from '../event-receiver';
 import { EventSender, OnEvent__symbol } from '../event-sender';
 import { EventSupplier } from '../event-supplier';
-import { EventSupply, noEventSupply } from '../event-supply';
+import { EventSupply, EventSupply__symbol, eventSupplyOf, EventSupplyPeer, noEventSupply } from '../event-supply';
 import { OnEvent, onSupplied } from '../on-event';
 
 /**
@@ -22,7 +22,8 @@ import { OnEvent, onSupplied } from '../on-event';
  * @typeparam T  Tracked value type.
  * @typeparam N  New (updated) value type.
  */
-export abstract class ValueTracker<T = any, N extends T = T> implements EventSender<[N, T]>, EventKeeper<[T]> {
+export abstract class ValueTracker<T = any, N extends T = T>
+    implements EventSender<[N, T]>, EventKeeper<[T]>, EventSupplyPeer {
 
   /**
    * @internal
@@ -53,6 +54,11 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
   get [AfterEvent__symbol](): AfterEvent<[T]> {
     return this.read;
   }
+
+  /**
+   * An event supply of this value tracker.
+   */
+  abstract readonly [EventSupply__symbol]: EventSupply;
 
   /**
    * The tracked value.
@@ -157,10 +163,16 @@ export abstract class ValueTracker<T = any, N extends T = T> implements EventSen
    *
    * @returns `this` instance.
    */
-  abstract done(reason?: any): this;
+  done(reason?: any): this {
+    eventSupplyOf(this).off(reason);
+    return this;
+  }
 
 }
 
+/**
+ * @internal
+ */
 function receiveNewValue<T, N extends T>(
     valueReceiver: EventReceiver.Generic<[T]>,
 ): EventReceiver.Generic<[N, T]> {
