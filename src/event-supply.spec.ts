@@ -1,5 +1,5 @@
 import { noop } from 'call-thru';
-import { eventSupply, EventSupply, noEventSupply } from './event-supply';
+import { eventSupply, EventSupply, eventSupplyOf, noEventSupply } from './event-supply';
 import Mock = jest.Mock;
 
 describe('EventSupply', () => {
@@ -16,6 +16,15 @@ describe('EventSupply', () => {
 
       noEventSupply().whenOff(mockWhenDone);
       expect(mockWhenDone).toHaveBeenCalledWith();
+    });
+  });
+
+  describe('eventSupplyOf', () => {
+    it('of `EventSupply` is the supply itself', () => {
+
+      const supply = eventSupply();
+
+      expect(eventSupplyOf(supply)).toBe(supply);
     });
   });
 

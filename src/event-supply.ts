@@ -5,6 +5,13 @@
 import { noop } from 'call-thru';
 
 /**
+ * A key of [[EventSupplyPeer]] property containing [[EventSupply]] instance.
+ *
+ * @category Core
+ */
+export const EventSupply__symbol = (/*#__PURE__*/ Symbol('events-supply'));
+
+/**
  * A supply of events from {@link EventSupplier event supplier} to {@link EventReceiver event receiver}.
  *
  * When no longer needed the supply may be {@link off cut off}.
@@ -13,7 +20,7 @@ import { noop } from 'call-thru';
  *
  * @category Core
  */
-export abstract class EventSupply {
+export abstract class EventSupply implements EventSupplyPeer {
 
   /**
    * Whether this supply is {@link off cut off} already.
@@ -21,6 +28,13 @@ export abstract class EventSupply {
    * `true` means the events will no longer be supplied.
    */
   abstract readonly isOff: boolean;
+
+  /**
+   * `this` event supply.
+   */
+  get [EventSupply__symbol](): this {
+    return this;
+  }
 
   /**
    * Cuts off the supply of events.
@@ -59,6 +73,36 @@ export abstract class EventSupply {
     return this;
   }
 
+}
+
+/**
+ * A peer of event supply.
+ *
+ * Contains an [[EventSupply]] that can be extracted by [[eventSupplyOf]] function.
+ *
+ * To be implemented by objects that controls event supply. An [[EventSupply]] is a peer of itself.
+ *
+ * @category Core
+ */
+export interface EventSupplyPeer {
+
+  /**
+   * An event supply of this peer.
+   */
+  readonly [EventSupply__symbol]: EventSupply;
+
+}
+
+/**
+ * Extracts an event supply from its peer.
+ *
+ * @category Core
+ * @param peer  A peer of event supply.
+ *
+ * @returns Extracted event supply contained in [[EventSupply__symbol]] property.
+ */
+export function eventSupplyOf(peer: EventSupplyPeer): EventSupply {
+  return peer[EventSupply__symbol];
 }
 
 /**
