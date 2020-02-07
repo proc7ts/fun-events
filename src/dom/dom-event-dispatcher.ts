@@ -4,6 +4,7 @@
  */
 import { noop } from 'call-thru';
 import { EventReceiver } from '../event-receiver';
+import { eventSupply, EventSupply, EventSupply__symbol, eventSupplyOf, EventSupplyPeer } from '../event-supply';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 
 const domEventContext: EventReceiver.Context<any> = {
@@ -15,7 +16,9 @@ const domEventContext: EventReceiver.Context<any> = {
  *
  * @category DOM
  */
-export class DomEventDispatcher {
+export class DomEventDispatcher implements EventSupplyPeer {
+
+  readonly [EventSupply__symbol]: EventSupply = eventSupply();
 
   /**
    * @internal
@@ -48,11 +51,18 @@ export class DomEventDispatcher {
   on<E extends Event>(type: string): OnDomEvent<E> {
     return onDomEventBy<E>((listener, opts) => {
 
-      // Create unique DOM listener instance
-      const domListener: EventListener = event => listener.receive(domEventContext, event as E);
+      const { supply } = listener;
 
-      this._target.addEventListener(type, domListener, opts);
-      listener.supply.whenOff(() => this._target.removeEventListener(type, domListener));
+      supply.needs(eventSupplyOf(this));
+
+      if (!supply.isOff) {
+
+        // Create unique DOM listener instance
+        const domListener: EventListener = event => listener.receive(domEventContext, event as E);
+
+        this._target.addEventListener(type, domListener, opts);
+        listener.supply.whenOff(() => this._target.removeEventListener(type, domListener));
+      }
     });
   }
 
@@ -68,6 +78,18 @@ export class DomEventDispatcher {
    */
   dispatch(event: Event): boolean {
     return this._target.dispatchEvent(event);
+  }
+
+  /**
+   * Removes all registered event listeners and rejects new listeners.
+   *
+   * @param reason  A reason to unregister event listeners.
+   *
+   * @returns `this` instance.
+   */
+  done(reason?: any): this {
+    eventSupplyOf(this).off(reason);
+    return this;
   }
 
 }
