@@ -7,7 +7,7 @@ import { EventEmitter } from '../event-emitter';
 import { EventKeeper, isEventKeeper } from '../event-keeper';
 import { EventSender } from '../event-sender';
 import { EventSupplier } from '../event-supplier';
-import { eventSupply, EventSupply } from '../event-supply';
+import { eventSupply, EventSupply, EventSupply__symbol, eventSupplyOf } from '../event-supply';
 import { OnEvent, onSupplied } from '../on-event';
 import { ValueTracker } from './value-tracker';
 
@@ -37,6 +37,10 @@ export class ValueSync<T> extends ValueTracker<T> {
 
   get on(): OnEvent<[T, T]> {
     return this._on.on;
+  }
+
+  get [EventSupply__symbol](): EventSupply {
+    return eventSupplyOf(this._on);
   }
 
   get it(): T {
@@ -166,11 +170,6 @@ export class ValueSync<T> extends ValueTracker<T> {
         supply1.off(reason);
       }).needs(supply1).needs(supply2);
     }
-  }
-
-  done(reason?: any): this {
-    this._on.done(reason);
-    return this;
   }
 
 }

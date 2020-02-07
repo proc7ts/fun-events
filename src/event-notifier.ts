@@ -4,7 +4,7 @@
  */
 import { eventReceiver, EventReceiver } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
-import { eventSupply, EventSupply, EventSupply__symbol, EventSupplyPeer } from './event-supply';
+import { eventSupply, EventSupply, EventSupply__symbol, eventSupplyOf, EventSupplyPeer } from './event-supply';
 
 /**
  * Event notifier can be used to register event receivers and send events to them.
@@ -83,7 +83,7 @@ export class EventNotifier<E extends any[]> implements EventSender<E>, EventSupp
    * @returns `this` instance.
    */
   done(reason?: any): this {
-    this[EventSupply__symbol].off(reason);
+    eventSupplyOf(this).off(reason);
     return this;
   }
 

@@ -4,6 +4,7 @@
  */
 import { EventEmitter } from '../event-emitter';
 import { EventKeeper } from '../event-keeper';
+import { EventSupply, EventSupply__symbol, eventSupplyOf } from '../event-supply';
 import { OnEvent } from '../on-event';
 import { ValueTracker } from './value-tracker';
 
@@ -22,6 +23,10 @@ class TrackedValue<T> extends ValueTracker<T> {
     return this._on.on;
   }
 
+  get [EventSupply__symbol](): EventSupply {
+    return eventSupplyOf(this._on);
+  }
+
   get it(): T {
     return this._it;
   }
@@ -34,11 +39,6 @@ class TrackedValue<T> extends ValueTracker<T> {
       this._it = value;
       this._on.send(value, oldValue);
     }
-  }
-
-  done(reason?: any): this {
-    this._on.done(reason);
-    return this;
   }
 
 }
