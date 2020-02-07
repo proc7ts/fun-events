@@ -4,7 +4,7 @@
  */
 import { eventReceiver, EventReceiver } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
-import { eventSupply, EventSupply } from './event-supply';
+import { eventSupply, EventSupply, EventSupply__symbol, EventSupplyPeer } from './event-supply';
 
 /**
  * Event notifier can be used to register event receivers and send events to them.
@@ -19,17 +19,14 @@ import { eventSupply, EventSupply } from './event-supply';
  * @category Core
  * @typeparam E  An event type. This is a list of event receiver parameter types.
  */
-export class EventNotifier<E extends any[]> implements EventSender<E> {
+export class EventNotifier<E extends any[]> implements EventSender<E>, EventSupplyPeer {
 
   /**
    * @internal
    */
   private readonly _rcvs = new Set<EventReceiver.Generic<E>>();
 
-  /**
-   * @internal
-   */
-  private readonly _supply: EventSupply;
+  readonly [EventSupply__symbol]: EventSupply;
 
   /**
    * Sends the given `event` to all registered receivers.
@@ -39,7 +36,7 @@ export class EventNotifier<E extends any[]> implements EventSender<E> {
   readonly send: (this: this, ...event: E) => void = receiveEventsByEach(this._rcvs);
 
   constructor() {
-    this._supply = eventSupply(reason => {
+    this[EventSupply__symbol] = eventSupply(reason => {
       this._rcvs.forEach(({ supply }) => supply.off(reason));
     });
   }
@@ -72,7 +69,7 @@ export class EventNotifier<E extends any[]> implements EventSender<E> {
 
     this._rcvs.add(generic);
 
-    return generic.supply.needs(this._supply).whenOff(() => this._rcvs.delete(generic));
+    return generic.supply.needs(this).whenOff(() => this._rcvs.delete(generic));
   }
 
   /**
@@ -86,7 +83,7 @@ export class EventNotifier<E extends any[]> implements EventSender<E> {
    * @returns `this` instance.
    */
   done(reason?: any): this {
-    this._supply.off(reason);
+    this[EventSupply__symbol].off(reason);
     return this;
   }
 
