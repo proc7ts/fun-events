@@ -28,6 +28,9 @@ export default {
     if (id.startsWith(path.join(__dirname, 'src', 'dom') + path.sep)) {
       return 'fun-events.dom';
     }
+    if (id.startsWith(path.join(__dirname, 'src', 'impl') + path.sep)) {
+      return 'fun-events.impl';
+    }
     return 'fun-events';
   },
   output: [
