@@ -5,6 +5,9 @@ import { eventSupply, EventSupply, noEventSupply } from '../event-supply';
 import { OnEvent } from '../on-event';
 import { OnEventCallChain } from '../passes';
 
+/**
+ * @internal
+ */
 export function thru<E extends any[]>(
     register: (receiver: EventReceiver.Generic<any[]>) => void,
     onEvent: <F extends any[]>(register: (receiver: EventReceiver.Generic<F>) => void) => OnEvent<F>,
