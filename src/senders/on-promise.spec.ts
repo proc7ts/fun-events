@@ -6,33 +6,23 @@ describe('onPromise', () => {
 
     const value = 'test';
     const on = onPromise(Promise.resolve(value));
-    const receiver = jest.fn();
+    const promise = await new Promise(resolve => on(resolve));
 
-    on(receiver);
-    await Promise.resolve();
-
-    expect(receiver).toHaveBeenCalledWith(value);
+    expect(await promise).toBe(value);
   });
   it('cuts off events supply after resolution', async () => {
 
     const on = onPromise(Promise.resolve('test'));
-    const whenOff = jest.fn();
+    const promise = new Promise(resolve => on(noop).whenOff(resolve));
 
-    on(noop).whenOff(whenOff);
-    await Promise.resolve();
-
-    expect(whenOff).toHaveBeenCalledWith(undefined);
+    expect(await promise).toBeUndefined();
   });
   it('cuts off events supply with promise rejection reason', async () => {
 
     const error = new Error('test');
     const on = onPromise(Promise.reject(error));
-    const whenOff = jest.fn();
+    const promise = new Promise(resolve => on(noop).whenOff(resolve));
 
-    on(noop).whenOff(whenOff);
-    await Promise.resolve();
-    await Promise.resolve(); // Catches error in next microtask
-
-    expect(whenOff).toHaveBeenCalledWith(error);
+    expect(await promise).toBe(error);
   });
 });
