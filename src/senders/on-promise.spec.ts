@@ -31,6 +31,7 @@ describe('onPromise', () => {
 
     on(noop).whenOff(whenOff);
     await Promise.resolve();
+    await Promise.resolve(); // Catches error in next microtask
 
     expect(whenOff).toHaveBeenCalledWith(error);
   });
