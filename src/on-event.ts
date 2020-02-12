@@ -6,7 +6,7 @@ import { AfterEvent__symbol } from './event-keeper';
 import { eventReceiver, EventReceiver } from './event-receiver';
 import { EventSender, isEventSender, OnEvent__symbol } from './event-sender';
 import { EventSupplier } from './event-supplier';
-import { eventSupply, EventSupply, EventSupplyPeer, noEventSupply } from './event-supply';
+import { eventSupply, EventSupply, eventSupplyOf, EventSupplyPeer, noEventSupply } from './event-supply';
 import { once, share, thru, tillOff } from './impl';
 import { OnEventCallChain } from './passes';
 import Args = OnEventCallChain.Args;
@@ -57,12 +57,12 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   /**
    * Consumes events.
    *
-   * @param consume  A function consuming events. This function may return an {@link EventSupply event supply} instance
-   * when registers a nested event receiver. This supply will be cut off on new event, unless returned again.
+   * @param consume  A function consuming events. This function may return a {@link EventSupplyPeer peer of event
+   * supply} when registers a nested event receiver. This supply will be cut off on new event, unless returned again.
    *
    * @returns An event supply that will stop consuming events once {@link EventSupply.off cut off}.
    */
-  consume(consume: (...event: E) => EventSupply | void | undefined): EventSupply {
+  consume(consume: (...event: E) => EventSupplyPeer | void | undefined): EventSupply {
 
     let consumerSupply = noEventSupply();
     const senderSupply = this((...event: E) => {
@@ -70,7 +70,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
       const prevSupply = consumerSupply;
 
       try {
-        consumerSupply = consume(...event) || noEventSupply();
+        consumerSupply = eventSupplyOf(consume(...event) || noEventSupply());
       } finally {
         if (consumerSupply !== prevSupply) {
           prevSupply.off();
