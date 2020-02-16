@@ -2,9 +2,8 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { EventNotifier } from './base';
-import { EventSender, OnEvent__symbol } from './base';
-import { OnEvent, onEventBy } from './on-event';
+import { EventNotifier, EventSender, OnEvent__symbol } from '../base';
+import { OnEvent, onEventBy } from '../on-event';
 
 /**
  * Event emitter is a handy implementation of [[OnEvent]] sender.

@@ -4,8 +4,8 @@
  */
 import { noop } from 'call-thru';
 import { EventSender, eventSupply, EventSupply, OnEvent__symbol } from '../base';
-import { EventEmitter } from '../event-emitter';
 import { onEventBy } from '../on-event';
+import { EventEmitter } from '../senders';
 import { OnStateUpdate } from './on-state-update';
 import { statePath, StatePath } from './state-path';
 import { StateUpdateReceiver } from './state-update-receiver';

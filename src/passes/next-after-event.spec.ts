@@ -1,4 +1,4 @@
-import { EventEmitter } from '../event-emitter';
+import { EventEmitter } from '../senders';
 import { trackValue } from '../value';
 import { nextAfterEvent } from './next-after-event';
 

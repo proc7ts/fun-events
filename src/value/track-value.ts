@@ -3,8 +3,8 @@
  * @module fun-events
  */
 import { EventKeeper, EventSupply, EventSupply__symbol, eventSupplyOf } from '../base';
-import { EventEmitter } from '../event-emitter';
 import { OnEvent } from '../on-event';
+import { EventEmitter } from '../senders';
 import { ValueTracker } from './value-tracker';
 
 /**

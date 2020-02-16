@@ -1,7 +1,7 @@
 import { nextSkip } from 'call-thru';
 import { EventNotifier, EventSender, EventSupply } from '../base';
-import { EventEmitter } from '../event-emitter';
 import { OnEvent } from '../on-event';
+import { EventEmitter } from '../senders';
 import { nextOnEvent } from './next-on-event';
 import Mock = jest.Mock;
 

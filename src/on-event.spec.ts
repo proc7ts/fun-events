@@ -8,8 +8,8 @@ import {
   noEventSupply,
   OnEvent__symbol,
 } from './base';
-import { EventEmitter } from './event-emitter';
 import { OnEvent, onEventBy, onNever, onSupplied } from './on-event';
+import { EventEmitter } from './senders';
 import { trackValue } from './value';
 import Mock = jest.Mock;
 import SpyInstance = jest.SpyInstance;

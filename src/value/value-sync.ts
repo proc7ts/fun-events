@@ -13,8 +13,8 @@ import {
   eventSupplyOf,
   isEventKeeper,
 } from '../base';
-import { EventEmitter } from '../event-emitter';
 import { OnEvent, onSupplied } from '../on-event';
+import { EventEmitter } from '../senders';
 import { ValueTracker } from './value-tracker';
 
 /**

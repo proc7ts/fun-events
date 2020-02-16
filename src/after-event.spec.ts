@@ -9,7 +9,7 @@ import {
   noEventSupply,
   OnEvent__symbol,
 } from './base';
-import { EventEmitter } from './event-emitter';
+import { EventEmitter } from './senders';
 import { trackValue, ValueTracker } from './value';
 import Mock = jest.Mock;
 import SpyInstance = jest.SpyInstance;
