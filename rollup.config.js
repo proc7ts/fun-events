@@ -31,7 +31,7 @@ export default {
       return 'fun-events.dom';
     }
     if (id.startsWith(path.join(__dirname, 'src', 'impl') + path.sep)) {
-      return 'fun-events.impl';
+      return 'fun-events.base';
     }
     return 'fun-events';
   },
