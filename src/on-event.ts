@@ -2,11 +2,20 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { AfterEvent__symbol } from './event-keeper';
-import { eventReceiver, EventReceiver } from './event-receiver';
-import { EventSender, isEventSender, OnEvent__symbol } from './event-sender';
-import { EventSupplier } from './event-supplier';
-import { eventSupply, EventSupply, eventSupplyOf, EventSupplyPeer, noEventSupply } from './event-supply';
+import {
+  AfterEvent__symbol,
+  eventReceiver,
+  EventReceiver,
+  EventSender,
+  EventSupplier,
+  eventSupply,
+  EventSupply,
+  eventSupplyOf,
+  EventSupplyPeer,
+  isEventSender,
+  noEventSupply,
+  OnEvent__symbol,
+} from './base';
 import { once, share, thru, tillOff } from './impl';
 import { OnEventCallChain } from './passes';
 import Args = OnEventCallChain.Args;

@@ -3,11 +3,17 @@
  * @module fun-events
  */
 import { afterSupplied } from '../after-event';
+import {
+  EventKeeper,
+  EventSender,
+  EventSupplier,
+  eventSupply,
+  EventSupply,
+  EventSupply__symbol,
+  eventSupplyOf,
+  isEventKeeper,
+} from '../base';
 import { EventEmitter } from '../event-emitter';
-import { EventKeeper, isEventKeeper } from '../event-keeper';
-import { EventSender } from '../event-sender';
-import { EventSupplier } from '../event-supplier';
-import { eventSupply, EventSupply, EventSupply__symbol, eventSupplyOf } from '../event-supply';
 import { OnEvent, onSupplied } from '../on-event';
 import { ValueTracker } from './value-tracker';
 

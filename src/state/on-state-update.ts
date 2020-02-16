@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { EventSupply, EventSupplyPeer } from '../event-supply';
+import { EventSupply, EventSupplyPeer } from '../base';
 import { OnEvent } from '../on-event';
 import { StatePath } from './state-path';
 import { StateUpdateReceiver } from './state-update-receiver';

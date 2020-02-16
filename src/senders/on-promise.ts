@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { EventNotifier } from '../event-notifier';
+import { EventNotifier } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
 
 /**

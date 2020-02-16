@@ -24,6 +24,9 @@ export default {
   },
   external: Object.keys(pkg.peerDependencies),
   manualChunks(id) {
+    if (id.startsWith(path.join(__dirname, 'src', 'base') + path.sep)) {
+      return 'fun-events.base';
+    }
     if (id.startsWith(path.join(__dirname, 'src', 'dom') + path.sep)) {
       return 'fun-events.dom';
     }

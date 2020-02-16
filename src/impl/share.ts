@@ -1,6 +1,4 @@
-import { EventNotifier } from '../event-notifier';
-import { EventReceiver } from '../event-receiver';
-import { eventSupply, EventSupply } from '../event-supply';
+import { EventNotifier, EventReceiver, eventSupply, EventSupply } from '../base';
 
 /**
  * @internal

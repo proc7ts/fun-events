@@ -4,9 +4,7 @@
  */
 import { noop } from 'call-thru';
 import { AfterEvent, afterEventBy, afterSupplied } from '../after-event';
-import { AfterEvent__symbol, EventKeeper } from '../event-keeper';
-import { EventNotifier } from '../event-notifier';
-import { EventReceiver } from '../event-receiver';
+import { AfterEvent__symbol, EventKeeper, EventNotifier, EventReceiver } from '../base';
 
 /**
  * Builds an [[AfterEvent]] keeper of events sent by each of the `sources`.

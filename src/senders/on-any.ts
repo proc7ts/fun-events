@@ -2,9 +2,7 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { EventReceiver } from '../event-receiver';
-import { EventSupplier } from '../event-supplier';
-import { eventSupply } from '../event-supply';
+import { EventReceiver, EventSupplier, eventSupply } from '../base';
 import { OnEvent, onEventBy, onNever, onSupplied } from '../on-event';
 
 /**

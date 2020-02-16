@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { EventReceiver } from '../event-receiver';
+import { EventReceiver } from '../base';
 import { StatePath } from './state-path';
 
 /**

@@ -1,11 +1,15 @@
 import { nextArgs, nextSkip, noop } from 'call-thru';
 import { AfterEvent, afterEventBy, afterNever, afterSupplied, afterThe } from './after-event';
+import {
+  AfterEvent__symbol,
+  EventNotifier,
+  EventReceiver,
+  eventSupply,
+  EventSupply,
+  noEventSupply,
+  OnEvent__symbol,
+} from './base';
 import { EventEmitter } from './event-emitter';
-import { AfterEvent__symbol } from './event-keeper';
-import { EventNotifier } from './event-notifier';
-import { EventReceiver } from './event-receiver';
-import { OnEvent__symbol } from './event-sender';
-import { eventSupply, EventSupply, noEventSupply } from './event-supply';
 import { trackValue, ValueTracker } from './value';
 import Mock = jest.Mock;
 import SpyInstance = jest.SpyInstance;

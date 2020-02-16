@@ -1,5 +1,5 @@
 import { noop } from 'call-thru';
-import { OnEvent__symbol } from '../event-sender';
+import { OnEvent__symbol } from '../base';
 import { onSupplied } from '../on-event';
 import { StateTracker } from './state-tracker';
 import { StateUpdateReceiver } from './state-update-receiver';

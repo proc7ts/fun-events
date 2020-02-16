@@ -1,6 +1,6 @@
 import { asis } from 'call-thru';
+import { EventSupply } from '../base';
 import { EventEmitter } from '../event-emitter';
-import { EventSupply } from '../event-supply';
 import { onAsync } from './on-async';
 import Mock = jest.Mock;
 

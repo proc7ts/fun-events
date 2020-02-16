@@ -3,11 +3,19 @@
  * @module fun-events
  */
 import { noop, valueProvider } from 'call-thru';
-import { AfterEvent__symbol, EventKeeper, isEventKeeper } from './event-keeper';
-import { eventReceiver, EventReceiver } from './event-receiver';
-import { EventSender, OnEvent__symbol } from './event-sender';
-import { EventSupplier } from './event-supplier';
-import { EventSupply, eventSupply, EventSupplyPeer } from './event-supply';
+import {
+  AfterEvent__symbol,
+  EventKeeper,
+  eventReceiver,
+  EventReceiver,
+  EventSender,
+  EventSupplier,
+  EventSupply,
+  eventSupply,
+  EventSupplyPeer,
+  isEventKeeper,
+  OnEvent__symbol,
+} from './base';
 import { once, share, tillOff } from './impl';
 import { OnEvent } from './on-event';
 import { OnEventCallChain } from './passes';

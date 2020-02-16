@@ -2,9 +2,8 @@
  * @packageDocumentation
  * @module fun-events
  */
+import { EventKeeper, EventSupply, EventSupply__symbol, eventSupplyOf } from '../base';
 import { EventEmitter } from '../event-emitter';
-import { EventKeeper } from '../event-keeper';
-import { EventSupply, EventSupply__symbol, eventSupplyOf } from '../event-supply';
 import { OnEvent } from '../on-event';
 import { ValueTracker } from './value-tracker';
 

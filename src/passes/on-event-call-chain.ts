@@ -3,7 +3,7 @@
  * @module fun-events
  */
 import { CallChain, NextCall, NextSkip } from 'call-thru';
-import { EventSupplier } from '../event-supplier';
+import { EventSupplier } from '../base';
 
 /**
  * @category Core

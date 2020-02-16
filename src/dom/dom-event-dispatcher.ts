@@ -3,8 +3,7 @@
  * @module fun-events/dom
  */
 import { noop } from 'call-thru';
-import { EventReceiver } from '../event-receiver';
-import { eventSupply, EventSupply, EventSupply__symbol, eventSupplyOf, EventSupplyPeer } from '../event-supply';
+import { EventReceiver, eventSupply, EventSupply, EventSupply__symbol, eventSupplyOf, EventSupplyPeer } from '../base';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 
 const domEventContext: EventReceiver.Context<any> = {

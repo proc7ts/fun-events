@@ -1,6 +1,6 @@
 import { asis } from 'call-thru';
+import { EventSupply } from '../base';
 import { EventEmitter } from '../event-emitter';
-import { EventSupply } from '../event-supply';
 import { trackValue } from './track-value';
 import { ValueSync } from './value-sync';
 import { ValueTracker } from './value-tracker';

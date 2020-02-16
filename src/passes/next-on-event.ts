@@ -3,7 +3,7 @@
  * @module fun-events
  */
 import { NextCall, nextCall } from 'call-thru';
-import { EventSupplier } from '../event-supplier';
+import { EventSupplier } from '../base';
 import { OnEventCallChain } from './on-event-call-chain';
 
 /**

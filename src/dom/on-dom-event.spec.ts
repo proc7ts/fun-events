@@ -1,6 +1,4 @@
-import { EventNotifier } from '../event-notifier';
-import { EventReceiver } from '../event-receiver';
-import { eventSupply, EventSupply, noEventSupply } from '../event-supply';
+import { EventNotifier, EventReceiver, eventSupply, EventSupply, noEventSupply } from '../base';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 import Mock = jest.Mock;
 import SpyInstance = jest.SpyInstance;

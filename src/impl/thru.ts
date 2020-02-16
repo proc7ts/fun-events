@@ -1,7 +1,5 @@
 import { isNextCall, NextCall__symbol, noop } from 'call-thru';
-import { EventReceiver } from '../event-receiver';
-import { EventSupplier } from '../event-supplier';
-import { eventSupply, EventSupply, noEventSupply } from '../event-supply';
+import { EventReceiver, EventSupplier, eventSupply, EventSupply, noEventSupply } from '../base';
 import { OnEvent } from '../on-event';
 import { OnEventCallChain } from '../passes';
 

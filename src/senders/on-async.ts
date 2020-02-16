@@ -2,9 +2,7 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { EventNotifier } from '../event-notifier';
-import { EventSender } from '../event-sender';
-import { eventSupply } from '../event-supply';
+import { EventNotifier, EventSender, eventSupply } from '../base';
 import { OnEvent, onEventBy, onSupplied } from '../on-event';
 import { onAnyAsync } from './on-any-async';
 

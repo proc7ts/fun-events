@@ -3,9 +3,8 @@
  * @module fun-events
  */
 import { noop } from 'call-thru';
+import { EventSender, eventSupply, EventSupply, OnEvent__symbol } from '../base';
 import { EventEmitter } from '../event-emitter';
-import { EventSender, OnEvent__symbol } from '../event-sender';
-import { eventSupply, EventSupply } from '../event-supply';
 import { onEventBy } from '../on-event';
 import { OnStateUpdate } from './on-state-update';
 import { statePath, StatePath } from './state-path';

@@ -2,8 +2,7 @@
  * @packageDocumentation
  * @module fun-events/dom
  */
-import { eventReceiver, EventReceiver } from '../event-receiver';
-import { EventSupply, EventSupplyPeer } from '../event-supply';
+import { eventReceiver, EventReceiver, EventSupply, EventSupplyPeer } from '../base';
 import { once, tillOff } from '../impl';
 import { OnEvent } from '../on-event';
 

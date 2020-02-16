@@ -1,5 +1,5 @@
 import { AfterEvent, afterEventBy } from '../after-event';
-import { EventReceiver } from '../event-receiver';
+import { EventReceiver } from '../base';
 import { trackValue, ValueTracker } from '../value';
 import { afterAll } from './after-all';
 import Mock = jest.Mock;

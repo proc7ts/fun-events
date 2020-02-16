@@ -1,5 +1,4 @@
-import { EventReceiver } from '../event-receiver';
-import { eventSupply, EventSupply, eventSupplyOf, EventSupplyPeer } from '../event-supply';
+import { EventReceiver, eventSupply, EventSupply, eventSupplyOf, EventSupplyPeer } from '../base';
 
 /**
  * @internal

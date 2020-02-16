@@ -1,5 +1,4 @@
-import { EventNotifier } from '../event-notifier';
-import { EventSupply } from '../event-supply';
+import { EventNotifier, EventSupply } from '../base';
 import { OnEvent, onNever } from '../on-event';
 import { onAny } from './on-any';
 import Mock = jest.Mock;
