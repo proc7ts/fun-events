@@ -35,7 +35,7 @@ import Out = OnEventCallChain.Out;
  * @category Core
  * @typeparam E  An event type. This is a list of event receiver parameter types.
  */
-export abstract class OnEvent<E extends any[]> extends Function implements EventSender<E>, PromiseLike<E> {
+export abstract class OnEvent<E extends any[]> extends Function implements EventSender<E> {
 
   get [OnEvent__symbol](): this {
     return this;
@@ -44,16 +44,16 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   /**
    * Attaches callbacks to the next event and/or supply cut off reason.
    *
-   * This method makes event sender act as promise-like for the next event. This it is possible e.g. to use it in
-   * `await` expression.
+   * This method makes event sender act as promise-like for the first parameter of the next event. Thus it is possible
+   * e.g. to use it in `await` expression.
    *
    * @param onEvent  The callback to execute when next event received.
    * @param onCutOff  The callback to execute when supply is cut off before the next event received.
    *
    * @returns A Promise for the next event.
    */
-  then<TResult1 = E, TResult2 = never>(
-      onEvent?: ((value: E) => TResult1 | PromiseLike<TResult1>) | undefined | null,
+  then<TResult1 = E extends [infer F, ...any[]] ? F : undefined, TResult2 = never>(
+      onEvent?: ((...event: E) => TResult1 | PromiseLike<TResult1>) | undefined | null,
       onCutOff?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null,
   ): Promise<TResult1 | TResult2> {
     return then(this, onEvent, onCutOff);

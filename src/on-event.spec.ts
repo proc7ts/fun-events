@@ -108,7 +108,7 @@ describe('OnEvent', () => {
       const next = onEvent.then();
 
       emitter.send('event');
-      expect(await next).toEqual(['event']);
+      expect(await next).toBe('event');
     });
     it('resolves to immediately available event', async () => {
       mockRegister.mockImplementation(receiver => {
@@ -116,11 +116,11 @@ describe('OnEvent', () => {
         emitter.send('immediate');
       });
 
-      expect(await onEvent).toEqual(['immediate']);
+      expect(await onEvent).toBe('immediate');
     });
     it('executes resolution callback', async () => {
 
-      const next = onEvent.then(([event]) => `${event}!`);
+      const next = onEvent.then(event => `${event}!`);
 
       emitter.send('next event');
       expect(await next).toBe('next event!');

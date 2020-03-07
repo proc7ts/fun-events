@@ -1,9 +1,9 @@
 import { EventReceiver, eventSupply } from '../base';
 import { once } from './once';
 
-export function then<E extends any[], TResult1 = E, TResult2 = never>(
+export function then<E extends any[], TResult1 = E[0], TResult2 = never>(
     register: (receiver: EventReceiver.Generic<E>) => void,
-    onEvent?: ((value: E) => TResult1 | PromiseLike<TResult1>) | undefined | null,
+    onEvent?: ((...value: E) => TResult1 | PromiseLike<TResult1>) | undefined | null,
     onCutOff?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null,
 ): Promise<TResult1 | TResult2> {
   return new Promise((resolve, reject) => {
@@ -20,12 +20,12 @@ export function then<E extends any[], TResult1 = E, TResult2 = never>(
       receive: onEvent
           ? (_ctx, ...event) => {
             try {
-              resolve(onEvent(event));
+              resolve(onEvent(...event));
             } catch (e) {
               reject(e);
             }
           }
-          : (_ctx, ...event) => resolve(event as unknown as TResult1),
+          : ((_ctx: EventReceiver.Context<E>, event: E[0]) => resolve(event)) as any,
     });
   });
 }
