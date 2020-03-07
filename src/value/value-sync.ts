@@ -12,9 +12,9 @@ import {
   eventSupplyOf,
   isEventKeeper,
 } from '../base';
-import { afterSupplied } from '../keepers/after-supplied';
-import { OnEvent, onSupplied } from '../on-event';
-import { EventEmitter } from '../senders';
+import { afterSupplied } from '../keepers';
+import { OnEvent } from '../on-event';
+import { EventEmitter, onSupplied } from '../senders';
 import { ValueTracker } from './value-tracker';
 
 /**

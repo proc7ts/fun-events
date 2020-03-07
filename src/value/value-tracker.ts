@@ -17,7 +17,8 @@ import {
   noEventSupply,
   OnEvent__symbol,
 } from '../base';
-import { OnEvent, onSupplied } from '../on-event';
+import { OnEvent } from '../on-event';
+import { onSupplied } from '../senders';
 
 /**
  * Value accessor and changes tracker.

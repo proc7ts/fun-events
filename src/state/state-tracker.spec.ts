@@ -1,6 +1,6 @@
 import { noop } from 'call-thru';
 import { OnEvent__symbol } from '../base';
-import { onSupplied } from '../on-event';
+import { onSupplied } from '../senders';
 import { StateTracker } from './state-tracker';
 import { StateUpdateReceiver } from './state-update-receiver';
 import Mock = jest.Mock;

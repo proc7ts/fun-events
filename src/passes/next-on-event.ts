@@ -4,7 +4,7 @@
  */
 import { NextCall, nextCall } from 'call-thru';
 import { EventSupplier } from '../base';
-import { onSupplied } from '../on-event';
+import { onSupplied } from '../senders';
 import { OnEventCallChain } from './on-event-call-chain';
 
 /**
