@@ -60,6 +60,22 @@ export abstract class EventSupply implements EventSupplyPeer {
   abstract whenOff(callback: (this: void, reason?: any) => void): this;
 
   /**
+   * Makes another event supply depend on this one.
+   *
+   * Once this supply is {@link off cut off}, `another` one is cut off with the same reason.
+   *
+   * Calling this method has the same effect as calling {@link needs eventSupplyOf(another).need(this)}.
+   *
+   * @param another  A peer of event supply to make depend on this one.
+   *
+   * @returns `this` instance.
+   */
+  cuts(another: EventSupplyPeer): this {
+    eventSupplyOf(another).needs(this);
+    return this;
+  }
+
+  /**
    * Declares this event supply depends on another one.
    *
    * Once `another` supply is {@link off cut off}, this one is will be cut off with the same reason.

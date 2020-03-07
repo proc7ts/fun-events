@@ -104,20 +104,46 @@ describe('EventSupply', () => {
       });
     });
 
+    describe('cuts', () => {
+      it('cuts off another supply when on cutting this one off', () => {
+
+        const whenAnotherOff = jest.fn();
+        const anotherSupply = eventSupply(whenAnotherOff);
+
+        expect(supply.cuts(anotherSupply)).toBe(supply);
+
+        const reason = 'some reason';
+
+        supply.off(reason);
+        expect(whenAnotherOff).toHaveBeenCalledWith(reason);
+      });
+      it('cuts off another supply if this one is cut off already', () => {
+
+        const reason = 'some reason';
+
+        supply.off(reason);
+
+        const whenAnotherOff = jest.fn();
+        const anotherSupply = eventSupply(whenAnotherOff);
+
+        expect(supply.cuts(anotherSupply)).toBe(supply);
+        expect(whenAnotherOff).toHaveBeenCalledWith(reason);
+      });
+    });
+
     describe('needs', () => {
       it('is cut off when required supply is cut off', () => {
 
-        const mockCallback = jest.fn();
-        const mockOtherOff = jest.fn();
-        const anotherSupply = eventSupply(mockOtherOff);
+        const whenOff = jest.fn();
+        const anotherSupply = eventSupply();
 
         expect(supply.needs(anotherSupply)).toBe(supply);
-        supply.whenOff(mockCallback);
+        supply.whenOff(whenOff);
 
         const reason = 'some reason';
 
         anotherSupply.off(reason);
-        expect(mockCallback).toHaveBeenCalledWith(reason);
+        expect(whenOff).toHaveBeenCalledWith(reason);
       });
     });
   });
