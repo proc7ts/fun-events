@@ -748,13 +748,6 @@ export function afterSent<E extends any[]>(
   return afterEventBy(receiver => sender[OnEvent__symbol](receiver), fallback);
 }
 
-/**
- * An [[AfterEvent]] keeper that never sends any events.
- *
- * @category Core
- */
-export const afterNever: AfterEvent<any> = (/*#__PURE__*/ afterEventBy(({ supply }) => supply.off()));
-
 function noEvent(): never {
   throw new Error('No events to send');
 }

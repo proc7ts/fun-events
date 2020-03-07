@@ -1,5 +1,5 @@
 import { nextArgs, nextSkip, noop } from 'call-thru';
-import { AfterEvent, afterEventBy, afterNever, afterSupplied } from './after-event';
+import { AfterEvent, afterEventBy, afterSupplied } from './after-event';
 import {
   AfterEvent__symbol,
   EventNotifier,
@@ -295,12 +295,6 @@ describe('AfterEvent', () => {
 
       expect(afterEvent[AfterEvent__symbol]).toBe(afterEvent);
     });
-  });
-});
-
-describe('afterNever', () => {
-  it('returns a no-event supply', () => {
-    expect(afterNever(noop).isOff).toBe(true);
   });
 });
 
