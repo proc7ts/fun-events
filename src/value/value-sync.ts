@@ -72,7 +72,7 @@ export class ValueSync<T> extends ValueTracker<T> {
    *
    * @returns An event supply. {@link EventSupply.off Cut it off} to break synchronization.
    */
-  sync(tracker: ValueTracker<T, any>): EventSupply;
+  sync(tracker: ValueTracker<T>): EventSupply;
 
   /**
    * Synchronizes the tracked value with the others in the given direction.
@@ -83,7 +83,7 @@ export class ValueSync<T> extends ValueTracker<T> {
    *
    * @returns An event supply. {@link EventSupply.off Cut it off} to break synchronization.
    */
-  sync(direction: 'in' | 'out', tracker: ValueTracker<T, any>): EventSupply;
+  sync(direction: 'in' | 'out', tracker: ValueTracker<T>): EventSupply;
 
   /**
    * Synchronizes the tracked value with the ones extracted from the events sent by the given `supplier`.
@@ -100,7 +100,7 @@ export class ValueSync<T> extends ValueTracker<T> {
    */
   sync<U extends any[]>(
       supplier: EventSupplier<U>,
-      extract: (this: void, ...event: U) => ValueTracker<T, any> | undefined,
+      extract: (this: void, ...event: U) => ValueTracker<T> | undefined,
   ): EventSupply;
 
   /**
@@ -120,37 +120,37 @@ export class ValueSync<T> extends ValueTracker<T> {
   sync<U extends any[]>(
       direction: 'in' | 'out',
       supplier: EventSupplier<U>,
-      extract: (this: void, ...event: U) => ValueTracker<T, any> | undefined,
+      extract: (this: void, ...event: U) => ValueTracker<T> | undefined,
   ): EventSupply;
 
   sync<U extends any[]>(
-      first: 'in' | 'out' | ValueTracker<T, any> | EventSupplier<U>,
-      second?: ValueTracker<T, any>
+      first: 'in' | 'out' | ValueTracker<T> | EventSupplier<U>,
+      second?: ValueTracker<T>
           | EventSender<U>
           | EventKeeper<U>
-          | ((this: void, ...event: U) => ValueTracker<T, any> | undefined),
-      third?: (this: void, ...event: U) => ValueTracker<T, any> | undefined,
+          | ((this: void, ...event: U) => ValueTracker<T> | undefined),
+      third?: (this: void, ...event: U) => ValueTracker<T> | undefined,
   ): EventSupply {
 
-    let syncWithTracker = (tracker: ValueTracker<T, any>): EventSupply => syncTrackers(this, tracker);
-    let source: ValueTracker<T, any> | EventSupplier<U>;
-    let extract: ((this: void, ...event: U) => ValueTracker<T, any> | undefined) | undefined;
+    let syncWithTracker = (tracker: ValueTracker<T>): EventSupply => syncTrackers(this, tracker);
+    let source: ValueTracker<T> | EventSupplier<U>;
+    let extract: ((this: void, ...event: U) => ValueTracker<T> | undefined) | undefined;
 
     if (typeof first === 'string') {
       if (first === 'in') {
         syncWithTracker = tracker => syncTrackers(tracker, this);
       }
-      source = second as ValueTracker<T, any> | EventSender<U> | EventKeeper<U>;
+      source = second as ValueTracker<T> | EventSender<U> | EventKeeper<U>;
       extract = third;
     } else {
       source = first;
-      extract = second as (this: void, ...event: U) => ValueTracker<T, any> | undefined;
+      extract = second as (this: void, ...event: U) => ValueTracker<T> | undefined;
     }
 
     const extractTracker = extract;
 
     if (!extractTracker) {
-      return syncWithTracker(source as ValueTracker<T, any>);
+      return syncWithTracker(source as ValueTracker<T>);
     }
 
     const supplier = source as EventSupplier<U>;
@@ -162,7 +162,7 @@ export class ValueSync<T> extends ValueTracker<T> {
       return tracker && syncWithTracker(tracker);
     });
 
-    function syncTrackers(tracker1: ValueTracker<T, any>, tracker2: ValueTracker<T, any>): EventSupply {
+    function syncTrackers(tracker1: ValueTracker<T>, tracker2: ValueTracker<T>): EventSupply {
 
       const supply1 = tracker1.read(value => {
         tracker2.it = value;

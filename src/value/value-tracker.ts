@@ -29,10 +29,8 @@ import { OnEvent, onSupplied } from '../on-event';
  *
  * @category Value Tracking
  * @typeparam T  Tracked value type.
- * @typeparam N  New (updated) value type.
  */
-export abstract class ValueTracker<T = any, N extends T = T>
-    implements EventSender<[N, T]>, EventKeeper<[T]>, EventSupplyPeer {
+export abstract class ValueTracker<T = any> implements EventSender<[T, T]>, EventKeeper<[T]>, EventSupplyPeer {
 
   /**
    * @internal
@@ -44,7 +42,7 @@ export abstract class ValueTracker<T = any, N extends T = T>
    *
    * The `[OnEvent__symbol]` property is an alias of this one.
    */
-  abstract readonly on: OnEvent<[N, T]>;
+  abstract readonly on: OnEvent<[T, T]>;
 
   /**
    * An [[AfterEvent]] keeper of current value.
@@ -56,7 +54,7 @@ export abstract class ValueTracker<T = any, N extends T = T>
       () => [this.it],
   );
 
-  get [OnEvent__symbol](): OnEvent<[N, T]> {
+  get [OnEvent__symbol](): OnEvent<[T, T]> {
     return this.on;
   }
 
