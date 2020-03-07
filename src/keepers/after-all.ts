@@ -3,8 +3,9 @@
  * @module fun-events
  */
 import { noop } from 'call-thru';
-import { AfterEvent, afterEventBy, afterSupplied } from '../after-event';
+import { AfterEvent, afterEventBy } from '../after-event';
 import { AfterEvent__symbol, EventKeeper, EventNotifier, EventReceiver } from '../base';
+import { afterSupplied } from './after-supplied';
 
 /**
  * Builds an [[AfterEvent]] keeper of events sent by all event keepers in `sources` map.

@@ -2,7 +2,6 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { afterSupplied } from '../after-event';
 import {
   EventKeeper,
   EventSender,
@@ -13,6 +12,7 @@ import {
   eventSupplyOf,
   isEventKeeper,
 } from '../base';
+import { afterSupplied } from '../keepers/after-supplied';
 import { OnEvent, onSupplied } from '../on-event';
 import { EventEmitter } from '../senders';
 import { ValueTracker } from './value-tracker';
