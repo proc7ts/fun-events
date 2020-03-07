@@ -109,6 +109,7 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fun_events.eventsupply.html#cuts" class="tsd-kind-icon">cuts</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fun_events.eventsupply.html#needs" class="tsd-kind-icon">needs</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fun_events.eventsupply.html#off" class="tsd-kind-icon">off</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="fun_events.eventsupply.html#whenoff" class="tsd-kind-icon">when<wbr>Off</a></li>
@@ -125,7 +126,7 @@
 					<div class="tsd-signature tsd-kind-icon">is<wbr>Off<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/f07d8a8/src/base/event-supply.ts#L30">src/base/event-supply.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/91a1af0/src/base/event-supply.ts#L30">src/base/event-supply.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -148,7 +149,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f07d8a8/src/base/event-supply.ts#L35">src/base/event-supply.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/91a1af0/src/base/event-supply.ts#L35">src/base/event-supply.ts:35</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -164,8 +165,42 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="cuts" class="tsd-anchor"></a>
+					<h3>cuts</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">cuts<span class="tsd-signature-symbol">(</span>another<span class="tsd-signature-symbol">: </span><a href="../interfaces/fun_events.eventsupplypeer.html" class="tsd-signature-type">EventSupplyPeer</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/91a1af0/src/base/event-supply.ts#L73">src/base/event-supply.ts:73</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Makes another event supply depend on this one.</p>
+								</div>
+								<p>Once this supply is <a href="fun_events.eventsupply.html#off">cut off</a>, <code>another</code> one is cut off with the same reason.</p>
+								<p>Calling this method has the same effect as calling <a href="fun_events.eventsupply.html#needs">eventSupplyOf(another).need(this)</a>.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>another: <a href="../interfaces/fun_events.eventsupplypeer.html" class="tsd-signature-type">EventSupplyPeer</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A peer of event supply to make depend on this one.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+							<p><code>this</code> instance.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="needs" class="tsd-anchor"></a>
-					<h3>needs</h3>
+					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> needs</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">needs<span class="tsd-signature-symbol">(</span>another<span class="tsd-signature-symbol">: </span><a href="../interfaces/fun_events.eventsupplypeer.html" class="tsd-signature-type">EventSupplyPeer</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
@@ -173,7 +208,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f07d8a8/src/base/event-supply.ts#L71">src/base/event-supply.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/91a1af0/src/base/event-supply.ts#L87">src/base/event-supply.ts:87</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -206,7 +241,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f07d8a8/src/base/event-supply.ts#L49">src/base/event-supply.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/91a1af0/src/base/event-supply.ts#L49">src/base/event-supply.ts:49</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -240,7 +275,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f07d8a8/src/base/event-supply.ts#L60">src/base/event-supply.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/91a1af0/src/base/event-supply.ts#L60">src/base/event-supply.ts:60</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -293,6 +328,9 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_base_send_events_to_.html">&quot;base/send-<wbr>events-<wbr>to&quot;</a>
+					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="../modules/fun_events.html">fun-<wbr>events</a>
 					</li>
@@ -313,6 +351,9 @@
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="fun_events.eventsupply.html#_eventsupply__symbol_" class="tsd-kind-icon">[<wbr>Event<wbr>Supply__symbol]</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="fun_events.eventsupply.html#cuts" class="tsd-kind-icon">cuts</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="fun_events.eventsupply.html#needs" class="tsd-kind-icon">needs</a>

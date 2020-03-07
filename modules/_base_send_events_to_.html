@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>EventSender | Functional Event Processor</title>
+	<title>&quot;base/send-events-to&quot; | Functional Event Processor</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,142 +54,90 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="fun_events.html">fun-events</a>
-				</li>
-				<li>
-					<a href="fun_events.eventsender.html">EventSender</a>
+					<a href="_base_send_events_to_.html">&quot;base/send-events-to&quot;</a>
 				</li>
 			</ul>
-			<h1>Module EventSender&lt;E&gt;</h1>
+			<h1>External module &quot;base/send-events-to&quot;</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>A sender of events.</p>
-					</div>
-					<p>It is able to register event receivers.</p>
-				</div>
-			</section>
-			<section class="tsd-panel tsd-type-parameters">
-				<h3>Type parameters</h3>
-				<ul class="tsd-type-parameters">
-					<li>
-						<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>An event type. This is a tuple of event receiver parameter types.</p>
-							</div>
-						</div>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel tsd-hierarchy">
-				<h3>Hierarchy</h3>
-				<ul class="tsd-hierarchy">
-					<li>
-						<span class="target">EventSender</span>
-					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel">
-				<h3>Implemented by</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../classes/fun_events.afterevent.html" class="tsd-signature-type">AfterEvent</a></li>
-					<li><a href="../classes/fun_events.eventemitter.html" class="tsd-signature-type">EventEmitter</a></li>
-					<li><a href="../classes/fun_events.eventemitter.html" class="tsd-signature-type">EventEmitter</a></li>
-					<li><a href="../classes/fun_events.eventnotifier.html" class="tsd-signature-type">EventNotifier</a></li>
-					<li><a href="../classes/fun_events_dom.ondomevent.html" class="tsd-signature-type">OnDomEvent</a></li>
-					<li><a href="../classes/fun_events.onevent.html" class="tsd-signature-type">OnEvent</a></li>
-					<li><a href="../interfaces/fun_events.onstateupdate.html" class="tsd-signature-type">OnStateUpdate</a></li>
-					<li><a href="../classes/fun_events.statetracker.html" class="tsd-signature-type">StateTracker</a></li>
-					<li><a href="../classes/fun_events.valuesync.html" class="tsd-signature-type">ValueSync</a></li>
-					<li><a href="../classes/fun_events.valuetracker.html" class="tsd-signature-type">ValueTracker</a></li>
-				</ul>
-			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Type aliases</h3>
+							<h3>Core Functions</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="fun_events.eventsender.html#event" class="tsd-kind-icon">Event</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Methods</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-module"><a href="fun_events.eventsender.html#_onevent__symbol_" class="tsd-kind-icon">[<wbr>OnEvent__symbol]</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter"><a href="_base_send_events_to_.html#sendeventsto" class="tsd-kind-icon">send<wbr>Events<wbr>To</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Type aliases</h2>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
-					<a name="event" class="tsd-anchor"></a>
-					<h3>Event</h3>
-					<div class="tsd-signature tsd-kind-icon">Event&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">EventSender</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">infer </span> E<span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">never</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/91a1af0/src/base/event-sender.ts#L43">src/base/event-sender.ts:43</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>A type of events sent by the given event sender.</p>
-						</div>
-					</div>
-					<h4 class="tsd-type-parameters-title">Type parameters</h4>
-					<ul class="tsd-type-parameters">
-						<li>
-							<h4>T<span class="tsd-signature-symbol">: </span><a href="fun_events.eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Target event sender.</p>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-module">
-					<a name="_onevent__symbol_" class="tsd-anchor"></a>
-					<h3>[<wbr>OnEvent__symbol]</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">[<wbr>OnEvent__symbol]<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="fun_events.eventreceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/fun_events.eventsupply.html" class="tsd-signature-type">EventSupply</a></li>
+				<h2>Core Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
+					<a name="sendeventsto" class="tsd-anchor"></a>
+					<h3>send<wbr>Events<wbr>To</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">send<wbr>Events<wbr>To&lt;E&gt;<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="fun_events.eventreceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/91a1af0/src/base/event-sender.ts#L32">src/base/event-sender.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/91a1af0/src/base/send-events-to.ts#L15">src/base/send-events-to.ts:15</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Registers a receiver of events sent by this sender.</p>
+									<p>Creates an event sender targeted specific receiver.</p>
 								</div>
 							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
+									<div class="tsd-comment tsd-typography">
+										<p>An event type. This is a list of event receiver parameter types.</p>
+									</div>
+								</li>
+							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>receiver: <a href="fun_events.eventreceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>A receiver of events to register.</p>
+										<p>Target event receiver.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../classes/fun_events.eventsupply.html" class="tsd-signature-type">EventSupply</a></h4>
-							<p>A supply of events from this sender to the given <code>receiver</code>.</p>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h4>
+							<p>A function accepting events and sending them to target <code>receiver</code>.</p>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-siganture">
+									<ul class="tsd-signatures tsd-kind-type-literal">
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+									</ul>
+									<ul class="tsd-descriptions">
+										<li class="tsd-description">
+											<h4 class="tsd-parameters-title">Parameters</h4>
+											<ul class="tsd-parameters">
+												<li>
+													<h5>this: <span class="tsd-signature-type">void</span></h5>
+												</li>
+												<li>
+													<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>event: <span class="tsd-signature-type">E</span></h5>
+												</li>
+											</ul>
+											<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+										</li>
+									</ul>
+								</li>
+							</ul>
 						</li>
 					</ul>
 				</section>
@@ -201,15 +149,21 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
+					<li class="current tsd-kind-external-module">
+						<a href="_base_send_events_to_.html">&quot;base/send-<wbr>events-<wbr>to&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="fun_events.html">fun-<wbr>events</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="fun_events_dom.html">fun-<wbr>events/dom</a>
+					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="fun_events.eventsender.html#event" class="tsd-kind-icon">Event</a>
-					</li>
-					<li class=" tsd-kind-method tsd-parent-kind-module">
-						<a href="fun_events.eventsender.html#_onevent__symbol_" class="tsd-kind-icon">[<wbr>OnEvent__symbol]</a>
+					<li class=" tsd-kind-function tsd-parent-kind-external-module tsd-has-type-parameter">
+						<a href="_base_send_events_to_.html#sendeventsto" class="tsd-kind-icon">send<wbr>Events<wbr>To</a>
 					</li>
 				</ul>
 			</nav>

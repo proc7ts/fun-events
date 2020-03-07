@@ -104,7 +104,7 @@
 					<aside class="tsd-sources">
 						<ul>
 							<li>Defined in node_modules/call-thru/d.ts/call-chain.d.ts:41</li>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/f07d8a8/src/passes/on-event-call-chain.ts#L29">src/passes/on-event-call-chain.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/91a1af0/src/passes/on-event-call-chain.ts#L29">src/passes/on-event-call-chain.ts:29</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -143,7 +143,7 @@
 					<aside class="tsd-sources">
 						<ul>
 							<li>Defined in node_modules/call-thru/d.ts/call-chain.d.ts:43</li>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/f07d8a8/src/passes/on-event-call-chain.ts#L35">src/passes/on-event-call-chain.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/91a1af0/src/passes/on-event-call-chain.ts#L35">src/passes/on-event-call-chain.ts:35</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -235,18 +235,18 @@
 					<a name="onevent" class="tsd-anchor"></a>
 					<h3>on<wbr>Event</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-module tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Event&lt;E&gt;<span class="tsd-signature-symbol">(</span>pass<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span>, supplier<span class="tsd-signature-symbol">: </span><a href="fun_events.html#eventsupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Event&lt;E&gt;<span class="tsd-signature-symbol">(</span>pass<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span>, sender<span class="tsd-signature-symbol">: </span><a href="fun_events.eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f07d8a8/src/passes/on-event-call-chain.ts#L20">src/passes/on-event-call-chain.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/91a1af0/src/passes/on-event-call-chain.ts#L20">src/passes/on-event-call-chain.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Calls a pass in this chain with each event received from the given supplier.</p>
+									<p>Calls a pass in this chain with each event received from the given sender.</p>
 								</div>
 								<dl class="tsd-comment-tags">
 									<dt>typeparam</dt>
@@ -290,9 +290,9 @@
 									</ul>
 								</li>
 								<li>
-									<h5>supplier: <a href="fun_events.html#eventsupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>sender: <a href="fun_events.eventsender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>A supplier of events to pass down the chain.</p>
+										<p>A sender of events to pass down the chain.</p>
 									</div>
 								</li>
 							</ul>
