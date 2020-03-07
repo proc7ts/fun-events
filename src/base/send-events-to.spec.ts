@@ -1,4 +1,5 @@
-import { eventSupply, noEventSupply } from './event-supply';
+import { eventSupply } from './event-supply';
+import { noEventSupply } from './no-event-supply';
 import { sendEventsTo } from './send-events-to';
 
 describe('sendEventsTo', () => {

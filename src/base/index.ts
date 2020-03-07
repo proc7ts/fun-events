@@ -4,4 +4,5 @@ export * from './event-receiver';
 export * from './event-sender';
 export * from './event-supplier';
 export * from './event-supply';
+export * from './no-event-supply';
 export * from './send-events-to';

@@ -1,5 +1,6 @@
 import { noop } from 'call-thru';
-import { eventSupply, EventSupply, eventSupplyOf, noEventSupply } from './event-supply';
+import { eventSupply, EventSupply, eventSupplyOf } from './event-supply';
+import { noEventSupply } from './no-event-supply';
 import Mock = jest.Mock;
 
 describe('EventSupply', () => {
