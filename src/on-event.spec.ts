@@ -1,4 +1,4 @@
-import { nextArgs, nextSkip, noop } from 'call-thru';
+import { asis, nextArgs, nextSkip, noop } from 'call-thru';
 import {
   AfterEvent__symbol,
   EventNotifier,
@@ -86,6 +86,79 @@ describe('OnEvent', () => {
       emitter.send('event2');
       expect(mockReceiver).toHaveBeenCalledTimes(1);
       expect(mockReceiver).toHaveBeenLastCalledWith('event1');
+    });
+  });
+
+  describe('then', () => {
+
+    let emitter: EventNotifier<[string]>;
+    let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
+    let onEvent: OnEvent<[string]>;
+
+    beforeEach(() => {
+      emitter = new EventNotifier();
+      mockRegister = jest.fn(receiver => {
+        emitter.on(receiver);
+      });
+      onEvent = onEventBy(mockRegister);
+    });
+
+    it('resolves to next event', async () => {
+
+      const next = onEvent.then();
+
+      emitter.send('event');
+      expect(await next).toEqual(['event']);
+    });
+    it('resolves to immediately available event', async () => {
+      mockRegister.mockImplementation(receiver => {
+        emitter.on(receiver);
+        emitter.send('immediate');
+      });
+
+      expect(await onEvent).toEqual(['immediate']);
+    });
+    it('executes resolution callback', async () => {
+
+      const next = onEvent.then(([event]) => `${event}!`);
+
+      emitter.send('next event');
+      expect(await next).toBe('next event!');
+    });
+    it('rejects when resolution callback fails', async () => {
+
+      const error = new Error('test');
+      const next = onEvent.then(() => {
+        throw error;
+      });
+
+      emitter.send('next event');
+      expect(await next.catch(asis)).toBe(error);
+    });
+    it('rejects when supply is cut off', async () => {
+
+      const reason = 'reason';
+
+      emitter.done(reason);
+
+      expect(await onEvent.then().catch(asis)).toBe(reason);
+    });
+    it('resolves to cut off callback result when supply is cut off', async () => {
+
+      const reason = 'reason';
+
+      emitter.done(reason);
+
+      expect(await onEvent.then(noop, asis)).toBe(reason);
+    });
+    it('rejects when cut off callback fails', async () => {
+      emitter.done('reason');
+
+      const error = new Error('test');
+
+      expect(await onEvent.then(noop, () => {
+        throw error;
+      }).catch(asis)).toBe(error);
     });
   });
 
