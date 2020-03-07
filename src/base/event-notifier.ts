@@ -2,6 +2,7 @@
  * @packageDocumentation
  * @module fun-events
  */
+import { receiveByEach } from './event-notifier.impl';
 import { eventReceiver, EventReceiver } from './event-receiver';
 import { EventSender, OnEvent__symbol } from './event-sender';
 import { eventSupply, EventSupply, EventSupply__symbol, eventSupplyOf, EventSupplyPeer } from './event-supply';
@@ -33,7 +34,7 @@ export class EventNotifier<E extends any[]> implements EventSender<E>, EventSupp
    *
    * @param event  An event to send represented by function call arguments.
    */
-  readonly send: (this: this, ...event: E) => void = receiveEventsByEach(this._rcvs);
+  readonly send: (this: this, ...event: E) => void = receiveByEach(this._rcvs);
 
   constructor() {
     this[EventSupply__symbol] = eventSupply(reason => {
@@ -87,75 +88,4 @@ export class EventNotifier<E extends any[]> implements EventSender<E>, EventSupp
     return this;
   }
 
-}
-
-/**
- * Creates an event receiver function that dispatches events to each of the given event receivers.
- *
- * @category Core
- * @param receivers  An iterable of event receivers to dispatch event to.
- *
- * @returns An event receiver function that does not utilize event processing context an thus can be called directly.
- */
-function receiveEventsByEach<E extends any[]>(
-    receivers: Iterable<EventReceiver.Generic<E>>,
-): (this: void, ...event: E) => void {
-
-  let send: (this: void, event: E) => void = sendNonRecurrent;
-
-  return (...event) => send(event);
-
-  function sendNonRecurrent(event: E): void {
-
-    let actualReceivers = receivers;
-    const received: E[] = [];
-
-    send = (recurrent: E) => received.push(recurrent);
-
-    try {
-      for (; ;) {
-        actualReceivers = processEvent(actualReceivers, event);
-
-        const recurrent = received.shift();
-
-        if (!recurrent) {
-          break;
-        }
-
-        event = recurrent;
-      }
-    } finally {
-      send = sendNonRecurrent;
-    }
-  }
-}
-
-function processEvent<E extends any[]>(
-    receivers: Iterable<EventReceiver.Generic<E>>,
-    event: E,
-): EventReceiver.Generic<E>[] {
-
-  const recurrentReceivers: EventReceiver.Generic<E>[] = [];
-
-  for (const receiver of receivers) {
-
-    const idx = recurrentReceivers.length;
-
-    recurrentReceivers.push(receiver);
-
-    const context: EventReceiver.Context<E> = {
-      onRecurrent(recurrentReceiver) {
-        recurrentReceivers[idx] = eventReceiver({
-          supply: receiver.supply,
-          receive(_context, ...recurrentEvent) {
-            recurrentReceiver(...recurrentEvent);
-          },
-        });
-      },
-    };
-
-    receiver.receive(context, ...event);
-  }
-
-  return recurrentReceivers;
 }

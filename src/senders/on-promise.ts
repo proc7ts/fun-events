@@ -2,8 +2,8 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { EventNotifier, EventReceiver } from '../base';
-import { neverReceiveBecause } from '../base/impl';
+import { EventReceiver } from '../base';
+import { alwaysReceiveValue, neverReceiveBecause } from '../base/impl';
 import { OnEvent, onEventBy } from '../on-event';
 
 /**
@@ -32,18 +32,4 @@ export function onPromise<T>(promise: Promise<T>): OnEvent<[T]> {
   });
 
   return onEventBy(receiver => receive(receiver));
-}
-
-function alwaysReceiveValue<T>(value: T): (receiver: EventReceiver.Generic<[T]>) => void {
-  return receive => {
-    try {
-
-      const dispatcher = new EventNotifier<[T]>();
-
-      dispatcher.on(receive);
-      dispatcher.send(value);
-    } finally {
-      receive.supply.off();
-    }
-  };
 }
