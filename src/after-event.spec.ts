@@ -282,7 +282,7 @@ describe('AfterEvent', () => {
   describe('[OnEvent__symbol]', () => {
     it('refers to itself', () => {
 
-      const afterEvent = afterEventBy(() => noEventSupply());
+      const afterEvent = afterEventBy(noop);
 
       expect(afterEvent[OnEvent__symbol]).toBe(afterEvent);
     });
@@ -291,7 +291,7 @@ describe('AfterEvent', () => {
   describe('[AfterEvent__symbol]', () => {
     it('refers to itself', () => {
 
-      const afterEvent = afterEventBy(() => noEventSupply());
+      const afterEvent = afterEventBy(noop);
 
       expect(afterEvent[AfterEvent__symbol]).toBe(afterEvent);
     });

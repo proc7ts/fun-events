@@ -3,6 +3,7 @@
  * @module fun-events
  */
 import { EventNotifier, EventReceiver } from '../base';
+import { neverReceive } from '../impl';
 import { OnEvent, onEventBy } from '../on-event';
 
 /**
@@ -45,8 +46,4 @@ function alwaysReceiveValue<T>(value: T): (receiver: EventReceiver.Generic<[T]>)
       receive.supply.off();
     }
   };
-}
-
-function neverReceive(reason: any): (receiver: EventReceiver.Generic<any>) => void {
-  return ({ supply }) => supply.off(reason);
 }
