@@ -25,7 +25,7 @@ export class EventNotifier<E extends any[]> implements EventSender<E>, EventSupp
   /**
    * @internal
    */
-  private readonly _rcvs = new Set<EventReceiver.Generic<E>>();
+  private readonly _rcs = new Set<EventReceiver.Generic<E>>();
 
   readonly [EventSupply__symbol]: EventSupply;
 
@@ -34,19 +34,17 @@ export class EventNotifier<E extends any[]> implements EventSender<E>, EventSupp
    *
    * @param event  An event to send represented by function call arguments.
    */
-  readonly send: (this: this, ...event: E) => void = receiveByEach(this._rcvs);
+  readonly send: (this: this, ...event: E) => void = receiveByEach(this._rcs);
 
   constructor() {
-    this[EventSupply__symbol] = eventSupply(reason => {
-      this._rcvs.forEach(({ supply }) => supply.off(reason));
-    });
+    this[EventSupply__symbol] = eventSupply(() => this._rcs.clear());
   }
 
   /**
    * The number of currently registered event receivers.
    */
   get size(): number {
-    return this._rcvs.size;
+    return this._rcs.size;
   }
 
   [OnEvent__symbol](receiver: EventReceiver<E>): EventSupply {
@@ -68,9 +66,9 @@ export class EventNotifier<E extends any[]> implements EventSender<E>, EventSupp
 
     const generic = eventReceiver(receiver);
 
-    this._rcvs.add(generic);
+    this._rcs.add(generic);
 
-    return generic.supply.needs(this).whenOff(() => this._rcvs.delete(generic));
+    return generic.supply.needs(this).whenOff(() => this._rcs.delete(generic));
   }
 
   /**
