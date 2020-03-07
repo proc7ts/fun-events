@@ -1,4 +1,4 @@
-import { EventNotifier, EventReceiver, eventSupply, EventSupply } from '../base';
+import { EventNotifier, EventReceiver, eventSupply, EventSupply, sendEventsTo } from '../base';
 
 /**
  * @internal
@@ -45,10 +45,9 @@ export function share<E extends any[]>(
     if (initialEvents) {
       // Send initial events to just registered receiver
 
-      const dispatcher = new EventNotifier<E>();
+      const dispatch = sendEventsTo(receiver);
 
-      dispatcher.on(receiver);
-      initialEvents.forEach(event => dispatcher.send(...event));
+      initialEvents.forEach(event => dispatch(...event));
     }
   };
 }

@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { EventNotifier, EventSender, OnEvent__symbol } from '../base';
+import { EventSender, OnEvent__symbol, sendEventsTo } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
 
 /**
@@ -25,9 +25,7 @@ export function onAnyAsync<E>(from: EventSender<[PromiseLike<E> | E]>): OnEvent<
   return onEventBy(receiver => {
 
     const { supply } = receiver;
-    const sender = new EventNotifier<[E, number]>();
-
-    sender.on(receiver);
+    const dispatch = sendEventsTo(receiver);
 
     let lastIndex = 0;
 
@@ -40,7 +38,7 @@ export function onAnyAsync<E>(from: EventSender<[PromiseLike<E> | E]>): OnEvent<
         Promise.resolve()
             .then(() => promise)
             .then(
-                event => sender.send(event, index),
+                event => dispatch(event, index),
                 reason => supply.off(reason),
             );
       },

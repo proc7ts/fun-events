@@ -4,7 +4,7 @@
  */
 import { noop } from 'call-thru';
 import { AfterEvent, afterEventBy } from '../after-event';
-import { AfterEvent__symbol, EventKeeper, EventNotifier, EventReceiver } from '../base';
+import { AfterEvent__symbol, EventKeeper, EventReceiver, sendEventsTo } from '../base';
 import { afterSupplied } from './after-supplied';
 
 /**
@@ -23,8 +23,8 @@ export function afterEach<E extends any[]>(...sources: EventKeeper<E>[]): AfterE
 
   function registerReceiver(receiver: EventReceiver.Generic<E[]>): void {
 
-    const notifier = new EventNotifier<E[]>();
-    const supply = notifier.on(receiver);
+    const { supply } = receiver;
+    const dispatch = sendEventsTo(receiver);
     let send: () => void = noop;
     const result: E[] = [];
 
@@ -36,7 +36,7 @@ export function afterEach<E extends any[]>(...sources: EventKeeper<E>[]): AfterE
     });
 
     if (!supply.isOff) {
-      send = () => notifier.send(...result);
+      send = () => dispatch(...result);
     }
   }
 

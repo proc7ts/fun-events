@@ -4,7 +4,7 @@
  */
 import { noop } from 'call-thru';
 import { AfterEvent, afterEventBy } from '../after-event';
-import { AfterEvent__symbol, EventKeeper, EventNotifier, EventReceiver } from '../base';
+import { AfterEvent__symbol, EventKeeper, EventReceiver, sendEventsTo } from '../base';
 import { afterSupplied } from './after-supplied';
 
 /**
@@ -29,8 +29,8 @@ export function afterAll<S extends { readonly [key: string]: EventKeeper<any> }>
       receiver: EventReceiver.Generic<[{ readonly [K in keyof S]: EventKeeper.Event<S[K]> }]>,
   ): void {
 
-    const notifier = new EventNotifier<[{ readonly [K in keyof S]: EventKeeper.Event<S[K]> }]>();
-    const supply = notifier.on(receiver);
+    const { supply } = receiver;
+    const dispatch = sendEventsTo(receiver);
     let send: () => void = noop;
     const result: { [K in keyof S]: EventKeeper.Event<S[K]> } = {} as any;
 
@@ -42,7 +42,7 @@ export function afterAll<S extends { readonly [key: string]: EventKeeper<any> }>
     });
 
     if (!supply.isOff) {
-      send = () => notifier.send(result);
+      send = () => dispatch(result);
     }
   }
 

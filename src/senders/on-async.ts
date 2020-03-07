@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { EventNotifier, EventSender, eventSupply } from '../base';
+import { EventSender, eventSupply, sendEventsTo } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
 import { onAnyAsync } from './on-any-async';
 import { onSupplied } from './on-supplied';
@@ -27,9 +27,7 @@ export function onAsync<E>(from: EventSender<[PromiseLike<E> | E]>): OnEvent<[E,
   return onEventBy(receiver => {
 
     const { supply } = receiver;
-    const sender = new EventNotifier<[E, ...E[]]>();
-
-    sender.on(receiver);
+    const dispatch = sendEventsTo(receiver);
 
     const sourceSupply = eventSupply();
     let numInProcess = 0;
@@ -73,7 +71,7 @@ export function onAsync<E>(from: EventSender<[PromiseLike<E> | E]>): OnEvent<[E,
           numReceived -= toSend.length;
           numInProcess -= toSend.length;
 
-          sender.send(...(toSend as [E, ...E[]]));
+          dispatch(...(toSend as [E, ...E[]]));
           if (!numInProcess && sourceSupply.isOff) {
             receiver.supply.needs(sourceSupply);
           }
