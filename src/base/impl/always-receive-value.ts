@@ -1,19 +1,15 @@
-import { EventNotifier } from '../event-notifier';
 import { EventReceiver } from '../event-receiver';
+import { sendEventsTo } from '../send-events-to';
 
 /**
  * @internal
  */
 export function alwaysReceiveValue<T>(value: T): (receiver: EventReceiver.Generic<[T]>) => void {
-  return receive => {
+  return receiver => {
     try {
-
-      const dispatcher = new EventNotifier<[T]>();
-
-      dispatcher.on(receive);
-      dispatcher.send(value);
+      sendEventsTo(receiver)(value);
     } finally {
-      receive.supply.off();
+      receiver.supply.off();
     }
   };
 }
