@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { EventNotifier } from '../base';
+import { EventNotifier, EventReceiver } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
 
 /**
@@ -19,21 +19,34 @@ import { OnEvent, onEventBy } from '../on-event';
  * @returns An [[OnEvent]] sender of the given `promise` settlement event.
  */
 export function onPromise<T>(promise: Promise<T>): OnEvent<[T]> {
-  return onEventBy(receiver => {
 
-    const { supply } = receiver;
+  let receive = (receiver: EventReceiver.Generic<[T]>): void => {
+    promise.then(() => receive(receiver), () => receive(receiver));
+  };
 
-    promise.then(
-        value => {
-
-          const dispatcher = new EventNotifier<[T]>();
-
-          dispatcher.on(receiver);
-          dispatcher.send(value);
-          supply.off();
-        },
-    ).catch(
-        e => supply.off(e),
-    );
+  promise.then(value => {
+    receive = alwaysReceiveValue(value);
+  }).catch(e => {
+    receive = neverReceive(e);
   });
+
+  return onEventBy(receiver => receive(receiver));
+}
+
+function alwaysReceiveValue<T>(value: T): (receiver: EventReceiver.Generic<[T]>) => void {
+  return receive => {
+    try {
+
+      const dispatcher = new EventNotifier<[T]>();
+
+      dispatcher.on(receive);
+      dispatcher.send(value);
+    } finally {
+      receive.supply.off();
+    }
+  };
+}
+
+function neverReceive(reason: any): (receiver: EventReceiver.Generic<any>) => void {
+  return ({ supply }) => supply.off(reason);
 }
