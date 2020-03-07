@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { noop, valueProvider } from 'call-thru';
+import { noop } from 'call-thru';
 import {
   AfterEvent__symbol,
   EventKeeper,
@@ -746,18 +746,6 @@ export function afterSent<E extends any[]>(
     fallback?: (this: void) => E,
 ): AfterEvent<E> {
   return afterEventBy(receiver => sender[OnEvent__symbol](receiver), fallback);
-}
-
-/**
- * Builds an [[AfterEvent]] keeper of the given `event`.
- *
- * @category Core
- * @param event  An event that will be sent to all receivers upon registration.
- *
- * @returns An [[AfterEvent]] keeper that always sends the given `event`.
- */
-export function afterThe<E extends any[]>(...event: E): AfterEvent<E> {
-  return afterEventBy(() => eventSupply(), valueProvider(event));
 }
 
 /**

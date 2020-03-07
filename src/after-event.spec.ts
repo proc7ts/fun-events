@@ -1,5 +1,5 @@
 import { nextArgs, nextSkip, noop } from 'call-thru';
-import { AfterEvent, afterEventBy, afterNever, afterSupplied, afterThe } from './after-event';
+import { AfterEvent, afterEventBy, afterNever, afterSupplied } from './after-event';
 import {
   AfterEvent__symbol,
   EventNotifier,
@@ -470,21 +470,5 @@ describe('afterSupplied', () => {
     it('throws an exception when requesting the last event', () => {
       expect(() => afterEvent.once(noop)).toThrow('No events to send');
     });
-  });
-});
-
-describe('afterThe', () => {
-  it('always sends the same event', () => {
-
-    const event = ['foo', 'bar'];
-    const mockReceiver1 = jest.fn();
-    const mockReceiver2 = jest.fn();
-    const afterEvent = afterThe(...event);
-
-    afterEvent(mockReceiver1);
-    afterEvent(mockReceiver2);
-
-    expect(mockReceiver1).toHaveBeenCalledWith(...event);
-    expect(mockReceiver2).toHaveBeenCalledWith(...event);
   });
 });
