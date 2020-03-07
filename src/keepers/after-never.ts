@@ -3,7 +3,7 @@
  * @module fun-events
  */
 import { AfterEvent, afterEventBy } from '../after-event';
-import { neverReceive } from '../impl';
+import { neverReceive } from '../base/impl';
 
 /**
  * An [[AfterEvent]] keeper that never sends any events.

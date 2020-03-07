@@ -3,7 +3,7 @@
  * @module fun-events
  */
 import { EventNotifier, EventReceiver } from '../base';
-import { neverReceiveBecause } from '../impl';
+import { neverReceiveBecause } from '../base/impl';
 import { OnEvent, onEventBy } from '../on-event';
 
 /**

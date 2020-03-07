@@ -1,4 +1,4 @@
-import { EventReceiver } from '../base';
+import { EventReceiver } from '../index';
 
 export function neverReceiveBecause(reason?: any): (receiver: EventReceiver.Generic<any>) => void {
   return ({ supply }) => supply.off(reason);

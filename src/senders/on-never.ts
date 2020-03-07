@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { neverReceive } from '../impl';
+import { neverReceive } from '../base/impl';
 import { OnEvent, onEventBy } from '../on-event';
 
 /**
