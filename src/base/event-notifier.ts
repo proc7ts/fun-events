@@ -25,7 +25,7 @@ export class EventNotifier<E extends any[]> implements EventSender<E>, EventSupp
   /**
    * @internal
    */
-  private readonly _rcs = new Set<EventReceiver.Generic<E>>();
+  private _rcs?: Set<EventReceiver.Generic<E>>;
 
   readonly [EventSupply__symbol]: EventSupply;
 
@@ -34,17 +34,24 @@ export class EventNotifier<E extends any[]> implements EventSender<E>, EventSupp
    *
    * @param event  An event to send represented by function call arguments.
    */
-  readonly send: (this: this, ...event: E) => void = receiveByEach(this._rcs);
+  readonly send: (this: this, ...event: E) => void;
 
   constructor() {
-    this[EventSupply__symbol] = eventSupply(() => this._rcs.clear());
+
+    const rcs = this._rcs = new Set<EventReceiver.Generic<E>>();
+
+    this.send = receiveByEach(rcs);
+    this[EventSupply__symbol] = eventSupply(() => {
+      rcs.clear();
+      delete this._rcs;
+    });
   }
 
   /**
    * The number of currently registered event receivers.
    */
   get size(): number {
-    return this._rcs.size;
+    return this._rcs ? this._rcs.size : 0;
   }
 
   [OnEvent__symbol](receiver: EventReceiver<E>): EventSupply {
@@ -65,10 +72,15 @@ export class EventNotifier<E extends any[]> implements EventSender<E>, EventSupp
   on(receiver: EventReceiver<E>): EventSupply {
 
     const generic = eventReceiver(receiver);
+    const supply = generic.supply.needs(this);
+    const { _rcs } = this;
 
-    this._rcs.add(generic);
+    if (_rcs && !supply.isOff) {
+      _rcs.add(generic);
+      supply.whenOff(() => _rcs.delete(generic));
+    }
 
-    return generic.supply.needs(this).whenOff(() => this._rcs.delete(generic));
+    return supply;
   }
 
   /**

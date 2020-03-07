@@ -87,15 +87,13 @@ export abstract class EventSupply implements EventSupplyPeer {
   needs(another: EventSupplyPeer): this {
 
     const supply = eventSupplyOf(another);
+    let off = (reason?: any): void => {
+      this.off(reason);
+    };
 
     if (supply.isOff) {
-      supply.whenOff(reason => this.off(reason));
+      supply.whenOff(off);
     } else {
-
-      let off = (reason?: any): void => {
-        this.off(reason);
-      };
-
       this.whenOff(() => off = noop); // Drop the reference to this supply
       supply.whenOff(reason => off(reason));
     }

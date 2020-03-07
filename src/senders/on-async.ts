@@ -43,7 +43,7 @@ export function onAsync<E>(from: EventSender<[PromiseLike<E> | E]>): OnEvent<[E,
 
     sourceSupply.whenOff(reason => {
       if (!numInProcess) {
-        receiver.supply.off(reason);
+        supply.off(reason);
       }
     });
 
