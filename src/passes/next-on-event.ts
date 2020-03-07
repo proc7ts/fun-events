@@ -4,6 +4,7 @@
  */
 import { NextCall, nextCall } from 'call-thru';
 import { EventSupplier } from '../base';
+import { onSupplied } from '../on-event';
 import { OnEventCallChain } from './on-event-call-chain';
 
 /**
@@ -21,5 +22,5 @@ import { OnEventCallChain } from './on-event-call-chain';
 export function nextOnEvent<E extends any[]>(
     supplier: EventSupplier<E>,
 ): NextCall<OnEventCallChain, E> {
-  return nextCall((chain, pass) => chain.onEvent(pass, supplier));
+  return nextCall((chain, pass) => chain.onEvent(pass, onSupplied(supplier)));
 }

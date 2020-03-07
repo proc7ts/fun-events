@@ -1,5 +1,5 @@
 import { isNextCall, NextCall__symbol, noop } from 'call-thru';
-import { EventReceiver, EventSupplier, eventSupply, EventSupply, noEventSupply } from '../base';
+import { EventReceiver, EventSender, eventSupply, EventSupply, noEventSupply, OnEvent__symbol } from '../base';
 import { OnEvent } from '../on-event';
 import { OnEventCallChain } from '../passes';
 
@@ -9,7 +9,6 @@ import { OnEventCallChain } from '../passes';
 export function thru<E extends any[]>(
     register: (receiver: EventReceiver.Generic<any[]>) => void,
     onEvent: <F extends any[]>(register: (receiver: EventReceiver.Generic<F>) => void) => OnEvent<F>,
-    toSupplier: <F extends any[]>(supplier: EventSupplier<F>) => OnEvent<F>,
     passes: ((...args: any[]) => any)[],
 ): OnEvent<E> {
 
@@ -58,12 +57,12 @@ export function thru<E extends any[]>(
               },
               onEvent<E extends any[]>(
                   fn: (this: void, ...event: E) => void,
-                  supplier: EventSupplier<E>,
+                  sender: EventSender<E>,
               ): void {
 
                 const supply = eventSupply().needs(entry.supply);
 
-                toSupplier(supplier)({
+                sender[OnEvent__symbol]({
                   supply,
                   receive(_context, ...event): void {
                     handleResult(fn(...event), event, supply);

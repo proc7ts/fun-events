@@ -616,7 +616,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   ): OnEvent<Out<Return3>>;
 
   thru_(...passes: any[]): OnEvent<any[]> {
-    return thru(this, onEventBy, onSupplied, passes);
+    return thru(this, onEventBy, passes);
   }
 
 }
