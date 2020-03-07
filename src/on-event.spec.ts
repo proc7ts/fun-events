@@ -8,7 +8,7 @@ import {
   noEventSupply,
   OnEvent__symbol,
 } from './base';
-import { OnEvent, onEventBy, onNever, onSupplied } from './on-event';
+import { OnEvent, onEventBy, onSupplied } from './on-event';
 import { EventEmitter } from './senders';
 import { trackValue } from './value';
 import Mock = jest.Mock;
@@ -669,12 +669,6 @@ describe('OnEvent', () => {
       emitter.done(reason);
       expect(mockOff).toHaveBeenCalledWith(reason);
     });
-  });
-});
-
-describe('onNever', () => {
-  it('returns no-event supply', () => {
-    expect(onNever(noop).isOff).toBe(true);
   });
 });
 

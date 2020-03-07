@@ -3,7 +3,8 @@
  * @module fun-events
  */
 import { EventReceiver, EventSupplier, eventSupply } from '../base';
-import { OnEvent, onEventBy, onNever, onSupplied } from '../on-event';
+import { OnEvent, onEventBy, onSupplied } from '../on-event';
+import { onNever } from './on-never';
 
 /**
  * Builds an [[OnEvent]] sender of events sent by any of the given `suppliers`.

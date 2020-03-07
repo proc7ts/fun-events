@@ -3,7 +3,7 @@
  * @module fun-events
  */
 import { EventNotifier, EventReceiver } from '../base';
-import { neverReceive } from '../impl';
+import { neverReceiveBecause } from '../impl';
 import { OnEvent, onEventBy } from '../on-event';
 
 /**
@@ -28,7 +28,7 @@ export function onPromise<T>(promise: Promise<T>): OnEvent<[T]> {
   promise.then(value => {
     receive = alwaysReceiveValue(value);
   }).catch(e => {
-    receive = neverReceive(e);
+    receive = neverReceiveBecause(e);
   });
 
   return onEventBy(receiver => receive(receiver));

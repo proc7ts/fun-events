@@ -684,10 +684,3 @@ export function onSupplied<E extends any[]>(supplier: EventSupplier<E>): OnEvent
 
   return onEventBy(onEvent.bind(supplier));
 }
-
-/**
- * An [[OnEvent]] sender that never sends any events.
- *
- * @category Core
- */
-export const onNever: OnEvent<any> = (/*#__PURE__*/ onEventBy(({ supply }) => supply.off()));
