@@ -1,25 +1,8 @@
 import { noop } from 'call-thru';
 import { eventSupply, EventSupply, eventSupplyOf } from './event-supply';
-import { noEventSupply } from './no-event-supply';
 import Mock = jest.Mock;
 
 describe('EventSupply', () => {
-  describe('noEventSupply', () => {
-    it('is no-op', () => {
-      expect(noEventSupply().off()).toBe(noEventSupply());
-    });
-    it('is cut off', () => {
-      expect(noEventSupply().isOff).toBe(true);
-    });
-    it('calls `whenOff` callback immediately', () => {
-
-      const mockWhenDone = jest.fn();
-
-      noEventSupply().whenOff(mockWhenDone);
-      expect(mockWhenDone).toHaveBeenCalledWith();
-    });
-  });
-
   describe('eventSupplyOf', () => {
     it('of `EventSupply` is the supply itself', () => {
 

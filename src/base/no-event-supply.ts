@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { EventSupply } from './event-supply';
+import { EventSupply, eventSupplyOf, EventSupplyPeer } from './event-supply';
 
 /**
  * @internal
@@ -19,6 +19,15 @@ class NoSupply extends EventSupply {
 
   whenOff(callback: (reason?: any) => void): this {
     callback();
+    return this;
+  }
+
+  cuts(another: EventSupplyPeer): this {
+    eventSupplyOf(another).off();
+    return this;
+  }
+
+  needs(): this {
     return this;
   }
 

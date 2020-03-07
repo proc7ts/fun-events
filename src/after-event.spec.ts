@@ -10,7 +10,6 @@ import {
   OnEvent__symbol,
 } from './base';
 import Mock = jest.Mock;
-import SpyInstance = jest.SpyInstance;
 
 describe('AfterEvent', () => {
   describe('once', () => {
@@ -18,7 +17,7 @@ describe('AfterEvent', () => {
     let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
     let afterEvent: AfterEvent<[string]>;
     let supply: EventSupply;
-    let offSpy: SpyInstance;
+    let offSpy: Mock;
     let emitter: EventNotifier<[string]>;
     let mockReceiver: Mock<void, [string]>;
 
@@ -26,7 +25,7 @@ describe('AfterEvent', () => {
       emitter = new EventNotifier();
       mockRegister = jest.fn(receiver => {
         supply = receiver.supply;
-        offSpy = jest.spyOn(supply, 'off');
+        supply.whenOff(offSpy = jest.fn());
         emitter.on(receiver);
         emitter.send('init');
       });
@@ -73,7 +72,7 @@ describe('AfterEvent', () => {
     let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
     let afterEvent: AfterEvent<[string]>;
     let supply: EventSupply;
-    let offSpy: SpyInstance;
+    let offSpy: Mock;
     let emitter: EventNotifier<[string]>;
     let mockReceiver: Mock<void, [string]>;
     let requiredSupply: EventSupply;
@@ -82,7 +81,7 @@ describe('AfterEvent', () => {
       emitter = new EventNotifier();
       mockRegister = jest.fn(receiver => {
         supply = receiver.supply;
-        offSpy = jest.spyOn(supply, 'off');
+        supply.whenOff(offSpy = jest.fn());
         emitter.on(receiver);
         emitter.send('init');
       });

@@ -158,7 +158,7 @@ describe('OnEvent', () => {
     let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
     let onEvent: OnEvent<[string]>;
     let supply: EventSupply;
-    let offSpy: SpyInstance;
+    let offSpy: Mock;
     let emitter: EventNotifier<[string]>;
     let mockReceiver: Mock<void, [string]>;
     let requiredSupply: EventSupply;
@@ -168,7 +168,7 @@ describe('OnEvent', () => {
       mockRegister = jest.fn(receiver => {
         emitter.on(receiver);
         supply = receiver.supply;
-        offSpy = jest.spyOn(supply, 'off');
+        supply.whenOff(offSpy = jest.fn());
       });
       onEvent = onEventBy(mockRegister);
       mockReceiver = jest.fn();
@@ -227,7 +227,7 @@ describe('OnEvent', () => {
     let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
     let onEvent: OnEvent<[string]>;
     let supply: EventSupply;
-    let offSpy: SpyInstance;
+    let offSpy: Mock;
     let emitter: EventNotifier<[string]>;
     let mockReceiver: Mock<void, [string]>;
     let requiredSupply: EventSupply;
@@ -238,7 +238,7 @@ describe('OnEvent', () => {
       mockRegister = jest.fn(receiver => {
         emitter.on(receiver);
         supply = receiver.supply;
-        offSpy = jest.spyOn(supply, 'off');
+        supply.whenOff(offSpy = jest.fn());
       });
       onEvent = onEventBy(mockRegister);
       mockReceiver = jest.fn();

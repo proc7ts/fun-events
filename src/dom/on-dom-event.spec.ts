@@ -91,14 +91,14 @@ describe('OnDomEvent', () => {
   describe('tillOff', () => {
 
     let supply: EventSupply;
-    let offSpy: SpyInstance;
+    let offSpy: Mock;
     let requiredSupply: EventSupply;
 
     beforeEach(() => {
       mockRegister = jest.fn(receiver => {
         events.on(receiver);
         supply = receiver.supply;
-        offSpy = jest.spyOn(supply, 'off');
+        supply.whenOff(offSpy = jest.fn());
       });
       requiredSupply = eventSupply();
     });
