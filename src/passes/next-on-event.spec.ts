@@ -1,5 +1,5 @@
 import { nextSkip } from 'call-thru';
-import { EventNotifier, EventSender, EventSupply } from '../base';
+import { EventSender, EventSupply } from '../base';
 import { OnEvent } from '../on-event';
 import { EventEmitter } from '../senders';
 import { nextOnEvent } from './next-on-event';
@@ -7,20 +7,20 @@ import Mock = jest.Mock;
 
 describe('nextOnEvent', () => {
 
-  let sender: EventEmitter<[EventNotifier<[string]>?]>;
-  let nested1: EventNotifier<[string]>;
-  let nested2: EventNotifier<[string]>;
-  let extract: Mock<EventSender<[string]> | undefined, [EventNotifier<[string]>?]>;
+  let sender: EventEmitter<[EventEmitter<[string]>?]>;
+  let nested1: EventEmitter<[string]>;
+  let nested2: EventEmitter<[string]>;
+  let extract: Mock<EventSender<[string]> | undefined, [EventEmitter<[string]>?]>;
   let result: OnEvent<[string]>;
   let receiver: Mock<void, [string]>;
   let supply: EventSupply;
 
   beforeEach(() => {
     sender = new EventEmitter();
-    nested1 = new EventNotifier();
-    nested2 = new EventNotifier();
+    nested1 = new EventEmitter();
+    nested2 = new EventEmitter();
     receiver = jest.fn();
-    extract = jest.fn((nested?: EventNotifier<[string]>) => nested);
+    extract = jest.fn((nested?: EventEmitter<[string]>) => nested);
     result = sender.on.thru(notifier => {
 
       const extracted = extract(notifier);

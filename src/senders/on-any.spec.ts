@@ -1,20 +1,21 @@
-import { EventNotifier, EventSupply } from '../base';
+import { EventSupply } from '../base';
 import { OnEvent } from '../on-event';
+import { EventEmitter } from './event-emitter';
 import { onAny } from './on-any';
 import { onNever } from './on-never';
 import Mock = jest.Mock;
 
 describe('onAny', () => {
 
-  let source1: EventNotifier<[string]>;
-  let source2: EventNotifier<[string]>;
+  let source1: EventEmitter<[string]>;
+  let source2: EventEmitter<[string]>;
   let fromAny: OnEvent<[string]>;
   let mockReceiver: Mock<void, [string]>;
   let supply: EventSupply;
 
   beforeEach(() => {
-    source1 = new EventNotifier();
-    source2 = new EventNotifier();
+    source1 = new EventEmitter();
+    source2 = new EventEmitter();
     fromAny = onAny(source1, source2);
     mockReceiver = jest.fn();
     supply = fromAny(mockReceiver);
