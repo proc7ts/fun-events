@@ -23,5 +23,5 @@ export function afterSent<E extends any[]>(
     sender: EventSender<E>,
     fallback?: (this: void) => E,
 ): AfterEvent<E> {
-  return afterEventBy(receiver => sender[OnEvent__symbol](receiver), fallback);
+  return afterEventBy(receiver => sender[OnEvent__symbol]().to(receiver), fallback);
 }

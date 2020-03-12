@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { AfterEvent, afterEventBy } from '../after-event';
+import { AfterEvent, afterEventBy, receiveAfterEvent } from '../after-event';
 import {
   AfterEvent__symbol,
   EventKeeper,
@@ -39,28 +39,56 @@ export abstract class ValueTracker<T = any> implements EventSender<[T, T]>, Even
   private _by = noEventSupply();
 
   /**
-   * An [[OnEvent]] sender of value changes. The new value is sent as first argument, and the old value as a second one.
+   * Returns [[OnEvent]] sender of value changes.
    *
    * The `[OnEvent__symbol]` property is an alias of this one.
+   *
+   * @returns Value changes sender.
    */
-  abstract readonly on: OnEvent<[T, T]>;
+  abstract on(): OnEvent<[T, T]>;
 
   /**
-   * An [[AfterEvent]] keeper of current value.
+   * Registers a receiver of value changes.
+   *
+   * The new value is sent as first argument, and the old value as a second one.
+   *
+   * @param receiver  A receiver to register.
+   *
+   * @returns A supply of value changes.
+   */
+  abstract on(receiver: EventReceiver<[T, T]>): EventSupply;
+
+  /**
+   * Builds an [[AfterEvent]] keeper of current value.
    *
    * The `[AfterEvent__symbol]` property is an alias of this one.
+   *
+   * @returns Current value keeper.
    */
-  readonly read: AfterEvent<[T]> = afterEventBy<[T]>(
-      receiver => this.on(receiveNewValue(receiver)),
-      () => [this.it],
-  );
+  read(): AfterEvent<[T]>;
 
-  get [OnEvent__symbol](): OnEvent<[T, T]> {
-    return this.on;
+  /**
+   * Registers a receiver of current values.
+   *
+   * @param receiver  A receiver to register.
+   *
+   * @returns A supply of current value.
+   */
+  read(receiver: EventReceiver<[T]>): EventSupply;
+
+  read(receiver?: EventReceiver<[T]>): AfterEvent<[T]> | EventSupply {
+    return (this.read = /*#__INLINE__*/ receiveAfterEvent(afterEventBy<[T]>(
+        receiver => this.on(receiveNewValue(receiver)),
+        () => [this.it],
+    )))(receiver);
   }
 
-  get [AfterEvent__symbol](): AfterEvent<[T]> {
-    return this.read;
+  [OnEvent__symbol](): OnEvent<[T, T]> {
+    return this.on();
+  }
+
+  [AfterEvent__symbol](): AfterEvent<[T]> {
+    return this.read();
   }
 
   /**
@@ -116,9 +144,9 @@ export abstract class ValueTracker<T = any> implements EventSender<[T, T]>, Even
 
     const acceptValuesFrom = (sender: EventSupplier<[T]>): EventSupply => {
 
-      const registrar = isEventKeeper(sender) ? sender[AfterEvent__symbol] : sender[OnEvent__symbol];
+      const onValue = isEventKeeper(sender) ? sender[AfterEvent__symbol]() : sender[OnEvent__symbol]();
 
-      return registrar(value => this.it = value);
+      return onValue.to(value => this.it = value);
     };
 
     this.byNone();

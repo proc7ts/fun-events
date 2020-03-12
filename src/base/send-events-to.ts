@@ -1,3 +1,7 @@
+/**
+ * @packageDocumentation
+ * @module fun-events
+ */
 import { noop } from 'call-thru';
 import { receiveByEach } from './event-notifier.impl';
 import { eventReceiver, EventReceiver } from './event-receiver';

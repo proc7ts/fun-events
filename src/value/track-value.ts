@@ -2,8 +2,8 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { EventKeeper, EventSupply, EventSupply__symbol, eventSupplyOf } from '../base';
-import { OnEvent } from '../on-event';
+import { EventKeeper, EventReceiver, EventSupply, EventSupply__symbol, eventSupplyOf } from '../base';
+import { OnEvent, receiveOnEvent } from '../on-event';
 import { EventEmitter } from '../senders';
 import { ValueTracker } from './value-tracker';
 
@@ -18,12 +18,14 @@ class TrackedValue<T> extends ValueTracker<T> {
     super();
   }
 
-  get on(): OnEvent<[T, T]> {
-    return this._on.on;
-  }
-
   get [EventSupply__symbol](): EventSupply {
     return eventSupplyOf(this._on);
+  }
+
+  on(): OnEvent<[T, T]>;
+  on(receiver: EventReceiver<[T, T]>): EventSupply;
+  on(receiver?: EventReceiver<[T, T]>): OnEvent<[T, T]> | EventSupply {
+    return (this.on = /*#__INLINE__*/ receiveOnEvent(this._on.on()))(receiver);
   }
 
   get it(): T {

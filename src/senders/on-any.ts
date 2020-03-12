@@ -37,7 +37,7 @@ export function onAny<E extends any[]>(...suppliers: EventSupplier<E>[]): OnEven
     };
 
     suppliers.forEach(
-        supplier => onSupplied(supplier)({
+        supplier => onSupplied(supplier).to({
           supply: eventSupply(removeSupplier).needs(supply),
           receive,
         }),

@@ -2,11 +2,10 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { EventReceiver } from './event-receiver';
-import { EventSupply } from './event-supply';
+import { AfterEvent } from '../after-event';
 
 /**
- * A key of event receiver registration method of [[EventKeeper]].
+ * A key of [[EventKeeper]] method returning its [[AfterEvent]] instance..
  *
  * @category Core
  */
@@ -24,13 +23,11 @@ export const AfterEvent__symbol = (/*#__PURE__*/ Symbol('after-event'));
 export interface EventKeeper<E extends any[]> {
 
   /**
-   * Registers a receiver of events kept and sent by this keeper.
+   * Returns an [[AfterEvent]] instance of this event keeper.
    *
-   * @param receiver  A receiver of events to register.
-   *
-   * @returns A supply of events from this keeper to the given `receiver`.
+   * @returns [[AfterEvent]] instance registering event receivers sent by this keeper.
    */
-  [AfterEvent__symbol](receiver: EventReceiver<E>): EventSupply;
+  [AfterEvent__symbol](): AfterEvent<E>;
 
 }
 
@@ -52,7 +49,7 @@ export namespace EventKeeper {
  * @typeparam E  An event type. This is a list of event receiver parameter types.
  * @param value  An object to check.
  *
- * @returns `true` if `value` contains an `[AfterEvent__symbol]` property, or `false` otherwise.
+ * @returns `true` if `value` contains an [[AfterEvent__symbol]] property, or `false` otherwise.
  */
 export function isEventKeeper<E extends any[]>(value: object): value is EventKeeper<E> {
   return AfterEvent__symbol in value;

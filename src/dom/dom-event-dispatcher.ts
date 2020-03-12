@@ -11,7 +11,7 @@ const domEventContext: EventReceiver.Context<any> = {
 };
 
 /**
- * DOM event dispatcher can be used to register event listeners and dispatch events.
+ * DOM event dispatcher can be used to register event listeners of particular event types and dispatch events.
  *
  * @category DOM
  */

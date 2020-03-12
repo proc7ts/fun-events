@@ -18,14 +18,14 @@ function eventReceiver(type: string, event: Event) {
   console.log('Event of type ', type, event);
 }
 
-// An `OnEvent` registrar function accepts event receivers with compatible event signature 
+// An `OnEvent` event sender accepts event receivers with compatible event signature 
 const onEvent: OnEvent<[string, Event]>;
 
-// Call an `OnEvent` registrar to register receiver
+// Call an `OnEvent.to()` method to register receiver
 // An event supply returned can be cut off to unregister the receiver
-const supply: EventSupply = onEvent(eventReceiver);
+const supply: EventSupply = onEvent.to(eventReceiver);
 
-// Generate some events
+// ...generate some events...
 
 supply.off(); // The eventReceiver will no longer receive events after this call
 ```
@@ -46,9 +46,9 @@ supply.off(); // The eventReceiver will no longer receive events after this call
 `EventReceiver`
 ---------------
 
-Event receiver is a function that is called on each event sent by event sender when registered.
+Event receiver is a function that is called on each event sent by event supplier when registered.
 
-To register an event receiver in event supplier just call the registration function with this receiver as argument.
+To register an event receiver in event supplier just call its registration method with this receiver as argument.
 
 An event receiver can also be in object form:
 ```typescript
@@ -62,14 +62,14 @@ const eventReceiver: EventReceiver<[string, Event]> = {
   }
 };
 
-// An `OnEvent` registrar function accepts event receivers with compatible event signature 
+// An `OnEvent` event sender accepts event receivers with compatible event signature 
 const onEvent: OnEvent<[string, Event]>;
 
-// Call an `OnEvent` registrar to register receiver
+// Call an `OnEvent.to()` method to register receiver
 // An event supply returned can be cut off to unregister the receiver
-const supply: EventSupply = onEvent(eventReceiver);
+const supply: EventSupply = onEvent.to(eventReceiver);
 
-// Generate some events
+// ...generate some events...
 
 supply.off(); // The eventReceiver will no longer receive events after this call
 ```
@@ -95,10 +95,12 @@ import { EventReceiver } from 'fun-events';
 const eventReceiver: EventReceiver<[string, Event]> = {
   receive(context, type, event) { 
     console.log('Event of type ', type, event);
-    // Event processing potentially leading to sending event to this receiver again
-    this.onRecurrent((recurrentType, recurrentEvent) => {
+    context.onRecurrent((recurrentType, recurrentEvent) => {
       console.log('Recurrent event of type ', recurrentType, recurrentEvent);
     });
+    
+    // ...event processing potentially leading to sending event to this receiver again...
+    
   }
 };
 ``` 
@@ -107,11 +109,12 @@ const eventReceiver: EventReceiver<[string, Event]> = {
 `EventSender`
 -------------
 
-An event sender interface has only one method accepting an event receiver to register. Once this method called, the
-receiver will start receiving the events until their supply is cut off.
+An event sender interface has only one method returning an `OnEvent` instance. The latter can be used to register
+an event receiver. The registered event receiver starts receiving upcoming events until the returned event supply
+is cut off.
 
-The event receiver registrar method typically implements an `OnEvent` interface - a function augmented with handy
-methods. To convert a plain event receiver registration function to `OnEvent`, an `onEventBy()` function can be used.
+The `OnEvent` is an `EventSender` implementation itself. It has additional event processing methods. To convert a plain
+event receiver registration function to `OnEvent`, an `onEventBy()` function can be used.
 
 
 ### `OnEvent.once()`
@@ -124,25 +127,25 @@ Registers the next event receiver. It won't receive any events after receiving t
 
 An event supplier that keeps the last event sent.
 
-It has only one method that registers an event receiver, just like an `EventSender`. The registered event receiver
-would receive the kept event immediately upon registration, and all upcoming events after that.
+It has only one method that returns an `AfterEvent` instance. The latter can be used to register an event receiver.
+The registered event receiver receives the kept event immediately upon registration, and all upcoming events after that
+until the returned event supply is cut off.
 
 The event keeper _always_ has event to send, unless it is closed. This is handy when tracking some state: the registered
-receiver would receive current state, and all updates after that.
+receiver receives current state, and all updates to it after that.
 
-The event keeper registrar method typically implements an `AfterEvent` interface - a function extending `OnEvent`
-interface and augmented with methods specific to event keeper. To convert a plain event receiver registration function
-to `AfterEvent`, an `afterEventBy()` function can be used.
+The `AfterEvent` is an `EventKeeper` implementation itself. It extends `OnEvent` with methods specific to event keeper.
+To convert a plain event receiver registration function to `AfterEvent`, an `afterEventBy()` function can be used.
 
 
 `EventSupply`
 -------------
 
-A supply of events from event supplier to event receiver. It is returned from event receiver registration functions.
+A supply of events from event supplier to event receiver. It is returned from event receiver registration.
 
-When events are no longer needed (or just exhausted) the supply may be cut off by calling the `off()` method.
+When events are no longer needed (or just exhausted) the supply may be cut off by calling its `off()` method.
 
-It also notifies on supply cut off by calling callback functions registered by `whenOff()` method. 
+It also notifies on supply cut off by calling callback functions registered by its `whenOff()` method. 
 
 An event supply may be constructed using `eventSupply()` function.
 
@@ -150,11 +153,9 @@ An event supply may be constructed using `eventSupply()` function.
 `EventEmitter`
 --------------
 
-Event emitter is a handy implementation of `OnEvent` sender.
+Event emitter is a handy implementation of `EventSender`.
 
-Manages a list of registered event receivers, and removes them from the list once their supplies are cut off.
-
-Can be used as `EventSender`.
+It manages a list of registered event receivers, and removes them from the list once their supplies are cut off.
 
 ```typescript
 import { EventEmitter } from 'fun-events';
@@ -175,8 +176,7 @@ State Tracking
 
 A state is a tree-like structure of sub-states (nodes) available under `StatePath`.
 
-A `StateTracker` can be used to notify on state changes of particular nodes. Then the registered receivers will receive
-an update.
+A `StateTracker` can be used to notify on state changes of particular node and its sub-tree.
 
 ```typescript
 import { StatePath, StateTracker } from 'fun-events';
@@ -196,8 +196,8 @@ function property2Changed(path: StatePath, newValue: number, oldValue: number) {
 }
 
 tracker.onUpdate(stateChanged); // Will be notified on all changes
-tracker.track('property1', property1Changed); // Will be notified on `property1` changes
-tracker.track(['property2'], property2Changed); // The path can be long
+tracker.track('property1').to(property1Changed); // Will be notified on `property1` changes
+tracker.track(['property2']).to(property2Changed); // The path can be long
 
 tracker.update(['some', 'path'], 'new', 'old');
 // State path changed: ['some', 'path'] 
@@ -270,27 +270,28 @@ console.log(sync.it, v1.it === v2.it, v2.it === v3.it, v3.it === sync.it); // 22
 DOM Events
 ----------
 
-DOM events are supported by `OnDomEvent` and `DomEventDispatcher`. The former extends an `OnEvent` event receiver
-registrar interface with DOM-specific functionality. The latter can be attached to arbitrary `EventTarget`. It provides
-an `OnDomEvent` registrars for each event type and dispatches DOM events.
+DOM events are supported by `OnDomEvent` and `DomEventDispatcher`. The former extends an `OnEvent` sender with
+DOM-specific functionality. The latter can be attached to arbitrary `EventTarget`. It constructs an `OnDomEvent`
+senders for each event type and dispatches DOM events.
 
 ```typescript
 import { DomEventDispatcher } from 'fun-events';
 
 const dispatcher = new DomEventDispatcher(document.getElementById('my-button'));
 
-dispatcher.on('click')(submit);
-dispatcher.dispatch(new KeyboardEvent('click'));
+dispatcher.on('click').to(submit);
+dispatcher.dispatch(new MouseEvent('click'));
 ```
 
 ### `OnDomEvent`
 
-A DOM event listener registrar function interface. It extends `OnEvent` interface with the following properties:
+An `EventSender` implementation able to register DOM event listeners. It extends `OnEvent` interface with the following
+methods:
 
 
-#### `capture`
+#### `capture()`
 
-An `OnDomEvent` sender derived from this one that enables event capturing by default.
+Registers a capturing listener of DOM events.
 
 This corresponds to specifying `true` or `{ capture: true }` as a second argument to `EventTarget.addEventListener()`.
 
@@ -307,11 +308,11 @@ container.addEventListener('click', handleContainerClick, true);
 ```
 
 
-#### `instead`
+#### `instead()`
 
-An `OnDomEvent` sender derived from this one that registers listeners to invoke instead of the default action.
+Registers a listener of DOM events to invoke instead of default action.
 
-It invokes an `Event.preventDefault()` method prior to calling the registered listeners. 
+This listener invokes an `Event.preventDefault()` method prior to event handling.
 
 ```typescript
 import { DomEventDispatcher } from 'fun-events';
@@ -321,12 +322,11 @@ new DomEventDispatcher(document.getElementById('my-href')).on('click').instead(d
 ```
 
 
-#### `just`
+#### `just()`
 
-An `OnDomEvent` sender derived from this one that registers listeners preventing further propagation of
-current event in the capturing and bubbling phases.
+Registers a listener of DOM events preventing further propagation of current event in the capturing and bubbling phases.
 
-It invokes an `Event.stopPropagation()` method prior to calling the registered listeners.
+This listener invokes an `Event.stopPropagation()` method prior to event handling.
 
 ```typescript
 import { DomEventDispatcher } from 'fun-events';
@@ -336,11 +336,11 @@ new DomEventDispatcher(document.getElementById('my-div')).on('click').just(handl
 ```
 
 
-#### `last`
+#### `last()`
 
-An `OnDomEvent` sender derived from this one that registers the last event listener.
+Registers the last DOM event listener.
 
-It invokes an `Event.stopImmediatePropagation()` method prior to calling the registered listeners.
+This listener invokes an `Event.stopImmediatePropagation()` method prior to event handling.
 
 ```typescript
 import { DomEventDispatcher } from 'fun-events';
@@ -352,13 +352,13 @@ const onClick = dispatcher.on('click');
 onClick.last(() => console.log('1')); // This is the last handler 
 onClick(() => console.log('2'));      // This one won't be called
 
-dispatcher.dispatch(new KeyboardEvent('click')); // console: 1 
+dispatcher.dispatch(new MouseEvent('click')); // console: 1 
 ```
 
 
-#### `passive`
+#### `passive()`
 
-An `OnDomEvent` sender derived from this one that accepts listeners never calling `Event.preventDefault()`.
+Registers a DOM event listener that never calls `Event.preventDefault()`.
 
 This corresponds to specifying `{ passive: true }` as a second argument to `EventTarget.addEventListener()`.
 

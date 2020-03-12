@@ -2,6 +2,7 @@
  * @packageDocumentation
  * @module fun-events
  */
+import { nextArg } from 'call-thru';
 import { EventSender, eventSupply, sendEventsTo } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
 import { onAnyAsync } from './on-any-async';
@@ -35,7 +36,7 @@ export function onAsync<E>(from: EventSender<[PromiseLike<E> | E]>): OnEvent<[E,
         .tillOff(supply, sourceSupply)
         .thru_(event => {
           ++numInProcess;
-          return event;
+          return nextArg(event);
         });
     let received: E[] = [];
     let numSent = 1;
@@ -47,7 +48,7 @@ export function onAsync<E>(from: EventSender<[PromiseLike<E> | E]>): OnEvent<[E,
       }
     });
 
-    onAnyAsync(source)({
+    onAnyAsync(source).to({
       supply,
       receive(_ctx, event, index) {
 

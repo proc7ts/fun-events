@@ -8,17 +8,44 @@ import { StatePath } from './state-path';
 import { StateUpdateReceiver } from './state-update-receiver';
 
 /**
- * A state update receivers registration function interface.
+ * An [[EventSender]] implementation able to register state update receivers.
  *
  * @category State Tracking
  */
 export interface OnStateUpdate extends OnEvent<[StatePath, any, any]> {
 
   /**
-   * An [[OnStateUpdate]] sender derived from this one that stops sending updates to registered receiver after the
-   * first one.
+   * Returns a reference to itself.
+   *
+   * @returns `this` instance.
    */
-  readonly once: OnStateUpdate;
+  to(): this;
+
+  /**
+   * Starts sending state updates to the given receiver.
+   *
+   * @param receiver  Target state updates receiver.
+   *
+   * @returns A supply of state updates from this sender to the given `receiver`.
+   */
+  to(receiver: StateUpdateReceiver): EventSupply;
+
+  /**
+   * Builds an [[OnStateUpdate]] sender of events originated from this one that stops sending them to registered
+   * receiver after the first one.
+   *
+   * @returns State updates sender.
+   */
+  once(): OnStateUpdate;
+
+  /**
+   * Registers a receiver of state updates originated from this sender that stops receiving them after the first one.
+   *
+   * @param receiver  A receiver of state updates to register.
+   *
+   * @returns A supply of state updates.
+   */
+  once(receiver: StateUpdateReceiver): EventSupply;
 
   /**
    * Builds an [[OnStateEvent]] sender that sends updated from this one until the required `supply` is cut off.
@@ -35,4 +62,66 @@ export interface OnStateUpdate extends OnEvent<[StatePath, any, any]> {
 
   (receiver: StateUpdateReceiver): EventSupply;
 
+}
+
+export namespace OnStateUpdate {
+
+  /**
+   * A signature of function registering receivers of state updates.
+   *
+   * When called without parameters it returns an [[OnStateUpdate]] sender. When called with state updates receiver
+   * as parameter it returns a supply of events from that sender.
+   */
+  export interface Fn {
+
+    /**
+     * Returns the state updates sender.
+     *
+     * @returns [[OnStateUpdate]] sender the updates originated from.
+     */
+    (
+        this: void,
+    ): OnStateUpdate;
+
+    /**
+     * Registers a receiver of state updates sent by the sender.
+     *
+     * @param receiver  A receiver of state updates to register.
+     *
+     * @returns A supply of state updates from the sender to the given `receiver`.
+     */
+    (
+        this: void,
+        receiver: StateUpdateReceiver,
+    ): EventSupply;
+
+    /**
+     * Either registers a receiver of state updates sent by the sender, or returns the sender itself.
+     *
+     * @param receiver  A receiver of state updates to register.
+     *
+     * @returns Either a supply of state updates from the sender to the given `receiver`, or [[OnStateUpdate]] sender
+     * the updates originated from when `receiver` is omitted.
+     */
+    (
+        this: void,
+        receiver?: StateUpdateReceiver,
+    ): EventSupply | OnStateUpdate;
+
+  }
+
+}
+
+/**
+ * Converts state updates sender to state update receivers registration function.
+ *
+ * This function delegates to [[OnStateUpdate.to]] method.
+ *
+ * @category State Tracking
+ * @param onStateUpdate  State update sender to convert.
+ *
+ * @returns state update receivers registration function.
+ */
+export function receiveOnStateUpdate(onStateUpdate: OnEvent<[StatePath, any, any]>): OnStateUpdate.Fn {
+  return onStateUpdate.to.bind(onStateUpdate) as OnStateUpdate.Fn;
 }

@@ -3,7 +3,7 @@
  * @module fun-events
  */
 import { AfterEvent__symbol, EventSupplier, isEventSender, OnEvent__symbol } from '../base';
-import { OnEvent, onEventBy } from '../on-event';
+import { OnEvent } from '../on-event';
 
 /**
  * Builds an [[OnEvent]] sender of events supplied by the given `supplier`.
@@ -15,12 +15,5 @@ import { OnEvent, onEventBy } from '../on-event';
  * @returns An [[OnEvent]] sender of events originated from the given `supplier`.
  */
 export function onSupplied<E extends any[]>(supplier: EventSupplier<E>): OnEvent<E> {
-
-  const onEvent = isEventSender(supplier) ? supplier[OnEvent__symbol] : supplier[AfterEvent__symbol];
-
-  if (onEvent instanceof OnEvent) {
-    return onEvent;
-  }
-
-  return onEventBy(onEvent.bind(supplier));
+  return isEventSender(supplier) ? supplier[OnEvent__symbol]() : supplier[AfterEvent__symbol]();
 }

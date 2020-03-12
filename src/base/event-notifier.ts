@@ -4,23 +4,20 @@
  */
 import { receiveByEach } from './event-notifier.impl';
 import { eventReceiver, EventReceiver } from './event-receiver';
-import { EventSender, OnEvent__symbol } from './event-sender';
 import { eventSupply, EventSupply, EventSupply__symbol, eventSupplyOf, EventSupplyPeer } from './event-supply';
 
 /**
  * Event notifier can be used to register event receivers and send events to them.
  *
- * It does not implement an [[OnEvent]] interface though. Use an [[EventEmitter]] if you need one.
+ * It does not implement an [[EventSender]] interface though. Use an [[EventEmitter]] if you need one.
  *
  * Manages a list of registered event receivers, and removes them from the list once their supplies
  * are {@link EventSupply.off cut off}.
  *
- * Can be used as [[EventSender]].
- *
  * @category Core
  * @typeparam E  An event type. This is a list of event receiver parameter types.
  */
-export class EventNotifier<E extends any[]> implements EventSender<E>, EventSupplyPeer {
+export class EventNotifier<E extends any[]> implements EventSupplyPeer {
 
   /**
    * @internal
@@ -52,10 +49,6 @@ export class EventNotifier<E extends any[]> implements EventSender<E>, EventSupp
    */
   get size(): number {
     return this._rcs ? this._rcs.size : 0;
-  }
-
-  [OnEvent__symbol](receiver: EventReceiver<E>): EventSupply {
-    return this.on(receiver);
   }
 
   /**

@@ -29,7 +29,7 @@ export function afterEach<E extends any[]>(...sources: EventKeeper<E>[]): AfterE
     const result: E[] = [];
 
     sources.forEach((source, index) => {
-      supply.needs(source[AfterEvent__symbol]((...event) => {
+      supply.needs(source[AfterEvent__symbol]().to((...event) => {
         result[index] = event;
         send();
       }).needs(supply));

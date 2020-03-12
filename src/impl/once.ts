@@ -1,12 +1,13 @@
 import { EventReceiver } from '../base';
+import { OnEvent } from '../on-event';
 
 /**
  * @internal
  */
 export function once<E extends any[]>(
-    register: (receiver: EventReceiver.Generic<E>) => void,
+    onSource: OnEvent<E>,
 ): (receiver: EventReceiver.Generic<E>) => void {
-  return receiver => register({
+  return receiver => onSource.to({
     supply: receiver.supply,
     receive: (context, ...event) => {
       receiver.receive(context, ...event);
