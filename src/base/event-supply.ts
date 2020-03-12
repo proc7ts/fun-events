@@ -20,14 +20,43 @@ export const EventSupply__symbol = (/*#__PURE__*/ Symbol('events-supply'));
  *
  * @category Core
  */
-export abstract class EventSupply implements EventSupplyPeer {
+export class EventSupply implements EventSupplyPeer {
+
+  /**
+   * @internal
+   */
+  private _off: (reason?: any) => void;
+
+  /**
+   * @internal
+   */
+  private _whenOff: (callback: (reason?: any) => void) => void;
+
+  constructor(off: (this: void, reason?: any) => void = noop) {
+    this._off = reason => {
+      this._whenOff = callback => callback(reason);
+      this._off = noop;
+      off(reason);
+    };
+    this._whenOff = callback => {
+
+      const prev = this._off;
+
+      this._off = reason => {
+        prev(reason);
+        callback(reason);
+      };
+    };
+  }
 
   /**
    * Whether this supply is {@link off cut off} already.
    *
    * `true` means the events will no longer be supplied.
    */
-  abstract readonly isOff: boolean;
+  get isOff(): boolean {
+    return this._off === noop;
+  }
 
   /**
    * `this` event supply.
@@ -46,7 +75,10 @@ export abstract class EventSupply implements EventSupplyPeer {
    * @param reason  An optional reason why supply is cut off. It will be reported to [[whenOff]] callbacks.
    * @returns A cut off event supply instance.
    */
-  abstract off(reason?: any): EventSupply;
+  off(reason?: any): EventSupply {
+    this._off(reason);
+    return this;
+  }
 
   /**
    * Registers a callback function that will be called as soon as this supply is {@link off cut off}. This callback
@@ -57,7 +89,10 @@ export abstract class EventSupply implements EventSupplyPeer {
    *
    * @returns `this` instance.
    */
-  abstract whenOff(callback: (this: void, reason?: any) => void): this;
+  whenOff(callback: (this: void, reason?: any) => void): this {
+    this._whenOff(callback);
+    return this;
+  }
 
   /**
    * Makes another event supply depend on this one.
@@ -84,7 +119,10 @@ export abstract class EventSupply implements EventSupplyPeer {
    *
    * @returns `this` instance.
    */
-  abstract needs(another: EventSupplyPeer): this;
+  needs(another: EventSupplyPeer): this {
+    eventSupplyOf(another).whenOff(reason => this._off(reason));
+    return this;
+  }
 
 }
 
@@ -125,47 +163,6 @@ export function eventSupplyOf(peer: EventSupplyPeer): EventSupply {
  * @param off  A function to call when supply will supply is {@link EventSupply.off cut off}. Accepts optional
  * cut off reason as its only parameter. No-op by default.
  */
-export function eventSupply(off: (this: void, reason?: any) => void = noop): EventSupply {
-
-  let whenOff: (callback: (reason?: any) => void) => void;
-  let cutOff: (reason?: any) => void = reason => {
-    whenOff = callback => callback(reason);
-    cutOff = noop;
-    off(reason);
-  };
-
-  whenOff = callback => {
-
-    const prev = cutOff;
-
-    cutOff = reason => {
-      prev(reason);
-      callback(reason);
-    };
-  };
-
-  class Supply extends EventSupply {
-
-    get isOff(): boolean {
-      return cutOff === noop;
-    }
-
-    off(reason?: any): EventSupply {
-      cutOff(reason);
-      return this;
-    }
-
-    whenOff(callback: (reason?: any) => void): this {
-      whenOff(callback);
-      return this;
-    }
-
-    needs(another: EventSupplyPeer): this {
-      eventSupplyOf(another).whenOff(reason => cutOff(reason));
-      return this;
-    }
-
-  }
-
-  return new Supply();
+export function eventSupply(off?: (this: void, reason?: any) => void): EventSupply {
+  return new EventSupply(off);
 }
