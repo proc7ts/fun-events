@@ -29,7 +29,7 @@ export function onAnyAsync<E>(from: EventSender<[PromiseLike<E> | E]>): OnEvent<
 
     let lastIndex = 0;
 
-    from[OnEvent__symbol]({
+    from[OnEvent__symbol]().to({
       supply,
       receive(_ctx, promise) {
 

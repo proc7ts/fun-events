@@ -6,7 +6,7 @@ import { noop } from 'call-thru';
 import { EventSender, eventSupply, EventSupply, OnEvent__symbol } from '../base';
 import { onEventBy } from '../on-event';
 import { EventEmitter } from '../senders';
-import { OnStateUpdate } from './on-state-update';
+import { OnStateUpdate, receiveOnStateUpdate } from './on-state-update';
 import { statePath, StatePath } from './state-path';
 import { StateUpdateReceiver } from './state-update-receiver';
 
@@ -135,9 +135,6 @@ class SubStateTracker implements StateTracker {
     this._trackers.send([...this._path, ...statePath(path)], newValue, oldValue);
   });
 
-  readonly onUpdate: OnStateUpdate =
-      onEventBy<[StatePath, any, any]>(receiver => this._trackers.on(this._path, receiver));
-
   constructor(private readonly _trackers: Trackers, private readonly _path: StatePath.Normalized) {
   }
 
@@ -146,8 +143,16 @@ class SubStateTracker implements StateTracker {
     return this;
   }
 
-  get [OnEvent__symbol](): OnStateUpdate {
-    return this.onUpdate;
+  onUpdate(): OnStateUpdate;
+  onUpdate(receiver: StateUpdateReceiver): EventSupply;
+  onUpdate(receiver?: StateUpdateReceiver): OnStateUpdate | EventSupply {
+    return (this.onUpdate = /*#__PURE__*/ receiveOnStateUpdate(onEventBy<[StatePath, any, any]>(
+        receiver => this._trackers.on(this._path, receiver),
+    )))(receiver);
+  }
+
+  [OnEvent__symbol](): OnStateUpdate {
+    return this.onUpdate();
   }
 
   track(path: StatePath): SubStateTracker {
@@ -182,16 +187,31 @@ export class StateTracker implements EventSender<[StatePath, any, any]> {
   readonly _tracker: SubStateTracker = new SubStateTracker(new Trackers(), []);
 
   /**
-   * A {@link OnStateUpdate state updates sender}.
+   * Builds a {@link OnStateUpdate state updates sender}.
    *
    * A state update will be sent to it whenever an `update()` function is called.
+   *
+   * The `[OnEvent__symbol]` property is an alias of this one.
+   *
+   * @returns State updates sender.
    */
-  get onUpdate(): OnStateUpdate {
-    return this._tracker.onUpdate;
+  onUpdate(): OnStateUpdate;
+
+  /**
+   * Registers a receiver of state updates.
+   *
+   * @param receiver State updates receiver to register.
+   *
+   * @returns A supply of state updates.
+   */
+  onUpdate(receiver: StateUpdateReceiver): EventSupply;
+
+  onUpdate(receiver?: StateUpdateReceiver): OnStateUpdate | EventSupply {
+    return (this.onUpdate = /*#__PURE__*/ receiveOnStateUpdate(this._tracker.onUpdate()))(receiver);
   }
 
-  get [OnEvent__symbol](): OnStateUpdate {
-    return this.onUpdate;
+  [OnEvent__symbol](): OnStateUpdate {
+    return this.onUpdate();
   }
 
   // noinspection JSCommentMatchesSignature

@@ -22,14 +22,59 @@ export type DomEventListener<E extends Event> = EventReceiver<[E]>;
  * @category DOM
  * @typeparam E  Supported DOM event type.
  */
-export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
+export class OnDomEvent<E extends Event> extends OnEvent<[E]> {
+
+  to(): this;
 
   /**
-   * An [[OnDomEvent]] sender derived from this one that stops sending events to registered listener after the first
-   * one.
+   * Starts sending DOM events to the given listener.
+   *
+   * @param listener  Target receiver of DOM events.
+   * @param opts  DOM event listener options to pass to `EventTarget.addEventListener()`.
+   *
+   * @returns A supply of DOM events from this sender to the given `listener`.
    */
-  get once(): OnDomEvent<E> {
-    return onDomEventBy(once(this));
+  to(listener: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): EventSupply;
+
+  to(listener?: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): this | EventSupply {
+    if (!listener) {
+      return this;
+    }
+
+    const receiver = eventReceiver(listener);
+    const { supply } = receiver;
+
+    if (!supply.isOff) {
+      (this._on as (
+          this: void,
+          listener: EventReceiver.Generic<[E]>,
+          opts?: AddEventListenerOptions | boolean,
+      ) => void)(receiver, opts);
+    }
+
+    return supply;
+  }
+
+  /**
+   * Builds an [[OnDomEvent]] sender of events originated from this one that stops sending them to registered receiver
+   * after the first one.
+   *
+   * @returns DOM event sender.
+   */
+  once(): OnDomEvent<E>;
+
+  /**
+   * Registers a listener of DOM events originated from this sender that stops receiving them after the first one.
+   *
+   * @param listener  A DOM event listener to register.
+   * @param opts  DOM event listener options to pass to `EventTarget.addEventListener()`.
+   *
+   * @returns A supply of DOM event.
+   */
+  once(listener: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): EventSupply;
+
+  once(listener?: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): OnDomEvent<E> | EventSupply {
+    return (this.once = /*#__INLINE__*/ receiveOnDomEvent(onDomEventBy(once(this))))(listener, opts);
   }
 
   /**
@@ -48,40 +93,74 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
   }
 
   /**
-   * An [[OnDomEvent]] sender derived from this one that enables event capturing by default.
+   * Builds an [[OnDomEvent]] sender of events originated from this sender that enables event capturing by default.
    *
    * This corresponds to specifying `true` or `{ capture: true }` as a second argument to
    * `EventTarget.addEventListener()`.
+   *
+   * @returns DOM events sender.
    */
-  get capture(): OnDomEvent<E> {
-    return onDomEventBy((
+  capture(): OnDomEvent<E>;
+
+  /**
+   * Registers a capturing listener of DOM events.
+   *
+   * This corresponds to specifying `true` or `{ capture: true }` as a second argument to
+   * `EventTarget.addEventListener()`.
+   *
+   * @param listener  A DOM events listener to register.
+   * @param opts  DOM event listener options to pass to `EventTarget.addEventListener()`.
+   *
+   * @returns A supply of DOM events.
+   */
+  capture(listener: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): EventSupply;
+
+  capture(listener?: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): OnDomEvent<E> | EventSupply {
+    return (this.capture = /*#__INLINE__*/ receiveOnDomEvent(onDomEventBy((
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean,
     ) => {
       if (opts == null) {
-        return this(listener, true);
+        return this.to(listener, true);
       }
       if (typeof opts === 'object' && opts.capture == null) {
-        return this(listener, { ...opts, capture: true });
+        return this.to(listener, { ...opts, capture: true });
       }
-      return this(listener, opts);
-    });
+      return this.to(listener, opts);
+    })))(listener, opts);
   }
 
   /**
-   * An [[OnDomEvent]] sender derived from this one that registers listeners to invoke instead of the default action.
+   * Builds an [[OnDomEvent]] sender of events originated from this sender that registers listeners to invoke instead
+   * of the default action.
    *
-   * It invokes an `Event.preventDefault()` method prior to calling the registered listeners.
+   * It invokes an `Event.preventDefault()` method prior to calling the registered listener.
+   *
+   * @returns DOM events sender.
    */
-  get instead(): OnDomEvent<E> {
-    return onDomEventBy((
+  instead(): OnDomEvent<E>;
+
+  /**
+   * Registers a listener of DOM events to invoke instead of default action.
+   *
+   * This listener invokes an `Event.preventDefault()` method prior to event handling.
+   *
+   * @param listener  A DOM events listener to register.
+   * @param opts  DOM event listener options to pass to `EventTarget.addEventListener()`.
+   *
+   * @returns A supply of DOM events.
+   */
+  instead(listener: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): EventSupply;
+
+  instead(listener?: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): OnDomEvent<E> | EventSupply {
+    return (this.instead = /*#__INLINE__*/ receiveOnDomEvent(onDomEventBy((
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean,
     ) => {
 
       const receiver = eventReceiver(listener);
 
-      return this(
+      return this.to(
           {
             supply: receiver.supply,
             receive(context, event) {
@@ -91,24 +170,41 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
           },
           opts,
       );
-    });
+    })))(listener, opts);
   }
 
   /**
-   * An [[OnDomEvent]] sender derived from this one that registers listeners preventing further propagation of
-   * current event in the capturing and bubbling phases.
+   * Builds an [[OnDomEvent]] sender of events originate from this sender that registers listeners preventing further
+   * propagation of current event in the capturing and bubbling phases.
    *
-   * It invokes an `Event.stopPropagation()` method prior to calling the registered listeners.
+   * It invokes an `Event.stopPropagation()` method prior to calling the registered listener.
+   *
+   * @returns DOM events sender.
    */
-  get just(): OnDomEvent<E> {
-    return onDomEventBy((
+  just(): OnDomEvent<E>;
+
+  /**
+   * Registers a listener of DOM events preventing further propagation of current event in the capturing and bubbling
+   * phases.
+   *
+   * This listener invokes an `Event.stopPropagation()` method prior to event handling.
+   *
+   * @param listener  A DOM events listener to register.
+   * @param opts  DOM event listener options to pass to `EventTarget.addEventListener()`.
+   *
+   * @returns A supply of DOM events.
+   */
+  just(listener: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): EventSupply;
+
+  just(listener?: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): OnDomEvent<E> | EventSupply {
+    return (this.just = /*#__INLINE__*/ receiveOnDomEvent(onDomEventBy((
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean,
     ) => {
 
       const receiver = eventReceiver(listener);
 
-      return this(
+      return this.to(
           {
             supply: receiver.supply,
             receive(context, event) {
@@ -118,23 +214,39 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
           },
           opts,
       );
-    });
+    })))(listener, opts);
   }
 
   /**
-   * An [[OnDomEvent]] sender derived from this one that registers the last event listener.
+   * Builds an [[OnDomEvent]] sender of events originated from this sender that registers the last event listener.
    *
-   * It invokes an `Event.stopImmediatePropagation()` method prior to calling the registered listeners.
+   * It invokes an `Event.stopImmediatePropagation()` method prior to calling the registered listener.
+   *
+   * @returns DOM event sender.
    */
-  get last(): OnDomEvent<E> {
-    return onDomEventBy((
+  last(): OnDomEvent<E>;
+
+  /**
+   * Registers the last DOM event listener.
+   *
+   * This listener invokes an `Event.stopImmediatePropagation()` method prior to event handling.
+   *
+   * @param listener  A DOM events listener to register.
+   * @param opts  DOM event listener options to pass to `EventTarget.addEventListener()`.
+   *
+   * @returns A supply of DOM events.
+   */
+  last(listener: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): EventSupply;
+
+  last(listener?: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): OnDomEvent<E> | EventSupply {
+    return (this.last = /*#__INLINE__*/ receiveOnDomEvent(onDomEventBy((
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean,
     ) => {
 
       const receiver = eventReceiver(listener);
 
-      return this(
+      return this.to(
           {
             supply: receiver.supply,
             receive(context, event) {
@@ -144,46 +256,102 @@ export abstract class OnDomEvent<E extends Event> extends OnEvent<[E]> {
           },
           opts,
       );
-    });
+    })))(listener, opts);
   }
 
   /**
-   * An [[OnDomEvent]] sender derived from this one that accepts listeners never calling `Event.preventDefault()`.
+   * Builds an [[OnDomEvent]] sender of events originated from this sender that accepts listeners never calling
+   * `Event.preventDefault()`.
    *
    * This corresponds to specifying `{ passive: true }` as a second argument to `EventTarget.addEventListener()`.
+   *
+   * @returns DOM event listener.
    */
-  get passive(): OnDomEvent<E> {
-    return onDomEventBy((
+  passive(): OnDomEvent<E>;
+
+  /**
+   * Registers a DOM event listener that never calls `Event.preventDefault()`.
+   *
+   * This corresponds to specifying `{ passive: true }` as a second argument to `EventTarget.addEventListener()`.
+   *
+   * @param listener  A DOM events listener to register.
+   * @param opts  DOM event listener options to pass to `EventTarget.addEventListener()`.
+   *
+   * @returns A supply of DOM events.
+   */
+  passive(listener: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): EventSupply;
+
+  passive(listener?: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): OnDomEvent<E> | EventSupply {
+    return (this.passive = /*#__INLINE__*/ receiveOnDomEvent(onDomEventBy((
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean,
     ) => {
       if (opts == null) {
-        return this(listener, { passive: true });
+        return this.to(listener, { passive: true });
       }
       if (typeof opts === 'boolean') {
-        return this(listener, { capture: opts, passive: true });
+        return this.to(listener, { capture: opts, passive: true });
       }
       if (opts.passive == null) {
-        return this(listener, { ...opts, passive: true });
+        return this.to(listener, { ...opts, passive: true });
       }
-      return this(listener, opts);
-    });
+      return this.to(listener, opts);
+    })))(listener, opts);
   }
 
 }
 
-export interface OnDomEvent<E extends Event> {
+export namespace OnDomEvent {
 
   /**
-   * Registers a DOM event listener.
+   * A signature of function registering listeners of DOM events sent by event sender.
    *
-   * @param listener  A DOM event listener to register.
-   * @param opts  DOM event listener options to pass to `EventTarget.addEventListener()`.
+   * When called without parameters it returns an [[OnDomEvent]] sender. When called with DOM event listener
+   * as parameter it returns a supply of DOM events from that sender.
    *
-   * @return A DOM events supply.
+   * @typeparam E  Supported DOM event type.
    */
-  // eslint-disable-next-line @typescript-eslint/prefer-function-type
-  (this: void, listener: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): EventSupply;
+  export interface Fn<E extends Event> {
+
+    /**
+     * Returns the DOM events sender.
+     *
+     * @returns [[OnDomEvent]] sender the events originated from.
+     */
+    (
+        this: void,
+    ): OnDomEvent<E>;
+
+    /**
+     * Registers a listener of DOM events sent by the sender.
+     *
+     * @param listener  A listener of DOM events to register.
+     * @param opts  DOM event listener options to pass to `EventTarget.addEventListener()`.
+     *
+     * @returns A supply of DOM events from the sender to the given `listener`.
+     */
+    (
+        this: void,
+        listener: DomEventListener<E>,
+        opts?: AddEventListenerOptions | boolean,
+    ): EventSupply;
+
+    /**
+     * Either registers a listener of DOM events sent by the sender, or returns the sender itself.
+     *
+     * @param listener  A listener of DOM events to register.
+     * @param opts  DOM event listener options to pass to `EventTarget.addEventListener()`.
+     *
+     * @returns Either a supply of DOM events from the sender to the given `listener`, or [[OnDomEvent]] sender
+     * the events originated from when `listener` is omitted.
+     */
+    (
+        this: void,
+        listener?: DomEventListener<E>,
+        opts?: AddEventListenerOptions | boolean,
+    ): EventSupply | OnDomEvent<E>;
+
+  }
 
 }
 
@@ -203,22 +371,18 @@ export function onDomEventBy<E extends Event>(
         opts?: AddEventListenerOptions | boolean,
     ) => void,
 ): OnDomEvent<E> {
+  return new OnDomEvent(register);
+}
 
-  const onDomEvent = (
-      (
-          listener: DomEventListener<E>,
-          opts?: AddEventListenerOptions | boolean,
-      ) => {
-
-        const receiver = eventReceiver(listener);
-
-        register(receiver, opts);
-
-        return receiver.supply;
-      }
-  ) as OnDomEvent<E>;
-
-  Object.setPrototypeOf(onDomEvent, OnDomEvent.prototype);
-
-  return onDomEvent;
+/**
+ * Converts DOM event sender to event listener registration function.
+ *
+ * This function delegates to [[OnDomEvent.to]] method.
+ *
+ * @param onDomEvent  DOM event sender to convert.
+ *
+ * @returns Event listener registration function.
+ */
+export function receiveOnDomEvent<E extends Event>(onDomEvent: OnDomEvent<E>): OnDomEvent.Fn<E> {
+  return onDomEvent.to.bind(onDomEvent) as OnDomEvent.Fn<E>;
 }

@@ -108,7 +108,7 @@ describe('OnDomEvent', () => {
       const event1 = new KeyboardEvent('keydown');
       const event2 = new KeyboardEvent('keyup');
 
-      onDomEvent.tillOff(requiredSupply)(mockListener);
+      onDomEvent.tillOff(requiredSupply).to(mockListener);
       events.send(event1);
       events.send(event2);
 
@@ -120,7 +120,7 @@ describe('OnDomEvent', () => {
       const event = new KeyboardEvent('click');
       const whenOff = jest.fn();
 
-      onDomEvent.tillOff(noEventSupply())(mockListener).whenOff(whenOff);
+      onDomEvent.tillOff(noEventSupply()).to(mockListener).whenOff(whenOff);
       events.send(event);
       expect(mockListener).not.toHaveBeenCalled();
       expect(whenOff).toHaveBeenCalled();
@@ -131,7 +131,7 @@ describe('OnDomEvent', () => {
       const event2 = new KeyboardEvent('keyup');
       const whenOff = jest.fn();
 
-      onDomEvent.tillOff(requiredSupply)(mockListener).whenOff(whenOff);
+      onDomEvent.tillOff(requiredSupply).to(mockListener).whenOff(whenOff);
       events.send(event1);
       supply.off('reason');
       events.send(event2);
@@ -147,7 +147,7 @@ describe('OnDomEvent', () => {
       const event2 = new KeyboardEvent('keyup');
       const whenOff = jest.fn();
 
-      onDomEvent.tillOff(requiredSupply)(mockListener).whenOff(whenOff);
+      onDomEvent.tillOff(requiredSupply).to(mockListener).whenOff(whenOff);
       events.send(event1);
       requiredSupply.off('reason');
       events.send(event2);
@@ -161,7 +161,7 @@ describe('OnDomEvent', () => {
 
   describe('capture', () => {
     it('builds `OnDomEvent`', () => {
-      expect(onDomEvent.capture).toBeInstanceOf(OnDomEvent);
+      expect(onDomEvent.capture()).toBeInstanceOf(OnDomEvent);
     });
     it('registers event listener', () => {
       onDomEvent.capture(mockListener);
@@ -199,7 +199,7 @@ describe('OnDomEvent', () => {
 
   describe('passive', () => {
     it('builds `OnDomEvent`', () => {
-      expect(onDomEvent.passive).toBeInstanceOf(OnDomEvent);
+      expect(onDomEvent.passive()).toBeInstanceOf(OnDomEvent);
     });
     it('registers event listener', () => {
       onDomEvent.passive(mockListener);
@@ -234,14 +234,14 @@ describe('OnDomEvent', () => {
       expect(mockRegister).toHaveBeenCalledWith(expect.anything(), opts);
     });
     it('combines with `capture`', () => {
-      onDomEvent.capture.passive(mockListener);
+      onDomEvent.capture().passive(mockListener);
       expect(mockRegister).toHaveBeenCalledWith(expect.anything(), { capture: true, passive: true });
     });
   });
 
   describe('instead', () => {
     it('builds `OnDomEvent`', () => {
-      expect(onDomEvent.instead).toBeInstanceOf(OnDomEvent);
+      expect(onDomEvent.instead()).toBeInstanceOf(OnDomEvent);
     });
     it('registers event listener', () => {
       onDomEvent.instead(mockListener);
@@ -262,7 +262,7 @@ describe('OnDomEvent', () => {
 
   describe('just', () => {
     it('builds `OnDomEvent`', () => {
-      expect(onDomEvent.just).toBeInstanceOf(OnDomEvent);
+      expect(onDomEvent.just()).toBeInstanceOf(OnDomEvent);
     });
     it('registers event listener', () => {
       onDomEvent.just(mockListener);
@@ -283,7 +283,7 @@ describe('OnDomEvent', () => {
 
   describe('last', () => {
     it('builds `OnDomEvent`', () => {
-      expect(onDomEvent.last).toBeInstanceOf(OnDomEvent);
+      expect(onDomEvent.last()).toBeInstanceOf(OnDomEvent);
     });
     it('registers event listener', () => {
       onDomEvent.last(mockListener);

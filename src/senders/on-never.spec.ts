@@ -3,6 +3,6 @@ import { onNever } from './on-never';
 
 describe('onNever', () => {
   it('returns no-event supply', () => {
-    expect(onNever(noop).isOff).toBe(true);
+    expect(onNever.to(noop).isOff).toBe(true);
   });
 });

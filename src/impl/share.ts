@@ -1,10 +1,11 @@
 import { EventNotifier, EventReceiver, eventSupply, EventSupply, sendEventsTo } from '../base';
+import { OnEvent } from '../on-event';
 
 /**
  * @internal
  */
 export function share<E extends any[]>(
-    register: (receiver: EventReceiver.Generic<E>) => EventSupply,
+    onSource: OnEvent<E>,
 ): (receiver: EventReceiver.Generic<E>) => void {
 
   const shared = new EventNotifier<E>();
@@ -16,7 +17,7 @@ export function share<E extends any[]>(
       initialEvents = [];
       sharedSupply = eventSupply(() => initialEvents = undefined);
 
-      register({
+      onSource.to({
         supply: sharedSupply,
         receive(_ctx, ...event) {
           if (initialEvents) {

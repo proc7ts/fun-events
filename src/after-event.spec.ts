@@ -91,7 +91,7 @@ describe('AfterEvent', () => {
     });
 
     it('sends original events', () => {
-      afterEvent.tillOff(requiredSupply)(mockReceiver);
+      afterEvent.tillOff(requiredSupply).to(mockReceiver);
       emitter.send('event1');
       emitter.send('event2');
 
@@ -103,7 +103,7 @@ describe('AfterEvent', () => {
 
       const whenOff = jest.fn();
 
-      afterEvent.tillOff(noEventSupply())(mockReceiver).whenOff(whenOff);
+      afterEvent.tillOff(noEventSupply()).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       expect(mockReceiver).not.toHaveBeenCalled();
       expect(whenOff).toHaveBeenCalled();
@@ -112,7 +112,7 @@ describe('AfterEvent', () => {
 
       const whenOff = jest.fn();
 
-      afterEvent.tillOff(requiredSupply)(mockReceiver).whenOff(whenOff);
+      afterEvent.tillOff(requiredSupply).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       supply.off('reason');
       emitter.send('event2');
@@ -127,7 +127,7 @@ describe('AfterEvent', () => {
 
       const whenOff = jest.fn();
 
-      afterEvent.tillOff(requiredSupply)(mockReceiver).whenOff(whenOff);
+      afterEvent.tillOff(requiredSupply).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       requiredSupply.off('reason');
       emitter.send('event2');
@@ -164,8 +164,8 @@ describe('AfterEvent', () => {
 
       const shared = afterEvent.share();
 
-      shared(mockReceiver);
-      shared(mockReceiver2);
+      shared.to(mockReceiver);
+      shared.to(mockReceiver2);
       expect(mockReceiver).toHaveBeenCalledWith(...fallback);
       expect(mockReceiver2).toHaveBeenCalledWith(...fallback);
     });
@@ -179,8 +179,8 @@ describe('AfterEvent', () => {
 
       const shared = afterEvent.share();
 
-      shared(mockReceiver);
-      shared(mockReceiver2);
+      shared.to(mockReceiver);
+      shared.to(mockReceiver2);
       emitter.send('a', 'b');
       expect(mockReceiver).toHaveBeenCalledWith('a', 'b');
       expect(mockReceiver2).toHaveBeenCalledWith('a', 'b');
@@ -209,21 +209,21 @@ describe('AfterEvent', () => {
 
       it('registers event receiver', () => {
 
-        const transforming: AfterEvent<[string]> = afterEvent.keep.thru(
+        const transforming: AfterEvent<[string]> = afterEvent.keepThru(
             (event1: string, event2: string) => `${event1}, ${event2}`,
         );
 
-        transforming(mockReceiver);
+        transforming.to(mockReceiver);
         expect(mockRegister).toHaveBeenCalled();
       });
       it('unregisters event receiver when supply is cut off', () => {
 
-        const transforming = afterEvent.keep.thru(
+        const transforming = afterEvent.keepThru(
             (event1: string, event2: string) => `${event1}, ${event2}`,
         );
 
-        const supply1 = transforming(mockReceiver);
-        const supply2 = transforming(jest.fn());
+        const supply1 = transforming.to(mockReceiver);
+        const supply2 = transforming.to(jest.fn());
 
         supply1.off();
         expect(mockOff).not.toHaveBeenCalled();
@@ -232,11 +232,11 @@ describe('AfterEvent', () => {
       });
       it('transforms original event', () => {
 
-        const transforming = afterEvent.keep.thru(
+        const transforming = afterEvent.keepThru(
             (event1: string, event2: string) => `${event1}, ${event2}`,
         );
 
-        transforming(mockReceiver);
+        transforming.to(mockReceiver);
 
         emitter.send('a', 'bb');
 
@@ -245,12 +245,12 @@ describe('AfterEvent', () => {
       });
       it('skips original event', () => {
 
-        const transforming = afterEvent.keep.thru(
+        const transforming = afterEvent.keepThru(
             (event1: string, event2: string) => event1 < event2 ? nextArgs(event1, event2) : nextSkip,
             (event1: string, event2: string) => `${event1}, ${event2}`,
         );
 
-        transforming(mockReceiver);
+        transforming.to(mockReceiver);
 
         emitter.send('a', 'bb');
         expect(mockReceiver).toHaveBeenCalledWith('init1, init2');
@@ -262,11 +262,11 @@ describe('AfterEvent', () => {
       it('cuts off events supply when original sender cuts it off', () => {
 
         const mockOff2 = jest.fn();
-        const transforming = afterEvent.keep.thru(
+        const transforming = afterEvent.keepThru(
             (event1: string, event2: string) => `${event1}, ${event2}`,
         );
 
-        transforming(mockReceiver).whenOff(mockOff2);
+        transforming.to(mockReceiver).whenOff(mockOff2);
 
         const reason = 'some reason';
 
@@ -281,7 +281,7 @@ describe('AfterEvent', () => {
 
       const afterEvent = afterEventBy(noop);
 
-      expect(afterEvent[OnEvent__symbol]).toBe(afterEvent);
+      expect(afterEvent[OnEvent__symbol]()).toBe(afterEvent);
     });
   });
 
@@ -290,7 +290,7 @@ describe('AfterEvent', () => {
 
       const afterEvent = afterEventBy(noop);
 
-      expect(afterEvent[AfterEvent__symbol]).toBe(afterEvent);
+      expect(afterEvent[AfterEvent__symbol]()).toBe(afterEvent);
     });
   });
 });
@@ -314,7 +314,7 @@ describe('afterEventBy', () => {
   });
 
   it('builds an `AfterEvent` keeper', () => {
-    afterEvent(mockReceiver);
+    afterEvent.to(mockReceiver);
     expect(mockRegister).toHaveBeenCalled();
     expect(mockReceiver).toHaveBeenCalledWith('fallback');
     expect(mockReceiver).toHaveBeenCalledTimes(1);
@@ -329,7 +329,7 @@ describe('afterEventBy', () => {
       emitter.send('event');
     });
 
-    afterEvent(mockReceiver);
+    afterEvent.to(mockReceiver);
 
     expect(mockReceiver).toHaveBeenCalledWith('event');
     expect(mockReceiver).toHaveBeenCalledTimes(1);
@@ -340,7 +340,7 @@ describe('afterEventBy', () => {
       emitter.send('event');
     });
 
-    afterEvent({
+    afterEvent.to({
       supply: noEventSupply(),
       receive(_context, ...event) {
         mockReceiver(...event);
@@ -353,7 +353,7 @@ describe('afterEventBy', () => {
 
     const recurrentReceiver = jest.fn();
 
-    afterEvent({
+    afterEvent.to({
       receive(context, ...event) {
         context.onRecurrent(recurrentReceiver);
         mockReceiver(...event);

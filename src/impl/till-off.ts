@@ -1,28 +1,23 @@
-import { EventReceiver, eventSupply, EventSupply, eventSupplyOf, EventSupplyPeer } from '../base';
+import { EventReceiver, eventSupply, EventSupply, EventSupplyPeer } from '../base';
+import { OnEvent } from '../on-event';
 
 /**
  * @internal
  */
 export function tillOff<E extends any[]>(
-    register: (receiver: EventReceiver.Generic<E>) => void,
+    onSource: OnEvent<E>,
     required: EventSupplyPeer,
     dependentSupply?: EventSupply,
 ): (receiver: EventReceiver.Generic<E>) => void {
-  const requiredSupply = eventSupplyOf(required);
   return receiver => {
     if (dependentSupply) {
-
-      const supply = eventSupply().needs(requiredSupply);
-
-      dependentSupply.needs(supply);
-
-      register({
-        supply,
+      onSource.to({
+        supply: eventSupply().needs(required).cuts(dependentSupply),
         receive: (receiver.receive as Function).bind(receiver),
       });
     } else {
-      receiver.supply.needs(requiredSupply);
-      register(receiver);
+      receiver.supply.needs(required);
+      onSource.to(receiver);
     }
   };
 }

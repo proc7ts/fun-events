@@ -32,13 +32,13 @@ describe('ValueTracker', () => {
 
   describe('[OnEvent__symbol]', () => {
     it('refers to `on`', () => {
-      expect(v1[OnEvent__symbol]).toBe(v1.on);
+      expect(v1[OnEvent__symbol]()).toBe(v1.on());
     });
   });
 
   describe('[AfterEvent__symbol]', () => {
     it('refers to `read`', () => {
-      expect(v1[AfterEvent__symbol]).toBe(v1.read);
+      expect(v1[AfterEvent__symbol]()).toBe(v1.read());
     });
   });
 
@@ -79,7 +79,7 @@ describe('ValueTracker', () => {
       expect(v1.it).toBe('new!');
     });
     it('is supported for initial value', () => {
-      v1.read.once({
+      v1.read().once().to({
         receive(context, value) {
           context.onRecurrent(noop);
           v1.it = value + '!';

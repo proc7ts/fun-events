@@ -21,13 +21,13 @@ describe('nextOnEvent', () => {
     nested2 = new EventEmitter();
     receiver = jest.fn();
     extract = jest.fn((nested?: EventEmitter<[string]>) => nested);
-    result = sender.on.thru(notifier => {
+    result = sender.on().thru(notifier => {
 
       const extracted = extract(notifier);
 
       return extracted ? nextOnEvent(extracted) : nextSkip;
     });
-    supply = result(receiver);
+    supply = result.to(receiver);
   });
 
   it('receives nested event', () => {
@@ -111,7 +111,7 @@ describe('nextOnEvent', () => {
   it('cuts off previous supply when next event skipped', () => {
     supply.off();
 
-    result = sender.on.thru(
+    result = sender.on().thru(
         notifier => notifier === nested1 ? nested1 : nextSkip,
         notifier => {
 
@@ -120,7 +120,7 @@ describe('nextOnEvent', () => {
           return extracted ? nextOnEvent(extracted) : nextSkip;
         },
     );
-    supply = result(receiver);
+    supply = result.to(receiver);
 
     sender.send(nested1);
     sender.send(nested2);
@@ -134,7 +134,7 @@ describe('nextOnEvent', () => {
   it('allows to post-process events', () => {
     supply.off();
 
-    result = sender.on.thru(
+    result = sender.on().thru(
         notifier => {
 
           const extracted = extract(notifier);
@@ -143,7 +143,7 @@ describe('nextOnEvent', () => {
         },
         value => value + '!',
     );
-    supply = result(receiver);
+    supply = result.to(receiver);
 
     sender.send(nested1);
     nested1.send('value1');

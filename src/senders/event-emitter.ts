@@ -2,8 +2,8 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { EventNotifier, EventSender, OnEvent__symbol } from '../base';
-import { OnEvent, onEventBy } from '../on-event';
+import { EventNotifier, EventReceiver, EventSender, EventSupply, OnEvent__symbol } from '../base';
+import { OnEvent, onEventBy, receiveOnEvent } from '../on-event';
 
 /**
  * Event emitter is a handy implementation of [[OnEvent]] sender.
@@ -16,12 +16,16 @@ import { OnEvent, onEventBy } from '../on-event';
 export class EventEmitter<E extends any[]> extends EventNotifier<E> implements EventSender<E> {
 
   /**
-   * An [[OnEvent]] sender.
-   *
-   * The `[OnEvent__symbol]` property is an alias of this one.
+   * Returns an [[OnEvent]] sender.
    */
-  readonly on = onEventBy<E>(receiver => super.on(receiver));
+  on(): OnEvent<E>;
+  on(receiver: EventReceiver<E>): EventSupply;
+  on(receiver?: EventReceiver<E>): OnEvent<E> | EventSupply {
+    return (this.on = /*#__INLINE__*/ receiveOnEvent(onEventBy<E>(receiver => super.on(receiver))))(receiver);
+  }
 
-  readonly [OnEvent__symbol]: OnEvent<E> = this.on;
+  [OnEvent__symbol](): OnEvent<E> {
+    return this.on();
+  }
 
 }

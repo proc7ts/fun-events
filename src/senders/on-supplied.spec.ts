@@ -1,4 +1,4 @@
-import { AfterEvent__symbol, EventNotifier, EventReceiver, EventSupply, OnEvent__symbol } from '../base';
+import { AfterEvent__symbol, EventKeeper, EventReceiver, EventSender, EventSupply, OnEvent__symbol } from '../base';
 import { OnEvent } from '../on-event';
 import { trackValue } from '../value';
 import { EventEmitter } from './event-emitter';
@@ -7,20 +7,23 @@ import { onSupplied } from './on-supplied';
 describe('onSupplied', () => {
   describe('from event sender', () => {
 
-    let sender: EventNotifier<[string]>;
+    let sender: EventEmitter<[string]>;
     let onEvent: OnEvent<[string]>;
     let mockReceiver: EventReceiver<[string]>;
     let supply: EventSupply;
 
     beforeEach(() => {
-      sender = new EventNotifier();
-      onEvent = onSupplied({
-        [OnEvent__symbol](receiver) {
-          return sender.on(receiver);
+      sender = new EventEmitter();
+
+      const supplier: EventSender<[string]> = {
+        [OnEvent__symbol]() {
+          return sender.on();
         },
-      });
+      };
+
+      onEvent = onSupplied(supplier);
       mockReceiver = jest.fn();
-      supply = onEvent(mockReceiver);
+      supply = onEvent.to(mockReceiver);
     });
 
     it('reports events sent by the given sender', () => {
@@ -43,7 +46,7 @@ describe('onSupplied', () => {
 
       const sender = new EventEmitter<[string]>();
 
-      expect(onSupplied(sender)).toBe(sender[OnEvent__symbol]);
+      expect(onSupplied(sender)).toBe(sender[OnEvent__symbol]());
     });
   });
 
@@ -51,11 +54,13 @@ describe('onSupplied', () => {
     it('returns the keeper\'s registrar', () => {
 
       const tracker = trackValue(1);
-      const keeper = {
-        [AfterEvent__symbol]: tracker.read,
+      const keeper: EventKeeper<[number]> = {
+        [AfterEvent__symbol]() {
+          return tracker.read();
+        },
       };
 
-      expect(onSupplied(keeper)).toBe(keeper[AfterEvent__symbol]);
+      expect(onSupplied(keeper)).toBe(keeper[AfterEvent__symbol]());
     });
   });
 });

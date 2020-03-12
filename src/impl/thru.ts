@@ -7,21 +7,20 @@ import { OnEventCallChain } from '../passes';
  * @internal
  */
 export function thru<E extends any[]>(
-    register: (receiver: EventReceiver.Generic<any[]>) => void,
-    onEvent: <F extends any[]>(register: (receiver: EventReceiver.Generic<F>) => void) => OnEvent<F>,
+    onSource: OnEvent<E>,
     passes: ((...args: any[]) => any)[],
-): OnEvent<E> {
+): (receiver: EventReceiver.Generic<E>) => void {
 
   interface ChainEntry {
     readonly chain: OnEventCallChain;
     supply: EventSupply;
   }
 
-  return onEvent<any>(receiver => {
+  return (receiver: EventReceiver.Generic<any>) => {
 
     const chains: ChainEntry[] = [];
 
-    register({
+    onSource.to({
       supply: receiver.supply,
       receive(context, ...event) {
 
@@ -56,16 +55,16 @@ export function thru<E extends any[]>(
                 entry.supply.off();
               },
               onEvent<E extends any[]>(
-                  fn: (this: void, ...event: E) => void,
+                  pass: (this: void, ...event: E) => void,
                   sender: EventSender<E>,
               ): void {
 
                 const supply = eventSupply().needs(entry.supply);
 
-                sender[OnEvent__symbol]({
+                sender[OnEvent__symbol]().to({
                   supply,
                   receive(_context, ...event): void {
-                    handleResult(fn(...event), event, supply);
+                    handleResult(pass(...event), event, supply);
                   },
                 });
               },
@@ -108,5 +107,5 @@ export function thru<E extends any[]>(
         }
       },
     });
-  });
+  };
 }

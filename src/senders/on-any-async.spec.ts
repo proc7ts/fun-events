@@ -26,7 +26,7 @@ describe('onAnyAsync', () => {
         received.push(Promise.resolve(event));
       }
     });
-    supply = onAnyAsync(origin)(receiver).whenOff(reason => {
+    supply = onAnyAsync(origin).to(receiver).whenOff(reason => {
 
       const resolver = resolvers.shift();
 

@@ -2,11 +2,10 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { EventReceiver } from './event-receiver';
-import { EventSupply } from './event-supply';
+import { OnEvent } from '../on-event';
 
 /**
- * A key of event receiver registration method of [[EventSender]].
+ * A key of [[EventSender]] method returning its [[OnEvent]] instance.
  *
  * @category Core
  */
@@ -15,7 +14,7 @@ export const OnEvent__symbol = (/*#__PURE__*/ Symbol('on-event'));
 /**
  * A sender of events.
  *
- * It is able to register event receivers.
+ * Contains an [[OnEvent]] instance registering event receivers.
  *
  * @category Core
  * @typeparam E  An event type. This is a tuple of event receiver parameter types.
@@ -23,13 +22,11 @@ export const OnEvent__symbol = (/*#__PURE__*/ Symbol('on-event'));
 export interface EventSender<E extends any[]> {
 
   /**
-   * Registers a receiver of events sent by this sender.
+   * Returns an [[OnEvent]] instance of this event sender.
    *
-   * @param receiver  A receiver of events to register.
-   *
-   * @returns A supply of events from this sender to the given `receiver`.
+   * @returns [[OnEvent]] instance registering event receivers sent by this sender.
    */
-  [OnEvent__symbol](receiver: EventReceiver<E>): EventSupply;
+  [OnEvent__symbol](): OnEvent<E>;
 
 }
 
@@ -51,7 +48,7 @@ export namespace EventSender {
  * @typeparam E  An event type. This is a list of event receiver parameter types.
  * @param value  An object to check.
  *
- * @returns `true` if `value` contains `[OnEvent__symbol]` property, or `false` otherwise.
+ * @returns `true` if `value` contains [[OnEvent__symbol]] property, or `false` otherwise.
  */
 export function isEventSender<E extends any[]>(value: object): value is EventSender<E> {
   return OnEvent__symbol in value;

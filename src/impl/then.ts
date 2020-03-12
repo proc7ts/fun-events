@@ -1,13 +1,14 @@
 import { EventReceiver, eventSupply } from '../base';
+import { OnEvent } from '../on-event';
 import { once } from './once';
 
 export function then<E extends any[], TResult1 = E[0], TResult2 = never>(
-    register: (receiver: EventReceiver.Generic<E>) => void,
+    onSource: OnEvent<E>,
     onEvent?: ((...value: E) => TResult1 | PromiseLike<TResult1>) | undefined | null,
     onCutOff?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null,
 ): Promise<TResult1 | TResult2> {
   return new Promise((resolve, reject) => {
-    once(register)({
+    once(onSource)({
       supply: onCutOff
           ? eventSupply(reason => {
             try {

@@ -11,7 +11,7 @@ describe('OnEvent', () => {
 
       const onEvent = onEventBy(() => noEventSupply());
 
-      expect(onEvent[OnEvent__symbol]).toBe(onEvent);
+      expect(onEvent[OnEvent__symbol]()).toBe(onEvent);
     });
   });
 
@@ -176,7 +176,7 @@ describe('OnEvent', () => {
     });
 
     it('sends original events', () => {
-      onEvent.tillOff(requiredSupply)(mockReceiver);
+      onEvent.tillOff(requiredSupply).to(mockReceiver);
       emitter.send('event1');
       emitter.send('event2');
 
@@ -187,7 +187,7 @@ describe('OnEvent', () => {
 
       const whenOff = jest.fn();
 
-      onEvent.tillOff(noEventSupply())(mockReceiver).whenOff(whenOff);
+      onEvent.tillOff(noEventSupply()).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       expect(mockReceiver).not.toHaveBeenCalled();
       expect(whenOff).toHaveBeenCalled();
@@ -196,7 +196,7 @@ describe('OnEvent', () => {
 
       const whenOff = jest.fn();
 
-      onEvent.tillOff(requiredSupply)(mockReceiver).whenOff(whenOff);
+      onEvent.tillOff(requiredSupply).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       supply.off('reason');
       emitter.send('event2');
@@ -210,7 +210,7 @@ describe('OnEvent', () => {
 
       const whenOff = jest.fn();
 
-      onEvent.tillOff(requiredSupply)(mockReceiver).whenOff(whenOff);
+      onEvent.tillOff(requiredSupply).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       requiredSupply.off('reason');
       emitter.send('event2');
@@ -247,7 +247,7 @@ describe('OnEvent', () => {
     });
 
     it('sends original events', () => {
-      onEvent.tillOff(requiredSupply, dependentSupply)(mockReceiver);
+      onEvent.tillOff(requiredSupply, dependentSupply).to(mockReceiver);
       emitter.send('event1');
       emitter.send('event2');
 
@@ -258,7 +258,7 @@ describe('OnEvent', () => {
 
       const whenOff = jest.fn();
 
-      onEvent.tillOff(noEventSupply(), dependentSupply)(mockReceiver).whenOff(whenOff);
+      onEvent.tillOff(noEventSupply(), dependentSupply).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       expect(mockReceiver).not.toHaveBeenCalled();
       expect(whenOff).not.toHaveBeenCalled();
@@ -270,7 +270,7 @@ describe('OnEvent', () => {
 
       const whenOff = jest.fn();
 
-      onEvent.tillOff(requiredSupply, dependentSupply)(mockReceiver).whenOff(whenOff);
+      onEvent.tillOff(requiredSupply, dependentSupply).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       supply.off('reason');
       emitter.send('event2');
@@ -287,7 +287,7 @@ describe('OnEvent', () => {
 
       const whenOff = jest.fn();
 
-      onEvent.tillOff(requiredSupply, dependentSupply)(mockReceiver).whenOff(whenOff);
+      onEvent.tillOff(requiredSupply, dependentSupply).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       requiredSupply.off('reason');
       emitter.send('event2');
@@ -317,7 +317,7 @@ describe('OnEvent', () => {
       nested2 = new EventNotifier();
       receiver = jest.fn();
       consume = jest.fn((nested?: EventNotifier<[string]>) => nested && nested.on(receiver));
-      supply = sender.on.consume(consume);
+      supply = sender.on().consume(consume);
     });
 
     it('receives nested event', () => {
@@ -332,7 +332,7 @@ describe('OnEvent', () => {
       const supply2 = eventSupply();
       let calls = 0;
 
-      source.on.consume(() => {
+      source.on().consume(() => {
 
         const result = !calls ? supply1 : calls === 1 ? supply2 : undefined;
 
@@ -359,7 +359,7 @@ describe('OnEvent', () => {
       const supply1 = eventSupply();
       let calls = 0;
 
-      source.on.consume(() => {
+      source.on().consume(() => {
 
         const result = !calls || calls === 1 ? supply1 : undefined;
 
@@ -476,8 +476,8 @@ describe('OnEvent', () => {
 
       const shared = onEvent.share();
 
-      shared(mockReceiver);
-      shared(mockReceiver2);
+      shared.to(mockReceiver);
+      shared.to(mockReceiver2);
       emitter.send('a', 'b');
       expect(mockReceiver).toHaveBeenCalledWith('a', 'b');
       expect(mockReceiver2).toHaveBeenCalledWith('a', 'b');
@@ -486,16 +486,16 @@ describe('OnEvent', () => {
 
       const shared = onEvent.share();
 
-      shared(mockReceiver);
-      shared(mockReceiver2);
+      shared.to(mockReceiver);
+      shared.to(mockReceiver2);
 
       expect(mockRegister).toHaveBeenCalledTimes(1);
     });
     it('cuts off events supply from the source when all event supplies do', () => {
 
       const shared = onEvent.share();
-      const supply1 = shared(mockReceiver);
-      const supply2 = shared(mockReceiver2);
+      const supply1 = shared.to(mockReceiver);
+      const supply2 = shared.to(mockReceiver2);
 
       supply1.off('reason1');
       expect(offSpy).not.toHaveBeenCalled();
@@ -511,8 +511,8 @@ describe('OnEvent', () => {
 
       const shared = onEvent.share();
 
-      shared(mockReceiver);
-      shared(mockReceiver2);
+      shared.to(mockReceiver);
+      shared.to(mockReceiver2);
 
       expect(mockReceiver).toHaveBeenCalledWith('init1', '1');
       expect(mockReceiver).toHaveBeenCalledWith('init2', '2');
@@ -535,8 +535,8 @@ describe('OnEvent', () => {
       });
 
       const shared = onEvent.share();
-      const supply1 = shared(mockReceiver);
-      const supply2 = shared(mockReceiver2);
+      const supply1 = shared.to(mockReceiver);
+      const supply2 = shared.to(mockReceiver2);
 
       supply1.off();
       supply2.off();
@@ -544,8 +544,8 @@ describe('OnEvent', () => {
       mockReceiver.mockClear();
       mockReceiver2.mockClear();
 
-      shared(mockReceiver);
-      shared(mockReceiver2);
+      shared.to(mockReceiver);
+      shared.to(mockReceiver2);
       expect(mockReceiver).toHaveBeenCalledWith('init1', '1');
       expect(mockReceiver).toHaveBeenCalledWith('init2', '2');
       expect(mockReceiver).toHaveReturnedTimes(2);
@@ -562,9 +562,9 @@ describe('OnEvent', () => {
 
       const shared = onEvent.share();
 
-      shared(mockReceiver);
+      shared.to(mockReceiver);
       emitter.send('update1', '11');
-      shared(mockReceiver2);
+      shared.to(mockReceiver2);
       emitter.send('update2', '12');
 
       expect(mockReceiver).toHaveBeenCalledWith('init1', '1');
@@ -601,7 +601,7 @@ describe('OnEvent', () => {
           (event1: string, event2: string) => `${event1}, ${event2}`,
       );
 
-      transforming(mockReceiver);
+      transforming.to(mockReceiver);
       expect(mockRegister).toHaveBeenCalled();
     });
     it('unregisters event receiver once events supply cut off', () => {
@@ -610,8 +610,8 @@ describe('OnEvent', () => {
           (event1: string, event2: string) => `${event1}, ${event2}`,
       );
 
-      const supply1 = transforming(mockReceiver);
-      const supply2 = transforming(noop);
+      const supply1 = transforming.to(mockReceiver);
+      const supply2 = transforming.to(noop);
 
       supply1.off();
       expect(offSpy).not.toHaveBeenCalled();
@@ -624,7 +624,7 @@ describe('OnEvent', () => {
           (event1: string, event2: string) => `${event1}, ${event2}`,
       );
 
-      transforming(mockReceiver);
+      transforming.to(mockReceiver);
 
       emitter.send('a', 'bb');
 
@@ -637,7 +637,7 @@ describe('OnEvent', () => {
           (event1: string, event2: string) => `${event1}, ${event2}`,
       );
 
-      transforming(mockReceiver);
+      transforming.to(mockReceiver);
 
       emitter.send('a', 'bb');
       expect(mockReceiver).toHaveBeenCalledWith('a, bb');
@@ -653,7 +653,7 @@ describe('OnEvent', () => {
           (event1: string, event2: string) => `${event1}, ${event2}`,
       );
 
-      transforming(mockReceiver).whenOff(mockOff);
+      transforming.to(mockReceiver).whenOff(mockOff);
 
       const reason = 'some reason';
 

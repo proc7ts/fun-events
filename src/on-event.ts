@@ -19,23 +19,67 @@ import Args = OnEventCallChain.Args;
 import Out = OnEventCallChain.Out;
 
 /**
- * An event receiver registration function interface.
+ * An [[EventSender]] implementation able to register event receivers.
  *
  * A registered event receiver would receive upcoming events, until the returned event supply will be
  * {@link EventSupply.off cut off}.
  *
- * An [[OnEvent]] function also has a set of handy methods. More could be added later. It also can be used as
- * [[EventSender]].
- *
- * To convert a plain event receiver registration function to [[OnEvent]] an [[onEventBy]] function can be used.
+ * Contains additional event processing methods.
  *
  * @category Core
  * @typeparam E  An event type. This is a list of event receiver parameter types.
  */
-export abstract class OnEvent<E extends any[]> extends Function implements EventSender<E> {
+export class OnEvent<E extends any[]> implements EventSender<E> {
 
-  get [OnEvent__symbol](): this {
+  /**
+   * Generic event receiver registration function. It will be called on each receiver registration,
+   * unless the receiver's {@link EventReceiver.Generic.supply event supply} is cut off already.
+   */
+  protected readonly _on: (receiver: EventReceiver.Generic<E>) => void;
+
+  /**
+   * Constructs [[OnEvent]] instance.
+   *
+   * @param on  Generic event receiver registration function. It will be called on each receiver registration,
+   * unless the receiver's {@link EventReceiver.Generic.supply event supply} is cut off already.
+   */
+  constructor(on: (receiver: EventReceiver.Generic<E>) => void) {
+    this._on = on;
+  }
+
+  [OnEvent__symbol](): this {
     return this;
+  }
+
+  /**
+   * Returns a reference to itself.
+   *
+   * @returns `this` instance.
+   */
+  to(): this;
+
+  /**
+   * Starts sending events to the given receiver.
+   *
+   * @param receiver  Target receiver of events.
+   *
+   * @returns A supply of events from this sender to the given `receiver`.
+   */
+  to(receiver: EventReceiver<E>): EventSupply;
+
+  to(receiver?: EventReceiver<E>): this | EventSupply {
+    if (!receiver) {
+      return this;
+    }
+
+    const generic = eventReceiver(receiver);
+    const { supply } = generic;
+
+    if (!supply.isOff) {
+      this._on(generic);
+    }
+
+    return supply;
   }
 
   /**
@@ -57,10 +101,24 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   }
 
   /**
-   * An [[OnEvent]] sender derived from this one that stops sending events to registered receiver after the first one.
+   * Builds an [[OnEvent]] sender of events originated from this one that stops sending them to registered receiver
+   * after the first one.
+   *
+   * @returns Event sender.
    */
-  get once(): OnEvent<E> {
-    return onEventBy(once(this));
+  once(): OnEvent<E>;
+
+  /**
+   * Registers a receiver of events originated from this sender that stops receiving them after the first one.
+   *
+   * @param receiver  A receiver of events to register.
+   *
+   * @returns A supply of event.
+   */
+  once(receiver: EventReceiver<E>): EventSupply;
+
+  once(receiver?: EventReceiver<E>): OnEvent<E> | EventSupply {
+    return (this.once = /*#__INLINE__*/ receiveOnEvent(onEventBy(once(this))))(receiver);
   }
 
   /**
@@ -89,23 +147,27 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   consume(consume: (...event: E) => EventSupplyPeer | void | undefined): EventSupply {
 
     let consumerSupply = noEventSupply();
-    const senderSupply = this((...event: E) => {
 
-      const prevSupply = consumerSupply;
+    // Do not use `.cuts()` here as `consumerSupply` is mutable
+    const supply = eventSupply(reason => consumerSupply.off(reason));
 
-      try {
-        consumerSupply = eventSupplyOf(consume(...event) || noEventSupply());
-      } finally {
-        if (consumerSupply !== prevSupply) {
-          prevSupply.off();
+    this.to({
+      supply,
+      receive(_ctx, ...event: E) {
+
+        const prevSupply = consumerSupply;
+
+        try {
+          consumerSupply = eventSupplyOf(consume(...event) || noEventSupply());
+        } finally {
+          if (consumerSupply !== prevSupply) {
+            prevSupply.off();
+          }
         }
-      }
+      },
     });
 
-    return eventSupply(reason => {
-      consumerSupply.off(reason);
-      senderSupply.off(reason);
-    }).needs(senderSupply);
+    return supply;
   }
 
   /**
@@ -124,7 +186,7 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   /**
    * Constructs an [[OnEvent]] sender of original events passed trough the chain of transformations.
    *
-   * The passes are preformed by `callThru()` function. The event receivers registered by resulting event sender
+   * The passes are preformed by `call-thru` library. The event receivers registered by resulting event sender
    * are called by the last pass in chain. Thus they can be e.g. filtered out or called multiple times.
    *
    * @returns An [[OnEvent]] sender of events transformed with provided passes. The returned sender shares the supply
@@ -364,8 +426,8 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
       pass13: (this: void, ...args: Args13) => Return13,
   ): OnEvent<Out<Return3>>;
 
-  thru(...fns: any[]): OnEvent<any[]> {
-    return onEventBy(share((this as any).thru_(...fns)));
+  thru(...passes: any[]): OnEvent<any[]> {
+    return (this as any).thru_(...passes).share();
   }
 
   /**
@@ -613,21 +675,58 @@ export abstract class OnEvent<E extends any[]> extends Function implements Event
   ): OnEvent<Out<Return3>>;
 
   thru_(...passes: any[]): OnEvent<any[]> {
-    return thru(this, onEventBy, passes);
+    return onEventBy(thru(this, passes));
   }
 
 }
 
-export interface OnEvent<E extends any[]> {
+export namespace OnEvent {
 
   /**
-   * Registers a receiver of events sent by this sender.
+   * A signature of function registering receivers of events sent by event sender.
    *
-   * @param receiver  A receiver of events to register.
+   * When called without parameters it returns an [[OnEvent]] sender. When called with event receiver as parameter
+   * it returns a supply of events from that sender.
    *
-   * @returns A supply of events from this sender to the given `receiver`.
+   * @typeparam E  An event type. This is a tuple of event receiver parameter types.
    */
-  (this: void, receiver: EventReceiver<E>): EventSupply;// eslint-disable-line @typescript-eslint/prefer-function-type
+  export interface Fn<E extends any[]> {
+
+    /**
+     * Returns the event sender.
+     *
+     * @returns [[OnEvent]] sender the events originated from.
+     */
+    (
+        this: void,
+    ): OnEvent<E>;
+
+    /**
+     * Registers a receiver of events sent by the sender.
+     *
+     * @param receiver  A receiver of events to register.
+     *
+     * @returns A supply of events from the sender to the given `receiver`.
+     */
+    (
+        this: void,
+        receiver: EventReceiver<E>,
+    ): EventSupply;
+
+    /**
+     * Either registers a receiver of events sent by the sender, or returns the sender itself.
+     *
+     * @param receiver  A receiver of events to register.
+     *
+     * @returns Either a supply of events from the sender to the given `receiver`, or [[OnEvent]] sender the events
+     * originated from when `receiver` is omitted.
+     */
+    (
+        this: void,
+        receiver?: EventReceiver<E>,
+    ): EventSupply | OnEvent<E>;
+
+  }
 
 }
 
@@ -644,20 +743,18 @@ export interface OnEvent<E extends any[]> {
 export function onEventBy<E extends any[]>(
     register: (this: void, receiver: EventReceiver.Generic<E>) => void,
 ): OnEvent<E> {
+  return new OnEvent(register);
+}
 
-  const onEvent = ((receiver: EventReceiver<E>) => {
-
-    const generic = eventReceiver(receiver);
-    const { supply } = generic;
-
-    if (!supply.isOff) {
-      register(generic);
-    }
-
-    return supply;
-  }) as OnEvent<E>;
-
-  Object.setPrototypeOf(onEvent, OnEvent.prototype);
-
-  return onEvent;
+/**
+ * Converts event sender to event receivers registration function.
+ *
+ * This function delegates to [[OnEvent.to]] method.
+ *
+ * @param onEvent  Event sender to convert.
+ *
+ * @returns Event receiver registration function.
+ */
+export function receiveOnEvent<E extends any[]>(onEvent: OnEvent<E>): OnEvent.Fn<E> {
+  return onEvent.to.bind(onEvent) as OnEvent.Fn<E>;
 }

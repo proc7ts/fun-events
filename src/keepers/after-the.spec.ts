@@ -8,8 +8,8 @@ describe('afterThe', () => {
     const mockReceiver2 = jest.fn();
     const afterEvent = afterThe(...event);
 
-    afterEvent(mockReceiver1);
-    afterEvent(mockReceiver2);
+    afterEvent.to(mockReceiver1);
+    afterEvent.to(mockReceiver2);
 
     expect(mockReceiver1).toHaveBeenCalledWith(...event);
     expect(mockReceiver2).toHaveBeenCalledWith(...event);
