@@ -8,8 +8,9 @@ export function alwaysReceiveValue<T>(value: T): (receiver: EventReceiver.Generi
   return receiver => {
     try {
       sendEventsTo(receiver)(value);
-    } finally {
       receiver.supply.off();
+    } catch (e) {
+      receiver.supply.off(e);
     }
   };
 }
