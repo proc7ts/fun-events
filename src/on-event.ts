@@ -47,6 +47,15 @@ export class OnEvent<E extends any[]> implements EventSender<E> {
     this._on = on;
   }
 
+  /**
+   * Event receiver registration function of this sender.
+   *
+   * Delegates to [[OnEvent.to]] method.
+   */
+  get F(): OnEvent.Fn<E> {
+    return this.to.bind(this) as OnEvent.Fn<E>;
+  }
+
   [OnEvent__symbol](): this {
     return this;
   }
@@ -118,7 +127,7 @@ export class OnEvent<E extends any[]> implements EventSender<E> {
   once(receiver: EventReceiver<E>): EventSupply;
 
   once(receiver?: EventReceiver<E>): OnEvent<E> | EventSupply {
-    return (this.once = /*#__INLINE__*/ receiveOnEvent(onEventBy(once(this))))(receiver);
+    return (this.once = onEventBy(once(this)).F)(receiver);
   }
 
   /**
@@ -688,6 +697,8 @@ export namespace OnEvent {
    * When called without parameters it returns an [[OnEvent]] sender. When called with event receiver as parameter
    * it returns a supply of events from that sender.
    *
+   * Available as [[OnEvent.F]] property value.
+   *
    * @typeparam E  An event type. This is a tuple of event receiver parameter types.
    */
   export interface Fn<E extends any[]> {
@@ -744,18 +755,4 @@ export function onEventBy<E extends any[]>(
     register: (this: void, receiver: EventReceiver.Generic<E>) => void,
 ): OnEvent<E> {
   return new OnEvent(register);
-}
-
-/**
- * Converts event sender to event receivers registration function.
- *
- * This function delegates to [[OnEvent.to]] method.
- *
- * @category Core
- * @param onEvent  Event sender to convert.
- *
- * @returns Event receiver registration function.
- */
-export function receiveOnEvent<E extends any[]>(onEvent: OnEvent<E>): OnEvent.Fn<E> {
-  return onEvent.to.bind(onEvent) as OnEvent.Fn<E>;
 }

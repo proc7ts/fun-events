@@ -14,7 +14,7 @@ import {
   isEventKeeper,
 } from '../base';
 import { afterSupplied } from '../keepers';
-import { OnEvent, receiveOnEvent } from '../on-event';
+import { OnEvent } from '../on-event';
 import { EventEmitter, onSupplied } from '../senders';
 import { ValueTracker } from './value-tracker';
 
@@ -45,7 +45,7 @@ export class ValueSync<T> extends ValueTracker<T> {
   on(): OnEvent<[T, T]>;
   on(receiver: EventReceiver<[T, T]>): EventSupply;
   on(receiver?: EventReceiver<[T, T]>): OnEvent<[T, T]> | EventSupply {
-    return (this.on = /*#__INLINE__*/ receiveOnEvent(this._on.on()))(receiver);
+    return (this.on = this._on.on().F)(receiver);
   }
 
   get [EventSupply__symbol](): EventSupply {

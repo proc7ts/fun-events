@@ -68,6 +68,15 @@ export class AfterEvent<E extends any[]> extends OnEvent<E> implements EventKeep
     this._or = or;
   }
 
+  /**
+   * Event receiver registration function of this event keeper.
+   *
+   * Delegates to [[AfterEvent.to]] method.
+   */
+  get F(): AfterEvent.Fn<E> {
+    return this.to.bind(this) as AfterEvent.Fn<E>;
+  }
+
   [AfterEvent__symbol](): this {
     return this;
   }
@@ -153,7 +162,7 @@ export class AfterEvent<E extends any[]> extends OnEvent<E> implements EventKeep
   once(receiver: EventReceiver<E>): EventSupply;
 
   once(receiver?: EventReceiver<E>): AfterEvent<E> | EventSupply {
-    return (this.once = /*#__INLINE__*/ receiveAfterEvent(afterEventBy(once(this))))(receiver);
+    return (this.once = afterEventBy(once(this)).F)(receiver);
   }
 
   /**
@@ -693,6 +702,8 @@ export namespace AfterEvent {
    * When called without parameters it returns an [[AfterEvent]] keeper. When called with event receiver as parameter
    * it returns a supply of events from that keeper.
    *
+   * Available as [[AfterEvent.F]] property value.
+   *
    * @typeparam E  An event type. This is a tuple of event receiver parameter types.
    */
   export interface Fn<E extends any[]> {
@@ -754,18 +765,4 @@ export function afterEventBy<E extends any[]>(
     fallback?: (this: void) => E,
 ): AfterEvent<E> {
   return new AfterEvent(register, fallback);
-}
-
-/**
- * Converts event keeper to event receivers registration function.
- *
- * This function delegates to [[AfterEvent.to]] method.
- *
- * @category Core
- * @param afterEvent  Event keeper to convert.
- *
- * @returns Event receiver registration function.
- */
-export function receiveAfterEvent<E extends any[]>(afterEvent: AfterEvent<E>): AfterEvent.Fn<E> {
-  return afterEvent.to.bind(afterEvent) as AfterEvent.Fn<E>;
 }

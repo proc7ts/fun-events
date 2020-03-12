@@ -25,6 +25,15 @@ export type DomEventListener<E extends Event> = EventReceiver<[E]>;
 export class OnDomEvent<E extends Event> extends OnEvent<[E]> {
 
   /**
+   * DOM event listener registration function of this event sender.
+   *
+   * Delegates to [[OnDomEvent.to]] method.
+   */
+  get F(): OnDomEvent.Fn<E> {
+    return this.to.bind(this) as OnDomEvent.Fn<E>;
+  }
+
+  /**
    * Returns a reference to itself.
    *
    * @returns `this` instance.
@@ -79,7 +88,7 @@ export class OnDomEvent<E extends Event> extends OnEvent<[E]> {
   once(listener: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): EventSupply;
 
   once(listener?: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): OnDomEvent<E> | EventSupply {
-    return (this.once = /*#__INLINE__*/ receiveOnDomEvent(onDomEventBy(once(this))))(listener, opts);
+    return (this.once = onDomEventBy(once(this)).F)(listener, opts);
   }
 
   /**
@@ -121,7 +130,7 @@ export class OnDomEvent<E extends Event> extends OnEvent<[E]> {
   capture(listener: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): EventSupply;
 
   capture(listener?: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): OnDomEvent<E> | EventSupply {
-    return (this.capture = /*#__INLINE__*/ receiveOnDomEvent(onDomEventBy((
+    return (this.capture = onDomEventBy((
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean,
     ) => {
@@ -132,7 +141,7 @@ export class OnDomEvent<E extends Event> extends OnEvent<[E]> {
         return this.to(listener, { ...opts, capture: true });
       }
       return this.to(listener, opts);
-    })))(listener, opts);
+    }).F)(listener, opts);
   }
 
   /**
@@ -158,7 +167,7 @@ export class OnDomEvent<E extends Event> extends OnEvent<[E]> {
   instead(listener: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): EventSupply;
 
   instead(listener?: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): OnDomEvent<E> | EventSupply {
-    return (this.instead = /*#__INLINE__*/ receiveOnDomEvent(onDomEventBy((
+    return (this.instead = onDomEventBy((
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean,
     ) => {
@@ -175,7 +184,7 @@ export class OnDomEvent<E extends Event> extends OnEvent<[E]> {
           },
           opts,
       );
-    })))(listener, opts);
+    }).F)(listener, opts);
   }
 
   /**
@@ -202,7 +211,7 @@ export class OnDomEvent<E extends Event> extends OnEvent<[E]> {
   just(listener: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): EventSupply;
 
   just(listener?: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): OnDomEvent<E> | EventSupply {
-    return (this.just = /*#__INLINE__*/ receiveOnDomEvent(onDomEventBy((
+    return (this.just = onDomEventBy((
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean,
     ) => {
@@ -219,7 +228,7 @@ export class OnDomEvent<E extends Event> extends OnEvent<[E]> {
           },
           opts,
       );
-    })))(listener, opts);
+    }).F)(listener, opts);
   }
 
   /**
@@ -244,7 +253,7 @@ export class OnDomEvent<E extends Event> extends OnEvent<[E]> {
   last(listener: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): EventSupply;
 
   last(listener?: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): OnDomEvent<E> | EventSupply {
-    return (this.last = /*#__INLINE__*/ receiveOnDomEvent(onDomEventBy((
+    return (this.last = onDomEventBy((
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean,
     ) => {
@@ -261,7 +270,7 @@ export class OnDomEvent<E extends Event> extends OnEvent<[E]> {
           },
           opts,
       );
-    })))(listener, opts);
+    }).F)(listener, opts);
   }
 
   /**
@@ -287,7 +296,7 @@ export class OnDomEvent<E extends Event> extends OnEvent<[E]> {
   passive(listener: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): EventSupply;
 
   passive(listener?: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): OnDomEvent<E> | EventSupply {
-    return (this.passive = /*#__INLINE__*/ receiveOnDomEvent(onDomEventBy((
+    return (this.passive = onDomEventBy((
         listener: DomEventListener<E>,
         opts?: AddEventListenerOptions | boolean,
     ) => {
@@ -301,7 +310,7 @@ export class OnDomEvent<E extends Event> extends OnEvent<[E]> {
         return this.to(listener, { ...opts, passive: true });
       }
       return this.to(listener, opts);
-    })))(listener, opts);
+    }).F)(listener, opts);
   }
 
 }
@@ -313,6 +322,8 @@ export namespace OnDomEvent {
    *
    * When called without parameters it returns an [[OnDomEvent]] sender. When called with DOM event listener
    * as parameter it returns a supply of DOM events from that sender.
+   *
+   * Available as [[OnDomEvent.F]] property value.
    *
    * @typeparam E  Supported DOM event type.
    */
@@ -377,18 +388,4 @@ export function onDomEventBy<E extends Event>(
     ) => void,
 ): OnDomEvent<E> {
   return new OnDomEvent(register);
-}
-
-/**
- * Converts DOM event sender to event listener registration function.
- *
- * This function delegates to [[OnDomEvent.to]] method.
- *
- * @category DOM
- * @param onDomEvent  DOM event sender to convert.
- *
- * @returns Event listener registration function.
- */
-export function receiveOnDomEvent<E extends Event>(onDomEvent: OnDomEvent<E>): OnDomEvent.Fn<E> {
-  return onDomEvent.to.bind(onDomEvent) as OnDomEvent.Fn<E>;
 }

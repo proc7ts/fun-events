@@ -3,7 +3,7 @@
  * @module fun-events
  */
 import { EventKeeper, EventReceiver, EventSupply, EventSupply__symbol, eventSupplyOf } from '../base';
-import { OnEvent, receiveOnEvent } from '../on-event';
+import { OnEvent } from '../on-event';
 import { EventEmitter } from '../senders';
 import { ValueTracker } from './value-tracker';
 
@@ -25,7 +25,7 @@ class TrackedValue<T> extends ValueTracker<T> {
   on(): OnEvent<[T, T]>;
   on(receiver: EventReceiver<[T, T]>): EventSupply;
   on(receiver?: EventReceiver<[T, T]>): OnEvent<[T, T]> | EventSupply {
-    return (this.on = /*#__INLINE__*/ receiveOnEvent(this._on.on()))(receiver);
+    return (this.on = this._on.on().F)(receiver);
   }
 
   get it(): T {

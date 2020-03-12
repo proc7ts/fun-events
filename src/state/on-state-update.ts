@@ -15,6 +15,13 @@ import { StateUpdateReceiver } from './state-update-receiver';
 export interface OnStateUpdate extends OnEvent<[StatePath, any, any]> {
 
   /**
+   * Event receiver registration function of this state updates sender.
+   *
+   * Delegates to [[OnStateUpdate.to]] method.
+   */
+  readonly F: OnStateUpdate.Fn;
+
+  /**
    * Returns a reference to itself.
    *
    * @returns `this` instance.
@@ -71,6 +78,8 @@ export namespace OnStateUpdate {
    *
    * When called without parameters it returns an [[OnStateUpdate]] sender. When called with state updates receiver
    * as parameter it returns a supply of events from that sender.
+   *
+   * Available as [[OnStateUpdate.F]] property value.
    */
   export interface Fn {
 
@@ -110,18 +119,4 @@ export namespace OnStateUpdate {
 
   }
 
-}
-
-/**
- * Converts state updates sender to state update receivers registration function.
- *
- * This function delegates to [[OnStateUpdate.to]] method.
- *
- * @category State Tracking
- * @param onStateUpdate  State update sender to convert.
- *
- * @returns state update receivers registration function.
- */
-export function receiveOnStateUpdate(onStateUpdate: OnEvent<[StatePath, any, any]>): OnStateUpdate.Fn {
-  return onStateUpdate.to.bind(onStateUpdate) as OnStateUpdate.Fn;
 }

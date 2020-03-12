@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module fun-events
  */
-import { AfterEvent, afterEventBy, receiveAfterEvent } from '../after-event';
+import { AfterEvent, afterEventBy } from '../after-event';
 import {
   AfterEvent__symbol,
   EventKeeper,
@@ -77,10 +77,10 @@ export abstract class ValueTracker<T = any> implements EventSender<[T, T]>, Even
   read(receiver: EventReceiver<[T]>): EventSupply;
 
   read(receiver?: EventReceiver<[T]>): AfterEvent<[T]> | EventSupply {
-    return (this.read = /*#__INLINE__*/ receiveAfterEvent(afterEventBy<[T]>(
+    return (this.read = afterEventBy<[T]>(
         receiver => this.on(receiveNewValue(receiver)),
         () => [this.it],
-    )))(receiver);
+    ).F)(receiver);
   }
 
   [OnEvent__symbol](): OnEvent<[T, T]> {

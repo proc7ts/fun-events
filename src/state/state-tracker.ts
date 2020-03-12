@@ -6,7 +6,7 @@ import { noop } from 'call-thru';
 import { EventSender, eventSupply, EventSupply, OnEvent__symbol } from '../base';
 import { onEventBy } from '../on-event';
 import { EventEmitter } from '../senders';
-import { OnStateUpdate, receiveOnStateUpdate } from './on-state-update';
+import { OnStateUpdate } from './on-state-update';
 import { statePath, StatePath } from './state-path';
 import { StateUpdateReceiver } from './state-update-receiver';
 
@@ -138,7 +138,6 @@ class SubStateTracker implements StateTracker {
   constructor(private readonly _trackers: Trackers, private readonly _path: StatePath.Normalized) {
   }
 
-  // noinspection JSUnusedGlobalSymbols
   get _tracker(): this {
     return this;
   }
@@ -146,9 +145,9 @@ class SubStateTracker implements StateTracker {
   onUpdate(): OnStateUpdate;
   onUpdate(receiver: StateUpdateReceiver): EventSupply;
   onUpdate(receiver?: StateUpdateReceiver): OnStateUpdate | EventSupply {
-    return (this.onUpdate = /*#__PURE__*/ receiveOnStateUpdate(onEventBy<[StatePath, any, any]>(
+    return (this.onUpdate = onEventBy<[StatePath, any, any]>(
         receiver => this._trackers.on(this._path, receiver),
-    )))(receiver);
+    ).F as OnStateUpdate.Fn)(receiver);
   }
 
   [OnEvent__symbol](): OnStateUpdate {
@@ -207,7 +206,7 @@ export class StateTracker implements EventSender<[StatePath, any, any]> {
   onUpdate(receiver: StateUpdateReceiver): EventSupply;
 
   onUpdate(receiver?: StateUpdateReceiver): OnStateUpdate | EventSupply {
-    return (this.onUpdate = /*#__PURE__*/ receiveOnStateUpdate(this._tracker.onUpdate()))(receiver);
+    return (this.onUpdate = this._tracker.onUpdate().F)(receiver);
   }
 
   [OnEvent__symbol](): OnStateUpdate {
