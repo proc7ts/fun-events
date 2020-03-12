@@ -23,10 +23,10 @@ function noEvent(): never {
 }
 
 /**
- * A kept and upcoming events receiver registration function interface.
+ * An [[EventKeeper]] implementation able to register the receivers of kept and upcoming events.
  *
- * A registered event receiver would receive the kept event immediately upon registration, and all upcoming events
- * after that.
+ * The registered event receiver receives the kept event immediately upon registration, and all upcoming events
+ * after that until the returned event supply is cut off.
  *
  * To convert a plain event receiver registration function to [[AfterEvent]] an [[afterEventBy]] function can be used.
  *
@@ -72,6 +72,11 @@ export class AfterEvent<E extends any[]> extends OnEvent<E> implements EventKeep
     return this;
   }
 
+  /**
+   * Returns a reference to itself.
+   *
+   * @returns `this` instance.
+   */
   to(): this;
 
   /**
@@ -756,6 +761,7 @@ export function afterEventBy<E extends any[]>(
  *
  * This function delegates to [[AfterEvent.to]] method.
  *
+ * @category Core
  * @param afterEvent  Event keeper to convert.
  *
  * @returns Event receiver registration function.

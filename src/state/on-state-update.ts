@@ -8,11 +8,27 @@ import { StatePath } from './state-path';
 import { StateUpdateReceiver } from './state-update-receiver';
 
 /**
- * A state update receivers registration function interface.
+ * An [[EventSender]] implementation able to register state update receivers.
  *
  * @category State Tracking
  */
 export interface OnStateUpdate extends OnEvent<[StatePath, any, any]> {
+
+  /**
+   * Returns a reference to itself.
+   *
+   * @returns `this` instance.
+   */
+  to(): this;
+
+  /**
+   * Starts sending state updates to the given receiver.
+   *
+   * @param receiver  Target state updates receiver.
+   *
+   * @returns A supply of state updates from this sender to the given `receiver`.
+   */
+  to(receiver: StateUpdateReceiver): EventSupply;
 
   /**
    * Builds an [[OnStateUpdate]] sender of events originated from this one that stops sending them to registered
@@ -101,6 +117,7 @@ export namespace OnStateUpdate {
  *
  * This function delegates to [[OnStateUpdate.to]] method.
  *
+ * @category State Tracking
  * @param onStateUpdate  State update sender to convert.
  *
  * @returns state update receivers registration function.

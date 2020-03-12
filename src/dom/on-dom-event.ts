@@ -17,13 +17,18 @@ import { OnEvent } from '../on-event';
 export type DomEventListener<E extends Event> = EventReceiver<[E]>;
 
 /**
- * A DOM event listener registrar signature.
+ * An [[EventSender]] implementation able to register DOM event listeners.
  *
  * @category DOM
  * @typeparam E  Supported DOM event type.
  */
 export class OnDomEvent<E extends Event> extends OnEvent<[E]> {
 
+  /**
+   * Returns a reference to itself.
+   *
+   * @returns `this` instance.
+   */
   to(): this;
 
   /**
@@ -379,6 +384,7 @@ export function onDomEventBy<E extends Event>(
  *
  * This function delegates to [[OnDomEvent.to]] method.
  *
+ * @category DOM
  * @param onDomEvent  DOM event sender to convert.
  *
  * @returns Event listener registration function.

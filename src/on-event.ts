@@ -21,7 +21,7 @@ import Out = OnEventCallChain.Out;
 /**
  * An [[EventSender]] implementation able to register event receivers.
  *
- * A registered event receiver would receive upcoming events, until the returned event supply will be
+ * The registered event receiver starts receiving upcoming events until the returned event supply is
  * {@link EventSupply.off cut off}.
  *
  * Contains additional event processing methods.
@@ -751,6 +751,7 @@ export function onEventBy<E extends any[]>(
  *
  * This function delegates to [[OnEvent.to]] method.
  *
+ * @category Core
  * @param onEvent  Event sender to convert.
  *
  * @returns Event receiver registration function.
