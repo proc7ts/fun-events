@@ -95,15 +95,16 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
+							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="fun_events.eventsupply.html#isoff" class="tsd-kind-icon">is<wbr>Off</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="fun_events.eventsupply.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="fun_events.eventsupply.html#_eventsupply__symbol_" class="tsd-kind-icon">[<wbr>Event<wbr>Supply__symbol]</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="fun_events.eventsupply.html#isoff" class="tsd-kind-icon">is<wbr>Off</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -119,22 +120,50 @@
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="isoff" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> is<wbr>Off</h3>
-					<div class="tsd-signature tsd-kind-icon">is<wbr>Off<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/91a1af0/src/base/event-supply.ts#L30">src/base/event-supply.ts:30</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Whether this supply is <a href="fun_events.eventsupply.html#off">cut off</a> already.</p>
-						</div>
-						<p><code>true</code> means the events will no longer be supplied.</p>
-					</div>
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class">
+					<a name="constructor" class="tsd-anchor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Event<wbr>Supply<span class="tsd-signature-symbol">(</span>off<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, reason<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fun_events.eventsupply.html" class="tsd-signature-type">EventSupply</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/45b83b0/src/base/event-supply.ts#L33">src/base/event-supply.ts:33</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> off: <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, reason<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> = noop</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-siganture">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, reason<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>this: <span class="tsd-signature-type">void</span></h5>
+														</li>
+														<li>
+															<h5><span class="tsd-flag ts-flagOptional">Optional</span> reason: <span class="tsd-signature-type">any</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="fun_events.eventsupply.html" class="tsd-signature-type">EventSupply</a></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -149,7 +178,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/91a1af0/src/base/event-supply.ts#L35">src/base/event-supply.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/45b83b0/src/base/event-supply.ts#L64">src/base/event-supply.ts:64</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -158,6 +187,29 @@
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a name="isoff" class="tsd-anchor"></a>
+					<h3>is<wbr>Off</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> isOff<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/45b83b0/src/base/event-supply.ts#L57">src/base/event-supply.ts:57</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Whether this supply is <a href="fun_events.eventsupply.html#off">cut off</a> already.</p>
+								</div>
+								<p><code>true</code> means the events will no longer be supplied.</p>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -174,7 +226,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/91a1af0/src/base/event-supply.ts#L73">src/base/event-supply.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/45b83b0/src/base/event-supply.ts#L108">src/base/event-supply.ts:108</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -200,7 +252,7 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="needs" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> needs</h3>
+					<h3>needs</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">needs<span class="tsd-signature-symbol">(</span>another<span class="tsd-signature-symbol">: </span><a href="../interfaces/fun_events.eventsupplypeer.html" class="tsd-signature-type">EventSupplyPeer</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
@@ -208,7 +260,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/91a1af0/src/base/event-supply.ts#L87">src/base/event-supply.ts:87</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/45b83b0/src/base/event-supply.ts#L122">src/base/event-supply.ts:122</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -233,7 +285,7 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="off" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> off</h3>
+					<h3>off</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">off<span class="tsd-signature-symbol">(</span>reason<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="fun_events.eventsupply.html" class="tsd-signature-type">EventSupply</a></li>
 					</ul>
@@ -241,7 +293,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/91a1af0/src/base/event-supply.ts#L49">src/base/event-supply.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/45b83b0/src/base/event-supply.ts#L78">src/base/event-supply.ts:78</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -267,7 +319,7 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="whenoff" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> when<wbr>Off</h3>
+					<h3>when<wbr>Off</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
 						<li class="tsd-signature tsd-kind-icon">when<wbr>Off<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, reason<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
@@ -275,7 +327,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/91a1af0/src/base/event-supply.ts#L60">src/base/event-supply.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/45b83b0/src/base/event-supply.ts#L92">src/base/event-supply.ts:92</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -328,9 +380,6 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_base_send_events_to_.html">&quot;base/send-<wbr>events-<wbr>to&quot;</a>
-					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="../modules/fun_events.html">fun-<wbr>events</a>
 					</li>
@@ -346,11 +395,14 @@
 					<li class="current tsd-kind-class tsd-parent-kind-external-module">
 						<a href="fun_events.eventsupply.html" class="tsd-kind-icon">Event<wbr>Supply</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="fun_events.eventsupply.html#isoff" class="tsd-kind-icon">is<wbr>Off</a>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class">
+								<a href="fun_events.eventsupply.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="fun_events.eventsupply.html#_eventsupply__symbol_" class="tsd-kind-icon">[<wbr>Event<wbr>Supply__symbol]</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a href="fun_events.eventsupply.html#isoff" class="tsd-kind-icon">is<wbr>Off</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="fun_events.eventsupply.html#cuts" class="tsd-kind-icon">cuts</a>

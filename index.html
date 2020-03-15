@@ -79,21 +79,21 @@
   <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Event of type '</span>, <span class="hljs-keyword">type</span>, event);
 }
 
-<span class="hljs-comment">// An `OnEvent` registrar function accepts event receivers with compatible event signature </span>
+<span class="hljs-comment">// An `OnEvent` event sender accepts event receivers with compatible event signature </span>
 <span class="hljs-keyword">const</span> onEvent: OnEvent&lt;[<span class="hljs-built_in">string</span>, Event]&gt;;
 
-<span class="hljs-comment">// Call an `OnEvent` registrar to register receiver</span>
+<span class="hljs-comment">// Call an `OnEvent.to()` method to register receiver</span>
 <span class="hljs-comment">// An event supply returned can be cut off to unregister the receiver</span>
-<span class="hljs-keyword">const</span> supply: EventSupply = onEvent(eventReceiver);
+<span class="hljs-keyword">const</span> supply: EventSupply = onEvent.to(eventReceiver);
 
-<span class="hljs-comment">// Generate some events</span>
+<span class="hljs-comment">// ...generate some events...</span>
 
 supply.off(); <span class="hljs-comment">// The eventReceiver will no longer receive events after this call</span></code></pre>
 				<a href="#codeeventreceivercode" id="codeeventreceivercode" style="color: inherit; text-decoration: none;">
 					<h2><code>EventReceiver</code></h2>
 				</a>
-				<p>Event receiver is a function that is called on each event sent by event sender when registered.</p>
-				<p>To register an event receiver in event supplier just call the registration function with this receiver as argument.</p>
+				<p>Event receiver is a function that is called on each event sent by event supplier when registered.</p>
+				<p>To register an event receiver in event supplier just call its registration method with this receiver as argument.</p>
 				<p>An event receiver can also be in object form:</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EventReceiver, EventSupply, OnEvent } <span class="hljs-keyword">from</span> <span class="hljs-string">'fun-events'</span>;
 
@@ -105,14 +105,14 @@ supply.off(); <span class="hljs-comment">// The eventReceiver will no longer rec
   }
 };
 
-<span class="hljs-comment">// An `OnEvent` registrar function accepts event receivers with compatible event signature </span>
+<span class="hljs-comment">// An `OnEvent` event sender accepts event receivers with compatible event signature </span>
 <span class="hljs-keyword">const</span> onEvent: OnEvent&lt;[<span class="hljs-built_in">string</span>, Event]&gt;;
 
-<span class="hljs-comment">// Call an `OnEvent` registrar to register receiver</span>
+<span class="hljs-comment">// Call an `OnEvent.to()` method to register receiver</span>
 <span class="hljs-comment">// An event supply returned can be cut off to unregister the receiver</span>
-<span class="hljs-keyword">const</span> supply: EventSupply = onEvent(eventReceiver);
+<span class="hljs-keyword">const</span> supply: EventSupply = onEvent.to(eventReceiver);
 
-<span class="hljs-comment">// Generate some events</span>
+<span class="hljs-comment">// ...generate some events...</span>
 
 supply.off(); <span class="hljs-comment">// The eventReceiver will no longer receive events after this call</span></code></pre>
 				<p>In this form event receiver method accepts <em>event processing context</em> as first parameter.</p>
@@ -133,19 +133,22 @@ supply.off(); <span class="hljs-comment">// The eventReceiver will no longer rec
 <span class="hljs-keyword">const</span> eventReceiver: EventReceiver&lt;[<span class="hljs-built_in">string</span>, Event]&gt; = {
   receive(context, <span class="hljs-keyword">type</span>, event) { 
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Event of type '</span>, <span class="hljs-keyword">type</span>, event);
-    <span class="hljs-comment">// Event processing potentially leading to sending event to this receiver again</span>
-    <span class="hljs-keyword">this</span>.onRecurrent(<span class="hljs-function">(<span class="hljs-params">recurrentType, recurrentEvent</span>) =&gt;</span> {
+    context.onRecurrent(<span class="hljs-function">(<span class="hljs-params">recurrentType, recurrentEvent</span>) =&gt;</span> {
       <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Recurrent event of type '</span>, recurrentType, recurrentEvent);
     });
+
+    <span class="hljs-comment">// ...event processing potentially leading to sending event to this receiver again...</span>
+
   }
 };</code></pre>
 				<a href="#codeeventsendercode" id="codeeventsendercode" style="color: inherit; text-decoration: none;">
 					<h2><code>EventSender</code></h2>
 				</a>
-				<p>An event sender interface has only one method accepting an event receiver to register. Once this method called, the
-				receiver will start receiving the events until their supply is cut off.</p>
-				<p>The event receiver registrar method typically implements an <code>OnEvent</code> interface - a function augmented with handy
-				methods. To convert a plain event receiver registration function to <code>OnEvent</code>, an <code>onEventBy()</code> function can be used.</p>
+				<p>An event sender interface has only one method returning an <code>OnEvent</code> instance. The latter can be used to register
+					an event receiver. The registered event receiver starts receiving upcoming events until the returned event supply
+				is cut off.</p>
+				<p>The <code>OnEvent</code> is an <code>EventSender</code> implementation itself. It has additional event processing methods. To convert a plain
+				event receiver registration function to <code>OnEvent</code>, an <code>onEventBy()</code> function can be used.</p>
 				<a href="#codeoneventoncecode" id="codeoneventoncecode" style="color: inherit; text-decoration: none;">
 					<h3><code>OnEvent.once()</code></h3>
 				</a>
@@ -154,26 +157,25 @@ supply.off(); <span class="hljs-comment">// The eventReceiver will no longer rec
 					<h2><code>EventKeeper</code></h2>
 				</a>
 				<p>An event supplier that keeps the last event sent.</p>
-				<p>It has only one method that registers an event receiver, just like an <code>EventSender</code>. The registered event receiver
-				would receive the kept event immediately upon registration, and all upcoming events after that.</p>
+				<p>It has only one method that returns an <code>AfterEvent</code> instance. The latter can be used to register an event receiver.
+					The registered event receiver receives the kept event immediately upon registration, and all upcoming events after that
+				until the returned event supply is cut off.</p>
 				<p>The event keeper <em>always</em> has event to send, unless it is closed. This is handy when tracking some state: the registered
-				receiver would receive current state, and all updates after that.</p>
-				<p>The event keeper registrar method typically implements an <code>AfterEvent</code> interface - a function extending <code>OnEvent</code>
-					interface and augmented with methods specific to event keeper. To convert a plain event receiver registration function
-				to <code>AfterEvent</code>, an <code>afterEventBy()</code> function can be used.</p>
+				receiver receives current state, and all updates to it after that.</p>
+				<p>The <code>AfterEvent</code> is an <code>EventKeeper</code> implementation itself. It extends <code>OnEvent</code> with methods specific to event keeper.
+				To convert a plain event receiver registration function to <code>AfterEvent</code>, an <code>afterEventBy()</code> function can be used.</p>
 				<a href="#codeeventsupplycode" id="codeeventsupplycode" style="color: inherit; text-decoration: none;">
 					<h2><code>EventSupply</code></h2>
 				</a>
-				<p>A supply of events from event supplier to event receiver. It is returned from event receiver registration functions.</p>
-				<p>When events are no longer needed (or just exhausted) the supply may be cut off by calling the <code>off()</code> method.</p>
-				<p>It also notifies on supply cut off by calling callback functions registered by <code>whenOff()</code> method. </p>
+				<p>A supply of events from event supplier to event receiver. It is returned from event receiver registration.</p>
+				<p>When events are no longer needed (or just exhausted) the supply may be cut off by calling its <code>off()</code> method.</p>
+				<p>It also notifies on supply cut off by calling callback functions registered by its <code>whenOff()</code> method. </p>
 				<p>An event supply may be constructed using <code>eventSupply()</code> function.</p>
 				<a href="#codeeventemittercode" id="codeeventemittercode" style="color: inherit; text-decoration: none;">
 					<h2><code>EventEmitter</code></h2>
 				</a>
-				<p>Event emitter is a handy implementation of <code>OnEvent</code> sender.</p>
-				<p>Manages a list of registered event receivers, and removes them from the list once their supplies are cut off.</p>
-				<p>Can be used as <code>EventSender</code>.</p>
+				<p>Event emitter is a handy implementation of <code>EventSender</code>.</p>
+				<p>It manages a list of registered event receivers, and removes them from the list once their supplies are cut off.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EventEmitter } <span class="hljs-keyword">from</span> <span class="hljs-string">'fun-events'</span>;
 
 <span class="hljs-keyword">const</span> emitter = <span class="hljs-keyword">new</span> EventEmitter&lt;[<span class="hljs-built_in">string</span>]&gt;();
@@ -188,8 +190,7 @@ emitter.send(<span class="hljs-string">'listen'</span>);</code></pre>
 					<h2>State Tracking</h2>
 				</a>
 				<p>A state is a tree-like structure of sub-states (nodes) available under <code>StatePath</code>.</p>
-				<p>A <code>StateTracker</code> can be used to notify on state changes of particular nodes. Then the registered receivers will receive
-				an update.</p>
+				<p>A <code>StateTracker</code> can be used to notify on state changes of particular node and its sub-tree.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { StatePath, StateTracker } <span class="hljs-keyword">from</span> <span class="hljs-string">'fun-events'</span>;
 
 <span class="hljs-keyword">const</span> tracker = <span class="hljs-keyword">new</span> StateTracker();
@@ -207,8 +208,8 @@ emitter.send(<span class="hljs-string">'listen'</span>);</code></pre>
 }
 
 tracker.onUpdate(stateChanged); <span class="hljs-comment">// Will be notified on all changes</span>
-tracker.track(<span class="hljs-string">'property1'</span>, property1Changed); <span class="hljs-comment">// Will be notified on `property1` changes</span>
-tracker.track([<span class="hljs-string">'property2'</span>], property2Changed); <span class="hljs-comment">// The path can be long</span>
+tracker.track(<span class="hljs-string">'property1'</span>).to(property1Changed); <span class="hljs-comment">// Will be notified on `property1` changes</span>
+tracker.track([<span class="hljs-string">'property2'</span>]).to(property2Changed); <span class="hljs-comment">// The path can be long</span>
 
 tracker.update([<span class="hljs-string">'some'</span>, <span class="hljs-string">'path'</span>], <span class="hljs-string">'new'</span>, <span class="hljs-string">'old'</span>);
 <span class="hljs-comment">// State path changed: ['some', 'path'] </span>
@@ -266,23 +267,24 @@ sync.it = <span class="hljs-number">22</span>;
 				<a href="#dom-events" id="dom-events" style="color: inherit; text-decoration: none;">
 					<h2>DOM Events</h2>
 				</a>
-				<p>DOM events are supported by <code>OnDomEvent</code> and <code>DomEventDispatcher</code>. The former extends an <code>OnEvent</code> event receiver
-					registrar interface with DOM-specific functionality. The latter can be attached to arbitrary <code>EventTarget</code>. It provides
-				an <code>OnDomEvent</code> registrars for each event type and dispatches DOM events.</p>
+				<p>DOM events are supported by <code>OnDomEvent</code> and <code>DomEventDispatcher</code>. The former extends an <code>OnEvent</code> sender with
+					DOM-specific functionality. The latter can be attached to arbitrary <code>EventTarget</code>. It constructs an <code>OnDomEvent</code>
+				senders for each event type and dispatches DOM events.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { DomEventDispatcher } <span class="hljs-keyword">from</span> <span class="hljs-string">'fun-events'</span>;
 
 <span class="hljs-keyword">const</span> dispatcher = <span class="hljs-keyword">new</span> DomEventDispatcher(<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'my-button'</span>));
 
-dispatcher.on(<span class="hljs-string">'click'</span>)(submit);
-dispatcher.dispatch(<span class="hljs-keyword">new</span> KeyboardEvent(<span class="hljs-string">'click'</span>));</code></pre>
+dispatcher.on(<span class="hljs-string">'click'</span>).to(submit);
+dispatcher.dispatch(<span class="hljs-keyword">new</span> MouseEvent(<span class="hljs-string">'click'</span>));</code></pre>
 				<a href="#codeondomeventcode" id="codeondomeventcode" style="color: inherit; text-decoration: none;">
 					<h3><code>OnDomEvent</code></h3>
 				</a>
-				<p>A DOM event listener registrar function interface. It extends <code>OnEvent</code> interface with the following properties:</p>
+				<p>An <code>EventSender</code> implementation able to register DOM event listeners. It extends <code>OnEvent</code> interface with the following
+				methods:</p>
 				<a href="#codecapturecode" id="codecapturecode" style="color: inherit; text-decoration: none;">
-					<h4><code>capture</code></h4>
+					<h4><code>capture()</code></h4>
 				</a>
-				<p>An <code>OnDomEvent</code> sender derived from this one that enables event capturing by default.</p>
+				<p>Registers a capturing listener of DOM events.</p>
 				<p>This corresponds to specifying <code>true</code> or <code>{ capture: true }</code> as a second argument to <code>EventTarget.addEventListener()</code>.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { DomEventDispatcher } <span class="hljs-keyword">from</span> <span class="hljs-string">'fun-events'</span>;
 
@@ -294,29 +296,28 @@ dispatcher.dispatch(<span class="hljs-keyword">new</span> KeyboardEvent(<span cl
 <span class="hljs-comment">// The above is the same as</span>
 container.addEventListener(<span class="hljs-string">'click'</span>, handleContainerClick, <span class="hljs-literal">true</span>);</code></pre>
 				<a href="#codeinsteadcode" id="codeinsteadcode" style="color: inherit; text-decoration: none;">
-					<h4><code>instead</code></h4>
+					<h4><code>instead()</code></h4>
 				</a>
-				<p>An <code>OnDomEvent</code> sender derived from this one that registers listeners to invoke instead of the default action.</p>
-				<p>It invokes an <code>Event.preventDefault()</code> method prior to calling the registered listeners. </p>
+				<p>Registers a listener of DOM events to invoke instead of default action.</p>
+				<p>This listener invokes an <code>Event.preventDefault()</code> method prior to event handling.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { DomEventDispatcher } <span class="hljs-keyword">from</span> <span class="hljs-string">'fun-events'</span>;
 
 <span class="hljs-comment">// Clicking on the link won't lead to navigation.</span>
 <span class="hljs-keyword">new</span> DomEventDispatcher(<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'my-href'</span>)).on(<span class="hljs-string">'click'</span>).instead(doSomethingElse); </code></pre>
 				<a href="#codejustcode" id="codejustcode" style="color: inherit; text-decoration: none;">
-					<h4><code>just</code></h4>
+					<h4><code>just()</code></h4>
 				</a>
-				<p>An <code>OnDomEvent</code> sender derived from this one that registers listeners preventing further propagation of
-				current event in the capturing and bubbling phases.</p>
-				<p>It invokes an <code>Event.stopPropagation()</code> method prior to calling the registered listeners.</p>
+				<p>Registers a listener of DOM events preventing further propagation of current event in the capturing and bubbling phases.</p>
+				<p>This listener invokes an <code>Event.stopPropagation()</code> method prior to event handling.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { DomEventDispatcher } <span class="hljs-keyword">from</span> <span class="hljs-string">'fun-events'</span>;
 
 <span class="hljs-comment">// The ascendants won't receive a click the div.</span>
 <span class="hljs-keyword">new</span> DomEventDispatcher(<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'my-div'</span>)).on(<span class="hljs-string">'click'</span>).just(handleClick); </code></pre>
 				<a href="#codelastcode" id="codelastcode" style="color: inherit; text-decoration: none;">
-					<h4><code>last</code></h4>
+					<h4><code>last()</code></h4>
 				</a>
-				<p>An <code>OnDomEvent</code> sender derived from this one that registers the last event listener.</p>
-				<p>It invokes an <code>Event.stopImmediatePropagation()</code> method prior to calling the registered listeners.</p>
+				<p>Registers the last DOM event listener.</p>
+				<p>This listener invokes an <code>Event.stopImmediatePropagation()</code> method prior to event handling.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { DomEventDispatcher } <span class="hljs-keyword">from</span> <span class="hljs-string">'fun-events'</span>;
 
 <span class="hljs-keyword">const</span> dispatcher = <span class="hljs-keyword">new</span> DomEventDispatcher(<span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'my-div'</span>))
@@ -326,11 +327,11 @@ container.addEventListener(<span class="hljs-string">'click'</span>, handleConta
 onClick.last(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'1'</span>)); <span class="hljs-comment">// This is the last handler </span>
 onClick(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'2'</span>));      <span class="hljs-comment">// This one won't be called</span>
 
-dispatcher.dispatch(<span class="hljs-keyword">new</span> KeyboardEvent(<span class="hljs-string">'click'</span>)); <span class="hljs-comment">// console: 1 </span></code></pre>
+dispatcher.dispatch(<span class="hljs-keyword">new</span> MouseEvent(<span class="hljs-string">'click'</span>)); <span class="hljs-comment">// console: 1 </span></code></pre>
 				<a href="#codepassivecode" id="codepassivecode" style="color: inherit; text-decoration: none;">
-					<h4><code>passive</code></h4>
+					<h4><code>passive()</code></h4>
 				</a>
-				<p>An <code>OnDomEvent</code> sender derived from this one that accepts listeners never calling <code>Event.preventDefault()</code>.</p>
+				<p>Registers a DOM event listener that never calls <code>Event.preventDefault()</code>.</p>
 				<p>This corresponds to specifying <code>{ passive: true }</code> as a second argument to <code>EventTarget.addEventListener()</code>.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { DomEventDispatcher } <span class="hljs-keyword">from</span> <span class="hljs-string">'fun-events'</span>;
 
@@ -346,9 +347,6 @@ dispatcher.dispatch(<span class="hljs-keyword">new</span> KeyboardEvent(<span cl
 				<ul>
 					<li class="globals  ">
 						<a href="globals.html"><em>Globals</em></a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="modules/_base_send_events_to_.html">&quot;base/send-<wbr>events-<wbr>to&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
 						<a href="modules/fun_events.html">fun-<wbr>events</a>

@@ -72,7 +72,7 @@
 					<div class="lead">
 						<p>A sender of events.</p>
 					</div>
-					<p>It is able to register event receivers.</p>
+					<p>Contains an <a href="../classes/fun_events.onevent.html">OnEvent</a> instance registering event receivers.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -101,11 +101,8 @@
 				<ul class="tsd-hierarchy">
 					<li><a href="../classes/fun_events.afterevent.html" class="tsd-signature-type">AfterEvent</a></li>
 					<li><a href="../classes/fun_events.eventemitter.html" class="tsd-signature-type">EventEmitter</a></li>
-					<li><a href="../classes/fun_events.eventemitter.html" class="tsd-signature-type">EventEmitter</a></li>
-					<li><a href="../classes/fun_events.eventnotifier.html" class="tsd-signature-type">EventNotifier</a></li>
 					<li><a href="../classes/fun_events_dom.ondomevent.html" class="tsd-signature-type">OnDomEvent</a></li>
 					<li><a href="../classes/fun_events.onevent.html" class="tsd-signature-type">OnEvent</a></li>
-					<li><a href="../interfaces/fun_events.onstateupdate.html" class="tsd-signature-type">OnStateUpdate</a></li>
 					<li><a href="../classes/fun_events.statetracker.html" class="tsd-signature-type">StateTracker</a></li>
 					<li><a href="../classes/fun_events.valuesync.html" class="tsd-signature-type">ValueSync</a></li>
 					<li><a href="../classes/fun_events.valuetracker.html" class="tsd-signature-type">ValueTracker</a></li>
@@ -138,7 +135,7 @@
 					<div class="tsd-signature tsd-kind-icon">Event&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">EventSender</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">infer </span> E<span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">never</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/91a1af0/src/base/event-sender.ts#L43">src/base/event-sender.ts:43</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/45b83b0/src/base/event-sender.ts#L40">src/base/event-sender.ts:40</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -165,31 +162,22 @@
 					<a name="_onevent__symbol_" class="tsd-anchor"></a>
 					<h3>[<wbr>OnEvent__symbol]</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">[<wbr>OnEvent__symbol]<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="fun_events.eventreceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/fun_events.eventsupply.html" class="tsd-signature-type">EventSupply</a></li>
+						<li class="tsd-signature tsd-kind-icon">[<wbr>OnEvent__symbol]<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/fun_events.onevent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/91a1af0/src/base/event-sender.ts#L32">src/base/event-sender.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/45b83b0/src/base/event-sender.ts#L29">src/base/event-sender.ts:29</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Registers a receiver of events sent by this sender.</p>
+									<p>Returns an <a href="../classes/fun_events.onevent.html">OnEvent</a> instance of this event sender.</p>
 								</div>
 							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>receiver: <a href="fun_events.eventreceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>A receiver of events to register.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../classes/fun_events.eventsupply.html" class="tsd-signature-type">EventSupply</a></h4>
-							<p>A supply of events from this sender to the given <code>receiver</code>.</p>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/fun_events.onevent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p><a href="../classes/fun_events.onevent.html">OnEvent</a> instance registering event receivers sent by this sender.</p>
 						</li>
 					</ul>
 				</section>
