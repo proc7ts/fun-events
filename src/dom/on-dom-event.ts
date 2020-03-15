@@ -30,7 +30,7 @@ export class OnDomEvent<E extends Event> extends OnEvent<[E]> {
    * Delegates to [[OnDomEvent.to]] method.
    */
   get F(): OnDomEvent.Fn<E> {
-    return this.to.bind(this) as OnDomEvent.Fn<E>;
+    return this.to.bind(this);
   }
 
   /**
@@ -41,14 +41,25 @@ export class OnDomEvent<E extends Event> extends OnEvent<[E]> {
   to(): this;
 
   /**
-   * Starts sending DOM events to the given listener.
+   * Starts sending DOM events to the given `listener`.
    *
-   * @param listener  Target receiver of DOM events.
+   * @param listener  Target listener of DOM events.
    * @param opts  DOM event listener options to pass to `EventTarget.addEventListener()`.
    *
    * @returns A supply of DOM events from this sender to the given `listener`.
    */
   to(listener: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): EventSupply;
+
+  /**
+   * Either starts sending DOM events to the given `listener`, or returns a reference to itself.
+   *
+   * @param listener  Target listener of DOM events.
+   * @param opts  DOM event listener options to pass to `EventTarget.addEventListener()`.
+   *
+   * @returns Either a supply of DOM events from this sender to the given `listener`, or `this` instance when `listener`
+   * is omitted.
+   */
+  to(listener?: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): this | EventSupply;
 
   to(listener?: DomEventListener<E>, opts?: AddEventListenerOptions | boolean): this | EventSupply {
     if (!listener) {

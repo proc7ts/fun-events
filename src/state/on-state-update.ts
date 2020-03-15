@@ -29,11 +29,21 @@ export interface OnStateUpdate extends OnEvent<[StatePath, any, any]> {
   to(): this;
 
   /**
-   * Starts sending state updates to the given receiver.
+   * Starts sending state updates to the given `receiver`.
    *
-   * @param receiver  Target state updates receiver.
+   * @param receiver  Target receiver of state updates.
    *
    * @returns A supply of state updates from this sender to the given `receiver`.
+   */
+  to(receiver: StateUpdateReceiver): EventSupply;
+
+  /**
+   * Either starts sending state updates to the given `receiver`, or returns a reference to itself.
+   *
+   * @param receiver  Target receiver of state updates.
+   *
+   * @returns Either a supply of state updates from this sender to the given `receiver`, or `this` instance when
+   * `receiver` is omitted.
    */
   to(receiver: StateUpdateReceiver): EventSupply;
 
@@ -66,8 +76,6 @@ export interface OnStateUpdate extends OnEvent<[StatePath, any, any]> {
    * @returns New updates sender.
    */
   tillOff(required: EventSupplyPeer, dependentSupply?: EventSupply): OnStateUpdate;
-
-  (receiver: StateUpdateReceiver): EventSupply;
 
 }
 

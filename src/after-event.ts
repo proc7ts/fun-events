@@ -74,7 +74,7 @@ export class AfterEvent<E extends any[]> extends OnEvent<E> implements EventKeep
    * Delegates to [[AfterEvent.to]] method.
    */
   get F(): AfterEvent.Fn<E> {
-    return this.to.bind(this) as AfterEvent.Fn<E>;
+    return this.to.bind(this);
   }
 
   [AfterEvent__symbol](): this {
@@ -89,13 +89,23 @@ export class AfterEvent<E extends any[]> extends OnEvent<E> implements EventKeep
   to(): this;
 
   /**
-   * Starts sending events to the given receiver.
+   * Starts sending events to the given `receiver`.
    *
    * @param receiver  Target receiver of events.
    *
    * @returns A supply of events from this keeper to the given `receiver`.
    */
   to(receiver: EventReceiver<E>): EventSupply;
+
+  /**
+   * Either starts sending events to the given `receiver`, or returns a reference to itself.
+   *
+   * @param receiver  Target receiver of events.
+   *
+   * @returns Either a supply of events from this keeper to the given `receiver`, or `this` instance when `receiver`
+   * is omitted.
+   */
+  to(receiver?: EventReceiver<E>): this | EventSupply;
 
   to(receiver?: EventReceiver<E>): this | EventSupply {
     if (!receiver) {

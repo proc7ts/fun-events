@@ -53,7 +53,7 @@ export class OnEvent<E extends any[]> implements EventSender<E> {
    * Delegates to [[OnEvent.to]] method.
    */
   get F(): OnEvent.Fn<E> {
-    return this.to.bind(this) as OnEvent.Fn<E>;
+    return this.to.bind(this);
   }
 
   [OnEvent__symbol](): this {
@@ -68,13 +68,23 @@ export class OnEvent<E extends any[]> implements EventSender<E> {
   to(): this;
 
   /**
-   * Starts sending events to the given receiver.
+   * Starts sending events to the given `receiver`.
    *
    * @param receiver  Target receiver of events.
    *
    * @returns A supply of events from this sender to the given `receiver`.
    */
   to(receiver: EventReceiver<E>): EventSupply;
+
+  /**
+   * Either starts sending events to the given `receiver`, or returns a reference to itself.
+   *
+   * @param receiver  Target receiver of events.
+   *
+   * @returns Either a supply of events from this sender to the given `receiver`, or `this` instance when `receiver`
+   * is omitted.
+   */
+  to(receiver?: EventReceiver<E>): this | EventSupply;
 
   to(receiver?: EventReceiver<E>): this | EventSupply {
     if (!receiver) {
