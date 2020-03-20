@@ -2,7 +2,7 @@ module.exports = {
   root: true,
   ignorePatterns: ['node_modules/', 'dist/', 'target/', 'd.ts/', '*.d.ts'],
   extends: [
-    '@surol',
+    '@proc7ts',
   ],
   overrides: [
     {
@@ -14,7 +14,7 @@ module.exports = {
     {
       files: ['*.ts'],
       extends: [
-        '@surol/eslint-config/typescript',
+        '@proc7ts/eslint-config/typescript',
       ],
       parserOptions: {
         project: './tsconfig.json',

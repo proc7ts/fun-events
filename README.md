@@ -10,7 +10,7 @@ Functional Event Processor
 A simple protocol for sending events to receivers registered in senders:
 
 ```typescript
-import { EventSupply, OnEvent } from 'fun-events';
+import { EventSupply, OnEvent } from '@proc7ts/fun-events';
 
 // API supports arbitrary event receiver signatures
 // An event is a tuple of event receiver arguments
@@ -31,16 +31,16 @@ supply.off(); // The eventReceiver will no longer receive events after this call
 ```
 
 
-[npm-image]: https://img.shields.io/npm/v/fun-events.svg?logo=npm
-[npm-url]: https://www.npmjs.com/package/fun-events
-[ci-image]: https://img.shields.io/circleci/build/github/surol/fun-events?logo=circleci
-[ci-url]: https://circleci.com/gh/surol/fun-events
-[codecov-image]: https://codecov.io/gh/surol/fun-events/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/surol/fun-events
+[npm-image]: https://img.shields.io/npm/v/@proc7ts/fun-events.svg?logo=npm
+[npm-url]: https://www.npmjs.com/package/@proc7ts/fun-events
+[ci-image]: https://img.shields.io/circleci/build/github/proc7ts/fun-events?logo=circleci
+[ci-url]: https://circleci.com/gh/proc7ts/fun-events
+[codecov-image]: https://codecov.io/gh/proc7ts/fun-events/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/proc7ts/fun-events
 [github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
-[github-url]: https://github.com/surol/fun-events
+[github-url]: https://github.com/proc7ts/fun-events
 [api-docs-image]: https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational
-[api-docs-url]: https://surol.github.io/fun-events/
+[api-docs-url]: https://proc7ts.github.io/fun-events/
 
 
 `EventReceiver`
@@ -52,7 +52,7 @@ To register an event receiver in event supplier just call its registration metho
 
 An event receiver can also be in object form:
 ```typescript
-import { EventReceiver, EventSupply, OnEvent } from 'fun-events';
+import { EventReceiver, EventSupply, OnEvent } from '@proc7ts/fun-events';
 
 // API supports arbitrary event receiver signatures
 // An event is a tuple of event receiver arguments
@@ -88,7 +88,7 @@ recurrent event(s). If this method is called during event processing, the recurr
 
 The event receiver then can look like this:
 ```typescript
-import { EventReceiver } from 'fun-events';
+import { EventReceiver } from '@proc7ts/fun-events';
 
 // API supports arbitrary event receiver signatures
 // An event is a tuple of event receiver arguments
@@ -158,7 +158,7 @@ Event emitter is a handy implementation of `EventSender`.
 It manages a list of registered event receivers, and removes them from the list once their supplies are cut off.
 
 ```typescript
-import { EventEmitter } from 'fun-events';
+import { EventEmitter } from '@proc7ts/fun-events';
 
 const emitter = new EventEmitter<[string]>();
 
@@ -179,7 +179,7 @@ A state is a tree-like structure of sub-states (nodes) available under `StatePat
 A `StateTracker` can be used to notify on state changes of particular node and its sub-tree.
 
 ```typescript
-import { StatePath, StateTracker } from 'fun-events';
+import { StatePath, StateTracker } from '@proc7ts/fun-events';
 
 const tracker = new StateTracker();
 
@@ -220,7 +220,7 @@ A `ValueTracker` class represents an accessor to some value which changes can be
 A simple `ValueTracker` can be constructed using a `trackValue()` function:
 
 ```typescript
-import { trackValue } from 'fun-events';
+import { trackValue } from '@proc7ts/fun-events';
 
 const value = trackValue(1);
 
@@ -233,7 +233,7 @@ console.log(value.it); // 2
 
 It is also possible to bind one value to another:
 ```typescript
-import { trackValue } from 'fun-events';
+import { trackValue } from '@proc7ts/fun-events';
 
 const value1 = trackValue(1);
 const value2 = trackValue(0).by(value1);
@@ -245,7 +245,7 @@ console.log(value2.it); // 2
 
 To synchronize multiple values with each other a `ValueSync` can be used:
 ```typescript
-import { trackValue, ValueSync } from 'fun-events';
+import { trackValue, ValueSync } from '@proc7ts/fun-events';
 
 const v1 = trackValue(1);
 const v2 = trackValue(2);
@@ -275,7 +275,7 @@ DOM-specific functionality. The latter can be attached to arbitrary `EventTarget
 senders for each event type and dispatches DOM events.
 
 ```typescript
-import { DomEventDispatcher } from 'fun-events';
+import { DomEventDispatcher } from '@proc7ts/fun-events';
 
 const dispatcher = new DomEventDispatcher(document.getElementById('my-button'));
 
@@ -296,7 +296,7 @@ Registers a capturing listener of DOM events.
 This corresponds to specifying `true` or `{ capture: true }` as a second argument to `EventTarget.addEventListener()`.
 
 ```typescript
-import { DomEventDispatcher } from 'fun-events';
+import { DomEventDispatcher } from '@proc7ts/fun-events';
 
 const container = document.getElementById('my-container');
 
@@ -315,7 +315,7 @@ Registers a listener of DOM events to invoke instead of default action.
 This listener invokes an `Event.preventDefault()` method prior to event handling.
 
 ```typescript
-import { DomEventDispatcher } from 'fun-events';
+import { DomEventDispatcher } from '@proc7ts/fun-events';
 
 // Clicking on the link won't lead to navigation.
 new DomEventDispatcher(document.getElementById('my-href')).on('click').instead(doSomethingElse); 
@@ -329,7 +329,7 @@ Registers a listener of DOM events preventing further propagation of current eve
 This listener invokes an `Event.stopPropagation()` method prior to event handling.
 
 ```typescript
-import { DomEventDispatcher } from 'fun-events';
+import { DomEventDispatcher } from '@proc7ts/fun-events';
 
 // The ascendants won't receive a click the div.
 new DomEventDispatcher(document.getElementById('my-div')).on('click').just(handleClick); 
@@ -343,7 +343,7 @@ Registers the last DOM event listener.
 This listener invokes an `Event.stopImmediatePropagation()` method prior to event handling.
 
 ```typescript
-import { DomEventDispatcher } from 'fun-events';
+import { DomEventDispatcher } from '@proc7ts/fun-events';
 
 const dispatcher = new DomEventDispatcher(document.getElementById('my-div'))
 const onClick = dispatcher.on('click');
@@ -363,7 +363,7 @@ Registers a DOM event listener that never calls `Event.preventDefault()`.
 This corresponds to specifying `{ passive: true }` as a second argument to `EventTarget.addEventListener()`.
 
 ```typescript
-import { DomEventDispatcher } from 'fun-events';
+import { DomEventDispatcher } from '@proc7ts/fun-events';
 
 // Scrolling events won't be prevented.
 new DomEventDispatcher(document.body).on('scroll').passive(handleScroll);

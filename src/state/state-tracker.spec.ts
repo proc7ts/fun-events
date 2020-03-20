@@ -1,4 +1,4 @@
-import { noop } from 'call-thru';
+import { noop } from '@proc7ts/call-thru';
 import { OnEvent__symbol } from '../base';
 import { onSupplied } from '../senders';
 import { StateTracker } from './state-tracker';

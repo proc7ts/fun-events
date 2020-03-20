@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module fun-events
+ * @module @proc7ts/fun-events
  */
 import { receiveByEach } from './event-notifier.impl';
 import { eventReceiver, EventReceiver } from './event-receiver';

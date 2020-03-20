@@ -1,4 +1,4 @@
-import { noop } from 'call-thru';
+import { noop } from '@proc7ts/call-thru';
 import { onPromise } from './on-promise';
 
 describe('onPromise', () => {

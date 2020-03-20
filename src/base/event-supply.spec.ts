@@ -1,4 +1,4 @@
-import { noop } from 'call-thru';
+import { noop } from '@proc7ts/call-thru';
 import { eventSupply, EventSupply, eventSupplyOf } from './event-supply';
 import Mock = jest.Mock;
 

@@ -1,8 +1,8 @@
 /**
  * @packageDocumentation
- * @module fun-events
+ * @module @proc7ts/fun-events
  */
-import { nextArg } from 'call-thru';
+import { nextArg } from '@proc7ts/call-thru';
 import { EventSender, eventSupply, sendEventsTo } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
 import { onAnyAsync } from './on-any-async';

@@ -1,4 +1,4 @@
-import { nextSkip } from 'call-thru';
+import { nextSkip } from '@proc7ts/call-thru';
 import { EventSender, EventSupply } from '../base';
 import { OnEvent } from '../on-event';
 import { EventEmitter } from '../senders';

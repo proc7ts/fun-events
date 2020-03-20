@@ -16,9 +16,9 @@ jobs:
     - restore_cache:
         name: Restore Yarn package cache
         keys:
-        - v3-dependencies-{{ checksum "yarn.lock" }}
+        - v4-dependencies-{{ checksum "yarn.lock" }}
         # fallback to using the latest cache if no exact match is found
-        - v3-dependencies-
+        - v4-dependencies-
 
     - run:
         name: Install dependencies
@@ -26,9 +26,10 @@ jobs:
 
     - save_cache:
         name: Save Yarn package cache
-        key: v3-dependencies-{{ checksum "yarn.lock" }}
+        key: v4-dependencies-{{ checksum "yarn.lock" }}
         paths:
-        - ~/.cache/yarn
+        - ~/repo/.yarn/cache
+        - ~/repo/.yarn/unplugged
 
     - run:
         name: Build the project

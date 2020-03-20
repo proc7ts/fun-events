@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module fun-events
+ * @module @proc7ts/fun-events
  */
 import { EventSupply, EventSupplyPeer } from '../base';
 import { OnEvent } from '../on-event';

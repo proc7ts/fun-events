@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module fun-events
+ * @module @proc7ts/fun-events
  */
 import { AfterEvent } from '../after-event';
 import { AfterEvent__symbol, EventKeeper, EventSupplier, isEventKeeper } from '../base';

@@ -1,8 +1,8 @@
 /**
  * @packageDocumentation
- * @module fun-events
+ * @module @proc7ts/fun-events
  */
-import { noop, valueProvider } from 'call-thru';
+import { noop, valueProvider } from '@proc7ts/call-thru';
 import { AfterEvent, afterEventBy } from '../after-event';
 
 /**

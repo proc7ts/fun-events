@@ -1,8 +1,8 @@
 /**
  * @packageDocumentation
- * @module fun-events
+ * @module @proc7ts/fun-events
  */
-import { noop } from 'call-thru';
+import { noop } from '@proc7ts/call-thru';
 import { EventSender, eventSupply, EventSupply, OnEvent__symbol } from '../base';
 import { onEventBy } from '../on-event';
 import { EventEmitter } from '../senders';

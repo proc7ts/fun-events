@@ -1,8 +1,8 @@
 /**
  * @packageDocumentation
- * @module fun-events
+ * @module @proc7ts/fun-events
  */
-import { noop } from 'call-thru';
+import { noop } from '@proc7ts/call-thru';
 import { eventSupply, EventSupply } from './event-supply';
 
 /**

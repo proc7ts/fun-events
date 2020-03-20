@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module fun-events/dom
+ * @module @proc7ts/fun-events/dom
  */
 import { eventReceiver, EventReceiver, EventSupply, EventSupplyPeer } from '../base';
 import { once, tillOff } from '../impl';

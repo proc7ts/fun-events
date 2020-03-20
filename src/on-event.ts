@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module fun-events
+ * @module @proc7ts/fun-events
  */
 import {
   eventReceiver,
@@ -205,7 +205,7 @@ export class OnEvent<E extends any[]> implements EventSender<E> {
   /**
    * Constructs an [[OnEvent]] sender of original events passed trough the chain of transformations.
    *
-   * The passes are preformed by `call-thru` library. The event receivers registered by resulting event sender
+   * The passes are preformed by `@proc7ts/call-thru` library. The event receivers registered by resulting event sender
    * are called by the last pass in chain. Thus they can be e.g. filtered out or called multiple times.
    *
    * @returns An [[OnEvent]] sender of events transformed with provided passes. The returned sender shares the supply

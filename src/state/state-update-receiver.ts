@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module fun-events
+ * @module @proc7ts/fun-events
  */
 import { EventReceiver } from '../base';
 import { StatePath } from './state-path';

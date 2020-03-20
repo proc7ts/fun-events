@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module fun-events
+ * @module @proc7ts/fun-events
  */
 import { EventKeeper, EventReceiver, EventSupply, EventSupply__symbol, eventSupplyOf } from '../base';
 import { OnEvent } from '../on-event';

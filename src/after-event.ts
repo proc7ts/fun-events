@@ -1,8 +1,8 @@
 /**
  * @packageDocumentation
- * @module fun-events
+ * @module @proc7ts/fun-events
  */
-import { noop } from 'call-thru';
+import { noop } from '@proc7ts/call-thru';
 import {
   AfterEvent__symbol,
   EventKeeper,
@@ -210,7 +210,7 @@ export class AfterEvent<E extends any[]> extends OnEvent<E> implements EventKeep
    * not be done automatically, as not every transformation results to [[EventKeeper]]. E.g. when some events
    * are filtered out.
    *
-   * The passes are preformed by `call-thru` library. The event receivers registered by resulting event keeper
+   * The passes are preformed by `@proc7ts/call-thru` library. The event receivers registered by resulting event keeper
    * are called by the last pass in chain. Thus they can be e.g. filtered out or called multiple times.
    *
    * @returns An [[AfterEvent]] keeper of events transformed with provided passes. The returned keeper shares the supply

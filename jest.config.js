@@ -21,7 +21,7 @@ module.exports = {
     [
       'jest-junit',
       {
-        suiteName: 'fun-events',
+        suiteName: '@proc7ts/fun-events',
         outputDirectory: './target/test-results',
         classNameTemplate: '{classname}: {title}',
         titleTemplate: '{classname}: {title}',

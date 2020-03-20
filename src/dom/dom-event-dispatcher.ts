@@ -1,8 +1,8 @@
 /**
  * @packageDocumentation
- * @module fun-events/dom
+ * @module @proc7ts/fun-events/dom
  */
-import { noop } from 'call-thru';
+import { noop } from '@proc7ts/call-thru';
 import { EventReceiver, eventSupply, EventSupply, EventSupply__symbol, eventSupplyOf, EventSupplyPeer } from '../base';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 

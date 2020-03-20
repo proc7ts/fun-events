@@ -1,4 +1,4 @@
-import { nextArgs, nextSkip, noop } from 'call-thru';
+import { nextArgs, nextSkip, noop } from '@proc7ts/call-thru';
 import { AfterEvent, afterEventBy } from './after-event';
 import {
   AfterEvent__symbol,

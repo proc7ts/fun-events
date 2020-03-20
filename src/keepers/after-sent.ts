@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module fun-events
+ * @module @proc7ts/fun-events
  */
 import { AfterEvent, afterEventBy } from '../after-event';
 import { EventSender, OnEvent__symbol } from '../base';
