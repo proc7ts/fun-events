@@ -16,9 +16,13 @@ jobs:
     - restore_cache:
         name: Restore Yarn package cache
         keys:
-        - v4-dependencies-{{ checksum "yarn.lock" }}
+        - v5-dependencies-{{ checksum "package.json" }}
         # fallback to using the latest cache if no exact match is found
-        - v4-dependencies-
+        - v5-dependencies-
+
+    - run:
+        name: Use Yarn 2
+        command: yarn set version berry
 
     - run:
         name: Install dependencies
@@ -26,10 +30,9 @@ jobs:
 
     - save_cache:
         name: Save Yarn package cache
-        key: v4-dependencies-{{ checksum "yarn.lock" }}
+        key: v5-dependencies-{{ checksum "package.json" }}
         paths:
-        - ~/repo/.yarn/cache
-        - ~/repo/.yarn/unplugged
+        - ~/repo/.yarn
 
     - run:
         name: Build the project
