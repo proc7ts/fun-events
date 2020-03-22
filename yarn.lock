@@ -448,7 +448,7 @@ __metadata:
     rollup-plugin-typescript2: ^0.26.0
     ts-jest: 25.2.0
     tslib: ^1.11.1
-    typedoc: ^0.17.1
+    typedoc: ^0.17.3
     typedoc-plugin-external-module-name: ^3.0.0
     typescript: ^3.8.3
   peerDependencies:
@@ -1134,15 +1134,6 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.0.0
   checksum: 2/bf3423d56a1d2ec86a5196b3b9edf63f2b3b57a9bd3642798937fc212c80b7db153ceae70c7b695906ca2443a2a68dbedcf06b5cad9e24861c4bd164d94e99ff
-  languageName: node
-  linkType: hard
-
-"backbone@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "backbone@npm:1.4.0"
-  dependencies:
-    underscore: ">=1.8.3"
-  checksum: 2/3a3c95f133fef708ff4a7bfbcdedab6bc63f1188b952af4c16882b029ecfa6c3c6dd367989006b3772ae0bc695d608f3d1f2ab8c076de7632dffff38ce96e9fd
   languageName: node
   linkType: hard
 
@@ -3629,13 +3620,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jquery@npm:^3.4.1":
-  version: 3.4.1
-  resolution: "jquery@npm:3.4.1"
-  checksum: 2/918300d1c768ae029bc88be13dc248ae0e82e1282f0353a6cced10ba6dabb70342a581777dc594da339c1beec7a04d3754358934a098c6627c35c6fb7d9af440
-  languageName: node
-  linkType: hard
-
 "js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -3957,7 +3941,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:^0.8.0":
+"marked@npm:0.8.0":
   version: 0.8.0
   resolution: "marked@npm:0.8.0"
   bin:
@@ -6041,15 +6025,12 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
-"typedoc-default-themes@npm:^0.8.0":
-  version: 0.8.0
-  resolution: "typedoc-default-themes@npm:0.8.0"
+"typedoc-default-themes@npm:^0.9.0":
+  version: 0.9.0
+  resolution: "typedoc-default-themes@npm:0.9.0"
   dependencies:
-    backbone: ^1.4.0
-    jquery: ^3.4.1
     lunr: ^2.3.8
-    underscore: ^1.9.2
-  checksum: 2/f845d0c0f8c2f8e116869c0563a4a1daa8afada802f856594976c5acf9dc16696124fbd0024338d2b4e903166b884101080e9d44cadb52ba10c0de32f5ad33e0
+  checksum: 2/0232b5ed08537e7b6d6bdd9a56e641074391ee2960eb7b3a86eba8e4cfd0dba6e4ddee3825839a599c92196302e9d88c1ee0ac511d68cdca56f58b45bea346bf
   languageName: node
   linkType: hard
 
@@ -6065,24 +6046,24 @@ resolve@1.1.7:
   languageName: node
   linkType: hard
 
-"typedoc@npm:^0.17.1":
-  version: 0.17.1
-  resolution: "typedoc@npm:0.17.1"
+"typedoc@npm:^0.17.3":
+  version: 0.17.3
+  resolution: "typedoc@npm:0.17.3"
   dependencies:
     fs-extra: ^8.1.0
     handlebars: ^4.7.3
     highlight.js: ^9.18.1
     lodash: ^4.17.15
-    marked: ^0.8.0
+    marked: 0.8.0
     minimatch: ^3.0.0
     progress: ^2.0.3
     shelljs: ^0.8.3
-    typedoc-default-themes: ^0.8.0
+    typedoc-default-themes: ^0.9.0
   peerDependencies:
     typescript: ">=3.8.3"
   bin:
     typedoc: bin/typedoc
-  checksum: 2/f6d12519251649d6647a1ee69464f19013399852a827b37af0d869a8692c6e23e36bcb2778e74c8b535ea6cd2a797c3f745141ff3b9301dbf32d189931f9c166
+  checksum: 2/b0bf2b8cac1c641bb37160306f064c6f18c97ec7b81a6d65cf201fdc746180a38bb1b61cdad044c025787e56f97dc5032ae237fa3e4e123ea2c36e7c898134f5
   languageName: node
   linkType: hard
 
@@ -6115,13 +6096,6 @@ typescript@^3.8.3:
   bin:
     uglifyjs: bin/uglifyjs
   checksum: 2/abd2b49f2c8cc7e53c8466665a7419a060c5d2c7a976599ab646df71feee8f5072d3f489b796aabbbb57c442b9b408950ba8f410781b2c810e49c977f59fb738
-  languageName: node
-  linkType: hard
-
-"underscore@npm:>=1.8.3, underscore@npm:^1.9.2":
-  version: 1.9.2
-  resolution: "underscore@npm:1.9.2"
-  checksum: 2/732d9b449dec613695a3510a98483f8e08cb9b6680a4cb166a8e260dbe768e9ab5cdce4a075a8f6811f675409f13974f6e4bf402e8e648a363d646b072ae7e99
   languageName: node
   linkType: hard
 
