@@ -53,10 +53,10 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "all": "run-p build:all test",
+    "all": "run-p --aggregate-output build:all test",
     "build": "rollup --config ./rollup.config.js",
-    "build:all": "run-p rebuild lint",
-    "ci:all": "run-p build:all ci:test",
+    "build:all": "run-p --aggregate-output rebuild lint",
+    "ci:all": "run-p --aggregate-output build:all ci:test",
     "ci:test": "jest --ci --runInBand",
     "clean": "node ./build/clean",
     "doc": "typedoc",
