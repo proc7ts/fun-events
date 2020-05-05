@@ -131,11 +131,12 @@ class SubStateTracker implements StateTracker {
       path: StatePath,
       newValue: V,
       oldValue: V,
-  ) => void = (<V>(path: StatePath, newValue: V, oldValue: V) => {
-    this._trackers.send([...this._path, ...statePath(path)], newValue, oldValue);
-  });
+  ) => void;
 
   constructor(private readonly _trackers: Trackers, private readonly _path: StatePath.Normalized) {
+    this.update = <V>(path: StatePath, newValue: V, oldValue: V) => {
+      this._trackers.send([...this._path, ...statePath(path)], newValue, oldValue);
+    };
   }
 
   get _tracker(): this {
