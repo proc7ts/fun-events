@@ -81,7 +81,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="@proc7ts_fun-events.EventReceiver.Object.html" class="tsd-signature-type">Object</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../modules/@proc7ts_fun-events.StatePath.html" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>
+						<a href="@proc7ts_fun-events.EventReceiver.Object.html" class="tsd-signature-type">Object</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../modules/@proc7ts_fun-events.StatePath.html#Normalized" class="tsd-signature-type">Normalized</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">Object</span>
@@ -113,12 +113,12 @@
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 					<a name="supply" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> supply</h3>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> supply</h3>
 					<div class="tsd-signature tsd-kind-icon">supply<span class="tsd-signature-symbol">:</span> <a href="../classes/@proc7ts_fun-events.EventSupply.html" class="tsd-signature-type">EventSupply</a></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="@proc7ts_fun-events.EventReceiver.Object.html">Object</a>.<a href="@proc7ts_fun-events.EventReceiver.Object.html#supply">supply</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/6fd58d9/src/base/event-receiver.ts#L57">fun-events/src/base/event-receiver.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/c4fe320/src/base/event-receiver.ts#L57">fun-events/src/base/event-receiver.ts:57</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -136,14 +136,14 @@
 					<a name="receive" class="tsd-anchor"></a>
 					<h3>receive</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">receive&lt;V&gt;<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.StateUpdateReceiver.Context.html" class="tsd-signature-type">Context</a>, path<span class="tsd-signature-symbol">: </span><a href="../modules/@proc7ts_fun-events.StatePath.html" class="tsd-signature-type">StatePath</a>, newValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, oldValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">receive&lt;V&gt;<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.StateUpdateReceiver.Context.html" class="tsd-signature-type">Context</a>, path<span class="tsd-signature-symbol">: </span><a href="../modules/@proc7ts_fun-events.StatePath.html#Normalized" class="tsd-signature-type">Normalized</a>, newValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, oldValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides <a href="@proc7ts_fun-events.EventReceiver.Object.html">Object</a>.<a href="@proc7ts_fun-events.EventReceiver.Object.html#receive">receive</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6fd58d9/src/state/state-update-receiver.ts#L58">fun-events/src/state/state-update-receiver.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/c4fe320/src/state/state-update-receiver.ts#L58">fun-events/src/state/state-update-receiver.ts:58</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -169,9 +169,9 @@
 									</div>
 								</li>
 								<li>
-									<h5>path: <a href="../modules/@proc7ts_fun-events.StatePath.html" class="tsd-signature-type">StatePath</a></h5>
+									<h5>path: <a href="../modules/@proc7ts_fun-events.StatePath.html#Normalized" class="tsd-signature-type">Normalized</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>A path to changed state part.</p>
+										<p>Normalized path to changed state part.</p>
 									</div>
 								</li>
 								<li>
