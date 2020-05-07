@@ -12,12 +12,11 @@ import { StateUpdateReceiver } from './state-update-receiver';
 
 class PathEntry {
 
-  readonly emitter = new EventEmitter<[StatePath, any, any]>();
+  readonly emitter = new EventEmitter<[StatePath.Normalized, any, any]>();
   private readonly _nested = new Map<PropertyKey, PathEntry>();
 
   constructor(private readonly _drop: () => void) {
     this.emitter.on((path, newValue, oldValue) => {
-      path = statePath(path);
 
       const key = path[0];
       const nested = this._nested.get(key);
@@ -179,7 +178,7 @@ class SubStateTracker implements StateTracker {
  *
  * @category State Tracking
  */
-export class StateTracker implements EventSender<[StatePath, any, any]> {
+export class StateTracker implements EventSender<[StatePath.Normalized, any, any]> {
 
   /**
    * @internal

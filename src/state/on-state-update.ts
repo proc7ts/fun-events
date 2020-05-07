@@ -12,7 +12,7 @@ import { StateUpdateReceiver } from './state-update-receiver';
  *
  * @category State Tracking
  */
-export interface OnStateUpdate extends OnEvent<[StatePath, any, any]> {
+export interface OnStateUpdate extends OnEvent<[StatePath.Normalized, any, any]> {
 
   /**
    * Event receiver registration function of this state updates sender.

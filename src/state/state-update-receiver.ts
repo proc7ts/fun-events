@@ -19,7 +19,7 @@ export namespace StateUpdateReceiver {
   /**
    * State update processing context.
    */
-  export interface Context extends EventReceiver.Context<[StatePath, any, any]> {
+  export interface Context extends EventReceiver.Context<[StatePath.Normalized, any, any]> {
 
     onRecurrent(receiver: Function): void;
 
@@ -29,14 +29,14 @@ export namespace StateUpdateReceiver {
    * State updates receiver function signature.
    *
    * @typeparam V  A type of changed value.
-   * @param path  A path to changed state part.
+   * @param path  Normalized path to changed state part.
    * @param newValue  New value.
    * @param oldValue  Previous value.
    */
   export type Function =
       <V>(
           this: void,
-          path: StatePath,
+          path: StatePath.Normalized,
           newValue: V,
           oldValue: V,
       ) => void;
@@ -44,18 +44,18 @@ export namespace StateUpdateReceiver {
   /**
    * State updates receiver object.
    */
-  export interface Object extends EventReceiver.Object<[StatePath, any, any]> {
+  export interface Object extends EventReceiver.Object<[StatePath.Normalized, any, any]> {
 
     /**
      * Receives a state update.
      *
      * @typeparam V  A type of changed value.
      * @param context  State update processing context.
-     * @param path  A path to changed state part.
+     * @param path  Normalized path to changed state part.
      * @param newValue  New value.
      * @param oldValue  Previous value.
      */
-    receive<V>(context: Context, path: StatePath, newValue: V, oldValue: V): void;
+    receive<V>(context: Context, path: StatePath.Normalized, newValue: V, oldValue: V): void;
 
   }
 
