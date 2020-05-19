@@ -1,4 +1,4 @@
-import { noop } from '@proc7ts/call-thru';
+import { asis, noop } from '@proc7ts/call-thru';
 import { eventSupply, EventSupply, eventSupplyOf } from './event-supply';
 import Mock = jest.Mock;
 
@@ -84,6 +84,21 @@ describe('EventSupply', () => {
 
         supply.whenOff(mockCallback);
         expect(mockCallback).toHaveBeenCalledWith(reason);
+      });
+    });
+
+    describe('wheDone', () => {
+      it('resolves when supply is cut off without reason', async () => {
+        expect(await supply.off().whenDone()).toBeUndefined();
+      });
+      it('rejects when supply is cut off with reason', async () => {
+
+        const reason = 'test';
+
+        expect(await supply.off(reason).whenDone().then(() => 'resolved', asis)).toBe(reason);
+      });
+      it('rejects when supply is cut off with `null` reason', async () => {
+        expect(await supply.off(null).whenDone().then(() => 'resolved', asis)).toBeNull();
       });
     });
 

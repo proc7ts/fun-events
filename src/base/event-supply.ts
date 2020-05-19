@@ -73,6 +73,8 @@ export class EventSupply implements EventSupplyPeer {
    * Calling this method for the second time has no effect.
    *
    * @param reason  An optional reason why supply is cut off. It will be reported to [[whenOff]] callbacks.
+   * By convenience, an absent reason means the supply is done successfully.
+   *
    * @returns A cut off event supply instance.
    */
   off(reason?: any): EventSupply {
@@ -85,13 +87,27 @@ export class EventSupply implements EventSupplyPeer {
    * will be called immediately if [[isOff]] is `true`.
    *
    * @param callback  A callback function accepting optional cut off reason as its only parameter.
-   * By convenience an `undefined` reason means normal completion.
+   * By convenience an `undefined` reason means the supply is done successfully.
    *
    * @returns `this` instance.
    */
   whenOff(callback: (this: void, reason?: any) => void): this {
     this._whenOff(callback);
     return this;
+  }
+
+  /**
+   * Builds a promise that will be resolved once this supply is {@link off done}.
+   *
+   * @returns A promise that will be successfully resolved once this supply is cut off without reason, or rejected
+   * once this supply is cut off with any reason except `undefined`.
+   */
+  whenDone(): Promise<void> {
+    return new Promise(
+        (resolve, reject) => this.whenOff(
+            reason => reason === undefined ? resolve() : reject(reason),
+        ),
+    );
   }
 
   /**
