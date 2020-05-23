@@ -107,5 +107,8 @@ export function trackValueBy<T, S extends any[]>(
     supplier: EventKeeper<S> | EventKeeper<[T]>,
     extract?: (this: void, ...event: S) => EventKeeper<[T]>,
 ): ValueTracker<T> {
-  return (trackValue() as any).by(supplier, extract);
+  return (trackValue() as ValueTracker<T>).by(
+      supplier as EventKeeper<S>,
+      extract as (this: void, ...event: S) => EventKeeper<[T]>,
+  );
 }

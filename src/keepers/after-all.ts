@@ -32,10 +32,10 @@ export function afterAll<S extends { readonly [key: string]: EventKeeper<any> }>
     const { supply } = receiver;
     const dispatch = sendEventsTo(receiver);
     let send: () => void = noop;
-    const result: { [K in keyof S]: EventKeeper.Event<S[K]> } = {} as any;
+    const result = {} as { [K in keyof S]: EventKeeper.Event<S[K]> };
 
-    keys.forEach((key: keyof S) => {
-      supply.needs(sources[key][AfterEvent__symbol]().to((...event) => {
+    keys.forEach(<K extends keyof S>(key: K) => {
+      supply.needs(sources[key][AfterEvent__symbol]().to((...event: EventKeeper.Event<S[K]>) => {
         result[key] = event;
         send();
       }).needs(supply));
@@ -48,11 +48,11 @@ export function afterAll<S extends { readonly [key: string]: EventKeeper<any> }>
 
   function latestEvent(): [{ readonly [K in keyof S]: EventKeeper.Event<S[K]> }] {
 
-    const result: { [K in keyof S]: EventKeeper.Event<S[K]> } = {} as any;
+    const result = {} as { [K in keyof S]: EventKeeper.Event<S[K]> };
 
     keys.forEach(
-        key => afterSupplied(sources[key]).once(
-            (...event) => result[key as keyof S] = event,
+        <K extends keyof S>(key: K) => afterSupplied(sources[key]).once(
+            (...event: EventKeeper.Event<S[K]>) => result[key as keyof S] = event,
         ),
     );
 

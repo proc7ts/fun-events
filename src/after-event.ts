@@ -451,6 +451,7 @@ export class AfterEvent<E extends any[]> extends OnEvent<E> implements EventKeep
   ): AfterEvent<Out<Return3>>;
 
   keepThru(...passes: any[]): AfterEvent<any[]> {
+    // eslint-disable-next-line
     return (this as any).keepThru_(...passes).share();
   }
 

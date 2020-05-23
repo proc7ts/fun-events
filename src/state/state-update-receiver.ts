@@ -21,7 +21,7 @@ export namespace StateUpdateReceiver {
    */
   export interface Context extends EventReceiver.Context<[StatePath.Normalized, any, any]> {
 
-    onRecurrent(receiver: Function): void;
+    onRecurrent(receiver: StateUpdateReceiver.Function): void;
 
   }
 

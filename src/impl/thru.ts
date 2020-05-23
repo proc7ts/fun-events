@@ -16,7 +16,7 @@ export function thru<E extends any[]>(
     supply: EventSupply;
   }
 
-  return (receiver: EventReceiver.Generic<any>) => {
+  return (receiver: EventReceiver.Generic<any>): void => {
 
     const chains: ChainEntry[] = [];
 

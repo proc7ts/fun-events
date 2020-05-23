@@ -446,6 +446,7 @@ export class OnEvent<E extends any[]> implements EventSender<E> {
   ): OnEvent<Out<Return3>>;
 
   thru(...passes: any[]): OnEvent<any[]> {
+    // eslint-disable-next-line
     return (this as any).thru_(...passes).share();
   }
 

@@ -20,7 +20,7 @@ import { onSupplied } from './on-supplied';
  */
 export function onAny<E extends any[]>(...suppliers: EventSupplier<E>[]): OnEvent<E> {
   if (!suppliers.length) {
-    return onNever;
+    return onNever as OnEvent<E>;
   }
 
   return onEventBy<E>(receiver => {

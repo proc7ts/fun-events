@@ -105,7 +105,7 @@ export namespace EventReceiver {
      *
      * @param receiver  Recurrent events receiver function.
      */
-    onRecurrent(receiver: Function<E>): void;
+    onRecurrent(receiver: EventReceiver.Function<E>): void;
 
   }
 

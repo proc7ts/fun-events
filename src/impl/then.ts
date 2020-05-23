@@ -19,14 +19,17 @@ export function then<E extends any[], TResult1 = E[0], TResult2 = never>(
           })
           : eventSupply(reject),
       receive: onEvent
-          ? (_ctx, ...event) => {
+          ? (_ctx, ...event): void => {
             try {
               resolve(onEvent(...event));
             } catch (e) {
               reject(e);
             }
           }
-          : ((_ctx: EventReceiver.Context<E>, event: E[0]) => resolve(event)) as any,
+          : ((_ctx, event: E[0]) => resolve(event)) as (
+              _ctx: EventReceiver.Context<E>,
+              ...event: E[]
+          ) => void,
     });
   });
 }

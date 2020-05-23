@@ -66,11 +66,11 @@ export class EventNotifier<E extends any[]> implements EventSupplyPeer {
 
     const generic = eventReceiver(receiver);
     const supply = generic.supply.needs(this);
-    const { _rcs } = this;
+    const receivers = this._rcs;
 
-    if (_rcs && !supply.isOff) {
-      _rcs.add(generic);
-      supply.whenOff(() => _rcs.delete(generic));
+    if (receivers && !supply.isOff) {
+      receivers.add(generic);
+      supply.whenOff(() => receivers.delete(generic));
     }
 
     return supply;

@@ -12,7 +12,7 @@ export function share<E extends any[]>(
   let sharedSupply: EventSupply;
   let initialEvents: E[] | undefined;
 
-  return receiver => {
+  return (receiver: EventReceiver.Generic<E>): void => {
     if (!shared.size) {
       initialEvents = [];
       sharedSupply = eventSupply(() => initialEvents = undefined);

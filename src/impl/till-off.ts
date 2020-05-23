@@ -9,11 +9,11 @@ export function tillOff<E extends any[]>(
     required: EventSupplyPeer,
     dependentSupply?: EventSupply,
 ): (receiver: EventReceiver.Generic<E>) => void {
-  return receiver => {
+  return (receiver: EventReceiver.Generic<E>): void => {
     if (dependentSupply) {
       onSource.to({
         supply: eventSupply().needs(required).cuts(dependentSupply),
-        receive: (receiver.receive as Function).bind(receiver),
+        receive: (receiver.receive as (...args: any[]) => void).bind(receiver),
       });
     } else {
       receiver.supply.needs(required);
