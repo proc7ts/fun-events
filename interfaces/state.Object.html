@@ -54,13 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/@proc7ts_fun-events.html">@proc7ts/fun-events</a>
+					<a href="../modules/state.html">state</a>
 				</li>
 				<li>
-					<a href="../modules/@proc7ts_fun-events.StateUpdateReceiver.html">StateUpdateReceiver</a>
-				</li>
-				<li>
-					<a href="@proc7ts_fun-events.StateUpdateReceiver.Object.html">Object</a>
+					<a href="state.Object.html">Object</a>
 				</li>
 			</ul>
 			<h1>Interface Object</h1>
@@ -81,7 +78,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="@proc7ts_fun-events.EventReceiver.Object.html" class="tsd-signature-type">Object</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../modules/@proc7ts_fun-events.StatePath.html#Normalized" class="tsd-signature-type">Normalized</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>
+						<a href="base.Object.html" class="tsd-signature-type">Object</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">StatePath.Normalized</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">Object</span>
@@ -97,13 +94,13 @@
 						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="@proc7ts_fun-events.StateUpdateReceiver.Object.html#supply" class="tsd-kind-icon">supply</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="state.Object.html#supply" class="tsd-kind-icon">supply</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-overwrite"><a href="@proc7ts_fun-events.StateUpdateReceiver.Object.html#receive" class="tsd-kind-icon">receive</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-overwrite"><a href="state.Object.html#receive" class="tsd-kind-icon">receive</a></li>
 							</ul>
 						</section>
 					</div>
@@ -116,9 +113,9 @@
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> supply</h3>
 					<div class="tsd-signature tsd-kind-icon">supply<span class="tsd-signature-symbol">:</span> <a href="../classes/@proc7ts_fun-events.EventSupply.html" class="tsd-signature-type">EventSupply</a></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="@proc7ts_fun-events.EventReceiver.Object.html">Object</a>.<a href="@proc7ts_fun-events.EventReceiver.Object.html#supply">supply</a></p>
+						<p>Inherited from <a href="base.Object.html">Object</a>.<a href="base.Object.html#supply">supply</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/d606243/src/base/event-receiver.ts#L57">fun-events/src/base/event-receiver.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/base/event-receiver.ts#L57">fun-events/src/base/event-receiver.ts:57</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -136,14 +133,14 @@
 					<a name="receive" class="tsd-anchor"></a>
 					<h3>receive</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">receive&lt;V&gt;<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.StateUpdateReceiver.Context.html" class="tsd-signature-type">Context</a>, path<span class="tsd-signature-symbol">: </span><a href="../modules/@proc7ts_fun-events.StatePath.html#Normalized" class="tsd-signature-type">Normalized</a>, newValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, oldValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">receive&lt;V&gt;<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="state.Context.html" class="tsd-signature-type">Context</a>, path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StatePath.Normalized</span>, newValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, oldValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="@proc7ts_fun-events.EventReceiver.Object.html">Object</a>.<a href="@proc7ts_fun-events.EventReceiver.Object.html#receive">receive</a></p>
+								<p>Overrides <a href="base.Object.html">Object</a>.<a href="base.Object.html#receive">receive</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/d606243/src/state/state-update-receiver.ts#L58">fun-events/src/state/state-update-receiver.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/state/state-update-receiver.ts#L58">fun-events/src/state/state-update-receiver.ts:58</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -163,13 +160,13 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>context: <a href="@proc7ts_fun-events.StateUpdateReceiver.Context.html" class="tsd-signature-type">Context</a></h5>
+									<h5>context: <a href="state.Context.html" class="tsd-signature-type">Context</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>State update processing context.</p>
 									</div>
 								</li>
 								<li>
-									<h5>path: <a href="../modules/@proc7ts_fun-events.StatePath.html#Normalized" class="tsd-signature-type">Normalized</a></h5>
+									<h5>path: <span class="tsd-signature-type">StatePath.Normalized</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Normalized path to changed state part.</p>
 									</div>
@@ -199,30 +196,87 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/@proc7ts_fun-events.html">@proc7ts/fun-<wbr>events</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/@proc7ts_fun-events_dom.html">@proc7ts/fun-<wbr>events/dom</a>
+					</li>
+					<li class=" tsd-kind-namespace tsd-has-type-parameter">
+						<a href="../modules/base.html">base</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/passes.html">passes</a>
+					</li>
+					<li class="current tsd-kind-namespace">
+						<a href="../modules/state.html">state</a>
+					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
-						<a href="@proc7ts_fun-events.StateUpdateReceiver.Context.html" class="tsd-kind-icon">Context</a>
+						<a href="state.Context.html" class="tsd-kind-icon">Context</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="state.Fn.html" class="tsd-kind-icon">Fn</a>
 					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-namespace">
-						<a href="@proc7ts_fun-events.StateUpdateReceiver.Object.html" class="tsd-kind-icon">Object</a>
+						<a href="state.Object.html" class="tsd-kind-icon">Object</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
-								<a href="@proc7ts_fun-events.StateUpdateReceiver.Object.html#supply" class="tsd-kind-icon">supply</a>
+								<a href="state.Object.html#supply" class="tsd-kind-icon">supply</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-overwrite">
-								<a href="@proc7ts_fun-events.StateUpdateReceiver.Object.html#receive" class="tsd-kind-icon">receive</a>
+								<a href="state.Object.html#receive" class="tsd-kind-icon">receive</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
 					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
-						<a href="../modules/@proc7ts_fun-events.StateUpdateReceiver.html#Function" class="tsd-kind-icon">Function</a>
+						<a href="../modules/state.html#Function" class="tsd-kind-icon">Function</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="../modules/state.html#Normalized" class="tsd-kind-icon">Normalized</a>
+					</li>
+					<li class=" tsd-kind-constructor tsd-parent-kind-namespace tsd-is-inherited">
+						<a href="../modules/state.html#constructor" class="tsd-kind-icon">constructor</a>
+					</li>
+					<li class=" tsd-kind-property tsd-parent-kind-namespace tsd-is-overwrite">
+						<a href="../modules/state.html#F" class="tsd-kind-icon">F</a>
+					</li>
+					<li class=" tsd-kind-property tsd-parent-kind-namespace tsd-is-inherited tsd-is-protected">
+						<a href="../modules/state.html#_on" class="tsd-kind-icon">_on</a>
+					</li>
+					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-inherited">
+						<a href="../modules/state.html#_OnEvent__symbol_" class="tsd-kind-icon">[<wbr>OnEvent__symbol]</a>
+					</li>
+					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-inherited">
+						<a href="../modules/state.html#consume" class="tsd-kind-icon">consume</a>
+					</li>
+					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite">
+						<a href="../modules/state.html#once" class="tsd-kind-icon">once</a>
+					</li>
+					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-inherited">
+						<a href="../modules/state.html#share" class="tsd-kind-icon">share</a>
+					</li>
+					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-has-type-parameter tsd-is-inherited">
+						<a href="../modules/state.html#then" class="tsd-kind-icon">then</a>
+					</li>
+					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-has-type-parameter tsd-is-inherited">
+						<a href="../modules/state.html#thru" class="tsd-kind-icon">thru</a>
+					</li>
+					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-has-type-parameter tsd-is-inherited">
+						<a href="../modules/state.html#thru_" class="tsd-kind-icon">thru_</a>
+					</li>
+					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite">
+						<a href="../modules/state.html#tillOff" class="tsd-kind-icon">till<wbr>Off</a>
+					</li>
+					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite">
+						<a href="../modules/state.html#to" class="tsd-kind-icon">to</a>
 					</li>
 				</ul>
 			</nav>
@@ -234,7 +288,6 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>

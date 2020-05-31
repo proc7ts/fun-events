@@ -54,13 +54,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/@proc7ts_fun-events.html">@proc7ts/fun-events</a>
+					<a href="../modules/state.html">state</a>
 				</li>
 				<li>
-					<a href="../modules/@proc7ts_fun-events.OnStateUpdate.html">OnStateUpdate</a>
-				</li>
-				<li>
-					<a href="@proc7ts_fun-events.OnStateUpdate.Fn.html">Fn</a>
+					<a href="state.Fn.html">Fn</a>
 				</li>
 			</ul>
 			<h1>Interface Fn&lt;E&gt;</h1>
@@ -79,9 +76,9 @@
 					<p>When called without parameters it returns an <a href="../classes/@proc7ts_fun-events.OnEvent.html">OnEvent</a> sender. When called with event receiver as parameter
 					it returns a supply of events from that sender.</p>
 					<p>Available as <a href="../classes/@proc7ts_fun-events.OnEvent.html#F">OnEvent.F</a> property value.</p>
-					<p>When called without parameters it returns an <a href="../modules/@proc7ts_fun-events.OnStateUpdate.html">OnStateUpdate</a> sender. When called with state updates receiver
+					<p>When called without parameters it returns an [[OnStateUpdate]] sender. When called with state updates receiver
 					as parameter it returns a supply of events from that sender.</p>
-					<p>Available as <a href="../modules/@proc7ts_fun-events.OnStateUpdate.html#F">OnStateUpdate.F</a> property value.</p>
+					<p>Available as [[OnStateUpdate.F]] property value.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -109,17 +106,17 @@
 				<h3 class="tsd-before-signature">Callable</h3>
 				<ul class="tsd-signatures tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
 					<li class="tsd-signature tsd-kind-icon">__call<span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
-					<li class="tsd-signature tsd-kind-icon">__call<span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">: </span><a href="../modules/@proc7ts_fun-events.EventReceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.EventSupply.html" class="tsd-signature-type">EventSupply</a></li>
-					<li class="tsd-signature tsd-kind-icon">__call<span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">?: </span><a href="../modules/@proc7ts_fun-events.EventReceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.EventSupply.html" class="tsd-signature-type">EventSupply</a><span class="tsd-signature-symbol"> | </span><a href="../classes/@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
-					<li class="tsd-signature tsd-kind-icon">__call<span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/@proc7ts_fun-events.OnStateUpdate.html" class="tsd-signature-type">OnStateUpdate</a></li>
-					<li class="tsd-signature tsd-kind-icon">__call<span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">: </span><a href="../modules/@proc7ts_fun-events.StateUpdateReceiver.html" class="tsd-signature-type">StateUpdateReceiver</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.EventSupply.html" class="tsd-signature-type">EventSupply</a></li>
-					<li class="tsd-signature tsd-kind-icon">__call<span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">?: </span><a href="../modules/@proc7ts_fun-events.StateUpdateReceiver.html" class="tsd-signature-type">StateUpdateReceiver</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.EventSupply.html" class="tsd-signature-type">EventSupply</a><span class="tsd-signature-symbol"> | </span><a href="../modules/@proc7ts_fun-events.OnStateUpdate.html" class="tsd-signature-type">OnStateUpdate</a></li>
+					<li class="tsd-signature tsd-kind-icon">__call<span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.EventSupply.html" class="tsd-signature-type">EventSupply</a></li>
+					<li class="tsd-signature tsd-kind-icon">__call<span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.EventSupply.html" class="tsd-signature-type">EventSupply</a><span class="tsd-signature-symbol"> | </span><a href="../classes/@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
+					<li class="tsd-signature tsd-kind-icon">__call<span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/state.html" class="tsd-signature-type">state</a></li>
+					<li class="tsd-signature tsd-kind-icon">__call<span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StateUpdateReceiver</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.EventSupply.html" class="tsd-signature-type">EventSupply</a></li>
+					<li class="tsd-signature tsd-kind-icon">__call<span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">StateUpdateReceiver</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.EventSupply.html" class="tsd-signature-type">EventSupply</a><span class="tsd-signature-symbol"> | </span><a href="../modules/state.html" class="tsd-signature-type">state</a></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/surol/fun-events/blob/d606243/src/on-event.ts#L714">fun-events/src/on-event.ts:714</a></li>
+								<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/on-event.ts#L715">fun-events/src/on-event.ts:715</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -129,9 +126,9 @@
 							<p>When called without parameters it returns an <a href="../classes/@proc7ts_fun-events.OnEvent.html">OnEvent</a> sender. When called with event receiver as parameter
 							it returns a supply of events from that sender.</p>
 							<p>Available as <a href="../classes/@proc7ts_fun-events.OnEvent.html#F">OnEvent.F</a> property value.</p>
-							<p>When called without parameters it returns an <a href="../modules/@proc7ts_fun-events.OnStateUpdate.html">OnStateUpdate</a> sender. When called with state updates receiver
+							<p>When called without parameters it returns an [[OnStateUpdate]] sender. When called with state updates receiver
 							as parameter it returns a supply of events from that sender.</p>
-							<p>Available as <a href="../modules/@proc7ts_fun-events.OnStateUpdate.html#F">OnStateUpdate.F</a> property value.</p>
+							<p>Available as [[OnStateUpdate.F]] property value.</p>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
@@ -145,7 +142,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/surol/fun-events/blob/d606243/src/on-event.ts#L723">fun-events/src/on-event.ts:723</a></li>
+								<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/on-event.ts#L724">fun-events/src/on-event.ts:724</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -155,9 +152,9 @@
 							<p>When called without parameters it returns an <a href="../classes/@proc7ts_fun-events.OnEvent.html">OnEvent</a> sender. When called with event receiver as parameter
 							it returns a supply of events from that sender.</p>
 							<p>Available as <a href="../classes/@proc7ts_fun-events.OnEvent.html#F">OnEvent.F</a> property value.</p>
-							<p>When called without parameters it returns an <a href="../modules/@proc7ts_fun-events.OnStateUpdate.html">OnStateUpdate</a> sender. When called with state updates receiver
+							<p>When called without parameters it returns an [[OnStateUpdate]] sender. When called with state updates receiver
 							as parameter it returns a supply of events from that sender.</p>
-							<p>Available as <a href="../modules/@proc7ts_fun-events.OnStateUpdate.html#F">OnStateUpdate.F</a> property value.</p>
+							<p>Available as [[OnStateUpdate.F]] property value.</p>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
@@ -165,7 +162,7 @@
 								<h5>this: <span class="tsd-signature-type">void</span></h5>
 							</li>
 							<li>
-								<h5>receiver: <a href="../modules/@proc7ts_fun-events.EventReceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								<h5>receiver: <span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								<div class="tsd-comment tsd-typography">
 									<p>A receiver of events to register.</p>
 								</div>
@@ -177,7 +174,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/surol/fun-events/blob/d606243/src/on-event.ts#L735">fun-events/src/on-event.ts:735</a></li>
+								<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/on-event.ts#L736">fun-events/src/on-event.ts:736</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -187,9 +184,9 @@
 							<p>When called without parameters it returns an <a href="../classes/@proc7ts_fun-events.OnEvent.html">OnEvent</a> sender. When called with event receiver as parameter
 							it returns a supply of events from that sender.</p>
 							<p>Available as <a href="../classes/@proc7ts_fun-events.OnEvent.html#F">OnEvent.F</a> property value.</p>
-							<p>When called without parameters it returns an <a href="../modules/@proc7ts_fun-events.OnStateUpdate.html">OnStateUpdate</a> sender. When called with state updates receiver
+							<p>When called without parameters it returns an [[OnStateUpdate]] sender. When called with state updates receiver
 							as parameter it returns a supply of events from that sender.</p>
-							<p>Available as <a href="../modules/@proc7ts_fun-events.OnStateUpdate.html#F">OnStateUpdate.F</a> property value.</p>
+							<p>Available as [[OnStateUpdate.F]] property value.</p>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
@@ -197,7 +194,7 @@
 								<h5>this: <span class="tsd-signature-type">void</span></h5>
 							</li>
 							<li>
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> receiver: <a href="../modules/@proc7ts_fun-events.EventReceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> receiver: <span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								<div class="tsd-comment tsd-typography">
 									<p>A receiver of events to register.</p>
 								</div>
@@ -210,7 +207,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/surol/fun-events/blob/d606243/src/state/on-state-update.ts#L92">fun-events/src/state/on-state-update.ts:92</a></li>
+								<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/state/on-state-update.ts#L92">fun-events/src/state/on-state-update.ts:92</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -220,9 +217,9 @@
 							<p>When called without parameters it returns an <a href="../classes/@proc7ts_fun-events.OnEvent.html">OnEvent</a> sender. When called with event receiver as parameter
 							it returns a supply of events from that sender.</p>
 							<p>Available as <a href="../classes/@proc7ts_fun-events.OnEvent.html#F">OnEvent.F</a> property value.</p>
-							<p>When called without parameters it returns an <a href="../modules/@proc7ts_fun-events.OnStateUpdate.html">OnStateUpdate</a> sender. When called with state updates receiver
+							<p>When called without parameters it returns an [[OnStateUpdate]] sender. When called with state updates receiver
 							as parameter it returns a supply of events from that sender.</p>
-							<p>Available as <a href="../modules/@proc7ts_fun-events.OnStateUpdate.html#F">OnStateUpdate.F</a> property value.</p>
+							<p>Available as [[OnStateUpdate.F]] property value.</p>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
@@ -230,13 +227,13 @@
 								<h5>this: <span class="tsd-signature-type">void</span></h5>
 							</li>
 						</ul>
-						<h4 class="tsd-returns-title">Returns <a href="../modules/@proc7ts_fun-events.OnStateUpdate.html" class="tsd-signature-type">OnStateUpdate</a></h4>
-						<p><a href="../modules/@proc7ts_fun-events.OnStateUpdate.html">OnStateUpdate</a> sender the updates originated from.</p>
+						<h4 class="tsd-returns-title">Returns <a href="../modules/state.html" class="tsd-signature-type">state</a></h4>
+						<p>[[OnStateUpdate]] sender the updates originated from.</p>
 					</li>
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/surol/fun-events/blob/d606243/src/state/on-state-update.ts#L101">fun-events/src/state/on-state-update.ts:101</a></li>
+								<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/state/on-state-update.ts#L101">fun-events/src/state/on-state-update.ts:101</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -246,9 +243,9 @@
 							<p>When called without parameters it returns an <a href="../classes/@proc7ts_fun-events.OnEvent.html">OnEvent</a> sender. When called with event receiver as parameter
 							it returns a supply of events from that sender.</p>
 							<p>Available as <a href="../classes/@proc7ts_fun-events.OnEvent.html#F">OnEvent.F</a> property value.</p>
-							<p>When called without parameters it returns an <a href="../modules/@proc7ts_fun-events.OnStateUpdate.html">OnStateUpdate</a> sender. When called with state updates receiver
+							<p>When called without parameters it returns an [[OnStateUpdate]] sender. When called with state updates receiver
 							as parameter it returns a supply of events from that sender.</p>
-							<p>Available as <a href="../modules/@proc7ts_fun-events.OnStateUpdate.html#F">OnStateUpdate.F</a> property value.</p>
+							<p>Available as [[OnStateUpdate.F]] property value.</p>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
@@ -256,7 +253,7 @@
 								<h5>this: <span class="tsd-signature-type">void</span></h5>
 							</li>
 							<li>
-								<h5>receiver: <a href="../modules/@proc7ts_fun-events.StateUpdateReceiver.html" class="tsd-signature-type">StateUpdateReceiver</a></h5>
+								<h5>receiver: <span class="tsd-signature-type">StateUpdateReceiver</span></h5>
 								<div class="tsd-comment tsd-typography">
 									<p>A receiver of state updates to register.</p>
 								</div>
@@ -268,7 +265,7 @@
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/surol/fun-events/blob/d606243/src/state/on-state-update.ts#L113">fun-events/src/state/on-state-update.ts:113</a></li>
+								<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/state/on-state-update.ts#L113">fun-events/src/state/on-state-update.ts:113</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
@@ -278,9 +275,9 @@
 							<p>When called without parameters it returns an <a href="../classes/@proc7ts_fun-events.OnEvent.html">OnEvent</a> sender. When called with event receiver as parameter
 							it returns a supply of events from that sender.</p>
 							<p>Available as <a href="../classes/@proc7ts_fun-events.OnEvent.html#F">OnEvent.F</a> property value.</p>
-							<p>When called without parameters it returns an <a href="../modules/@proc7ts_fun-events.OnStateUpdate.html">OnStateUpdate</a> sender. When called with state updates receiver
+							<p>When called without parameters it returns an [[OnStateUpdate]] sender. When called with state updates receiver
 							as parameter it returns a supply of events from that sender.</p>
-							<p>Available as <a href="../modules/@proc7ts_fun-events.OnStateUpdate.html#F">OnStateUpdate.F</a> property value.</p>
+							<p>Available as [[OnStateUpdate.F]] property value.</p>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
@@ -288,14 +285,14 @@
 								<h5>this: <span class="tsd-signature-type">void</span></h5>
 							</li>
 							<li>
-								<h5><span class="tsd-flag ts-flagOptional">Optional</span> receiver: <a href="../modules/@proc7ts_fun-events.StateUpdateReceiver.html" class="tsd-signature-type">StateUpdateReceiver</a></h5>
+								<h5><span class="tsd-flag ts-flagOptional">Optional</span> receiver: <span class="tsd-signature-type">StateUpdateReceiver</span></h5>
 								<div class="tsd-comment tsd-typography">
 									<p>A receiver of state updates to register.</p>
 								</div>
 							</li>
 						</ul>
-						<h4 class="tsd-returns-title">Returns <a href="../classes/@proc7ts_fun-events.EventSupply.html" class="tsd-signature-type">EventSupply</a><span class="tsd-signature-symbol"> | </span><a href="../modules/@proc7ts_fun-events.OnStateUpdate.html" class="tsd-signature-type">OnStateUpdate</a></h4>
-						<p>Either a supply of state updates from the sender to the given <code>receiver</code>, or <a href="../modules/@proc7ts_fun-events.OnStateUpdate.html">OnStateUpdate</a> sender
+						<h4 class="tsd-returns-title">Returns <a href="../classes/@proc7ts_fun-events.EventSupply.html" class="tsd-signature-type">EventSupply</a><span class="tsd-signature-symbol"> | </span><a href="../modules/state.html" class="tsd-signature-type">state</a></h4>
+						<p>Either a supply of state updates from the sender to the given <code>receiver</code>, or [[OnStateUpdate]] sender
 						the updates originated from when <code>receiver</code> is omitted.</p>
 					</li>
 				</ul>
@@ -307,52 +304,79 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/@proc7ts_fun-events.html">@proc7ts/fun-<wbr>events</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/@proc7ts_fun-events_dom.html">@proc7ts/fun-<wbr>events/dom</a>
+					</li>
+					<li class=" tsd-kind-namespace tsd-has-type-parameter">
+						<a href="../modules/base.html">base</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/passes.html">passes</a>
+					</li>
+					<li class="current tsd-kind-namespace">
+						<a href="../modules/state.html">state</a>
+					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="state.Context.html" class="tsd-kind-icon">Context</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
-						<a href="@proc7ts_fun-events.OnStateUpdate.Fn.html" class="tsd-kind-icon">Fn</a>
+						<a href="state.Fn.html" class="tsd-kind-icon">Fn</a>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="state.Object.html" class="tsd-kind-icon">Object</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="../modules/state.html#Function" class="tsd-kind-icon">Function</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="../modules/state.html#Normalized" class="tsd-kind-icon">Normalized</a>
+					</li>
 					<li class=" tsd-kind-constructor tsd-parent-kind-namespace tsd-is-inherited">
-						<a href="../modules/@proc7ts_fun-events.OnStateUpdate.html#constructor" class="tsd-kind-icon">constructor</a>
+						<a href="../modules/state.html#constructor" class="tsd-kind-icon">constructor</a>
 					</li>
 					<li class=" tsd-kind-property tsd-parent-kind-namespace tsd-is-overwrite">
-						<a href="../modules/@proc7ts_fun-events.OnStateUpdate.html#F" class="tsd-kind-icon">F</a>
+						<a href="../modules/state.html#F" class="tsd-kind-icon">F</a>
 					</li>
 					<li class=" tsd-kind-property tsd-parent-kind-namespace tsd-is-inherited tsd-is-protected">
-						<a href="../modules/@proc7ts_fun-events.OnStateUpdate.html#_on" class="tsd-kind-icon">_on</a>
+						<a href="../modules/state.html#_on" class="tsd-kind-icon">_on</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-inherited">
-						<a href="../modules/@proc7ts_fun-events.OnStateUpdate.html#_OnEvent__symbol_" class="tsd-kind-icon">[<wbr>OnEvent__symbol]</a>
+						<a href="../modules/state.html#_OnEvent__symbol_" class="tsd-kind-icon">[<wbr>OnEvent__symbol]</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-inherited">
-						<a href="../modules/@proc7ts_fun-events.OnStateUpdate.html#consume" class="tsd-kind-icon">consume</a>
+						<a href="../modules/state.html#consume" class="tsd-kind-icon">consume</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite">
-						<a href="../modules/@proc7ts_fun-events.OnStateUpdate.html#once" class="tsd-kind-icon">once</a>
+						<a href="../modules/state.html#once" class="tsd-kind-icon">once</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-inherited">
-						<a href="../modules/@proc7ts_fun-events.OnStateUpdate.html#share" class="tsd-kind-icon">share</a>
+						<a href="../modules/state.html#share" class="tsd-kind-icon">share</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-has-type-parameter tsd-is-inherited">
-						<a href="../modules/@proc7ts_fun-events.OnStateUpdate.html#then" class="tsd-kind-icon">then</a>
+						<a href="../modules/state.html#then" class="tsd-kind-icon">then</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-has-type-parameter tsd-is-inherited">
-						<a href="../modules/@proc7ts_fun-events.OnStateUpdate.html#thru" class="tsd-kind-icon">thru</a>
+						<a href="../modules/state.html#thru" class="tsd-kind-icon">thru</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-has-type-parameter tsd-is-inherited">
-						<a href="../modules/@proc7ts_fun-events.OnStateUpdate.html#thru_" class="tsd-kind-icon">thru_</a>
+						<a href="../modules/state.html#thru_" class="tsd-kind-icon">thru_</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite">
-						<a href="../modules/@proc7ts_fun-events.OnStateUpdate.html#tillOff" class="tsd-kind-icon">till<wbr>Off</a>
+						<a href="../modules/state.html#tillOff" class="tsd-kind-icon">till<wbr>Off</a>
 					</li>
 					<li class=" tsd-kind-method tsd-parent-kind-namespace tsd-is-overwrite">
-						<a href="../modules/@proc7ts_fun-events.OnStateUpdate.html#to" class="tsd-kind-icon">to</a>
+						<a href="../modules/state.html#to" class="tsd-kind-icon">to</a>
 					</li>
 				</ul>
 			</nav>
@@ -364,7 +388,6 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
