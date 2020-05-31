@@ -1,4 +1,5 @@
-import { isNextCall, NextCall__symbol, noop } from '@proc7ts/call-thru';
+import { isNextCall, NextCall__symbol } from '@proc7ts/call-thru';
+import { noop } from '@proc7ts/primitives';
 import { EventReceiver, EventSender, eventSupply, EventSupply, noEventSupply, OnEvent__symbol } from '../base';
 import { OnEvent } from '../on-event';
 import { OnEventCallChain } from '../passes';

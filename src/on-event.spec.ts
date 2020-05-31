@@ -1,4 +1,5 @@
-import { asis, nextArgs, nextSkip, noop } from '@proc7ts/call-thru';
+import { nextArgs, nextSkip } from '@proc7ts/call-thru';
+import { asis, noop } from '@proc7ts/primitives';
 import { EventNotifier, EventReceiver, eventSupply, EventSupply, noEventSupply, OnEvent__symbol } from './base';
 import { OnEvent, onEventBy } from './on-event';
 import { EventEmitter } from './senders';

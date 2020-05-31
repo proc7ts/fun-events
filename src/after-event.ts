@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { noop } from '@proc7ts/call-thru';
+import { noop } from '@proc7ts/primitives';
 import {
   AfterEvent__symbol,
   EventKeeper,

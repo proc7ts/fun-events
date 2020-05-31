@@ -1,4 +1,4 @@
-import { noop } from '@proc7ts/call-thru';
+import { noop } from '@proc7ts/primitives';
 import { AfterEvent } from '../after-event';
 import { AfterEvent__symbol, EventReceiver, EventSupply } from '../base';
 import { EventEmitter } from '../senders';

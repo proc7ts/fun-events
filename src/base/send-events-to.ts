@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { noop } from '@proc7ts/call-thru';
+import { noop } from '@proc7ts/primitives';
 import { receiveByEach } from './event-notifier.impl';
 import { eventReceiver, EventReceiver } from './event-receiver';
 

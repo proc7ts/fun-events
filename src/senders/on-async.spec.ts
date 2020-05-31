@@ -1,4 +1,4 @@
-import { asis } from '@proc7ts/call-thru';
+import { asis } from '@proc7ts/primitives';
 import { EventSupply } from '../base';
 import { EventEmitter } from './event-emitter';
 import { onAsync } from './on-async';

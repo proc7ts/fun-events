@@ -1,4 +1,4 @@
-import { noop } from '@proc7ts/call-thru';
+import { noop } from '@proc7ts/primitives';
 import { AfterEvent__symbol, EventKeeper, EventSender, EventSupply, OnEvent__symbol } from '../base';
 import { EventEmitter } from '../senders';
 import { trackValue, trackValueBy } from './track-value';

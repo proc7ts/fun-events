@@ -1,4 +1,4 @@
-import { asis, noop } from '@proc7ts/call-thru';
+import { asis, noop } from '@proc7ts/primitives';
 import { eventSupply, EventSupply, eventSupplyOf } from './event-supply';
 import Mock = jest.Mock;
 

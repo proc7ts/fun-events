@@ -6,6 +6,15 @@ import ts from 'rollup-plugin-typescript2';
 import typescript from 'typescript';
 import pkg from './package.json';
 
+const externals = [
+  ...Object.keys(pkg.dependencies),
+  ...Object.keys(pkg.peerDependencies),
+];
+
+function external(id) {
+  return externals.some(ext => (id + '/').startsWith(ext + '/'));
+}
+
 export default {
   plugins: [
     commonjs(),
@@ -22,7 +31,7 @@ export default {
     'fun-events': './src/index.ts',
     'fun-events.dom': './src/dom/index.ts',
   },
-  external: Object.keys(pkg.peerDependencies),
+  external,
   manualChunks(id) {
     if (id.startsWith(path.join(__dirname, 'src', 'base') + path.sep)) {
       return 'fun-events.base';
