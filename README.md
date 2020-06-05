@@ -2,7 +2,7 @@ Functional Event Processor
 ==========================
 
 [![NPM][npm-image]][npm-url]
-[![CircleCI][ci-image]][ci-url]
+[![Build Status][build-status-img]][build-status-link]
 [![codecov][codecov-image]][codecov-url]
 [![GitHub Project][github-image]][github-url]
 [![API Documentation][api-docs-image]][api-docs-url]
@@ -33,8 +33,8 @@ supply.off(); // The eventReceiver will no longer receive events after this call
 
 [npm-image]: https://img.shields.io/npm/v/@proc7ts/fun-events.svg?logo=npm
 [npm-url]: https://www.npmjs.com/package/@proc7ts/fun-events
-[ci-image]: https://img.shields.io/circleci/build/github/proc7ts/fun-events?logo=circleci
-[ci-url]: https://circleci.com/gh/proc7ts/fun-events
+[build-status-img]: https://github.com/proc7ts/fun-events/workflows/Build/badge.svg
+[build-status-link]: https://github.com/proc7ts/fun-events/actions?query=workflow%3ABuild
 [codecov-image]: https://codecov.io/gh/proc7ts/fun-events/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/proc7ts/fun-events
 [github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
