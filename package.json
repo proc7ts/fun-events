@@ -53,7 +53,7 @@
     "tslib": "^2.0.0",
     "typedoc": "^0.17.3",
     "typedoc-plugin-external-module-name": "^4.0.0",
-    "typescript": "^3.9.3"
+    "typescript": "^3.9.5"
   },
   "scripts": {
     "all": "run-p --aggregate-output build:all test",
