@@ -69,6 +69,21 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Core Namespaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-namespace tsd-parent-kind-module tsd-has-type-parameter"><a href="@proc7ts_fun-events.EventKeeper.html" class="tsd-kind-icon">Event<wbr>Keeper</a></li>
+								<li class="tsd-kind-namespace tsd-parent-kind-module tsd-has-type-parameter"><a href="@proc7ts_fun-events.EventReceiver.html" class="tsd-kind-icon">Event<wbr>Receiver</a></li>
+								<li class="tsd-kind-namespace tsd-parent-kind-module tsd-has-type-parameter"><a href="@proc7ts_fun-events.EventSender.html" class="tsd-kind-icon">Event<wbr>Sender</a></li>
+								<li class="tsd-kind-namespace tsd-parent-kind-module"><a href="@proc7ts_fun-events.OnEventCallChain.html" class="tsd-kind-icon">On<wbr>Event<wbr>Call<wbr>Chain</a></li>
+							</ul>
+							<h3>State Tracking Namespaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-namespace tsd-parent-kind-module"><a href="@proc7ts_fun-events.OnStateUpdate.html" class="tsd-kind-icon">On<wbr>State<wbr>Update</a></li>
+								<li class="tsd-kind-namespace tsd-parent-kind-module"><a href="@proc7ts_fun-events.StatePath.html" class="tsd-kind-icon">State<wbr>Path</a></li>
+								<li class="tsd-kind-namespace tsd-parent-kind-module"><a href="@proc7ts_fun-events.StateUpdateReceiver.html" class="tsd-kind-icon">State<wbr>Update<wbr>Receiver</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Core Classes</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/@proc7ts_fun-events.AfterEvent.html" class="tsd-kind-icon">After<wbr>Event</a></li>
@@ -152,17 +167,17 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
 					<a name="EventSupplier" class="tsd-anchor"></a>
 					<h3>Event<wbr>Supplier</h3>
-					<div class="tsd-signature tsd-kind-icon">Event<wbr>Supplier&lt;E&gt;<span class="tsd-signature-symbol">:</span> <a href="base.html" class="tsd-signature-type">base</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">EventKeeper</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">Event<wbr>Supplier&lt;E&gt;<span class="tsd-signature-symbol">:</span> <a href="@proc7ts_fun-events.EventSender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="@proc7ts_fun-events.EventKeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/base/event-supplier.ts#L16">fun-events/src/base/event-supplier.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/base/event-supplier.ts#L16">fun-events/src/base/event-supplier.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>A supplier of events.</p>
 						</div>
-						<p>Either an {@link EventSender event sender}, or {@link EventKeeper event keeper}.</p>
+						<p>Either an <a href="@proc7ts_fun-events.EventSender.html">event sender</a>, or <a href="@proc7ts_fun-events.EventKeeper.html">event keeper</a>.</p>
 					</div>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
 					<ul class="tsd-type-parameters">
@@ -185,12 +200,12 @@
 					<div class="tsd-signature tsd-kind-icon">After<wbr>Event__symbol<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">unique symbol</span><span class="tsd-signature-symbol"> = (/*#__PURE__*/ Symbol(&#x27;after-event&#x27;))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/base/event-keeper.ts#L12">fun-events/src/base/event-keeper.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/base/event-keeper.ts#L12">fun-events/src/base/event-keeper.ts:12</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A key of [[EventKeeper]] method returning its <a href="../classes/@proc7ts_fun-events.AfterEvent.html">AfterEvent</a> instance..</p>
+							<p>A key of <a href="@proc7ts_fun-events.EventKeeper.html">EventKeeper</a> method returning its <a href="../classes/@proc7ts_fun-events.AfterEvent.html">AfterEvent</a> instance..</p>
 						</div>
 					</div>
 				</section>
@@ -200,7 +215,7 @@
 					<div class="tsd-signature tsd-kind-icon">Event<wbr>Supply__symbol<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">unique symbol</span><span class="tsd-signature-symbol"> = (/*#__PURE__*/ Symbol(&#x27;events-supply&#x27;))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/base/event-supply.ts#L12">fun-events/src/base/event-supply.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/base/event-supply.ts#L12">fun-events/src/base/event-supply.ts:12</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -215,12 +230,12 @@
 					<div class="tsd-signature tsd-kind-icon">On<wbr>Event__symbol<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">unique symbol</span><span class="tsd-signature-symbol"> = (/*#__PURE__*/ Symbol(&#x27;on-event&#x27;))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/base/event-sender.ts#L12">fun-events/src/base/event-sender.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/base/event-sender.ts#L12">fun-events/src/base/event-sender.ts:12</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A key of [[EventSender]] method returning its <a href="../classes/@proc7ts_fun-events.OnEvent.html">OnEvent</a> instance.</p>
+							<p>A key of <a href="@proc7ts_fun-events.EventSender.html">EventSender</a> method returning its <a href="../classes/@proc7ts_fun-events.OnEvent.html">OnEvent</a> instance.</p>
 						</div>
 					</div>
 				</section>
@@ -230,7 +245,7 @@
 					<div class="tsd-signature tsd-kind-icon">after<wbr>Never<span class="tsd-signature-symbol">:</span> <a href="../classes/@proc7ts_fun-events.AfterEvent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = (/*#__PURE__*/ afterEventBy(neverReceive))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/keepers/after-never.ts#L13">fun-events/src/keepers/after-never.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/keepers/after-never.ts#L13">fun-events/src/keepers/after-never.ts:13</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -245,7 +260,7 @@
 					<div class="tsd-signature tsd-kind-icon">on<wbr>Never<span class="tsd-signature-symbol">:</span> <a href="../classes/@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = (/*#__PURE__*/ onEventBy(neverReceive))</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/senders/on-never.ts#L13">fun-events/src/senders/on-never.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/senders/on-never.ts#L13">fun-events/src/senders/on-never.ts:13</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -267,7 +282,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/keepers/after-all.ts#L20">fun-events/src/keepers/after-all.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/keepers/after-all.ts#L20">fun-events/src/keepers/after-all.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -303,13 +318,13 @@
 					<a name="afterEach" class="tsd-anchor"></a>
 					<h3>after<wbr>Each</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">after<wbr>Each&lt;E&gt;<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>sources<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventKeeper</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.AfterEvent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">after<wbr>Each&lt;E&gt;<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>sources<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.EventKeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.AfterEvent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/keepers/after-each.ts#L20">fun-events/src/keepers/after-each.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/keepers/after-each.ts#L20">fun-events/src/keepers/after-each.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -329,7 +344,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>sources: <span class="tsd-signature-type">EventKeeper</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>sources: <a href="@proc7ts_fun-events.EventKeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>An array of source event keepers.</p>
 									</div>
@@ -345,13 +360,13 @@
 					<a name="afterEventBy" class="tsd-anchor"></a>
 					<h3>after<wbr>Event<wbr>By</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">after<wbr>Event<wbr>By&lt;E&gt;<span class="tsd-signature-symbol">(</span>register<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">: </span><a href="../interfaces/base.Generic.html" class="tsd-signature-type">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span>, fallback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.AfterEvent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">after<wbr>Event<wbr>By&lt;E&gt;<span class="tsd-signature-symbol">(</span>register<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">: </span><a href="../interfaces/@proc7ts_fun-events.EventReceiver.Generic.html" class="tsd-signature-type">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span>, fallback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.AfterEvent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/after-event.ts#L774">fun-events/src/after-event.ts:774</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/after-event.ts#L774">fun-events/src/after-event.ts:774</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -373,15 +388,15 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>register: <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">: </span><a href="../interfaces/base.Generic.html" class="tsd-signature-type">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
+									<h5>register: <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">: </span><a href="../interfaces/@proc7ts_fun-events.EventReceiver.Generic.html" class="tsd-signature-type">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Generic event receiver registration function. It will be called on each receiver registration,
-										unless the receiver&#39;s {@link EventReceiver.Generic.supply event supply} is cut off already.</p>
+										unless the receiver&#39;s <a href="../interfaces/@proc7ts_fun-events.EventReceiver.Generic.html#supply">event supply</a> is cut off already.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">: </span><a href="../interfaces/base.Generic.html" class="tsd-signature-type">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">: </span><a href="../interfaces/@proc7ts_fun-events.EventReceiver.Generic.html" class="tsd-signature-type">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
@@ -391,7 +406,7 @@
 															<h5>this: <span class="tsd-signature-type">void</span></h5>
 														</li>
 														<li>
-															<h5>receiver: <a href="../interfaces/base.Generic.html" class="tsd-signature-type">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+															<h5>receiver: <a href="../interfaces/@proc7ts_fun-events.EventReceiver.Generic.html" class="tsd-signature-type">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -417,13 +432,13 @@
 					<a name="afterSent" class="tsd-anchor"></a>
 					<h3>after<wbr>Sent</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">after<wbr>Sent&lt;E&gt;<span class="tsd-signature-symbol">(</span>sender<span class="tsd-signature-symbol">: </span><a href="base.html" class="tsd-signature-type">base</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, fallback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.AfterEvent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">after<wbr>Sent&lt;E&gt;<span class="tsd-signature-symbol">(</span>sender<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.EventSender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, fallback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.AfterEvent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/keepers/after-sent.ts#L22">fun-events/src/keepers/after-sent.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/keepers/after-sent.ts#L22">fun-events/src/keepers/after-sent.ts:22</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -445,7 +460,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>sender: <a href="base.html" class="tsd-signature-type">base</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>sender: <a href="@proc7ts_fun-events.EventSender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>An event sender.</p>
 									</div>
@@ -467,14 +482,14 @@
 					<a name="afterSupplied" class="tsd-anchor"></a>
 					<h3>after<wbr>Supplied</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">after<wbr>Supplied&lt;E&gt;<span class="tsd-signature-symbol">(</span>keeper<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventKeeper</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.AfterEvent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">after<wbr>Supplied&lt;E&gt;<span class="tsd-signature-symbol">(</span>keeper<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.EventKeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.AfterEvent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
 						<li class="tsd-signature tsd-kind-icon">after<wbr>Supplied&lt;E&gt;<span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.html#EventSupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, fallback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.AfterEvent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/keepers/after-supplied.ts#L18">fun-events/src/keepers/after-supplied.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/keepers/after-supplied.ts#L18">fun-events/src/keepers/after-supplied.ts:18</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -494,7 +509,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>keeper: <span class="tsd-signature-type">EventKeeper</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>keeper: <a href="@proc7ts_fun-events.EventKeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>A keeper of events.</p>
 									</div>
@@ -506,7 +521,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/keepers/after-supplied.ts#L34">fun-events/src/keepers/after-supplied.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/keepers/after-supplied.ts#L34">fun-events/src/keepers/after-supplied.ts:34</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -514,7 +529,7 @@
 									<p>Builds an <a href="../classes/@proc7ts_fun-events.AfterEvent.html">AfterEvent</a> keeper of events sent by the given <code>supplier</code>.</p>
 								</div>
 								<p>The event generated by <code>fallback</code> will be sent to the registered first receiver, unless <code>supplier</code> sends one.</p>
-								<p>This is a synonym of <a href="@proc7ts_fun-events.html#afterSent">afterSent</a>, unless <code>supplier</code> is an [[EventKeeper]].</p>
+								<p>This is a synonym of <a href="@proc7ts_fun-events.html#afterSent">afterSent</a>, unless <code>supplier</code> is an <a href="@proc7ts_fun-events.EventKeeper.html">EventKeeper</a>.</p>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
@@ -556,7 +571,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/keepers/after-the.ts#L16">fun-events/src/keepers/after-the.ts:16</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/keepers/after-the.ts#L16">fun-events/src/keepers/after-the.ts:16</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -588,13 +603,13 @@
 					<a name="eventReceiver" class="tsd-anchor"></a>
 					<h3>event<wbr>Receiver</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">event<wbr>Receiver&lt;E&gt;<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/base.Generic.html" class="tsd-signature-type">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">event<wbr>Receiver&lt;E&gt;<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.EventReceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/@proc7ts_fun-events.EventReceiver.Generic.html" class="tsd-signature-type">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/base/event-receiver.ts#L125">fun-events/src/base/event-receiver.ts:125</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/base/event-receiver.ts#L125">fun-events/src/base/event-receiver.ts:125</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -615,13 +630,13 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>receiver: <span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>receiver: <a href="@proc7ts_fun-events.EventReceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>An event receiver to convert.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/base.Generic.html" class="tsd-signature-type">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/@proc7ts_fun-events.EventReceiver.Generic.html" class="tsd-signature-type">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>Event <code>receiver</code> in most generic form.</p>
 						</li>
 					</ul>
@@ -636,7 +651,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/base/event-supply.ts#L182">fun-events/src/base/event-supply.ts:182</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/base/event-supply.ts#L182">fun-events/src/base/event-supply.ts:182</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -668,7 +683,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/base/event-supply.ts#L171">fun-events/src/base/event-supply.ts:171</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/base/event-supply.ts#L171">fun-events/src/base/event-supply.ts:171</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -700,12 +715,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/base/event-keeper.ts#L54">fun-events/src/base/event-keeper.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/base/event-keeper.ts#L54">fun-events/src/base/event-keeper.ts:54</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Checks whether the given object implements an [[EventKeeper]] interface.</p>
+									<p>Checks whether the given object implements an <a href="@proc7ts_fun-events.EventKeeper.html">EventKeeper</a> interface.</p>
 								</div>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -741,12 +756,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/base/event-sender.ts#L53">fun-events/src/base/event-sender.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/base/event-sender.ts#L53">fun-events/src/base/event-sender.ts:53</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Checks whether the given object implements an [[EventSender]] interface.</p>
+									<p>Checks whether the given object implements an <a href="@proc7ts_fun-events.EventSender.html">EventSender</a> interface.</p>
 								</div>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -776,22 +791,22 @@
 					<a name="nextAfterEvent" class="tsd-anchor"></a>
 					<h3>next<wbr>After<wbr>Event</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">next<wbr>After<wbr>Event&lt;E&gt;<span class="tsd-signature-symbol">(</span>keeper<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventKeeper</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NextCall</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OnEventCallChain</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">next<wbr>After<wbr>Event&lt;E&gt;<span class="tsd-signature-symbol">(</span>keeper<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.EventKeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NextCall</span><span class="tsd-signature-symbol">&lt;</span><a href="@proc7ts_fun-events.OnEventCallChain.html" class="tsd-signature-type">OnEventCallChain</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/passes/next-after-event.ts#L25">fun-events/src/passes/next-after-event.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/passes/next-after-event.ts#L25">fun-events/src/passes/next-after-event.ts:25</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Builds a next chained call of {@link OnEventCallChain} that calls the next pass with every event supplied by
+									<p>Builds a next chained call of <a href="@proc7ts_fun-events.OnEventCallChain.html">OnEventCallChain</a> that calls the next pass with every event supplied by
 									the given keeper.</p>
 								</div>
 								<p>The event supply from the given keeper will be cut off each time the call is applied.</p>
-								<p>This differs from <a href="@proc7ts_fun-events.html#nextOnEvent">nextOnEvent</a> when passing supplier implementing both [[EventSender]] and [[EventKeeper]]
+								<p>This differs from <a href="@proc7ts_fun-events.html#nextOnEvent">nextOnEvent</a> when passing supplier implementing both <a href="@proc7ts_fun-events.EventSender.html">EventSender</a> and <a href="@proc7ts_fun-events.EventKeeper.html">EventKeeper</a>
 								interfaces such as <a href="../classes/@proc7ts_fun-events.ValueTracker.html">ValueTracker</a>. <a href="@proc7ts_fun-events.html#nextOnEvent">nextOnEvent</a> would prefer the former, while this one would prefer the latter.</p>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -806,13 +821,13 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>keeper: <span class="tsd-signature-type">EventKeeper</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>keeper: <a href="@proc7ts_fun-events.EventKeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>A keeper of events to pass down the chain.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">NextCall</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OnEventCallChain</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">NextCall</span><span class="tsd-signature-symbol">&lt;</span><a href="@proc7ts_fun-events.OnEventCallChain.html" class="tsd-signature-type">OnEventCallChain</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>Next call passing events from the given <code>keeper</code>.</p>
 						</li>
 					</ul>
@@ -821,18 +836,18 @@
 					<a name="nextOnEvent" class="tsd-anchor"></a>
 					<h3>next<wbr>OnEvent</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">next<wbr>OnEvent&lt;E&gt;<span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.html#EventSupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NextCall</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OnEventCallChain</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">next<wbr>OnEvent&lt;E&gt;<span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.html#EventSupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">NextCall</span><span class="tsd-signature-symbol">&lt;</span><a href="@proc7ts_fun-events.OnEventCallChain.html" class="tsd-signature-type">OnEventCallChain</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/passes/next-on-event.ts#L22">fun-events/src/passes/next-on-event.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/passes/next-on-event.ts#L22">fun-events/src/passes/next-on-event.ts:22</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Builds a next chained call of {@link OnEventCallChain} that calls the next pass with every event supplied by
+									<p>Builds a next chained call of <a href="@proc7ts_fun-events.OnEventCallChain.html">OnEventCallChain</a> that calls the next pass with every event supplied by
 									the given supplier.</p>
 								</div>
 								<p>The event supply from the given supplier will be cut off each time the call is applied.</p>
@@ -855,7 +870,7 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">NextCall</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OnEventCallChain</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">NextCall</span><span class="tsd-signature-symbol">&lt;</span><a href="@proc7ts_fun-events.OnEventCallChain.html" class="tsd-signature-type">OnEventCallChain</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>Next call passing events from the given <code>supplier</code>.</p>
 						</li>
 					</ul>
@@ -870,7 +885,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/base/no-event-supply.ts#L48">fun-events/src/base/no-event-supply.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/base/no-event-supply.ts#L48">fun-events/src/base/no-event-supply.ts:48</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -893,7 +908,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/senders/on-any.ts#L21">fun-events/src/senders/on-any.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/senders/on-any.ts#L21">fun-events/src/senders/on-any.ts:21</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -929,13 +944,13 @@
 					<a name="onAnyAsync" class="tsd-anchor"></a>
 					<h3>on<wbr>Any<wbr>Async</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Any<wbr>Async&lt;E&gt;<span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><a href="base.html" class="tsd-signature-type">base</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">PromiseLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Any<wbr>Async&lt;E&gt;<span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.EventSender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">PromiseLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/senders/on-any-async.ts#L24">fun-events/src/senders/on-any-async.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/senders/on-any-async.ts#L24">fun-events/src/senders/on-any-async.ts:24</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -960,7 +975,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>from: <a href="base.html" class="tsd-signature-type">base</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">PromiseLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>from: <a href="@proc7ts_fun-events.EventSender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">PromiseLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Unresolved events sender containing either events or their promises.</p>
 									</div>
@@ -975,13 +990,13 @@
 					<a name="onAsync" class="tsd-anchor"></a>
 					<h3>on<wbr>Async</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Async&lt;E&gt;<span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><a href="base.html" class="tsd-signature-type">base</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">PromiseLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Async&lt;E&gt;<span class="tsd-signature-symbol">(</span>from<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.EventSender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">PromiseLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/senders/on-async.ts#L27">fun-events/src/senders/on-async.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/senders/on-async.ts#L27">fun-events/src/senders/on-async.ts:27</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1006,7 +1021,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>from: <a href="base.html" class="tsd-signature-type">base</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">PromiseLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>from: <a href="@proc7ts_fun-events.EventSender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">PromiseLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Unresolved events sender containing either events or their promises.</p>
 									</div>
@@ -1021,13 +1036,13 @@
 					<a name="onEventBy" class="tsd-anchor"></a>
 					<h3>on<wbr>Event<wbr>By</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">on<wbr>Event<wbr>By&lt;E&gt;<span class="tsd-signature-symbol">(</span>register<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">: </span><a href="../interfaces/base.Generic.html" class="tsd-signature-type">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Event<wbr>By&lt;E&gt;<span class="tsd-signature-symbol">(</span>register<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">: </span><a href="../interfaces/@proc7ts_fun-events.EventReceiver.Generic.html" class="tsd-signature-type">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/on-event.ts#L765">fun-events/src/on-event.ts:765</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/on-event.ts#L765">fun-events/src/on-event.ts:765</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1047,15 +1062,15 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>register: <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">: </span><a href="../interfaces/base.Generic.html" class="tsd-signature-type">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
+									<h5>register: <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">: </span><a href="../interfaces/@proc7ts_fun-events.EventReceiver.Generic.html" class="tsd-signature-type">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Generic event receiver registration function. It will be called on each receiver registration,
-										unless the receiver&#39;s {@link EventReceiver.Generic.supply event supply} is cut off already.</p>
+										unless the receiver&#39;s <a href="../interfaces/@proc7ts_fun-events.EventReceiver.Generic.html#supply">event supply</a> is cut off already.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">: </span><a href="../interfaces/base.Generic.html" class="tsd-signature-type">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">: </span><a href="../interfaces/@proc7ts_fun-events.EventReceiver.Generic.html" class="tsd-signature-type">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
@@ -1065,7 +1080,7 @@
 															<h5>this: <span class="tsd-signature-type">void</span></h5>
 														</li>
 														<li>
-															<h5>receiver: <a href="../interfaces/base.Generic.html" class="tsd-signature-type">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+															<h5>receiver: <a href="../interfaces/@proc7ts_fun-events.EventReceiver.Generic.html" class="tsd-signature-type">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -1090,7 +1105,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/senders/on-promise.ts#L22">fun-events/src/senders/on-promise.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/senders/on-promise.ts#L22">fun-events/src/senders/on-promise.ts:22</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1131,7 +1146,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/senders/on-supplied.ts#L17">fun-events/src/senders/on-supplied.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/senders/on-supplied.ts#L17">fun-events/src/senders/on-supplied.ts:17</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1166,13 +1181,13 @@
 					<a name="sendEventsTo" class="tsd-anchor"></a>
 					<h3>send<wbr>Events<wbr>To</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">send<wbr>Events<wbr>To&lt;E&gt;<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">send<wbr>Events<wbr>To&lt;E&gt;<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.EventReceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/base/send-events-to.ts#L19">fun-events/src/base/send-events-to.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/base/send-events-to.ts#L19">fun-events/src/base/send-events-to.ts:19</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1192,7 +1207,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>receiver: <span class="tsd-signature-type">EventReceiver</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>receiver: <a href="@proc7ts_fun-events.EventReceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Target event receiver.</p>
 									</div>
@@ -1232,13 +1247,13 @@
 					<h3>state<wbr>Path</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 						<li class="tsd-signature tsd-kind-icon">state<wbr>Path&lt;K&gt;<span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span></li>
-						<li class="tsd-signature tsd-kind-icon">state<wbr>Path<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StatePath</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">StatePath.Normalized</span></li>
+						<li class="tsd-signature tsd-kind-icon">state<wbr>Path<span class="tsd-signature-symbol">(</span>path<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.StatePath.html" class="tsd-signature-type">StatePath</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.StatePath.html#Normalized" class="tsd-signature-type">Normalized</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/state/state-path.ts#L37">fun-events/src/state/state-path.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/state/state-path.ts#L37">fun-events/src/state/state-path.ts:37</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1267,7 +1282,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/state/state-path.ts#L46">fun-events/src/state/state-path.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/state/state-path.ts#L46">fun-events/src/state/state-path.ts:46</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1278,13 +1293,13 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>path: <span class="tsd-signature-type">StatePath</span></h5>
+									<h5>path: <a href="@proc7ts_fun-events.StatePath.html" class="tsd-signature-type">StatePath</a></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Arbitrary state path.</p>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">StatePath.Normalized</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="@proc7ts_fun-events.StatePath.html#Normalized" class="tsd-signature-type">Normalized</a></h4>
 							<p>Normalized state path.</p>
 						</li>
 					</ul>
@@ -1303,7 +1318,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/value/track-value.ts#L55">fun-events/src/value/track-value.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/value/track-value.ts#L55">fun-events/src/value/track-value.ts:55</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1332,7 +1347,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/value/track-value.ts#L64">fun-events/src/value/track-value.ts:64</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/value/track-value.ts#L64">fun-events/src/value/track-value.ts:64</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1364,14 +1379,14 @@
 					<a name="trackValueBy" class="tsd-anchor"></a>
 					<h3>track<wbr>Value<wbr>By</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">track<wbr>Value<wbr>By&lt;T&gt;<span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventKeeper</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.ValueTracker.html" class="tsd-signature-type">ValueTracker</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
-						<li class="tsd-signature tsd-kind-icon">track<wbr>Value<wbr>By&lt;T, S&gt;<span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventKeeper</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span>, extract<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">EventKeeper</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.ValueTracker.html" class="tsd-signature-type">ValueTracker</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">track<wbr>Value<wbr>By&lt;T&gt;<span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.EventKeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.ValueTracker.html" class="tsd-signature-type">ValueTracker</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">track<wbr>Value<wbr>By&lt;T, S&gt;<span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.EventKeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span>, extract<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="@proc7ts_fun-events.EventKeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.ValueTracker.html" class="tsd-signature-type">ValueTracker</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/value/track-value.ts#L84">fun-events/src/value/track-value.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/value/track-value.ts#L84">fun-events/src/value/track-value.ts:84</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1391,7 +1406,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>supplier: <span class="tsd-signature-type">EventKeeper</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>supplier: <a href="@proc7ts_fun-events.EventKeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>The source value keeper.</p>
 									</div>
@@ -1403,7 +1418,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/value/track-value.ts#L101">fun-events/src/value/track-value.ts:101</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/value/track-value.ts#L101">fun-events/src/value/track-value.ts:101</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1429,20 +1444,20 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>supplier: <span class="tsd-signature-type">EventKeeper</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>supplier: <a href="@proc7ts_fun-events.EventKeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>The event keeper to extract value keepers from.</p>
 									</div>
 								</li>
 								<li>
-									<h5>extract: <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">EventKeeper</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>extract: <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="@proc7ts_fun-events.EventKeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>A function extracting value keeper from event received from <code>supplier</code>.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">EventKeeper</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.EventKeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
@@ -1455,7 +1470,7 @@
 															<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>event: <span class="tsd-signature-type">S</span></h5>
 														</li>
 													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">EventKeeper</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+													<h4 class="tsd-returns-title">Returns <a href="@proc7ts_fun-events.EventKeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 												</li>
 											</ul>
 										</li>
@@ -1480,15 +1495,6 @@
 					</li>
 					<li class=" tsd-kind-module">
 						<a href="@proc7ts_fun-events_dom.html">@proc7ts/fun-<wbr>events/dom</a>
-					</li>
-					<li class=" tsd-kind-namespace tsd-has-type-parameter">
-						<a href="base.html">base</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="passes.html">passes</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="state.html">state</a>
 					</li>
 				</ul>
 			</nav>
@@ -1621,6 +1627,7 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
+				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>

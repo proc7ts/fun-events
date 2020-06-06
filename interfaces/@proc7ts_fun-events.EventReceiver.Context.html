@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Object | Functional Event Processor</title>
+	<title>Context | Functional Event Processor</title>
 	<meta name="description" content="Documentation for Functional Event Processor">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -54,13 +54,16 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/base.html">base</a>
+					<a href="../modules/@proc7ts_fun-events.html">@proc7ts/fun-events</a>
 				</li>
 				<li>
-					<a href="base.Object.html">Object</a>
+					<a href="../modules/@proc7ts_fun-events.EventReceiver.html">EventReceiver</a>
+				</li>
+				<li>
+					<a href="@proc7ts_fun-events.EventReceiver.Context.html">Context</a>
 				</li>
 			</ul>
-			<h1>Interface Object&lt;E&gt;</h1>
+			<h1>Interface Context&lt;E&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -70,8 +73,9 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Event receiver object.</p>
+						<p>Event processing context.</p>
 					</div>
+					<p>It is passed to <a href="@proc7ts_fun-events.EventReceiver.Object.html">Object</a> receivers.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -91,13 +95,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">Object</span>
+						<span class="target">Context</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<a href="base.Generic.html" class="tsd-signature-type">Generic</a>
-							</li>
-							<li>
-								<a href="state.Object.html" class="tsd-signature-type">Object</a>
+								<a href="@proc7ts_fun-events.StateUpdateReceiver.Context.html" class="tsd-signature-type">Context</a>
 							</li>
 						</ul>
 					</li>
@@ -108,72 +109,48 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Properties</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="base.Object.html#supply" class="tsd-kind-icon">supply</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="base.Object.html#receive" class="tsd-kind-icon">receive</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="@proc7ts_fun-events.EventReceiver.Context.html#onRecurrent" class="tsd-kind-icon">on<wbr>Recurrent</a></li>
 							</ul>
 						</section>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="supply" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> supply</h3>
-					<div class="tsd-signature tsd-kind-icon">supply<span class="tsd-signature-symbol">:</span> <a href="../classes/@proc7ts_fun-events.EventSupply.html" class="tsd-signature-type">EventSupply</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/base/event-receiver.ts#L57">fun-events/src/base/event-receiver.ts:57</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Event supply to this receiver.</p>
-						</div>
-						<p>Events will be supplied to this receiver until this supply is <a href="../classes/@proc7ts_fun-events.EventSupply.html#off">cut off</a>.</p>
-						<p>When omitted a new supply will be created per receiver registration within event supplier.</p>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="receive" class="tsd-anchor"></a>
-					<h3>receive</h3>
+					<a name="onRecurrent" class="tsd-anchor"></a>
+					<h3>on<wbr>Recurrent</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">receive<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="base.Context.html" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Recurrent<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="../modules/@proc7ts_fun-events.EventReceiver.html#Function" class="tsd-signature-type">Function</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/f054015/src/base/event-receiver.ts#L65">fun-events/src/base/event-receiver.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/6b07a09/src/base/event-receiver.ts#L108">fun-events/src/base/event-receiver.ts:108</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Receives an event.</p>
+									<p>Schedules the given event receiver to be called to process recurrent event(s).</p>
 								</div>
+								<p>If called during event processing the recurrent events will be sent to the given <code>receiver</code> after current event
+								processed instead of original one.</p>
+								<p>If called multiple times the latest <code>receiver</code> will be used.</p>
+								<p>If not called the recurrent events will be sent to original event receiver.</p>
+								<blockquote>
+									<p>This method should be called <strong>before</strong> the recurrent event issued. Otherwise it may happen that recurrent
+									event will be ignored in some situations. E.g. when it is issued during receiver registration.</p>
+								</blockquote>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>context: <a href="base.Context.html" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>receiver: <a href="../modules/@proc7ts_fun-events.EventReceiver.html#Function" class="tsd-signature-type">Function</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>An event processing context.</p>
-									</div>
-								</li>
-								<li>
-									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>event: <span class="tsd-signature-type">E</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>An event represented as the rest of arguments.</p>
+										<p>Recurrent events receiver function.</p>
 									</div>
 								</li>
 							</ul>
@@ -189,60 +166,30 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/@proc7ts_fun-events.html">@proc7ts/fun-<wbr>events</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/@proc7ts_fun-events_dom.html">@proc7ts/fun-<wbr>events/dom</a>
-					</li>
-					<li class="current tsd-kind-namespace tsd-has-type-parameter">
-						<a href="../modules/base.html">base</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/passes.html">passes</a>
-					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/state.html">state</a>
-					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
-						<a href="base.Context.html" class="tsd-kind-icon">Context</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
-						<a href="base.Generic.html" class="tsd-kind-icon">Generic</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
-						<a href="base.Object.html" class="tsd-kind-icon">Object</a>
+						<a href="@proc7ts_fun-events.EventReceiver.Context.html" class="tsd-kind-icon">Context</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="base.Object.html#supply" class="tsd-kind-icon">supply</a>
-							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="base.Object.html#receive" class="tsd-kind-icon">receive</a>
+								<a href="@proc7ts_fun-events.EventReceiver.Context.html#onRecurrent" class="tsd-kind-icon">on<wbr>Recurrent</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
-						<a href="../modules/base.html#Event" class="tsd-kind-icon">Event</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="@proc7ts_fun-events.EventReceiver.Generic.html" class="tsd-kind-icon">Generic</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="@proc7ts_fun-events.EventReceiver.Object.html" class="tsd-kind-icon">Object</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
-						<a href="../modules/base.html#Event-1" class="tsd-kind-icon">Event</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
-						<a href="../modules/base.html#Function" class="tsd-kind-icon">Function</a>
-					</li>
-					<li class=" tsd-kind-method tsd-parent-kind-namespace">
-						<a href="../modules/base.html#_AfterEvent__symbol_" class="tsd-kind-icon">[<wbr>After<wbr>Event__symbol]</a>
-					</li>
-					<li class=" tsd-kind-method tsd-parent-kind-namespace">
-						<a href="../modules/base.html#_OnEvent__symbol_" class="tsd-kind-icon">[<wbr>OnEvent__symbol]</a>
+						<a href="../modules/@proc7ts_fun-events.EventReceiver.html#Function" class="tsd-kind-icon">Function</a>
 					</li>
 				</ul>
 			</nav>
@@ -254,6 +201,7 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
+				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
@@ -261,7 +209,6 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
