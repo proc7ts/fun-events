@@ -23,7 +23,7 @@
   },
   "main": "dist/fun-events.js",
   "module": "dist/fun-events.mjs",
-  "typings": "index.d.ts",
+  "types": "index.d.ts",
   "peerDependencies": {
     "@proc7ts/call-thru": "^4.0.0"
   },
