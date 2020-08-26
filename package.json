@@ -24,14 +24,24 @@
   "main": "dist/fun-events.js",
   "module": "dist/fun-events.mjs",
   "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/fun-events.mjs",
+      "require": "./dist/fun-events.js"
+    },
+    "./dom": {
+      "import": "./dist/fun-events.dom.mjs",
+      "require": "./dist/fun-events.dom.js"
+    }
+  },
   "peerDependencies": {
-    "@proc7ts/call-thru": "^4.0.0"
+    "@proc7ts/call-thru": "^4.1.0"
   },
   "dependencies": {
-    "@proc7ts/primitives": "^1.1.0"
+    "@proc7ts/primitives": "^1.2.0"
   },
   "devDependencies": {
-    "@proc7ts/call-thru": "^4.0.0",
+    "@proc7ts/call-thru": "^4.1.0",
     "@proc7ts/eslint-config": "^2.0.4",
     "@proc7ts/rollup-helpers": "^1.0.0",
     "@rollup/plugin-commonjs": "^15.0.0",
