@@ -58,7 +58,7 @@
     "rollup": "^2.26.10",
     "rollup-plugin-sourcemaps": "^0.6.2",
     "rollup-plugin-typescript2": "^0.27.2",
-    "run-z": "^1.0.0",
+    "run-z": "^1.1.0",
     "shx": "^0.3.2",
     "ts-jest": "^26.3.0",
     "tslib": "^2.0.1",
