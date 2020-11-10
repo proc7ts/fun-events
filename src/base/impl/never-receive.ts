@@ -1,4 +1,4 @@
-import { EventReceiver } from '../index';
+import { EventReceiver } from '../event-receiver';
 
 /**
  * @internal

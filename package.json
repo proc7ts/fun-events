@@ -21,17 +21,18 @@
   "bugs": {
     "url": "https://github.com/proc7ts/fun-events/issues"
   },
-  "main": "dist/fun-events.js",
-  "module": "dist/fun-events.mjs",
+  "type": "module",
+  "main": "dist/fun-events.cjs",
+  "module": "dist/fun-events.js",
   "types": "index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/fun-events.mjs",
-      "require": "./dist/fun-events.js"
+      "import": "./dist/fun-events.js",
+      "require": "./dist/fun-events.cjs"
     },
     "./dom": {
-      "import": "./dist/fun-events.dom.mjs",
-      "require": "./dist/fun-events.dom.js"
+      "import": "./dist/fun-events.dom.js",
+      "require": "./dist/fun-events.dom.cjs"
     }
   },
   "peerDependencies": {
