@@ -46,5 +46,5 @@ export function statePath<K extends PropertyKey>(key: K): [K];
 export function statePath(path: StatePath): StatePath.Normalized;
 
 export function statePath(path: StatePath): StatePath.Normalized {
-  return Array.isArray(path) ? path as StatePath.Normalized : [path] as StatePath.Normalized;
+  return Array.isArray(path) ? path : [path];
 }
