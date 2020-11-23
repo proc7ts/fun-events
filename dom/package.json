@@ -1,5 +1,4 @@
 {
   "main": "../dist/fun-events.dom.cjs",
-  "module": "../dist/fun-events.dom.js",
-  "types": "index.d.ts"
+  "module": "../dist/fun-events.dom.js"
 }
