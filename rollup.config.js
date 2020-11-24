@@ -54,7 +54,7 @@ export default {
       plugins: [
         flatDts({
           tsconfig: 'tsconfig.main.json',
-          entries: ['dom'],
+          entries: [{ name: 'dom', file: 'dom/index.d.ts' }],
         }),
       ],
     },
