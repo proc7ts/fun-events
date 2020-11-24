@@ -24,13 +24,13 @@ export default {
   ],
   external: externalModules(),
   manualChunks(id) {
-    if (id.startsWith(path.join(__dirname, 'src', 'base') + path.sep)) {
+    if (id.startsWith(path.resolve('src', 'base') + path.sep)) {
       return 'fun-events.base';
     }
-    if (id.startsWith(path.join(__dirname, 'src', 'dom') + path.sep)) {
+    if (id.startsWith(path.resolve('src', 'dom') + path.sep)) {
       return 'fun-events.dom';
     }
-    if (id.startsWith(path.join(__dirname, 'src', 'impl') + path.sep)) {
+    if (id.startsWith(path.resolve('src', 'impl') + path.sep)) {
       return 'fun-events.base';
     }
     return 'fun-events';
