@@ -100,17 +100,17 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
 					<a name="Args" class="tsd-anchor"></a>
 					<h3>Args</h3>
-					<div class="tsd-signature tsd-kind-icon">Args&lt;Return, Return&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Return</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">NextSkip</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">Return</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">NextCall</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OnEventCallChain</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">infer </span> A<span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">Return</span><span class="tsd-signature-symbol">]</span></div>
+					<div class="tsd-signature tsd-kind-icon">Args&lt;TReturn, Return&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Return</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">NextSkip</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">Return</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">NextCall</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OnEventCallChain</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">infer </span> A<span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">A</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">Return</span><span class="tsd-signature-symbol">]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in call-thru/d.ts/call-chain.d.ts:41</li>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/b3c4588/src/passes/on-event-call-chain.ts#L29">fun-events/src/passes/on-event-call-chain.ts:29</a></li>
+							<li>Defined in call-thru/index.d.ts:172</li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/82296a9/src/passes/on-event-call-chain.ts#L29">fun-events/src/passes/on-event-call-chain.ts:29</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
 					<ul class="tsd-type-parameters">
 						<li>
-							<h4>Return</h4>
+							<h4>TReturn</h4>
 						</li>
 						<li>
 							<h4>Return</h4>
@@ -120,39 +120,39 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
 					<a name="OrSkip" class="tsd-anchor"></a>
 					<h3>Or<wbr>Skip</h3>
-					<div class="tsd-signature tsd-kind-icon">Or<wbr>Skip&lt;Return, Or&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">Return</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">NextSkip</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">infer </span> R<span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">R</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Or</span></div>
+					<div class="tsd-signature tsd-kind-icon">Or<wbr>Skip&lt;TReturn, TOr&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">TReturn</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">NextSkip</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">infer </span> TResult<span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">TOr</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in call-thru/d.ts/call-chain.d.ts:42</li>
+							<li>Defined in call-thru/index.d.ts:175</li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
 					<ul class="tsd-type-parameters">
 						<li>
-							<h4>Return</h4>
+							<h4>TReturn</h4>
 						</li>
 						<li>
-							<h4>Or = <span class="tsd-signature-type">never</span></h4>
+							<h4>TOr = <span class="tsd-signature-type">never</span></h4>
 						</li>
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
 					<a name="Out" class="tsd-anchor"></a>
 					<h3>Out</h3>
-					<div class="tsd-signature tsd-kind-icon">Out&lt;Return, Or, Return&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Return</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">NextSkip</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">Return</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">NextCall</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OnEventCallChain</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">infer </span> E<span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">Return</span><span class="tsd-signature-symbol">]</span></div>
+					<div class="tsd-signature tsd-kind-icon">Out&lt;TReturn, TOr, Return&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Return</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">NextSkip</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">Return</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">NextCall</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">OnEventCallChain</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">infer </span> E<span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">Return</span><span class="tsd-signature-symbol">]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in call-thru/d.ts/call-chain.d.ts:43</li>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/b3c4588/src/passes/on-event-call-chain.ts#L35">fun-events/src/passes/on-event-call-chain.ts:35</a></li>
+							<li>Defined in call-thru/index.d.ts:176</li>
+							<li>Defined in <a href="https://github.com/surol/fun-events/blob/82296a9/src/passes/on-event-call-chain.ts#L35">fun-events/src/passes/on-event-call-chain.ts:35</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
 					<ul class="tsd-type-parameters">
 						<li>
-							<h4>Return</h4>
+							<h4>TReturn</h4>
 						</li>
 						<li>
-							<h4>Or = <span class="tsd-signature-type">never</span></h4>
+							<h4>TOr = <span class="tsd-signature-type">never</span></h4>
 						</li>
 						<li>
 							<h4>Return</h4>
@@ -166,14 +166,14 @@
 					<a name="call" class="tsd-anchor"></a>
 					<h3>call</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-namespace tsd-has-type-parameter tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">call&lt;Args&gt;<span class="tsd-signature-symbol">(</span>pass<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Args</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span>, args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Args</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">call&lt;TArgs&gt;<span class="tsd-signature-symbol">(</span>pass<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TArgs</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span>, args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TArgs</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="@proc7ts_fun-events.OnEventCallChain.html">OnEventCallChain</a>.<a href="@proc7ts_fun-events.OnEventCallChain.html#call">call</a></p>
 								<ul>
-									<li>Defined in call-thru/d.ts/call-chain.d.ts:22</li>
+									<li>Defined in call-thru/index.d.ts:153</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -185,7 +185,7 @@
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>Args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
+									<h4>TArgs<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
 									<div class="tsd-comment tsd-typography">
 										<p>Pass arguments tuple type.</p>
 									</div>
@@ -194,14 +194,14 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>pass: <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Args</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span></h5>
+									<h5>pass: <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TArgs</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>A pass to call.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Args</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TArgs</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
@@ -211,7 +211,7 @@
 															<h5>this: <span class="tsd-signature-type">void</span></h5>
 														</li>
 														<li>
-															<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">Args</span></h5>
+															<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">TArgs</span></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -221,7 +221,7 @@
 									</ul>
 								</li>
 								<li>
-									<h5>args: <span class="tsd-signature-type">Args</span></h5>
+									<h5>args: <span class="tsd-signature-type">TArgs</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>An array of arguments for the call.</p>
 									</div>
@@ -241,7 +241,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/b3c4588/src/passes/on-event-call-chain.ts#L20">fun-events/src/passes/on-event-call-chain.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/surol/fun-events/blob/82296a9/src/passes/on-event-call-chain.ts#L20">fun-events/src/passes/on-event-call-chain.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -304,14 +304,14 @@
 					<a name="pass" class="tsd-anchor"></a>
 					<h3>pass</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-namespace tsd-has-type-parameter tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">pass&lt;Arg&gt;<span class="tsd-signature-symbol">(</span>pass<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Arg</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span>, arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Arg</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">pass&lt;TArg&gt;<span class="tsd-signature-symbol">(</span>pass<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TArg</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span>, arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TArg</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="@proc7ts_fun-events.OnEventCallChain.html">OnEventCallChain</a>.<a href="@proc7ts_fun-events.OnEventCallChain.html#pass">pass</a></p>
 								<ul>
-									<li>Defined in call-thru/d.ts/call-chain.d.ts:32</li>
+									<li>Defined in call-thru/index.d.ts:163</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -328,20 +328,20 @@
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>Arg</h4>
+									<h4>TArg</h4>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>pass: <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Arg</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span></h5>
+									<h5>pass: <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TArg</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>A pass to call.</p>
 									</div>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Arg</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TArg</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
@@ -351,7 +351,7 @@
 															<h5>this: <span class="tsd-signature-type">void</span></h5>
 														</li>
 														<li>
-															<h5>arg: <span class="tsd-signature-type">Arg</span></h5>
+															<h5>arg: <span class="tsd-signature-type">TArg</span></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -361,7 +361,7 @@
 									</ul>
 								</li>
 								<li>
-									<h5>arg: <span class="tsd-signature-type">Arg</span></h5>
+									<h5>arg: <span class="tsd-signature-type">TArg</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Single argument for the call.</p>
 									</div>
@@ -382,7 +382,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="@proc7ts_fun-events.OnEventCallChain.html">OnEventCallChain</a>.<a href="@proc7ts_fun-events.OnEventCallChain.html#skip">skip</a></p>
 								<ul>
-									<li>Defined in call-thru/d.ts/call-chain.d.ts:38</li>
+									<li>Defined in call-thru/index.d.ts:169</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
