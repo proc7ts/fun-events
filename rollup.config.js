@@ -1,4 +1,5 @@
 import { externalModules } from '@proc7ts/rollup-helpers';
+import flatDts from '@proc7ts/rollup-plugin-flat-dts';
 import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import path from 'path';
@@ -17,20 +18,19 @@ export default {
       typescript,
       tsconfig: 'tsconfig.main.json',
       cacheRoot: 'target/.rts2_cache',
-      useTsconfigDeclarationDir: true,
     }),
     nodeResolve(),
     sourcemaps(),
   ],
   external: externalModules(),
   manualChunks(id) {
-    if (id.startsWith(path.join(__dirname, 'src', 'base') + path.sep)) {
+    if (id.startsWith(path.resolve('src', 'base') + path.sep)) {
       return 'fun-events.base';
     }
-    if (id.startsWith(path.join(__dirname, 'src', 'dom') + path.sep)) {
+    if (id.startsWith(path.resolve('src', 'dom') + path.sep)) {
       return 'fun-events.dom';
     }
-    if (id.startsWith(path.join(__dirname, 'src', 'impl') + path.sep)) {
+    if (id.startsWith(path.resolve('src', 'impl') + path.sep)) {
       return 'fun-events.base';
     }
     return 'fun-events';
@@ -47,10 +47,22 @@ export default {
     {
       format: 'esm',
       sourcemap: true,
-      dir: './dist',
-      entryFileNames: '[name].js',
-      chunkFileNames: '_[name].js',
+      dir: '.',
+      entryFileNames: 'dist/[name].js',
+      chunkFileNames: 'dist/_[name].js',
       hoistTransitiveImports: false,
+      plugins: [
+        flatDts({
+          tsconfig: 'tsconfig.main.json',
+          lib: 'ES2018',
+          entries: {
+            dom: {
+              file: 'dom/index.d.ts',
+              lib: ['ES2018', 'DOM'],
+            },
+          },
+        }),
+      ],
     },
   ],
 };

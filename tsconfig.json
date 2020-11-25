@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "moduleResolution": "node",
-    "module": "es2015",
-    "target": "es2018",
+    "moduleResolution": "Node",
+    "module": "ES2015",
+    "target": "ES2018",
     "strict": true,
     "experimentalDecorators": true,
     "noFallthroughCasesInSwitch": true,
@@ -13,8 +13,8 @@
     "importHelpers": true,
     "noEmitHelpers": true,
     "lib": [
-      "dom",
-      "es2018"
+      "DOM",
+      "ES2018"
     ],
     "types": [
       "jest"
