@@ -1,6 +1,6 @@
 {
   "name": "@proc7ts/fun-events",
-  "version": "9.4.1",
+  "version": "9.4.2",
   "description": "Functional event processor",
   "keywords": [
     "dom-events",
