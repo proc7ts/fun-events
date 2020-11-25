@@ -2,6 +2,9 @@ import { EventReceiver, eventSupply } from '../base';
 import { OnEvent } from '../on-event';
 import { once } from './once';
 
+/**
+ * @internal
+ */
 export function then<E extends any[], TResult1 = E[0], TResult2 = never>(
     onSource: OnEvent<E>,
     onEvent?: ((...value: E) => TResult1 | PromiseLike<TResult1>) | undefined | null,

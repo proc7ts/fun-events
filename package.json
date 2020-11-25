@@ -36,15 +36,16 @@
     }
   },
   "peerDependencies": {
-    "@proc7ts/call-thru": "^4.3.0"
+    "@proc7ts/call-thru": "^4.3.1"
   },
   "dependencies": {
-    "@proc7ts/primitives": "^1.5.0"
+    "@proc7ts/primitives": "^1.5.1"
   },
   "devDependencies": {
-    "@proc7ts/call-thru": "^4.3.0",
+    "@proc7ts/call-thru": "^4.3.1",
     "@proc7ts/eslint-config": "^2.0.5",
     "@proc7ts/rollup-helpers": "^1.1.0",
+    "@proc7ts/rollup-plugin-flat-dts": "^1.0.0",
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
     "@types/jest": "^26.0.15",
@@ -71,7 +72,7 @@
     "all": "run-z build,lint,test",
     "build": "run-z +z --then rollup --config ./rollup.config.js",
     "ci:all": "run-z all +test/--ci/--runInBand",
-    "clean": "run-z +z --then shx rm -rf d.ts dist target",
+    "clean": "run-z +z --then shx rm -rf index.d.ts '*/index.d.ts' dist target",
     "doc": "run-z +z --then typedoc",
     "doc:publish": "run-z doc --then gh-pages --dist target/typedoc --dotfiles",
     "lint": "run-z +z --then eslint . --ext .js,.ts",
