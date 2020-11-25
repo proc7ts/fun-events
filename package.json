@@ -39,13 +39,13 @@
     "@proc7ts/call-thru": "^4.3.0"
   },
   "dependencies": {
-    "@proc7ts/primitives": "^1.5.0"
+    "@proc7ts/primitives": "^1.5.1"
   },
   "devDependencies": {
     "@proc7ts/call-thru": "^4.3.0",
     "@proc7ts/eslint-config": "^2.0.5",
     "@proc7ts/rollup-helpers": "^1.1.0",
-    "@proc7ts/rollup-plugin-flat-dts": "^1.0.0-dev.6",
+    "@proc7ts/rollup-plugin-flat-dts": "^1.0.0",
     "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
     "@types/jest": "^26.0.15",
