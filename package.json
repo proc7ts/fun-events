@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@proc7ts/call-thru": "^4.3.1",
-    "@run-z/eslint-config": "^1.0.0",
+    "@run-z/eslint-config": "^1.0.1",
     "@proc7ts/rollup-helpers": "^1.1.1",
     "@proc7ts/rollup-plugin-flat-dts": "^1.1.2",
     "@rollup/plugin-commonjs": "^16.0.0",
