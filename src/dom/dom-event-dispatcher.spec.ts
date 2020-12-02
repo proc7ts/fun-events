@@ -3,17 +3,13 @@ import Mock = jest.Mock;
 
 describe('DomEventDispatcher', () => {
 
-  let mockTarget: {
-    addEventListener: Mock<void, [string, EventListener]> & EventTarget['addEventListener'];
-    removeEventListener: Mock<void, [EventListener]> & EventTarget['removeEventListener'];
-    dispatchEvent: Mock<void, [Event]> & EventTarget['dispatchEvent'];
-  };
+  let mockTarget: jest.Mocked<Pick<EventTarget, 'addEventListener' | 'removeEventListener' | 'dispatchEvent'>>;
   let registeredListener: EventListener;
 
   beforeEach(() => {
     mockTarget = {
-      addEventListener: jest.fn((_type: string, listener: EventListener) => {
-        registeredListener = listener;
+      addEventListener: jest.fn((_type: string, listener) => {
+        registeredListener = listener as EventListener;
       }),
       removeEventListener: jest.fn(),
       dispatchEvent: jest.fn(),

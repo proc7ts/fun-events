@@ -14,7 +14,7 @@ describe('EventSupply', () => {
 
   describe('eventSupply', () => {
 
-    let mockOff: Mock<void, []>;
+    let mockOff: Mock<void, [reason?: any]>;
     let supply: EventSupply;
 
     beforeEach(() => {
