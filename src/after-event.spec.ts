@@ -1,15 +1,7 @@
 import { nextArgs, nextSkip } from '@proc7ts/call-thru';
-import { noop } from '@proc7ts/primitives';
+import { neverSupply, noop, Supply } from '@proc7ts/primitives';
 import { AfterEvent, afterEventBy } from './after-event';
-import {
-  AfterEvent__symbol,
-  EventNotifier,
-  EventReceiver,
-  eventSupply,
-  EventSupply,
-  noEventSupply,
-  OnEvent__symbol,
-} from './base';
+import { AfterEvent__symbol, EventNotifier, EventReceiver, OnEvent__symbol } from './base';
 import Mock = jest.Mock;
 
 describe('AfterEvent', () => {
@@ -17,7 +9,7 @@ describe('AfterEvent', () => {
 
     let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
     let afterEvent: AfterEvent<[string]>;
-    let supply: EventSupply;
+    let supply: Supply;
     let offSpy: Mock;
     let emitter: EventNotifier<[string]>;
     let mockReceiver: Mock<void, [string]>;
@@ -55,7 +47,7 @@ describe('AfterEvent', () => {
       expect(offSpy).toHaveBeenCalled();
     });
     it('never sends events if their supply is initially cut off', () => {
-      supply = noEventSupply();
+      supply = neverSupply();
       afterEvent.once({ supply, receive: (_context, ...event) => mockReceiver(...event) });
       expect(mockReceiver).not.toHaveBeenCalled();
     });
@@ -72,11 +64,11 @@ describe('AfterEvent', () => {
 
     let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
     let afterEvent: AfterEvent<[string]>;
-    let supply: EventSupply;
+    let supply: Supply;
     let offSpy: Mock;
     let emitter: EventNotifier<[string]>;
     let mockReceiver: Mock<void, [string]>;
-    let requiredSupply: EventSupply;
+    let requiredSupply: Supply;
 
     beforeEach(() => {
       emitter = new EventNotifier();
@@ -88,7 +80,7 @@ describe('AfterEvent', () => {
       });
       afterEvent = afterEventBy(mockRegister);
       mockReceiver = jest.fn();
-      requiredSupply = eventSupply();
+      requiredSupply = new Supply();
     });
 
     it('sends original events', () => {
@@ -104,7 +96,7 @@ describe('AfterEvent', () => {
 
       const whenOff = jest.fn();
 
-      afterEvent.tillOff(noEventSupply()).to(mockReceiver).whenOff(whenOff);
+      afterEvent.tillOff(neverSupply()).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       expect(mockReceiver).not.toHaveBeenCalled();
       expect(whenOff).toHaveBeenCalled();
@@ -271,7 +263,7 @@ describe('AfterEvent', () => {
 
         const reason = 'some reason';
 
-        emitter.done(reason);
+        emitter.supply.off(reason);
         expect(mockOff2).toHaveBeenCalledWith(reason);
       });
     });
@@ -342,7 +334,7 @@ describe('afterEventBy', () => {
     });
 
     afterEvent.to({
-      supply: noEventSupply(),
+      supply: neverSupply(),
       receive(_context, ...event) {
         mockReceiver(...event);
       },

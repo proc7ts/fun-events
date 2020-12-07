@@ -1,6 +1,6 @@
-import { noop } from '@proc7ts/primitives';
+import { noop, Supply } from '@proc7ts/primitives';
 import { AfterEvent } from '../after-event';
-import { AfterEvent__symbol, EventReceiver, EventSupply } from '../base';
+import { AfterEvent__symbol, EventReceiver } from '../base';
 import { EventEmitter } from '../senders';
 import { trackValue, ValueTracker } from '../value';
 import { afterSupplied } from './after-supplied';
@@ -11,7 +11,7 @@ describe('afterSupplied', () => {
     let keeper: ValueTracker<string>;
     let afterEvent: AfterEvent<[string]>;
     let mockReceiver: EventReceiver<[string]>;
-    let supply: EventSupply;
+    let supply: Supply;
 
     beforeEach(() => {
       keeper = trackValue('initial');
@@ -56,7 +56,7 @@ describe('afterSupplied', () => {
     let sender: EventEmitter<[string]>;
     let afterEvent: AfterEvent<[string]>;
     let mockReceiver: EventReceiver<[string]>;
-    let supply: EventSupply;
+    let supply: Supply;
 
     beforeEach(() => {
       sender = new EventEmitter();

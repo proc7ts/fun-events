@@ -1,4 +1,4 @@
-import { EventSupply } from '../base';
+import { Supply } from '@proc7ts/primitives';
 import { OnEvent } from '../on-event';
 import { EventEmitter } from './event-emitter';
 import { onAny } from './on-any';
@@ -11,7 +11,7 @@ describe('onAny', () => {
   let source2: EventEmitter<[string]>;
   let fromAny: OnEvent<[string]>;
   let mockReceiver: Mock<void, [string]>;
-  let supply: EventSupply;
+  let supply: Supply;
 
   beforeEach(() => {
     source1 = new EventEmitter();
@@ -36,7 +36,7 @@ describe('onAny', () => {
     expect(mockReceiver).not.toHaveBeenCalled();
   });
   it('keeps sending events when some of source supplies are cut off', () => {
-    source1.done('reason1');
+    source1.supply.off('reason1');
     source2.send('2');
     expect(mockReceiver).toHaveBeenCalledWith('2');
   });
@@ -45,8 +45,8 @@ describe('onAny', () => {
     const mockOff = jest.fn();
 
     supply.whenOff(mockOff);
-    source1.done('reason1');
-    source2.done('reason2');
+    source1.supply.off('reason1');
+    source2.supply.off('reason2');
 
     expect(mockOff).toHaveBeenCalledWith('reason2');
 

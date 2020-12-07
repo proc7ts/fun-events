@@ -1,5 +1,4 @@
-import { eventSupply } from './event-supply';
-import { noEventSupply } from './no-event-supply';
+import { neverSupply, Supply } from '@proc7ts/primitives';
 import { sendEventsTo } from './send-events-to';
 
 describe('sendEventsTo', () => {
@@ -19,7 +18,7 @@ describe('sendEventsTo', () => {
   it('stops sending events when receiver supply is cut off', () => {
 
     const receive = jest.fn();
-    const supply = eventSupply();
+    const supply = new Supply();
     const sender = sendEventsTo({ supply, receive });
 
     sender('event1', 1);
@@ -34,7 +33,7 @@ describe('sendEventsTo', () => {
   it('does not send any events when receiver supply is initially cut off', () => {
 
     const receive = jest.fn();
-    const supply = noEventSupply();
+    const supply = neverSupply();
     const sender = sendEventsTo({ supply, receive });
 
     sender('event1', 1);

@@ -2,14 +2,17 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { noop } from '@proc7ts/primitives';
-import { EventSender, eventSupply, EventSupply, OnEvent__symbol } from '../base';
+import { noop, Supply } from '@proc7ts/primitives';
+import { EventSender, OnEvent__symbol } from '../base';
 import { onEventBy } from '../on-event';
 import { EventEmitter } from '../senders';
 import { OnStateUpdate } from './on-state-update';
 import { statePath, StatePath } from './state-path';
 import { StateUpdateReceiver } from './state-update-receiver';
 
+/**
+ * @internal
+ */
 class PathEntry {
 
   readonly emitter = new EventEmitter<[StatePath.Normalized, any, any]>();
@@ -27,11 +30,11 @@ class PathEntry {
     });
   }
 
-  on(receiver: StateUpdateReceiver): EventSupply {
+  on(receiver: StateUpdateReceiver): Supply {
 
     const supply = this.emitter.on(receiver);
 
-    return eventSupply(reason => {
+    return new Supply(reason => {
       supply.off(reason);
       this._dropIfEmpty();
     }).needs(supply);
@@ -58,11 +61,11 @@ class PathEntry {
     return created;
   }
 
-  done(reason?: any): void {
+  done(reason?: unknown): void {
     for (const nested of this._nested.values()) {
       nested.done(reason);
     }
-    this.emitter.done(reason);
+    this.emitter.supply.off(reason);
   }
 
   private _remove(key: PropertyKey): void {
@@ -78,19 +81,22 @@ class PathEntry {
 
 }
 
+/**
+ * @internal
+ */
 class Trackers {
 
   private readonly _root = new PathEntry(noop);
 
-  on(path: StatePath.Normalized, receiver: StateUpdateReceiver): EventSupply {
+  on(path: StatePath.Normalized, receiver: StateUpdateReceiver): Supply {
     return this._entry(path).on(receiver);
   }
 
-  send<V>(path: StatePath.Normalized, newValue: V, oldValue: V): void {
+  send<T>(path: StatePath.Normalized, newValue: T, oldValue: T): void {
     this._root.emitter.send(path, newValue, oldValue);
   }
 
-  done(path: StatePath.Normalized, reason?: any): void {
+  done(path: StatePath.Normalized, reason?: unknown): void {
 
     const entry = this._entry(path, true);
 
@@ -123,17 +129,20 @@ class Trackers {
 
 }
 
+/**
+ * @internal
+ */
 class SubStateTracker implements StateTracker {
 
-  readonly update: <V>(
+  readonly update: <T>(
       this: void,
       path: StatePath,
-      newValue: V,
-      oldValue: V,
+      newValue: T,
+      oldValue: T,
   ) => void;
 
   constructor(private readonly _trackers: Trackers, private readonly _path: StatePath.Normalized) {
-    this.update = <V>(path: StatePath, newValue: V, oldValue: V) => {
+    this.update = <T>(path: StatePath, newValue: T, oldValue: T) => {
       this._trackers.send([...this._path, ...statePath(path)], newValue, oldValue);
     };
   }
@@ -143,8 +152,8 @@ class SubStateTracker implements StateTracker {
   }
 
   onUpdate(): OnStateUpdate;
-  onUpdate(receiver: StateUpdateReceiver): EventSupply;
-  onUpdate(receiver?: StateUpdateReceiver): OnStateUpdate | EventSupply {
+  onUpdate(receiver: StateUpdateReceiver): Supply;
+  onUpdate(receiver?: StateUpdateReceiver): OnStateUpdate | Supply {
     return (this.onUpdate = onEventBy<[StatePath, any, any]>(
         receiver => this._trackers.on(this._path, receiver),
     ).F as OnStateUpdate.Fn)(receiver);
@@ -162,7 +171,7 @@ class SubStateTracker implements StateTracker {
     return new SubStateTracker(this._trackers, [...this._path, ...path]);
   }
 
-  done(reason?: any): void {
+  done(reason?: unknown): void {
     this._trackers.done(this._path, reason);
   }
 
@@ -171,10 +180,10 @@ class SubStateTracker implements StateTracker {
 /**
  * State changes tracker.
  *
- * A state is a tree-like structure of sub-states (nodes) available under [[StatePath]].
+ * A state is a tree-like structure of sub-states (nodes) available under {@link StatePath}.
  *
- * When node modified a [[StateTracker.update]] should be called. Then all state update receivers registered by
- * [[StateTracker.onUpdate]] will receive this update.
+ * When node modified a {@link StateTracker.update} should be called. Then all state update receivers registered by
+ * {@link StateTracker.onUpdate} will receive this update.
  *
  * @category State Tracking
  */
@@ -199,13 +208,13 @@ export class StateTracker implements EventSender<[StatePath.Normalized, any, any
   /**
    * Registers a receiver of state updates.
    *
-   * @param receiver State updates receiver to register.
+   * @param receiver - State updates receiver to register.
    *
    * @returns A supply of state updates.
    */
-  onUpdate(receiver: StateUpdateReceiver): EventSupply;
+  onUpdate(receiver: StateUpdateReceiver): Supply;
 
-  onUpdate(receiver?: StateUpdateReceiver): OnStateUpdate | EventSupply {
+  onUpdate(receiver?: StateUpdateReceiver): OnStateUpdate | Supply {
     return (this.onUpdate = this._tracker.onUpdate().F)(receiver);
   }
 
@@ -217,18 +226,18 @@ export class StateTracker implements EventSender<[StatePath.Normalized, any, any
   /**
    * Updates the component state.
    *
-   * All receivers registered with [[onUpdate]] will receive this update.
+   * All receivers registered with {@link onUpdate} will receive this update.
    *
-   * @typeparam V  A type of changed value.
-   * @param key  Changed value key.
-   * @param newValue  New value.
-   * @param oldValue  Previous value.
+   * @typeParam T - A type of changed value.
+   * @param key - Changed value key.
+   * @param newValue - New value.
+   * @param oldValue - Previous value.
    */
-  get update(): <V>(
+  get update(): <T>(
       this: void,
       path: StatePath,
-      newValue: V,
-      oldValue: V,
+      newValue: T,
+      oldValue: T,
   ) => void {
     return this._tracker.update;
   }
@@ -236,7 +245,7 @@ export class StateTracker implements EventSender<[StatePath.Normalized, any, any
   /**
    * Starts tracking of partial state under the given path.
    *
-   * @param path  A path to state part.
+   * @param path - A path to state part.
    *
    * @return New partial state tracker.
    */
@@ -254,7 +263,7 @@ export class StateTracker implements EventSender<[StatePath.Normalized, any, any
    *
    * @param reason  An optional reason to stop tracking.
    */
-  done(reason?: any): void {
+  done(reason?: unknown): void {
     this._tracker.done(reason);
   }
 

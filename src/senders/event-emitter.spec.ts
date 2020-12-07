@@ -1,4 +1,5 @@
-import { EventSupply, OnEvent__symbol } from '../base';
+import { Supply } from '@proc7ts/primitives';
+import { OnEvent__symbol } from '../base';
 import { EventEmitter } from './event-emitter';
 import Mock = jest.Mock;
 
@@ -28,7 +29,7 @@ describe('EventEmitter', () => {
 
   describe('on', () => {
 
-    let supply: EventSupply;
+    let supply: Supply;
 
     beforeEach(() => {
       supply = emitter.on(mockReceiver);
@@ -106,7 +107,7 @@ describe('EventEmitter', () => {
     it('removes all event receivers', () => {
       emitter.on(mockReceiver);
       emitter.on(mockReceiver2);
-      emitter.done();
+      emitter.supply.off();
 
       expect(emitter.size).toBe(0);
 
@@ -123,7 +124,7 @@ describe('EventEmitter', () => {
 
       emitter.on(mockReceiver).whenOff(whenOff1);
       emitter.on(mockReceiver2).whenOff(whenOff2);
-      emitter.done(reason);
+      emitter.supply.off(reason);
 
       expect(whenOff1).toHaveBeenCalledWith(reason);
       expect(whenOff2).toHaveBeenCalledWith(reason);
@@ -132,7 +133,7 @@ describe('EventEmitter', () => {
 
       const reason = 'test';
 
-      emitter.done(reason);
+      emitter.supply.off(reason);
       emitter.send('event');
 
       const whenOff = jest.fn();

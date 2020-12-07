@@ -1,6 +1,5 @@
-import { noop } from '@proc7ts/primitives';
+import { noop, Supply } from '@proc7ts/primitives';
 import { EventReceiver, eventReceiver } from './event-receiver';
-import { eventSupply } from './event-supply';
 
 describe('EventReceiver', () => {
   describe('eventReceiver', () => {
@@ -34,7 +33,7 @@ describe('EventReceiver', () => {
     it('reuses provided event supply', () => {
 
       const receiver = {
-        supply: eventSupply(),
+        supply: new Supply(),
         receive: jest.fn(),
       };
       const generic = eventReceiver<[string, string]>(receiver);
@@ -56,7 +55,7 @@ describe('EventReceiver', () => {
       // eslint-disable-next-line prefer-const
       let generic: EventReceiver.Generic<[string, string]>;
       const receiver = {
-        supply: eventSupply(() => generic.receive(context, 'foo', 'bar')),
+        supply: new Supply(() => generic.receive(context, 'foo', 'bar')),
         receive: jest.fn(),
       };
 

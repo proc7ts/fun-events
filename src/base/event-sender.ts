@@ -5,7 +5,7 @@
 import { OnEvent } from '../on-event';
 
 /**
- * A key of [[EventSender]] method returning its [[OnEvent]] instance.
+ * A key of {@link EventSender} method returning its {@link OnEvent} instance.
  *
  * @category Core
  */
@@ -14,19 +14,19 @@ export const OnEvent__symbol = (/*#__PURE__*/ Symbol('on-event'));
 /**
  * A sender of events.
  *
- * Contains an [[OnEvent]] instance registering event receivers.
+ * Contains an {@link OnEvent} instance registering event receivers.
  *
  * @category Core
- * @typeparam E  An event type. This is a tuple of event receiver parameter types.
+ * @typeParam TEvent - An event type. This is a tuple of event receiver parameter types.
  */
-export interface EventSender<E extends any[]> {
+export interface EventSender<TEvent extends any[]> {
 
   /**
-   * Returns an [[OnEvent]] instance of this event sender.
+   * Returns an {@link OnEvent} instance of this event sender.
    *
-   * @returns [[OnEvent]] instance registering event receivers sent by this sender.
+   * @returns {@link OnEvent} instance registering event receivers sent by this sender.
    */
-  [OnEvent__symbol](): OnEvent<E>;
+  [OnEvent__symbol](): OnEvent<TEvent>;
 
 }
 
@@ -35,21 +35,21 @@ export namespace EventSender {
   /**
    * A type of events sent by the given event sender.
    *
-   * @typeparam T  Target event sender.
+   * @typeParam TSender - Target event sender.
    */
-  export type Event<T extends EventSender<any>> = T extends EventSender<infer E> ? E : never;
+  export type Event<TSender extends EventSender<any>> = TSender extends EventSender<infer TEvent> ? TEvent : never;
 
 }
 
 /**
- * Checks whether the given object implements an [[EventSender]] interface.
+ * Checks whether the given object implements an {@link EventSender} interface.
  *
  * @category Core
- * @typeparam E  An event type. This is a list of event receiver parameter types.
- * @param value  An object to check.
+ * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
+ * @param value - An object to check.
  *
- * @returns `true` if `value` contains [[OnEvent__symbol]] property, or `false` otherwise.
+ * @returns `true` if `value` contains {@link OnEvent__symbol} property, or `false` otherwise.
  */
-export function isEventSender<E extends any[]>(value: object): value is EventSender<E> {
+export function isEventSender<TEvent extends any[]>(value: object): value is EventSender<TEvent> {
   return OnEvent__symbol in value;
 }

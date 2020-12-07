@@ -1,5 +1,5 @@
-import { noop } from '@proc7ts/primitives';
-import { AfterEvent__symbol, EventKeeper, EventSender, EventSupply, OnEvent__symbol } from '../base';
+import { noop, Supply } from '@proc7ts/primitives';
+import { AfterEvent__symbol, EventKeeper, EventSender, OnEvent__symbol } from '../base';
 import { EventEmitter } from '../senders';
 import { trackValue, trackValueBy } from './track-value';
 import { ValueTracker } from './value-tracker';
@@ -45,7 +45,7 @@ describe('ValueTracker', () => {
   describe('read', () => {
 
     let mockReceiver: Mock<void, [string]>;
-    let supply: EventSupply;
+    let supply: Supply;
 
     beforeEach(() => {
       mockReceiver = jest.fn();
@@ -156,7 +156,7 @@ describe('ValueTracker', () => {
       expect(listener).not.toHaveBeenCalled();
     });
     it('is unbound when value supply is cut off', () => {
-      v1.done();
+      v1.supply.off();
 
       const listener = jest.fn();
 

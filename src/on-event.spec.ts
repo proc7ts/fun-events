@@ -1,6 +1,6 @@
 import { nextArgs, nextSkip } from '@proc7ts/call-thru';
-import { asis, noop } from '@proc7ts/primitives';
-import { EventNotifier, EventReceiver, eventSupply, EventSupply, noEventSupply, OnEvent__symbol } from './base';
+import { asis, neverSupply, noop, Supply } from '@proc7ts/primitives';
+import { EventNotifier, EventReceiver, OnEvent__symbol } from './base';
 import { OnEvent, onEventBy } from './on-event';
 import { EventEmitter } from './senders';
 import Mock = jest.Mock;
@@ -10,7 +10,7 @@ describe('OnEvent', () => {
   describe('[OnEvent__symbol]', () => {
     it('refers to itself', () => {
 
-      const onEvent = onEventBy(() => noEventSupply());
+      const onEvent = onEventBy(neverSupply);
 
       expect(onEvent[OnEvent__symbol]()).toBe(onEvent);
     });
@@ -20,7 +20,7 @@ describe('OnEvent', () => {
 
     let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
     let onEvent: OnEvent<[string]>;
-    let supply: EventSupply;
+    let supply: Supply;
     let offSpy: SpyInstance;
     let emitter: EventNotifier<[string]>;
     let mockReceiver: Mock<void, [string]>;
@@ -62,7 +62,7 @@ describe('OnEvent', () => {
       expect(mockReceiver).toHaveBeenCalledWith('event');
     });
     it('never sends events if their supply is initially cut off', () => {
-      supply = noEventSupply();
+      supply = neverSupply();
       onEvent.once({ supply, receive: (_context, ...event) => mockReceiver(...event) });
       emitter.send('event');
       expect(mockReceiver).not.toHaveBeenCalled();
@@ -131,7 +131,7 @@ describe('OnEvent', () => {
 
       const reason = 'reason';
 
-      emitter.done(reason);
+      emitter.supply.off(reason);
 
       expect(await onEvent.then().catch(asis)).toBe(reason);
     });
@@ -139,12 +139,12 @@ describe('OnEvent', () => {
 
       const reason = 'reason';
 
-      emitter.done(reason);
+      emitter.supply.off(reason);
 
       expect(await onEvent.then(noop, asis)).toBe(reason);
     });
     it('rejects when cut off callback fails', async () => {
-      emitter.done('reason');
+      emitter.supply.off('reason');
 
       const error = new Error('test');
 
@@ -158,11 +158,11 @@ describe('OnEvent', () => {
 
     let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
     let onEvent: OnEvent<[string]>;
-    let supply: EventSupply;
+    let supply: Supply;
     let offSpy: Mock;
     let emitter: EventNotifier<[string]>;
     let mockReceiver: Mock<void, [string]>;
-    let requiredSupply: EventSupply;
+    let requiredSupply: Supply;
 
     beforeEach(() => {
       emitter = new EventNotifier();
@@ -173,7 +173,7 @@ describe('OnEvent', () => {
       });
       onEvent = onEventBy(mockRegister);
       mockReceiver = jest.fn();
-      requiredSupply = eventSupply();
+      requiredSupply = new Supply();
     });
 
     it('sends original events', () => {
@@ -188,7 +188,7 @@ describe('OnEvent', () => {
 
       const whenOff = jest.fn();
 
-      onEvent.tillOff(noEventSupply()).to(mockReceiver).whenOff(whenOff);
+      onEvent.tillOff(neverSupply()).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       expect(mockReceiver).not.toHaveBeenCalled();
       expect(whenOff).toHaveBeenCalled();
@@ -227,12 +227,12 @@ describe('OnEvent', () => {
 
     let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
     let onEvent: OnEvent<[string]>;
-    let supply: EventSupply;
+    let supply: Supply;
     let offSpy: Mock;
     let emitter: EventNotifier<[string]>;
     let mockReceiver: Mock<void, [string]>;
-    let requiredSupply: EventSupply;
-    let dependentSupply: EventSupply;
+    let requiredSupply: Supply;
+    let dependentSupply: Supply;
 
     beforeEach(() => {
       emitter = new EventNotifier();
@@ -243,8 +243,8 @@ describe('OnEvent', () => {
       });
       onEvent = onEventBy(mockRegister);
       mockReceiver = jest.fn();
-      requiredSupply = eventSupply();
-      dependentSupply = eventSupply();
+      requiredSupply = new Supply();
+      dependentSupply = new Supply();
     });
 
     it('sends original events', () => {
@@ -259,7 +259,7 @@ describe('OnEvent', () => {
 
       const whenOff = jest.fn();
 
-      onEvent.tillOff(noEventSupply(), dependentSupply).to(mockReceiver).whenOff(whenOff);
+      onEvent.tillOff(neverSupply(), dependentSupply).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       expect(mockReceiver).not.toHaveBeenCalled();
       expect(whenOff).not.toHaveBeenCalled();
@@ -308,9 +308,9 @@ describe('OnEvent', () => {
     let sender: EventEmitter<[EventNotifier<[string]>?]>;
     let nested1: EventNotifier<[string]>;
     let nested2: EventNotifier<[string]>;
-    let consume: Mock<EventSupply | undefined, [EventNotifier<[string]>?]>;
+    let consume: Mock<Supply | undefined, [EventNotifier<[string]>?]>;
     let receiver: Mock<void, [string]>;
-    let supply: EventSupply;
+    let supply: Supply;
 
     beforeEach(() => {
       sender = new EventEmitter();
@@ -329,8 +329,8 @@ describe('OnEvent', () => {
     it('cuts off previous supply on new event', () => {
 
       const source = new EventEmitter<[]>();
-      const supply1 = eventSupply();
-      const supply2 = eventSupply();
+      const supply1 = new Supply();
+      const supply2 = new Supply();
       let calls = 0;
 
       source.on().consume(() => {
@@ -357,7 +357,7 @@ describe('OnEvent', () => {
     it('does not cut off previous supply on new event returning the same supply', () => {
 
       const source = new EventEmitter<[]>();
-      const supply1 = eventSupply();
+      const supply1 = new Supply();
       let calls = 0;
 
       source.on().consume(() => {
@@ -420,7 +420,7 @@ describe('OnEvent', () => {
 
       const reason = 'some reason';
 
-      sender.done(reason);
+      sender.supply.off(reason);
 
       expect(mockOff).toHaveBeenCalledWith(reason);
 
@@ -439,7 +439,7 @@ describe('OnEvent', () => {
 
       sender.send(nested1);
       nested1.send('value1');
-      nested1.done(reason);
+      nested1.supply.off(reason);
       nested1.send('value2');
 
       expect(mockOff).not.toHaveBeenCalledWith(reason);
@@ -658,7 +658,7 @@ describe('OnEvent', () => {
 
       const reason = 'some reason';
 
-      emitter.done(reason);
+      emitter.supply.off(reason);
       expect(mockOff).toHaveBeenCalledWith(reason);
     });
   });

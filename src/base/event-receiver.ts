@@ -2,11 +2,10 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { noop } from '@proc7ts/primitives';
-import { eventSupply, EventSupply } from './event-supply';
+import { noop, Supply } from '@proc7ts/primitives';
 
 /**
- * Event receiver is called on each event sent by [[EventSender]] when registered.
+ * Event receiver is called on each event sent by {@link EventSender} when registered.
  *
  * A receiver may be represented either by {@link EventReceiver.Function function}, or by
  * {@link EventReceiver.Object object}. The former is a simplest form. The latter allows control all aspects of event
@@ -18,12 +17,12 @@ import { eventSupply, EventSupply } from './event-supply';
  * A _recurrent event_ is an event sent from inside event receiver and targeted the same receiver. Recurrent event
  * processing is scheduled until after the current event processing finishes. To handle recurrent events in a specific
  * way the event receiver may utilize an {@link EventReceiver.Context event processing context} available as
- * a first parameter of [[EventReceiver.Object.receive]] method.
+ * a first parameter of {@link EventReceiver.Object.receive} method.
  *
  * @category Core
- * @typeparam E  An event type. This is a tuple of event receiver parameter types.
+ * @typeParam TEvent - An event type. This is a tuple of event receiver parameter types.
  */
-export type EventReceiver<E extends any[]> = EventReceiver.Function<E> | EventReceiver.Object<E>;
+export type EventReceiver<TEvent extends any[]> = EventReceiver.Function<TEvent> | EventReceiver.Object<TEvent>;
 
 export namespace EventReceiver {
 
@@ -32,63 +31,63 @@ export namespace EventReceiver {
    *
    * It never receives event processing context.
    *
-   * @typeparam E  An event type. This is a tuple of event receiver parameter types.
+   * @typeParam TEvent - An event type. This is a tuple of event receiver parameter types.
    */
-  export type Function<E extends any[]> =
+  export type Function<TEvent extends any[]> =
   /**
-   * @param event  An event represented by function call arguments.
+   * @param event - An event represented by function call arguments.
    */
-      (this: void, ...event: E) => void;
+      (this: void, ...event: TEvent) => void;
 
   /**
    * Event receiver object.
    *
-   * @typeparam E  An event type. This is a tuple of event receiver parameter types.
+   * @typeParam TEvent - An event type. This is a tuple of event receiver parameter types.
    */
-  export interface Object<E extends any[]> {
+  export interface Object<TEvent extends any[]> {
 
     /**
      * Event supply to this receiver.
      *
-     * Events will be supplied to this receiver until this supply is {@link EventSupply.off cut off}.
+     * Events will be supplied to this receiver until this supply is {@link Supply.off cut off}.
      *
      * When omitted a new supply will be created per receiver registration within event supplier.
      */
-    readonly supply?: EventSupply;
+    readonly supply?: Supply;
 
     /**
      * Receives an event.
      *
-     * @param context  An event processing context.
-     * @param event  An event represented as the rest of arguments.
+     * @param context - An event processing context.
+     * @param event - An event represented as the rest of arguments.
      */
-    receive(context: Context<E>, ...event: E): void;
+    receive(context: Context<TEvent>, ...event: TEvent): void;
 
   }
 
   /**
    * The most generic event receiver form.
    *
-   * Any event receiver may be converted to generic form by [[eventReceiver]] function.
+   * Any event receiver may be converted to generic form by {@link eventReceiver} function.
    *
-   * In contrast to [[Object]] this one always has a supply.
+   * In contrast to {@link EventReceiver.Object} this one always has a supply.
    *
-   * @typeparam E  An event type. This is a tuple of event receiver parameter types.
+   * @typeParam TEvent - An event type. This is a tuple of event receiver parameter types.
    */
-  export interface Generic<E extends any[]> extends Object<E> {
+  export interface Generic<TEvent extends any[]> extends Object<TEvent> {
 
-    readonly supply: EventSupply;
+    readonly supply: Supply;
 
   }
 
   /**
    * Event processing context.
    *
-   * It is passed to [[Object]] receivers.
+   * It is passed to {@link EventReceiver.Object} receivers.
    *
-   * @typeparam E  An event type. This is a tuple of event receiver parameter types.
+   * @typeParam TEvent - An event type. This is a tuple of event receiver parameter types.
    */
-  export interface Context<E extends any[]> {
+  export interface Context<TEvent extends any[]> {
 
     /**
      * Schedules the given event receiver to be called to process recurrent event(s).
@@ -103,9 +102,9 @@ export namespace EventReceiver {
      * > This method should be called __before__ the recurrent event issued. Otherwise it may happen that recurrent
      * > event will be ignored in some situations. E.g. when it is issued during receiver registration.
      *
-     * @param receiver  Recurrent events receiver function.
+     * @param receiver - Recurrent events receiver function.
      */
-    onRecurrent(receiver: EventReceiver.Function<E>): void;
+    onRecurrent(receiver: EventReceiver.Function<TEvent>): void;
 
   }
 
@@ -117,28 +116,28 @@ export namespace EventReceiver {
  * The returned event receiver would never send events to original receiver after event supply is cut off.
  *
  * @category Core
- * @typeparam E  An event type. This is a tuple of event receiver parameter types.
- * @param receiver  An event receiver to convert.
+ * @typeParam TEvent - An event type. This is a tuple of event receiver parameter types.
+ * @param receiver - An event receiver to convert.
  *
  * @returns Event `receiver` in most generic form.
  */
-export function eventReceiver<E extends any[]>(receiver: EventReceiver<E>): EventReceiver.Generic<E> {
+export function eventReceiver<TEvent extends any[]>(receiver: EventReceiver<TEvent>): EventReceiver.Generic<TEvent> {
 
   let generic: {
-    readonly supply: EventSupply;
-    receive: (context: EventReceiver.Context<E>, ...event: E) => void;
+    readonly supply: Supply;
+    receive: (context: EventReceiver.Context<TEvent>, ...event: TEvent) => void;
   };
 
   if (typeof receiver === 'function') {
     generic = {
-      supply: eventSupply(),
+      supply: new Supply(),
       receive(_context, ...event) {
         receiver(...event);
       },
     };
   } else {
     generic = {
-      supply: receiver.supply || eventSupply(),
+      supply: receiver.supply || new Supply(),
       receive(context, ...event) {
         if (!this.supply.isOff) {
           // Supply cut off callback may be called before the receiver disabled.

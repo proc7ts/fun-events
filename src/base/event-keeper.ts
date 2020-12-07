@@ -5,7 +5,7 @@
 import { AfterEvent } from '../after-event';
 
 /**
- * A key of [[EventKeeper]] method returning its [[AfterEvent]] instance..
+ * A key of {@link EventKeeper} method returning its {@link AfterEvent} instance.
  *
  * @category Core
  */
@@ -18,16 +18,16 @@ export const AfterEvent__symbol = (/*#__PURE__*/ Symbol('after-event'));
  * after that.
  *
  * @category Core
- * @typeparam E  An event type. This is a list of event receiver parameter types.
+ * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
  */
-export interface EventKeeper<E extends any[]> {
+export interface EventKeeper<TEvent extends any[]> {
 
   /**
-   * Returns an [[AfterEvent]] instance of this event keeper.
+   * Returns an {@link AfterEvent} instance of this event keeper.
    *
-   * @returns [[AfterEvent]] instance registering event receivers sent by this keeper.
+   * @returns {@link AfterEvent} instance registering event receivers sent by this keeper.
    */
-  [AfterEvent__symbol](): AfterEvent<E>;
+  [AfterEvent__symbol](): AfterEvent<TEvent>;
 
 }
 
@@ -36,21 +36,21 @@ export namespace EventKeeper {
   /**
    * A type of events sent by the given event keeper.
    *
-   * @typeparam T  Target event keeper.
+   * @typeParam TKeeper - Target event keeper.
    */
-  export type Event<T extends EventKeeper<any>> = T extends EventKeeper<infer E> ? E : never;
+  export type Event<TKeeper extends EventKeeper<any>> = TKeeper extends EventKeeper<infer TEvent> ? TEvent : never;
 
 }
 
 /**
- * Checks whether the given object implements an [[EventKeeper]] interface.
+ * Checks whether the given object implements an {@link EventKeeper} interface.
  *
  * @category Core
- * @typeparam E  An event type. This is a list of event receiver parameter types.
- * @param value  An object to check.
+ * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
+ * @param value - An object to check.
  *
- * @returns `true` if `value` contains an [[AfterEvent__symbol]] property, or `false` otherwise.
+ * @returns `true` if `value` contains an {@link AfterEvent__symbol} property, or `false` otherwise.
  */
-export function isEventKeeper<E extends any[]>(value: object): value is EventKeeper<E> {
+export function isEventKeeper<TEvent extends any[]>(value: object): value is EventKeeper<TEvent> {
   return AfterEvent__symbol in value;
 }

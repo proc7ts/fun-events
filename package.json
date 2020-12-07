@@ -1,6 +1,6 @@
 {
   "name": "@proc7ts/fun-events",
-  "version": "9.4.2",
+  "version": "10.0.0-dev.0",
   "description": "Functional event processor",
   "keywords": [
     "dom-events",
@@ -22,9 +22,9 @@
     "url": "https://github.com/proc7ts/fun-events/issues"
   },
   "type": "module",
-  "main": "dist/fun-events.cjs",
-  "module": "dist/fun-events.js",
-  "types": "index.d.ts",
+  "main": "./dist/fun-events.cjs",
+  "module": "./dist/fun-events.js",
+  "types": "./index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/fun-events.js",

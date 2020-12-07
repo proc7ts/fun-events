@@ -14,13 +14,13 @@ import { OnEventCallChain } from './on-event-call-chain';
  * The event supply from the given supplier will be cut off each time the call is applied.
  *
  * @category Core
- * @typeparam E  An event type. This is a tuple of argument types of the next pass.
- * @param supplier  A supplier of events to pass down the chain.
+ * @typeParam TEvent - An event type. This is a tuple of argument types of the next pass.
+ * @param supplier - A supplier of events to pass down the chain.
  *
  * @returns Next call passing events from the given `supplier`.
  */
-export function nextOnEvent<E extends any[]>(
-    supplier: EventSupplier<E>,
-): NextCall<OnEventCallChain, E> {
+export function nextOnEvent<TEvent extends any[]>(
+    supplier: EventSupplier<TEvent>,
+): NextCall<OnEventCallChain, TEvent> {
   return nextCall((chain, pass) => chain.onEvent(pass, onSupplied(supplier)));
 }

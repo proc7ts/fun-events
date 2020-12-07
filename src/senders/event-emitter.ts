@@ -2,29 +2,30 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { EventNotifier, EventReceiver, EventSender, EventSupply, OnEvent__symbol } from '../base';
+import { Supply } from '@proc7ts/primitives';
+import { EventNotifier, EventReceiver, EventSender, OnEvent__symbol } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
 
 /**
- * Event emitter is a handy implementation of [[OnEvent]] sender.
+ * Event emitter is a handy implementation of {@link OnEvent} sender.
  *
- * Extends [[EventNotifier]] by making its [[EventNotifier.on]] method implement an [[OnEvent]] interface.
+ * Extends {@link EventNotifier} by making its {@link EventNotifier.on} method implement an {@link OnEvent} interface.
  *
  * @category Core
- * @typeparam E  An event type. This is a list of event receiver parameter types.
+ * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
  */
-export class EventEmitter<E extends any[]> extends EventNotifier<E> implements EventSender<E> {
+export class EventEmitter<TEvent extends any[]> extends EventNotifier<TEvent> implements EventSender<TEvent> {
 
   /**
-   * Returns an [[OnEvent]] sender.
+   * Returns an {@link OnEvent} sender.
    */
-  on(): OnEvent<E>;
-  on(receiver: EventReceiver<E>): EventSupply;
-  on(receiver?: EventReceiver<E>): OnEvent<E> | EventSupply {
-    return (this.on = onEventBy<E>(receiver => super.on(receiver)).F)(receiver);
+  on(): OnEvent<TEvent>;
+  on(receiver: EventReceiver<TEvent>): Supply;
+  on(receiver?: EventReceiver<TEvent>): OnEvent<TEvent> | Supply {
+    return (this.on = onEventBy<TEvent>(receiver => super.on(receiver)).F)(receiver);
   }
 
-  [OnEvent__symbol](): OnEvent<E> {
+  [OnEvent__symbol](): OnEvent<TEvent> {
     return this.on();
   }
 
