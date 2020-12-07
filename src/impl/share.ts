@@ -1,21 +1,22 @@
-import { EventNotifier, EventReceiver, eventSupply, EventSupply, sendEventsTo } from '../base';
+import { Supply } from '@proc7ts/primitives';
+import { EventNotifier, EventReceiver, sendEventsTo } from '../base';
 import { OnEvent } from '../on-event';
 
 /**
  * @internal
  */
-export function share<E extends any[]>(
-    onSource: OnEvent<E>,
-): (receiver: EventReceiver.Generic<E>) => void {
+export function share<TEvent extends any[]>(
+    onSource: OnEvent<TEvent>,
+): (receiver: EventReceiver.Generic<TEvent>) => void {
 
-  const shared = new EventNotifier<E>();
-  let sharedSupply: EventSupply;
-  let initialEvents: E[] | undefined;
+  const shared = new EventNotifier<TEvent>();
+  let sharedSupply: Supply;
+  let initialEvents: TEvent[] | undefined;
 
-  return (receiver: EventReceiver.Generic<E>): void => {
+  return (receiver: EventReceiver.Generic<TEvent>): void => {
     if (!shared.size) {
       initialEvents = [];
-      sharedSupply = eventSupply(() => initialEvents = undefined);
+      sharedSupply = new Supply(() => initialEvents = undefined);
 
       onSource.to({
         supply: sharedSupply,

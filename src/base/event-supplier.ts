@@ -11,6 +11,6 @@ import { EventSender } from './event-sender';
  * Either an {@link EventSender event sender}, or {@link EventKeeper event keeper}.
  *
  * @category Core
- * @typeparam E  An event type. This is a list of event receiver parameter types.
+ * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
  */
-export type EventSupplier<E extends any[]> = EventSender<E> | EventKeeper<E>;
+export type EventSupplier<TEvent extends any[]> = EventSender<TEvent> | EventKeeper<TEvent>;

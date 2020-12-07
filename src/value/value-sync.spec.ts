@@ -1,5 +1,4 @@
-import { asis } from '@proc7ts/primitives';
-import { EventSupply } from '../base';
+import { asis, Supply } from '@proc7ts/primitives';
 import { EventEmitter } from '../senders';
 import { trackValue } from './track-value';
 import { ValueSync } from './value-sync';
@@ -8,9 +7,9 @@ import { ValueTracker } from './value-tracker';
 describe('ValueSync', () => {
 
   let v1: ValueTracker<number>;
-  let es1: EventSupply;
+  let es1: Supply;
   let v2: ValueTracker<number>;
-  let es2: EventSupply;
+  let es2: Supply;
   let v3: ValueTracker<number>;
   let sync: ValueSync<number>;
 
@@ -87,7 +86,7 @@ describe('ValueSync', () => {
       const reason = 'some reason';
 
       es1.whenOff(mockWhenDone);
-      sync.done(reason);
+      sync.supply.off(reason);
       expect(mockWhenDone).toHaveBeenCalledWith(reason);
 
       v2.it = 999;

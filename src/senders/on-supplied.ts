@@ -6,14 +6,14 @@ import { AfterEvent__symbol, EventSupplier, isEventSender, OnEvent__symbol } fro
 import { OnEvent } from '../on-event';
 
 /**
- * Builds an [[OnEvent]] sender of events supplied by the given `supplier`.
+ * Builds an {@link OnEvent} sender of events supplied by the given `supplier`.
  *
  * @category Core
- * @typeparam E  An event type. This is a list of event receiver parameter types.
- * @param supplier  An event supplier.
+ * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
+ * @param supplier - An event supplier.
  *
- * @returns An [[OnEvent]] sender of events originated from the given `supplier`.
+ * @returns An {@link OnEvent} sender of events originated from the given `supplier`.
  */
-export function onSupplied<E extends any[]>(supplier: EventSupplier<E>): OnEvent<E> {
+export function onSupplied<TEvent extends any[]>(supplier: EventSupplier<TEvent>): OnEvent<TEvent> {
   return isEventSender(supplier) ? supplier[OnEvent__symbol]() : supplier[AfterEvent__symbol]();
 }

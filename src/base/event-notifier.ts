@@ -2,43 +2,43 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
+import { Supply, SupplyPeer } from '@proc7ts/primitives';
 import { receiveByEach } from './event-notifier.impl';
 import { eventReceiver, EventReceiver } from './event-receiver';
-import { eventSupply, EventSupply, EventSupply__symbol, eventSupplyOf, EventSupplyPeer } from './event-supply';
 
 /**
  * Event notifier can be used to register event receivers and send events to them.
  *
- * It does not implement an [[EventSender]] interface though. Use an [[EventEmitter]] if you need one.
+ * It does not implement an {@link EventSender} interface though. Use an {@link EventEmitter} if you need one.
  *
  * Manages a list of registered event receivers, and removes them from the list once their supplies
- * are {@link EventSupply.off cut off}.
+ * are {@link Supply.off cut off}.
  *
  * @category Core
- * @typeparam E  An event type. This is a list of event receiver parameter types.
+ * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
  */
-export class EventNotifier<E extends any[]> implements EventSupplyPeer {
+export class EventNotifier<TEvent extends any[]> implements SupplyPeer {
 
   /**
    * @internal
    */
-  private _rcs?: Set<EventReceiver.Generic<E>>;
+  private _rcs?: Set<EventReceiver.Generic<TEvent>>;
 
-  readonly [EventSupply__symbol]: EventSupply;
+  readonly supply: Supply;
 
   /**
    * Sends the given `event` to all registered receivers.
    *
-   * @param event  An event to send represented by function call arguments.
+   * @param event - An event to send represented by function call arguments.
    */
-  readonly send: (this: this, ...event: E) => void;
+  readonly send: (this: this, ...event: TEvent) => void;
 
   constructor() {
 
-    const rcs = this._rcs = new Set<EventReceiver.Generic<E>>();
+    const rcs = this._rcs = new Set<EventReceiver.Generic<TEvent>>();
 
     this.send = receiveByEach(rcs);
-    this[EventSupply__symbol] = eventSupply(() => {
+    this.supply = new Supply(() => {
       rcs.clear();
       delete this._rcs;
     });
@@ -58,11 +58,11 @@ export class EventNotifier<E extends any[]> implements EventSupplyPeer {
    *
    * The `[OnEvent__symbol]` method is an alias of this one.
    *
-   * @param receiver  A receiver of events to register.
+   * @param receiver - A receiver of events to register.
    *
    * @returns A supply of events to the given `receiver`.
    */
-  on(receiver: EventReceiver<E>): EventSupply {
+  on(receiver: EventReceiver<TEvent>): Supply {
 
     const generic = eventReceiver(receiver);
     const supply = generic.supply.needs(this);
@@ -74,21 +74,6 @@ export class EventNotifier<E extends any[]> implements EventSupplyPeer {
     }
 
     return supply;
-  }
-
-  /**
-   * Removes all registered event receivers and cuts off corresponding event supplies.
-   *
-   * After this method call they won't receive any events. While new receivers would be cut off immediately upon
-   * registration.
-   *
-   * @param reason  A reason to stop sending events.
-   *
-   * @returns `this` instance.
-   */
-  done(reason?: any): this {
-    eventSupplyOf(this).off(reason);
-    return this;
   }
 
 }

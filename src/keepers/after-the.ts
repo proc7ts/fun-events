@@ -6,13 +6,14 @@ import { noop, valueProvider } from '@proc7ts/primitives';
 import { AfterEvent, afterEventBy } from '../after-event';
 
 /**
- * Builds an [[AfterEvent]] keeper of the given `event`.
+ * Builds an {@link AfterEvent} keeper of the given `event`.
  *
  * @category Core
- * @param event  An event that will be sent to all receivers upon registration.
+ * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
+ * @param event - An event that will be sent to all receivers upon registration.
  *
- * @returns An [[AfterEvent]] keeper that always sends the given `event`.
+ * @returns An {@link AfterEvent} keeper that always sends the given `event`.
  */
-export function afterThe<E extends any[]>(...event: E): AfterEvent<E> {
+export function afterThe<TEvent extends any[]>(...event: TEvent): AfterEvent<TEvent> {
   return afterEventBy(noop, valueProvider(event));
 }

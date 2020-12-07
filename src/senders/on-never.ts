@@ -6,7 +6,7 @@ import { neverReceive } from '../base/impl';
 import { OnEvent, onEventBy } from '../on-event';
 
 /**
- * An [[OnEvent]] sender that never sends any events.
+ * An {@link OnEvent} sender that never sends any events.
  *
  * @category Core
  */

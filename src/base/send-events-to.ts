@@ -10,16 +10,18 @@ import { eventReceiver, EventReceiver } from './event-receiver';
  * Creates an event sender targeted specific receiver.
  *
  * @category Core
- * @typeparam E  An event type. This is a list of event receiver parameter types.
+ * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
  *
- * @param receiver  Target event receiver.
+ * @param receiver - Target event receiver.
  *
  * @returns A function accepting events and sending them to target `receiver`.
  */
-export function sendEventsTo<E extends any[]>(receiver: EventReceiver<E>): (this: void, ...event: E) => void {
+export function sendEventsTo<TEvent extends any[]>(
+    receiver: EventReceiver<TEvent>,
+): (this: void, ...event: TEvent) => void {
 
   const generic = eventReceiver(receiver);
-  let send: (...event: E) => void = receiveByEach([generic]);
+  let send: (...event: TEvent) => void = receiveByEach([generic]);
 
   generic.supply.whenOff(() => send = noop);
 

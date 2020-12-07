@@ -1,5 +1,4 @@
-import { asis } from '@proc7ts/primitives';
-import { EventSupply } from '../base';
+import { asis, Supply } from '@proc7ts/primitives';
 import { EventEmitter } from './event-emitter';
 import { onAnyAsync } from './on-any-async';
 import Mock = jest.Mock;
@@ -10,7 +9,7 @@ describe('onAnyAsync', () => {
   let receiver: Mock<void, [string, number]>;
   let received: Promise<[string, number]>[];
   let resolvers: ((resolved: [string, number] | PromiseLike<[string, number]>) => void)[];
-  let supply: EventSupply;
+  let supply: Supply;
 
   beforeEach(() => {
     origin = new EventEmitter<[string | Promise<string>]>();
@@ -69,7 +68,7 @@ describe('onAnyAsync', () => {
 
     const reason = 'test';
 
-    origin.done(reason);
+    origin.supply.off(reason);
     expect(await next().catch(asis)).toBe(reason);
 
     const whenOff = jest.fn();

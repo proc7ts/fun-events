@@ -1,5 +1,4 @@
-import { asis } from '@proc7ts/primitives';
-import { EventSupply } from '../base';
+import { asis, Supply } from '@proc7ts/primitives';
 import { EventEmitter } from './event-emitter';
 import { onAsync } from './on-async';
 import Mock = jest.Mock;
@@ -10,7 +9,7 @@ describe('onAsync', () => {
   let receiver: Mock<void, string[]>;
   let received: Promise<string[]>[];
   let resolvers: ((resolved: string[] | PromiseLike<string[]>) => void)[];
-  let supply: EventSupply;
+  let supply: Supply;
 
   beforeEach(() => {
     origin = new EventEmitter<[string | Promise<string>]>();
@@ -94,7 +93,7 @@ describe('onAsync', () => {
 
     const reason = 'test';
 
-    origin.done(reason);
+    origin.supply.off(reason);
     expect(whenOff).not.toHaveBeenCalled();
 
     sendSecond('2');
@@ -110,7 +109,7 @@ describe('onAsync', () => {
 
     const reason = 'test';
 
-    origin.done(reason);
+    origin.supply.off(reason);
     expect(await next().catch(asis)).toBe(reason);
     expect(whenOff).toHaveBeenCalledWith(reason);
 
@@ -129,7 +128,7 @@ describe('onAsync', () => {
     origin.send(Promise.resolve('1'));
     origin.send(Promise.resolve('2'));
     origin.send(Promise.resolve('3'));
-    origin.done(reason);
+    origin.supply.off(reason);
 
     expect(whenOff).not.toHaveBeenCalled();
     expect(await next()).toEqual(['1']);

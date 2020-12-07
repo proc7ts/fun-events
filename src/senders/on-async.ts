@@ -3,13 +3,15 @@
  * @module @proc7ts/fun-events
  */
 import { nextArg } from '@proc7ts/call-thru';
-import { EventSender, eventSupply, sendEventsTo } from '../base';
+import { Supply } from '@proc7ts/primitives';
+import { EventSender, sendEventsTo } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
 import { onAnyAsync } from './on-any-async';
 import { onSupplied } from './on-supplied';
 
 /**
- * Builds an [[OnEvent]] sender of asynchronously resolved events originated from the given sender of unresolved events.
+ * Builds an {@link OnEvent} sender of asynchronously resolved events originated from the given sender of unresolved
+ * events.
  *
  * Receives events or their promises from the given event sender, and sends them once they are resolved in the same
  * order as they have been received. Possibly in batches, e.g. when events resolved out of order.
@@ -19,18 +21,18 @@ import { onSupplied } from './on-supplied';
  * too, but only after all incoming events resolved and sent.
  *
  * @category Core
- * @typeparam E  Resolved event type.
- * @param from  Unresolved events sender containing either events or their promises.
+ * @typeParam TEvent - Resolved event type.
+ * @param from - Unresolved events sender containing either events or their promises.
  *
  * @returns New `OnEvent` sender of resolved events.
  */
-export function onAsync<E>(from: EventSender<[PromiseLike<E> | E]>): OnEvent<[E, ...E[]]> {
+export function onAsync<TEvent>(from: EventSender<[PromiseLike<TEvent> | TEvent]>): OnEvent<[TEvent, ...TEvent[]]> {
   return onEventBy(receiver => {
 
     const { supply } = receiver;
     const dispatch = sendEventsTo(receiver);
 
-    const sourceSupply = eventSupply();
+    const sourceSupply = new Supply();
     let numInProcess = 0;
     const source = onSupplied(from)
         .tillOff(supply, sourceSupply)
@@ -38,7 +40,7 @@ export function onAsync<E>(from: EventSender<[PromiseLike<E> | E]>): OnEvent<[E,
           ++numInProcess;
           return nextArg(event);
         });
-    let received: E[] = [];
+    let received: TEvent[] = [];
     let numSent = 1;
     let numReceived = 0;
 
@@ -58,7 +60,7 @@ export function onAsync<E>(from: EventSender<[PromiseLike<E> | E]>): OnEvent<[E,
         ++numReceived;
         if (numReceived > i) {
 
-          let toSend: E[];
+          let toSend: TEvent[];
 
           if (numReceived === received.length) {
             // Can send all received events
@@ -72,7 +74,7 @@ export function onAsync<E>(from: EventSender<[PromiseLike<E> | E]>): OnEvent<[E,
           numReceived -= toSend.length;
           numInProcess -= toSend.length;
 
-          dispatch(...(toSend as [E, ...E[]]));
+          dispatch(...(toSend as [TEvent, ...TEvent[]]));
           if (!numInProcess && sourceSupply.isOff) {
             receiver.supply.needs(sourceSupply);
           }

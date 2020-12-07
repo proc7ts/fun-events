@@ -28,17 +28,17 @@ export namespace StateUpdateReceiver {
   /**
    * State updates receiver function signature.
    *
-   * @typeparam V  A type of changed value.
-   * @param path  Normalized path to changed state part.
-   * @param newValue  New value.
-   * @param oldValue  Previous value.
+   * @typeParam T - A type of changed value.
+   * @param path - Normalized path to changed state part.
+   * @param newValue - New value.
+   * @param oldValue - Previous value.
    */
   export type Function =
-      <V>(
+      <T>(
           this: void,
           path: StatePath.Normalized,
-          newValue: V,
-          oldValue: V,
+          newValue: T,
+          oldValue: T,
       ) => void;
 
   /**
@@ -49,13 +49,13 @@ export namespace StateUpdateReceiver {
     /**
      * Receives a state update.
      *
-     * @typeparam V  A type of changed value.
-     * @param context  State update processing context.
-     * @param path  Normalized path to changed state part.
-     * @param newValue  New value.
-     * @param oldValue  Previous value.
+     * @typeParam T - A type of changed value.
+     * @param context - State update processing context.
+     * @param path - Normalized path to changed state part.
+     * @param newValue - New value.
+     * @param oldValue - Previous value.
      */
-    receive<V>(context: Context, path: StatePath.Normalized, newValue: V, oldValue: V): void;
+    receive<T>(context: Context, path: StatePath.Normalized, newValue: T, oldValue: T): void;
 
   }
 

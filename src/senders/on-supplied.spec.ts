@@ -1,4 +1,5 @@
-import { AfterEvent__symbol, EventKeeper, EventReceiver, EventSender, EventSupply, OnEvent__symbol } from '../base';
+import { Supply } from '@proc7ts/primitives';
+import { AfterEvent__symbol, EventKeeper, EventReceiver, EventSender, OnEvent__symbol } from '../base';
 import { OnEvent } from '../on-event';
 import { trackValue } from '../value';
 import { EventEmitter } from './event-emitter';
@@ -10,7 +11,7 @@ describe('onSupplied', () => {
     let sender: EventEmitter<[string]>;
     let onEvent: OnEvent<[string]>;
     let mockReceiver: EventReceiver<[string]>;
-    let supply: EventSupply;
+    let supply: Supply;
 
     beforeEach(() => {
       sender = new EventEmitter();

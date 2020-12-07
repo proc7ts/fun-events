@@ -1,18 +1,19 @@
-import { EventReceiver, eventSupply, EventSupply, EventSupplyPeer } from '../base';
+import { Supply, SupplyPeer } from '@proc7ts/primitives';
+import { EventReceiver } from '../base';
 import { OnEvent } from '../on-event';
 
 /**
  * @internal
  */
-export function tillOff<E extends any[]>(
-    onSource: OnEvent<E>,
-    required: EventSupplyPeer,
-    dependentSupply?: EventSupply,
-): (receiver: EventReceiver.Generic<E>) => void {
-  return (receiver: EventReceiver.Generic<E>): void => {
+export function tillOff<TEvent extends any[]>(
+    onSource: OnEvent<TEvent>,
+    required: SupplyPeer,
+    dependentSupply?: Supply,
+): (receiver: EventReceiver.Generic<TEvent>) => void {
+  return (receiver: EventReceiver.Generic<TEvent>): void => {
     if (dependentSupply) {
       onSource.to({
-        supply: eventSupply().needs(required).cuts(dependentSupply),
+        supply: new Supply().needs(required).cuts(dependentSupply),
         receive: (receiver.receive as (...args: any[]) => void).bind(receiver),
       });
     } else {

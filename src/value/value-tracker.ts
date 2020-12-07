@@ -2,6 +2,7 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
+import { neverSupply, Supply, SupplyPeer } from '@proc7ts/primitives';
 import { AfterEvent, afterEventBy } from '../after-event';
 import {
   AfterEvent__symbol,
@@ -9,12 +10,7 @@ import {
   EventReceiver,
   EventSender,
   EventSupplier,
-  EventSupply,
-  EventSupply__symbol,
-  eventSupplyOf,
-  EventSupplyPeer,
   isEventKeeper,
-  noEventSupply,
   OnEvent__symbol,
 } from '../base';
 import { OnEvent } from '../on-event';
@@ -23,23 +19,23 @@ import { onSupplied } from '../senders';
 /**
  * Value accessor and changes tracker.
  *
- * Implements an [[EventSender]] interface by sending value changes to registered receivers as a pair of new and old
+ * Implements an {@link EventSender} interface by sending value changes to registered receivers as a pair of new and old
  * values.
  *
- * Implements an [[EventKeeper]] interface by sending current value and its updates.
+ * Implements an {@link EventKeeper} interface by sending current value and its updates.
  *
  * @category Value Tracking
- * @typeparam T  Tracked value type.
+ * @typeParam T - Tracked value type.
  */
-export abstract class ValueTracker<T = any> implements EventSender<[T, T]>, EventKeeper<[T]>, EventSupplyPeer {
+export abstract class ValueTracker<T> implements EventSender<[T, T]>, EventKeeper<[T]>, SupplyPeer {
 
   /**
    * @internal
    */
-  private _by = noEventSupply();
+  private _by = neverSupply();
 
   /**
-   * Returns [[OnEvent]] sender of value changes.
+   * Returns {@link OnEvent} sender of value changes.
    *
    * The `[OnEvent__symbol]` property is an alias of this one.
    *
@@ -52,14 +48,14 @@ export abstract class ValueTracker<T = any> implements EventSender<[T, T]>, Even
    *
    * The new value is sent as first argument, and the old value as a second one.
    *
-   * @param receiver  A receiver to register.
+   * @param receiver - A receiver to register.
    *
    * @returns A supply of value changes.
    */
-  abstract on(receiver: EventReceiver<[T, T]>): EventSupply;
+  abstract on(receiver: EventReceiver<[T, T]>): Supply;
 
   /**
-   * Builds an [[AfterEvent]] keeper of current value.
+   * Builds an {@link AfterEvent} keeper of current value.
    *
    * The `[AfterEvent__symbol]` property is an alias of this one.
    *
@@ -70,13 +66,13 @@ export abstract class ValueTracker<T = any> implements EventSender<[T, T]>, Even
   /**
    * Registers a receiver of current values.
    *
-   * @param receiver  A receiver to register.
+   * @param receiver - A receiver to register.
    *
    * @returns A supply of current value.
    */
-  read(receiver: EventReceiver<[T]>): EventSupply;
+  read(receiver: EventReceiver<[T]>): Supply;
 
-  read(receiver?: EventReceiver<[T]>): AfterEvent<[T]> | EventSupply {
+  read(receiver?: EventReceiver<[T]>): AfterEvent<[T]> | Supply {
     return (this.read = afterEventBy<[T]>(
         receiver => this.on(receiveNewValue(receiver)),
         () => [this.it],
@@ -94,7 +90,7 @@ export abstract class ValueTracker<T = any> implements EventSender<[T, T]>, Even
   /**
    * An event supply of this value tracker.
    */
-  abstract readonly [EventSupply__symbol]: EventSupply;
+  abstract readonly supply: Supply;
 
   /**
    * The tracked value.
@@ -106,11 +102,11 @@ export abstract class ValueTracker<T = any> implements EventSender<[T, T]>, Even
    *
    * If the value is already updated by another supplier, then unbinds from the old one first.
    *
-   * Call the [[ValueTracker.byNone]] method to unbind the tracked value from the `source`.
+   * Call the {@link ValueTracker.byNone} method to unbind the tracked value from the `source`.
    *
    * Note that explicitly updating the value would override the value received from the `source`.
    *
-   * @param supplier  The source value sender or keeper.
+   * @param supplier - The source value sender or keeper.
    *
    * @returns `this` instance.
    */
@@ -121,28 +117,28 @@ export abstract class ValueTracker<T = any> implements EventSender<[T, T]>, Even
    *
    * If the value is already updated by another value supplier, then unbinds from the old one first.
    *
-   * Call the [[ValueTracker.byNone]] method to unbind the tracked value from the `source`.
+   * Call the {@link ValueTracker.byNone} method to unbind the tracked value from the `source`.
    *
    * Note that explicitly updating the value would override the value received from the `source`.
    *
-   * @typeparam S  Source value type.
-   * @param supplier  The event supplier to extract value suppliers from.
-   * @param extract  A function extracting value supplier from event received from `supplier`.
+   * @typeParam TSrcEvent - Source event type.
+   * @param supplier - The event supplier to extract value suppliers from.
+   * @param extract - A function extracting value supplier from event received from `supplier`.
    * May return `undefined` to suspend receiving values.
    *
    * @returns `this` instance.
    */
-  by<S extends any[]>(
-      supplier: EventSupplier<S>,
-      extract: (this: void, ...event: S) => EventSupplier<[T]> | undefined,
+  by<TSrcEvent extends any[]>(
+      supplier: EventSupplier<TSrcEvent>,
+      extract: (this: void, ...event: TSrcEvent) => EventSupplier<[T]> | undefined,
   ): this;
 
-  by<S extends any[]>(
-      supplier: EventSupplier<S> | EventSupplier<[T]>,
-      extract?: (this: void, ...event: S) => EventSupplier<[T]> | undefined,
+  by<TSrcEvent extends any[]>(
+      supplier: EventSupplier<TSrcEvent> | EventSupplier<[T]>,
+      extract?: (this: void, ...event: TSrcEvent) => EventSupplier<[T]> | undefined,
   ): this {
 
-    const acceptValuesFrom = (sender: EventSupplier<[T]>): EventSupply => {
+    const acceptValuesFrom = (sender: EventSupplier<[T]>): Supply => {
 
       const onValue = isEventKeeper(sender) ? sender[AfterEvent__symbol]() : sender[OnEvent__symbol]();
 
@@ -157,9 +153,9 @@ export abstract class ValueTracker<T = any> implements EventSender<[T, T]>, Even
       this._by = acceptValuesFrom(sender);
     } else {
 
-      const container = supplier as EventSupplier<S>;
+      const container = supplier as EventSupplier<TSrcEvent>;
 
-      this._by = onSupplied(container).consume((...event: S) => {
+      this._by = onSupplied(container).consume((...event: TSrcEvent) => {
 
         const sender = extract(...event);
 
@@ -171,7 +167,7 @@ export abstract class ValueTracker<T = any> implements EventSender<[T, T]>, Even
       });
     }
 
-    this._by.whenOff(() => this._by = noEventSupply());
+    this._by.whenOff(() => this._by = neverSupply());
 
     return this;
   }
@@ -181,7 +177,7 @@ export abstract class ValueTracker<T = any> implements EventSender<[T, T]>, Even
    *
    * If the tracker is not bound then does nothing.
    *
-   * @param reason  Arbitrary reason of unbinding the value.
+   * @param reason - Arbitrary reason of unbinding the value.
    *
    * @returns `this` instance.
    */
@@ -190,28 +186,14 @@ export abstract class ValueTracker<T = any> implements EventSender<[T, T]>, Even
     return this;
   }
 
-  /**
-   * Removes all registered event receivers and cuts off corresponding event supplies.
-   *
-   * After this method call they won't receive events.
-
-   * @param reason  A reason to stop sending events.
-   *
-   * @returns `this` instance.
-   */
-  done(reason?: any): this {
-    eventSupplyOf(this).off(reason);
-    return this;
-  }
-
 }
 
 /**
  * @internal
  */
-function receiveNewValue<T, N extends T>(
+function receiveNewValue<T>(
     valueReceiver: EventReceiver.Generic<[T]>,
-): EventReceiver.Generic<[N, T]> {
+): EventReceiver.Generic<[T, T]> {
   return {
     supply: valueReceiver.supply,
     receive(context, newValue) {

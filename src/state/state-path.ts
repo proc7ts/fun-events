@@ -30,16 +30,17 @@ export namespace StatePath {
  * Normalizes a state path consisting of single key.
  *
  * @category State Tracking
- * @param key  A path key.
+ * @typeParam TKey - A type of path key.
+ * @param key - A path key.
  *
  * @return Normalized state path.
  */
-export function statePath<K extends PropertyKey>(key: K): [K];
+export function statePath<TKey extends PropertyKey>(key: TKey): readonly [TKey];
 
 /**
  * Normalizes arbitrary state path. I.e. converts it to array.
  *
- * @param path  Arbitrary state path.
+ * @param path - Arbitrary state path.
  *
  * @return Normalized state path.
  */

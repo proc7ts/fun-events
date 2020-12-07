@@ -1,20 +1,20 @@
 import { isNextCall, NextCall__symbol } from '@proc7ts/call-thru';
-import { noop } from '@proc7ts/primitives';
-import { EventReceiver, EventSender, eventSupply, EventSupply, noEventSupply, OnEvent__symbol } from '../base';
+import { neverSupply, noop, Supply } from '@proc7ts/primitives';
+import { EventReceiver, EventSender, OnEvent__symbol } from '../base';
 import { OnEvent } from '../on-event';
 import { OnEventCallChain } from '../passes';
 
 /**
  * @internal
  */
-export function thru<E extends any[]>(
-    onSource: OnEvent<E>,
+export function thru<TEvent extends any[]>(
+    onSource: OnEvent<TEvent>,
     passes: ((...args: any[]) => any)[],
-): (receiver: EventReceiver.Generic<E>) => void {
+): (receiver: EventReceiver.Generic<TEvent>) => void {
 
   interface ChainEntry {
     readonly chain: OnEventCallChain;
-    supply: EventSupply;
+    supply: Supply;
   }
 
   return (receiver: EventReceiver.Generic<any>): void => {
@@ -25,7 +25,7 @@ export function thru<E extends any[]>(
       supply: receiver.supply,
       receive(context, ...event) {
 
-        const chain = (index: number, chainSupply: EventSupply): [OnEventCallChain, EventSupply] => {
+        const chain = (index: number, chainSupply: Supply): [OnEventCallChain, Supply] => {
 
           const lastPass = index >= passes.length;
 
@@ -60,7 +60,7 @@ export function thru<E extends any[]>(
                   sender: EventSender<E>,
               ): void {
 
-                const supply = eventSupply().needs(entry.supply);
+                const supply = new Supply().needs(entry.supply);
 
                 sender[OnEvent__symbol]().to({
                   supply,
@@ -75,7 +75,7 @@ export function thru<E extends any[]>(
 
           chains[index] = entry;
 
-          return [entry.chain, noEventSupply()];
+          return [entry.chain, neverSupply()];
 
           function handleResult(
               callResult: any,
@@ -83,7 +83,7 @@ export function thru<E extends any[]>(
               parentSupply = entry.supply,
           ): void {
 
-            const [nextChain, prevSupply] = chain(index, eventSupply().needs(parentSupply));
+            const [nextChain, prevSupply] = chain(index, new Supply().needs(parentSupply));
 
             try {
               if (isNextCall(callResult)) {
@@ -99,7 +99,7 @@ export function thru<E extends any[]>(
           }
         };
 
-        const [firstChain, prevSupply] = chain(0, eventSupply().needs(receiver.supply));
+        const [firstChain, prevSupply] = chain(0, new Supply().needs(receiver.supply));
 
         try {
           firstChain.call(passes[0], event);

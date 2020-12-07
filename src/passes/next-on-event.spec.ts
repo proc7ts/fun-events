@@ -1,5 +1,6 @@
 import { nextSkip } from '@proc7ts/call-thru';
-import { EventSender, EventSupply } from '../base';
+import { Supply } from '@proc7ts/primitives';
+import { EventSender } from '../base';
 import { OnEvent } from '../on-event';
 import { EventEmitter } from '../senders';
 import { nextOnEvent } from './next-on-event';
@@ -13,7 +14,7 @@ describe('nextOnEvent', () => {
   let extract: Mock<EventSender<[string]> | undefined, [EventEmitter<[string]>?]>;
   let result: OnEvent<[string]>;
   let receiver: Mock<void, [string]>;
-  let supply: EventSupply;
+  let supply: Supply;
 
   beforeEach(() => {
     sender = new EventEmitter();
@@ -76,7 +77,7 @@ describe('nextOnEvent', () => {
 
     const reason = 'some reason';
 
-    sender.done(reason);
+    sender.supply.off(reason);
 
     expect(mockOff).toHaveBeenCalledWith(reason);
 
@@ -96,7 +97,7 @@ describe('nextOnEvent', () => {
 
     sender.send(nested1);
     nested1.send('value1');
-    nested1.done(reason);
+    nested1.supply.off(reason);
     nested1.send('value2');
 
     expect(mockOff).not.toHaveBeenCalledWith(reason);

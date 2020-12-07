@@ -4,24 +4,24 @@ import { eventReceiver, EventReceiver } from './event-receiver';
  * Creates an event receiver function that dispatches events to each of the given event receivers.
  *
  * @internal
- * @param receivers  An iterable of event receivers to dispatch event to.
+ * @param receivers - An iterable of event receivers to dispatch event to.
  *
  * @returns An event receiver function that does not utilize event processing context an thus can be called directly.
  */
-export function receiveByEach<E extends any[]>(
-    receivers: Iterable<EventReceiver.Generic<E>>,
-): (this: void, ...event: E) => void {
+export function receiveByEach<TEvent extends any[]>(
+    receivers: Iterable<EventReceiver.Generic<TEvent>>,
+): (this: void, ...event: TEvent) => void {
 
-  let send: (this: void, event: E) => void = sendNonRecurrent;
+  let send: (this: void, event: TEvent) => void = sendNonRecurrent;
 
   return (...event) => send(event);
 
-  function sendNonRecurrent(event: E): void {
+  function sendNonRecurrent(event: TEvent): void {
 
     let actualReceivers = receivers;
-    const received: E[] = [];
+    const received: TEvent[] = [];
 
-    send = (recurrent: E) => received.push(recurrent);
+    send = (recurrent: TEvent) => received.push(recurrent);
 
     try {
       for (; ;) {
@@ -41,12 +41,15 @@ export function receiveByEach<E extends any[]>(
   }
 }
 
-function processEvent<E extends any[]>(
-    receivers: Iterable<EventReceiver.Generic<E>>,
-    event: E,
-): EventReceiver.Generic<E>[] {
+/**
+ * @internal
+ */
+function processEvent<TEvent extends any[]>(
+    receivers: Iterable<EventReceiver.Generic<TEvent>>,
+    event: TEvent,
+): EventReceiver.Generic<TEvent>[] {
 
-  const recurrentReceivers: EventReceiver.Generic<E>[] = [];
+  const recurrentReceivers: EventReceiver.Generic<TEvent>[] = [];
 
   for (const receiver of receivers) {
 
@@ -54,7 +57,7 @@ function processEvent<E extends any[]>(
 
     recurrentReceivers.push(receiver);
 
-    const context: EventReceiver.Context<E> = {
+    const context: EventReceiver.Context<TEvent> = {
       onRecurrent(recurrentReceiver) {
         recurrentReceivers[idx] = eventReceiver({
           supply: receiver.supply,

@@ -100,7 +100,7 @@ describe('DomEventDispatcher', () => {
       const supply = dispatcher.on('click').to(mockListener);
       const reason = 'test reason';
 
-      dispatcher.done(reason);
+      dispatcher.supply.off(reason);
       expect(mockTarget.removeEventListener).toHaveBeenCalled();
 
       const whenOff = jest.fn();
@@ -112,7 +112,7 @@ describe('DomEventDispatcher', () => {
 
       const reason = 'test reason';
 
-      dispatcher.done(reason);
+      dispatcher.supply.off(reason);
 
       const supply = dispatcher.on('click').to(mockListener);
 
@@ -124,7 +124,7 @@ describe('DomEventDispatcher', () => {
       expect(whenOff).toHaveBeenCalledWith(reason);
     });
     it('rejects event dispatching', () => {
-      dispatcher.done();
+      dispatcher.supply.off();
       expect(dispatcher.dispatch(new KeyboardEvent('click'))).toBe(false);
       expect(mockTarget.dispatchEvent).not.toHaveBeenCalled();
     });
