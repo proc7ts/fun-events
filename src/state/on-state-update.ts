@@ -48,23 +48,6 @@ export interface OnStateUpdate extends OnEvent<[StatePath.Normalized, any, any]>
   to(receiver: StateUpdateReceiver): Supply;
 
   /**
-   * Builds an {@link OnStateUpdate} sender of events originated from this one that stops sending them to registered
-   * receiver after the first one.
-   *
-   * @returns State updates sender.
-   */
-  once(): OnStateUpdate;
-
-  /**
-   * Registers a receiver of state updates originated from this sender that stops receiving them after the first one.
-   *
-   * @param receiver - A receiver of state updates to register.
-   *
-   * @returns A supply of state updates.
-   */
-  once(receiver: StateUpdateReceiver): Supply;
-
-  /**
    * Builds an {@link OnStateUpdate} sender that sends updated from this one until the required `supply` is cut off.
    *
    * The outgoing events supply will be cut off once incoming event supply does. Unless a second supply passed in.

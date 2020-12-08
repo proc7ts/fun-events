@@ -4,7 +4,7 @@
  */
 import { Supply, SupplyPeer } from '@proc7ts/primitives';
 import { eventReceiver, EventReceiver, EventSender, OnEvent__symbol } from './base';
-import { once, share, then, thru, tillOff } from './impl';
+import { share, then, thru, tillOff } from './impl';
 import { OnEventCallChain } from './passes';
 import Args = OnEventCallChain.Args;
 import Out = OnEventCallChain.Out;
@@ -140,27 +140,6 @@ export class OnEvent<TEvent extends any[]> implements EventSender<TEvent> {
       onCutOff?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null,
   ): Promise<TResult1 | TResult2> {
     return then(this, onEvent, onCutOff);
-  }
-
-  /**
-   * Builds an {@link OnEvent} sender of events originated from this one that stops sending them to registered receiver
-   * after the first one.
-   *
-   * @returns Event sender.
-   */
-  once(): OnEvent<TEvent>;
-
-  /**
-   * Registers a receiver of events originated from this sender that stops receiving them after the first one.
-   *
-   * @param receiver - A receiver of events to register.
-   *
-   * @returns A supply of event.
-   */
-  once(receiver: EventReceiver<TEvent>): Supply;
-
-  once(receiver?: EventReceiver<TEvent>): OnEvent<TEvent> | Supply {
-    return (this.once = onEventBy(once(this)).F)(receiver);
   }
 
   /**

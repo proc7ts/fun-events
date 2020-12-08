@@ -1,4 +1,5 @@
 import { noop, Supply } from '@proc7ts/primitives';
+import { onceEvent } from '../actions';
 import { AfterEvent } from '../after-event';
 import { AfterEvent__symbol, EventReceiver } from '../base';
 import { EventEmitter } from '../senders';
@@ -80,7 +81,7 @@ describe('afterSupplied', () => {
 
       sender.send('other');
       expect(mockReceiver).not.toHaveBeenCalledWith('other');
-      afterEvent.once(event => expect(event).toEqual('initial'));
+      afterEvent.do(onceEvent).to(event => expect(event).toEqual('initial'));
     });
   });
 
@@ -98,7 +99,7 @@ describe('afterSupplied', () => {
       expect(() => afterEvent.to(noop)).toThrow('No events to send');
     });
     it('throws an exception when requesting the last event', () => {
-      expect(() => afterEvent.once(noop)).toThrow('No events to send');
+      expect(() => afterEvent.do(onceEvent).to(noop)).toThrow('No events to send');
     });
   });
 });

@@ -1,4 +1,5 @@
 import { neverSupply, Supply } from '@proc7ts/primitives';
+import { onceEvent } from '../actions';
 import { EventNotifier, EventReceiver } from '../base';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 import Mock = jest.Mock;
@@ -34,11 +35,11 @@ describe('OnDomEvent', () => {
     });
 
     it('registers event receiver', () => {
-      expect(onDomEvent.once(mockListener)).toBe(supply);
+      expect(onDomEvent.do(onceEvent).to(mockListener)).toBe(supply);
       expect(mockRegister).toHaveBeenCalled();
     });
     it('unregisters notified event receiver', () => {
-      onDomEvent.once(mockListener);
+      onDomEvent.do(onceEvent).to(mockListener);
       expect(offSpy).not.toHaveBeenCalled();
 
       const event = new KeyboardEvent('click');
@@ -58,7 +59,7 @@ describe('OnDomEvent', () => {
         events.send(event);
       });
 
-      onDomEvent.once(mockListener);
+      onDomEvent.do(onceEvent).to(mockListener);
 
       expect(offSpy).toHaveBeenCalled();
       expect(mockListener).toHaveBeenCalledWith(event);
@@ -68,17 +69,17 @@ describe('OnDomEvent', () => {
       const event = new KeyboardEvent('click');
 
       supply = neverSupply();
-      onDomEvent.once({ supply, receive: (_context, e) => mockListener(e) });
+      onDomEvent.do(onceEvent).to({ supply, receive: (_context, e) => mockListener(e) });
       events.send(event);
       expect(mockListener).not.toHaveBeenCalled();
     });
     it('never sends events after their supply is cut off', () => {
-      onDomEvent.once(mockListener).off();
+      onDomEvent.do(onceEvent).to(mockListener).off();
       events.send(new KeyboardEvent('click'));
       expect(mockListener).not.toHaveBeenCalled();
     });
     it('sends only one event', () => {
-      onDomEvent.once(mockListener);
+      onDomEvent.do(onceEvent).to(mockListener);
 
       const event1 = new KeyboardEvent('keydown');
 

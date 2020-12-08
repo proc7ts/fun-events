@@ -5,61 +5,6 @@ import { AfterEvent__symbol, EventNotifier, EventReceiver, OnEvent__symbol } fro
 import Mock = jest.Mock;
 
 describe('AfterEvent', () => {
-  describe('once', () => {
-
-    let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
-    let afterEvent: AfterEvent<[string]>;
-    let supply: Supply;
-    let offSpy: Mock;
-    let emitter: EventNotifier<[string]>;
-    let mockReceiver: Mock<void, [string]>;
-
-    beforeEach(() => {
-      emitter = new EventNotifier();
-      mockRegister = jest.fn(receiver => {
-        supply = receiver.supply;
-        supply.whenOff(offSpy = jest.fn());
-        emitter.on(receiver);
-        emitter.send('init');
-      });
-      afterEvent = afterEventBy(mockRegister);
-      mockReceiver = jest.fn();
-    });
-
-    it('registers event receiver', () => {
-      afterEvent.once(mockReceiver);
-      expect(mockRegister).toHaveBeenCalled();
-    });
-    it('sends initial event', () => {
-      afterEvent.once(mockReceiver);
-      expect(mockReceiver).toHaveBeenCalledWith('init');
-    });
-    it('cuts off supply after event received', () => {
-
-      const returnedSupply = afterEvent.once(mockReceiver);
-
-      expect(mockRegister).toHaveBeenCalled();
-      expect(returnedSupply.isOff).toBe(true);
-      expect(supply.isOff).toBe(true);
-    });
-    it('unregisters notified event receiver', () => {
-      afterEvent.once(mockReceiver);
-      expect(offSpy).toHaveBeenCalled();
-    });
-    it('never sends events if their supply is initially cut off', () => {
-      supply = neverSupply();
-      afterEvent.once({ supply, receive: (_context, ...event) => mockReceiver(...event) });
-      expect(mockReceiver).not.toHaveBeenCalled();
-    });
-    it('sends only one event', () => {
-      afterEvent.once(mockReceiver);
-      emitter.send('event1');
-      emitter.send('event2');
-      expect(mockReceiver).toHaveBeenCalledTimes(1);
-      expect(mockReceiver).toHaveBeenLastCalledWith('init');
-    });
-  });
-
   describe('tillOff', () => {
 
     let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;

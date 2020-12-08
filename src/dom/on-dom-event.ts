@@ -4,7 +4,7 @@
  */
 import { Supply, SupplyPeer } from '@proc7ts/primitives';
 import { eventReceiver, EventReceiver } from '../base';
-import { once, tillOff } from '../impl';
+import { tillOff } from '../impl';
 import { OnEvent } from '../on-event';
 
 /**
@@ -79,28 +79,6 @@ export class OnDomEvent<TEvent extends Event> extends OnEvent<[TEvent]> {
     }
 
     return supply;
-  }
-
-  /**
-   * Builds an {@link OnDomEvent} sender of events originated from this one that stops sending them to registered
-   * receiver after the first one.
-   *
-   * @returns DOM event sender.
-   */
-  once(): OnDomEvent<TEvent>;
-
-  /**
-   * Registers a listener of DOM events originated from this sender that stops receiving them after the first one.
-   *
-   * @param listener - A DOM event listener to register.
-   * @param opts - DOM event listener options to pass to `EventTarget.addEventListener()`.
-   *
-   * @returns A supply of DOM event.
-   */
-  once(listener: DomEventListener<TEvent>, opts?: AddEventListenerOptions | boolean): Supply;
-
-  once(listener?: DomEventListener<TEvent>, opts?: AddEventListenerOptions | boolean): OnDomEvent<TEvent> | Supply {
-    return (this.once = onDomEventBy(once(this)).F)(listener, opts);
   }
 
   /**

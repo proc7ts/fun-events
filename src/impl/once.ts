@@ -5,10 +5,10 @@ import { OnEvent } from '../on-event';
  * @internal
  */
 export function once<TEvent extends any[]>(
-    onSource: OnEvent<TEvent>,
+    supplier: OnEvent<TEvent>,
 ): (receiver: EventReceiver.Generic<TEvent>) => void {
   return (receiver: EventReceiver.Generic<TEvent>): void => {
-    onSource.to({
+    supplier.to({
       supply: receiver.supply,
       receive: (context, ...event) => {
         receiver.receive(context, ...event);

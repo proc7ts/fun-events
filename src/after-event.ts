@@ -4,7 +4,7 @@
  */
 import { noop, Supply, SupplyPeer } from '@proc7ts/primitives';
 import { AfterEvent__symbol, EventKeeper, eventReceiver, EventReceiver } from './base';
-import { once, share, thru, tillOff } from './impl';
+import { share, thru, tillOff } from './impl';
 import { OnEvent } from './on-event';
 import { OnEventCallChain } from './passes';
 import Args = OnEventCallChain.Args;
@@ -165,27 +165,6 @@ export class AfterEvent<TEvent extends any[]> extends OnEvent<TEvent> implements
     });
 
     return supply;
-  }
-
-  /**
-   * Builds an {@link AfterEvent} keeper of events originated from this one that stops sending them to registered
-   * receiver after the first one.
-   *
-   * @returns Event keeper.
-   */
-  once(): AfterEvent<TEvent>;
-
-  /**
-   * Registers a receiver of events originated from this keeper that stops receiving them after the first one.
-   *
-   * @param receiver - A receiver of events to register.
-   *
-   * @returns A supply of event.
-   */
-  once(receiver: EventReceiver<TEvent>): Supply;
-
-  once(receiver?: EventReceiver<TEvent>): AfterEvent<TEvent> | Supply {
-    return (this.once = afterEventBy(once(this)).F)(receiver);
   }
 
   /**
