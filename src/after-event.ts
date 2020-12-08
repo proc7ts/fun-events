@@ -75,6 +75,26 @@ export class AfterEvent<TEvent extends any[]> extends OnEvent<TEvent> implements
   }
 
   /**
+   * Converts a plain event receiver registration function to {@link AfterEvent} keeper with a fallback.
+   *
+   * The event constructed by `fallback` will be sent to the registered first receiver, unless `register` function sends
+   * one.
+   *
+   * @typeParam TNewEvent - An event type. This is a list of event receiver parameter types.
+   * @param register - Generic event receiver registration function. It will be called on each receiver registration,
+   * unless the receiver's {@link EventReceiver.Generic.supply event supply} is cut off already.
+   * @param fallback - A function creating fallback event. When omitted, the initial event is expected to be sent by
+   * `register` function. A receiver registration would lead to an error otherwise.
+   *
+   * @returns An {@link AfterEvent} keeper registering event receivers with the given `register` function.
+   */
+  by<TNewEvent extends any[]>(
+      register: (this: void, receiver: EventReceiver.Generic<TNewEvent>) => void,
+  ): AfterEvent<TNewEvent> {
+    return new AfterEvent(register);
+  }
+
+  /**
    * Returns a reference to itself.
    *
    * @returns `this` instance.
@@ -181,19 +201,6 @@ export class AfterEvent<TEvent extends any[]> extends OnEvent<TEvent> implements
    */
   tillOff(required: SupplyPeer, dependentSupply?: Supply): AfterEvent<TEvent> {
     return afterEventBy(tillOff(this, required, dependentSupply));
-  }
-
-  /**
-   * Constructs an {@link AfterEvent} keeper that shares events supply among all registered receivers.
-   *
-   * The created keeper receives events from this one and sends to registered receivers. The shared keeper registers
-   * a receiver in this one only once, when first receiver registered. And cuts off original events supply once all
-   * event supplies do.
-   *
-   * @returns An {@link AfterEvent} keeper sharing a common supply of events originating from this keeper.
-   */
-  share(): AfterEvent<TEvent> {
-    return afterEventBy(share(this));
   }
 
   /**
@@ -445,7 +452,7 @@ export class AfterEvent<TEvent extends any[]> extends OnEvent<TEvent> implements
 
   keepThru(...passes: any[]): AfterEvent<any[]> {
     // eslint-disable-next-line
-    return (this as any).keepThru_(...passes).share();
+    return afterEventBy(share((this as any).keepThru_(...passes)));
   }
 
   /**
@@ -454,7 +461,7 @@ export class AfterEvent<TEvent extends any[]> extends OnEvent<TEvent> implements
    *
    * This method does the same as {@link AfterEvent.keepThru} one, except it does not share the supply of transformed
    * events among receivers. This may be useful e.g. when the result will be further transformed anyway.
-   * It is wise to {@link AfterEvent.share share} the supply of events from final result in this case.
+   * It is wise to {@link shareEvents share} the supply of events from final result in this case.
    *
    * @returns An {@link AfterEvent} keeper of events transformed with provided passes.
    */

@@ -133,53 +133,6 @@ describe('AfterEvent', () => {
     });
   });
 
-  describe('share', () => {
-
-    let fallback: [string, string];
-    let mockRegister: Mock<void, [EventReceiver.Generic<[string, string]>]>;
-    let emitter: EventNotifier<[string, string]>;
-    let afterEvent: AfterEvent<[string, string]>;
-    let mockReceiver: Mock<void, [string, string]>;
-    let mockReceiver2: Mock<void, [string, string]>;
-
-    beforeEach(() => {
-      fallback = ['init1', 'init2'];
-      emitter = new EventNotifier();
-      mockRegister = jest.fn(receiver => {
-        emitter.on(receiver);
-      });
-      afterEvent = afterEventBy(mockRegister, () => fallback);
-      mockReceiver = jest.fn();
-      mockReceiver2 = jest.fn();
-    });
-
-    it('sends fallback event from the source', () => {
-
-      const shared = afterEvent.share();
-
-      shared.to(mockReceiver);
-      shared.to(mockReceiver2);
-      expect(mockReceiver).toHaveBeenCalledWith(...fallback);
-      expect(mockReceiver2).toHaveBeenCalledWith(...fallback);
-    });
-    it('keeps initial event from the source', () => {
-
-      const shared = afterEvent.share();
-
-      shared.once((...received) => expect(received).toEqual(fallback));
-    });
-    it('sends events from the source', () => {
-
-      const shared = afterEvent.share();
-
-      shared.to(mockReceiver);
-      shared.to(mockReceiver2);
-      emitter.send('a', 'b');
-      expect(mockReceiver).toHaveBeenCalledWith('a', 'b');
-      expect(mockReceiver2).toHaveBeenCalledWith('a', 'b');
-    });
-  });
-
   describe('keep', () => {
     describe('thru', () => {
 

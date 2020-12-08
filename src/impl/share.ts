@@ -6,7 +6,7 @@ import { OnEvent } from '../on-event';
  * @internal
  */
 export function share<TEvent extends any[]>(
-    onSource: OnEvent<TEvent>,
+    supplier: OnEvent<TEvent>,
 ): (receiver: EventReceiver.Generic<TEvent>) => void {
 
   const shared = new EventNotifier<TEvent>();
@@ -18,7 +18,7 @@ export function share<TEvent extends any[]>(
       initialEvents = [];
       sharedSupply = new Supply(() => initialEvents = undefined);
 
-      onSource.to({
+      supplier.to({
         supply: sharedSupply,
         receive(_ctx, ...event) {
           if (initialEvents) {

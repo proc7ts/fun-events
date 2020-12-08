@@ -51,6 +51,21 @@ export class OnEvent<TEvent extends any[]> implements EventSender<TEvent> {
   }
 
   /**
+   * Converts a plain event receiver registration function to {@link OnEvent} sender.
+   *
+   * @typeParam TNewEvent - An event type. This is a list of event receiver parameter types.
+   * @param register - Generic event receiver registration function. It will be called on each receiver registration,
+   * unless the receiver's {@link EventReceiver.Generic.supply event supply} is cut off already.
+   *
+   * @returns An {@link OnEvent} sender registering event receivers with the given `register` function.
+   */
+  by<TNewEvent extends any[]>(
+      register: (this: void, receiver: EventReceiver.Generic<TNewEvent>) => void,
+  ): OnEvent<TNewEvent> {
+    return new OnEvent(register);
+  }
+
+  /**
    * Applies the given action to this event supplier.
    *
    * @typeParam TOut - Action result type.
@@ -161,19 +176,6 @@ export class OnEvent<TEvent extends any[]> implements EventSender<TEvent> {
    */
   tillOff(required: SupplyPeer, dependentSupply?: Supply): OnEvent<TEvent> {
     return onEventBy(tillOff(this, required, dependentSupply));
-  }
-
-  /**
-   * Constructs an {@link OnEvent} sender that shares events supply among all registered receivers.
-   *
-   * The created sender receives events from this one and sends to registered receivers. The shared sender registers
-   * a receiver in this one only once, when first receiver registered. And cuts off original events supply once all
-   * supplies do.
-   *
-   * @returns An {@link OnEvent} sender sharing a common supply of events originated from this sender.
-   */
-  share(): OnEvent<TEvent> {
-    return onEventBy(share(this));
   }
 
   /**
@@ -421,7 +423,7 @@ export class OnEvent<TEvent extends any[]> implements EventSender<TEvent> {
 
   thru(...passes: any[]): OnEvent<any[]> {
     // eslint-disable-next-line
-    return (this as any).thru_(...passes).share();
+    return onEventBy(share((this as any).thru_(...passes)));
   }
 
   /**

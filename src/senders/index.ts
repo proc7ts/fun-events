@@ -1,4 +1,3 @@
-export * from './consume-events';
 export * from './event-emitter';
 export * from './on-any';
 export * from './on-any-async';

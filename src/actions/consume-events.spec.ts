@@ -1,7 +1,7 @@
 import { Supply } from '@proc7ts/primitives';
 import { EventNotifier } from '../base';
+import { EventEmitter } from '../senders';
 import { consumeEvents } from './consume-events';
-import { EventEmitter } from './event-emitter';
 
 describe('consumeEvents', () => {
 

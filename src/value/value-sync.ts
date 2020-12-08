@@ -3,10 +3,11 @@
  * @module @proc7ts/fun-events
  */
 import { Supply } from '@proc7ts/primitives';
+import { consumeEvents } from '../actions';
 import { EventKeeper, EventReceiver, EventSender, EventSupplier, isEventKeeper } from '../base';
 import { afterSupplied } from '../keepers';
 import { OnEvent } from '../on-event';
-import { consumeEvents, EventEmitter, onSupplied } from '../senders';
+import { EventEmitter, onSupplied } from '../senders';
 import { ValueTracker } from './value-tracker';
 
 /**
