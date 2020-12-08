@@ -1,5 +1,5 @@
 import { neverSupply, Supply } from '@proc7ts/primitives';
-import { onceEvent } from '../actions';
+import { onceEvent, passEventsTillOff } from '../actions';
 import { EventNotifier, EventReceiver } from '../base';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 import Mock = jest.Mock;
@@ -110,7 +110,7 @@ describe('OnDomEvent', () => {
       const event1 = new KeyboardEvent('keydown');
       const event2 = new KeyboardEvent('keyup');
 
-      onDomEvent.tillOff(requiredSupply).to(mockListener);
+      onDomEvent.do(passEventsTillOff, requiredSupply).to(mockListener);
       events.send(event1);
       events.send(event2);
 
@@ -122,7 +122,7 @@ describe('OnDomEvent', () => {
       const event = new KeyboardEvent('click');
       const whenOff = jest.fn();
 
-      onDomEvent.tillOff(neverSupply()).to(mockListener).whenOff(whenOff);
+      onDomEvent.do(passEventsTillOff, neverSupply()).to(mockListener).whenOff(whenOff);
       events.send(event);
       expect(mockListener).not.toHaveBeenCalled();
       expect(whenOff).toHaveBeenCalled();
@@ -133,7 +133,7 @@ describe('OnDomEvent', () => {
       const event2 = new KeyboardEvent('keyup');
       const whenOff = jest.fn();
 
-      onDomEvent.tillOff(requiredSupply).to(mockListener).whenOff(whenOff);
+      onDomEvent.do(passEventsTillOff, requiredSupply).to(mockListener).whenOff(whenOff);
       events.send(event1);
       supply.off('reason');
       events.send(event2);
@@ -149,7 +149,7 @@ describe('OnDomEvent', () => {
       const event2 = new KeyboardEvent('keyup');
       const whenOff = jest.fn();
 
-      onDomEvent.tillOff(requiredSupply).to(mockListener).whenOff(whenOff);
+      onDomEvent.do(passEventsTillOff, requiredSupply).to(mockListener).whenOff(whenOff);
       events.send(event1);
       requiredSupply.off('reason');
       events.send(event2);

@@ -2,9 +2,9 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { Supply, SupplyPeer } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/primitives';
 import { eventReceiver, EventReceiver, EventSender, OnEvent__symbol } from './base';
-import { share, then, thru, tillOff } from './impl';
+import { share, then, thru } from './impl';
 import { OnEventCallChain } from './passes';
 import Args = OnEventCallChain.Args;
 import Out = OnEventCallChain.Out;
@@ -140,21 +140,6 @@ export class OnEvent<TEvent extends any[]> implements EventSender<TEvent> {
       onCutOff?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null,
   ): Promise<TResult1 | TResult2> {
     return then(this, onEvent, onCutOff);
-  }
-
-  /**
-   * Builds an {@link OnEvent} sender that sends events from this one until the required `supply` is cut off.
-   *
-   * The outgoing events supply will be cut off once incoming event supply does. Unless a second supply passed in.
-   * In the latter case that supply will be cut off instead.
-   *
-   * @param required - A peer of required event supply.
-   * @param dependentSupply - The supply to cut off on cutting off the incoming events supply.
-   *
-   * @returns New event sender.
-   */
-  tillOff(required: SupplyPeer, dependentSupply?: Supply): OnEvent<TEvent> {
-    return onEventBy(tillOff(this, required, dependentSupply));
   }
 
   /**

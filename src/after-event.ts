@@ -2,9 +2,9 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { noop, Supply, SupplyPeer } from '@proc7ts/primitives';
+import { noop, Supply } from '@proc7ts/primitives';
 import { AfterEvent__symbol, EventKeeper, eventReceiver, EventReceiver } from './base';
-import { share, thru, tillOff } from './impl';
+import { share, thru } from './impl';
 import { OnEvent } from './on-event';
 import { OnEventCallChain } from './passes';
 import Args = OnEventCallChain.Args;
@@ -165,21 +165,6 @@ export class AfterEvent<TEvent extends any[]> extends OnEvent<TEvent> implements
     });
 
     return supply;
-  }
-
-  /**
-   * Builds an {@link AfterEvent} keeper that sends events from this one until the required `supply` is cut off.
-   *
-   * The outgoing events supply will be cut off once incoming event supply does. Unless a second supply passed in.
-   * In the latter case that supply will be cut off instead.
-   *
-   * @param required - A peer of required event supply.
-   * @param dependentSupply - The supply to cut off on cutting off the incoming events supply.
-   *
-   * @returns New event keeper.
-   */
-  tillOff(required: SupplyPeer, dependentSupply?: Supply): AfterEvent<TEvent> {
-    return afterEventBy(tillOff(this, required, dependentSupply));
   }
 
   /**

@@ -37,7 +37,7 @@ export function shareEvents<TEvent extends any[]>(supplier: AfterEvent<TEvent>):
 export function shareEvents<TEvent extends any[]>(supplier: OnEvent<TEvent>): OnEvent<TEvent>;
 
 export function shareEvents<TEvent extends any[]>(
-    supplier: OnEvent<TEvent> | AfterEvent<TEvent>,
+    supplier: OnEvent<TEvent>,
 ): OnEvent<TEvent> | AfterEvent<TEvent> {
-  return (supplier as OnEvent<TEvent>).by(share(supplier));
+  return supplier.by(share(supplier));
 }

@@ -29,7 +29,7 @@ export function onceEvent<TEvent extends any[]>(
 ): OnEvent<TEvent>;
 
 export function onceEvent<TEvent extends any[]>(
-    supplier: OnEvent<TEvent> | AfterEvent<TEvent>,
+    supplier: OnEvent<TEvent>,
 ): OnEvent<TEvent> | AfterEvent<TEvent> {
-  return (supplier as OnEvent<TEvent>).by(once(supplier));
+  return supplier.by(once(supplier));
 }
