@@ -2,7 +2,7 @@ import { isNextCall, NextCall__symbol } from '@proc7ts/call-thru';
 import { neverSupply, noop, Supply } from '@proc7ts/primitives';
 import { EventReceiver, EventSender, OnEvent__symbol } from '../base';
 import { OnEvent } from '../on-event';
-import { OnEventCallChain } from '../passes';
+import { OnEventCallChain } from './index';
 
 /**
  * @internal

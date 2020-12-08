@@ -4,6 +4,7 @@ import { EventSender } from '../base';
 import { OnEvent } from '../on-event';
 import { EventEmitter } from '../senders';
 import { nextOnEvent } from './next-on-event';
+import { thruOn } from './thru-on';
 import Mock = jest.Mock;
 
 describe('nextOnEvent', () => {
@@ -22,7 +23,7 @@ describe('nextOnEvent', () => {
     nested2 = new EventEmitter();
     receiver = jest.fn();
     extract = jest.fn((nested?: EventEmitter<[string]>) => nested);
-    result = sender.on().thru(notifier => {
+    result = sender.on().do(thruOn).forAll(notifier => {
 
       const extracted = extract(notifier);
 
@@ -112,7 +113,7 @@ describe('nextOnEvent', () => {
   it('cuts off previous supply when next event skipped', () => {
     supply.off();
 
-    result = sender.on().thru(
+    result = sender.on().do(thruOn).forAll(
         notifier => notifier === nested1 ? nested1 : nextSkip,
         notifier => {
 
@@ -135,7 +136,7 @@ describe('nextOnEvent', () => {
   it('allows to post-process events', () => {
     supply.off();
 
-    result = sender.on().thru(
+    result = sender.on().do(thruOn).forAll(
         notifier => {
 
           const extracted = extract(notifier);

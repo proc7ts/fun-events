@@ -1,6 +1,7 @@
 import { EventEmitter } from '../senders';
 import { trackValue } from '../value';
 import { nextAfterEvent } from './next-after-event';
+import { thruOn } from './thru-on';
 
 describe('nextAfterEvent', () => {
   it('prefers `EventKeeper` over `EventSender`', () => {
@@ -8,7 +9,7 @@ describe('nextAfterEvent', () => {
     const sender = new EventEmitter<[string]>();
     const receiver = jest.fn<void, [string]>();
 
-    sender.on().thru(
+    sender.on().do(thruOn).forAll(
         str => trackValue(str + '!'),
         tracker => nextAfterEvent(tracker),
     ).to(receiver);

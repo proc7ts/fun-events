@@ -6,6 +6,7 @@ import { nextArg } from '@proc7ts/call-thru';
 import { Supply } from '@proc7ts/primitives';
 import { passEventsTillOff } from '../actions';
 import { EventSender, sendEventsTo } from '../base';
+import { thruOn } from '../call-thru';
 import { OnEvent, onEventBy } from '../on-event';
 import { onAnyAsync } from './on-any-async';
 import { onSupplied } from './on-supplied';
@@ -37,7 +38,7 @@ export function onAsync<TEvent>(from: EventSender<[PromiseLike<TEvent> | TEvent]
     let numInProcess = 0;
     const source = onSupplied(from)
         .do(passEventsTillOff, supply, sourceSupply)
-        .thru_(event => {
+        .do(thruOn).forEach(event => {
           ++numInProcess;
           return nextArg(event);
         });
