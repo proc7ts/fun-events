@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { neverSupply, Supply, SupplyPeer } from '@proc7ts/primitives';
+import { Supply, SupplyPeer } from '@proc7ts/primitives';
 import { eventReceiver, EventReceiver, EventSender, OnEvent__symbol } from './base';
 import { once, share, then, thru, tillOff } from './impl';
 import { OnEventCallChain } from './passes';
@@ -48,6 +48,24 @@ export class OnEvent<TEvent extends any[]> implements EventSender<TEvent> {
 
   [OnEvent__symbol](): this {
     return this;
+  }
+
+  /**
+   * Applies the given action to this event supplier.
+   *
+   * @typeParam TOut - Action result type.
+   * @typeParam TArgs - Action parameters type.
+   * @param action - A function accepting this sender as its first parameter, and the given arguments as the rest of
+   * them.
+   * @param args - Arguments to pass to action function.
+   *
+   * @returns Action result.
+   */
+  do<TOut, TArgs extends any[] = []>(
+      action: (this: void, onEvent: this, ...args: TArgs) => TOut,
+      ...args: TArgs
+  ): TOut {
+    return action(this, ...args);
   }
 
   /**
@@ -143,40 +161,6 @@ export class OnEvent<TEvent extends any[]> implements EventSender<TEvent> {
    */
   tillOff(required: SupplyPeer, dependentSupply?: Supply): OnEvent<TEvent> {
     return onEventBy(tillOff(this, required, dependentSupply));
-  }
-
-  /**
-   * Consumes events.
-   *
-   * @param consume - A function consuming events. This function may return a {@link SupplyPeer peer of event
-   * supply} when registers a nested event receiver. This supply will be cut off on new event, unless returned again.
-   *
-   * @returns An event supply that will stop consuming events once {@link Supply.off cut off}.
-   */
-  consume(consume: (...event: TEvent) => SupplyPeer | void | undefined): Supply {
-
-    let consumerSupply = neverSupply();
-
-    // Do not use `.cuts()` here as `consumerSupply` is mutable
-    const supply = new Supply(reason => consumerSupply.off(reason));
-
-    this.to({
-      supply,
-      receive(_ctx, ...event: TEvent) {
-
-        const prevSupply = consumerSupply;
-
-        try {
-          consumerSupply = (consume(...event) || neverSupply()).supply;
-        } finally {
-          if (consumerSupply !== prevSupply) {
-            prevSupply.off();
-          }
-        }
-      },
-    });
-
-    return supply;
   }
 
   /**

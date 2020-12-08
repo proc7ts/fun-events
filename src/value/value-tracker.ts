@@ -14,7 +14,7 @@ import {
   OnEvent__symbol,
 } from '../base';
 import { OnEvent } from '../on-event';
-import { onSupplied } from '../senders';
+import { consumeEvents, onSupplied } from '../senders';
 
 /**
  * Value accessor and changes tracker.
@@ -155,7 +155,7 @@ export abstract class ValueTracker<T> implements EventSender<[T, T]>, EventKeepe
 
       const container = supplier as EventSupplier<TSrcEvent>;
 
-      this._by = onSupplied(container).consume((...event: TSrcEvent) => {
+      this._by = onSupplied(container).do(consumeEvents, (...event: TSrcEvent) => {
 
         const sender = extract(...event);
 
