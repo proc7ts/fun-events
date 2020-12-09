@@ -156,7 +156,7 @@ export abstract class ValueTracker<T> implements EventSender<[T, T]>, EventKeepe
 
       const container = supplier as EventSupplier<TSrcEvent>;
 
-      this._by = onSupplied(container).do(consumeEvents, (...event: TSrcEvent) => {
+      this._by = onSupplied(container).do(consumeEvents((...event) => {
 
         const sender = extract(...event);
 
@@ -165,7 +165,7 @@ export abstract class ValueTracker<T> implements EventSender<[T, T]>, EventKeepe
         }
 
         return;
-      });
+      }));
     }
 
     this._by.whenOff(() => this._by = neverSupply());

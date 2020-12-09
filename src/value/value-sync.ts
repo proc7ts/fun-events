@@ -152,15 +152,14 @@ export class ValueSync<T> extends ValueTracker<T> {
 
     const supplier = source as EventSupplier<TSrcEvent>;
 
-    return (isEventKeeper(supplier) ? afterSupplied(supplier) : onSupplied(supplier)).do(
-        consumeEvents,
-        (...event: TSrcEvent) => {
+    return (isEventKeeper(supplier) ? afterSupplied(supplier) : onSupplied(supplier)).do(consumeEvents(
+        (...event) => {
 
           const tracker = extractTracker(...event);
 
           return tracker && syncWithTracker(tracker);
         },
-    );
+    ));
 
     function syncTrackers(tracker1: ValueTracker<T>, tracker2: ValueTracker<T>): Supply {
 
