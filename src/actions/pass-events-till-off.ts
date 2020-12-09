@@ -8,7 +8,7 @@ import { tillOff } from '../impl';
 import { OnEvent } from '../on-event';
 
 /**
- * Builds an {@link AfterEvent} keeper that passes events until the `required` supply is cut off.
+ * Creates an {@link AfterEvent} keeper that passes events until the `required` supply is cut off.
  *
  * The outgoing events supply will be cut off once incoming event supply does. Unless a second supply passed in.
  * In the latter case that supply will be cut off instead.
@@ -28,7 +28,7 @@ export function passEventsTillOff<TEvent extends any[]>(
 ): AfterEvent<TEvent>;
 
 /**
- * Builds an {@link OnEvent} sender that passes events until the `required` supply is cut off.
+ * Creates an {@link OnEvent} sender that passes events until the `required` supply is cut off.
  *
  * The outgoing events supply will be cut off once incoming event supply does. Unless a second supply passed in.
  * In the latter case that supply will be cut off instead.

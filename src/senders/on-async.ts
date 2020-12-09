@@ -2,11 +2,9 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { nextArg } from '@proc7ts/call-thru';
 import { Supply } from '@proc7ts/primitives';
-import { passEventsTillOff } from '../actions';
+import { mapEvents, passEventsTillOff } from '../actions';
 import { EventSender, sendEventsTo } from '../base';
-import { thruOn } from '../call-thru';
 import { OnEvent, onEventBy } from '../on-event';
 import { onAnyAsync } from './on-any-async';
 import { onSupplied } from './on-supplied';
@@ -38,10 +36,10 @@ export function onAsync<TEvent>(from: EventSender<[PromiseLike<TEvent> | TEvent]
     let numInProcess = 0;
     const source = onSupplied(from)
         .do(passEventsTillOff, supply, sourceSupply)
-        .do(thruOn).forEach(event => {
+        .do(mapEvents(event => {
           ++numInProcess;
-          return nextArg(event);
-        });
+          return event;
+        }));
     let received: TEvent[] = [];
     let numSent = 1;
     let numReceived = 0;

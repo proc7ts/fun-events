@@ -1,9 +1,13 @@
+/**
+ * @packageDocumentation
+ * @module @proc7ts/fun-events
+ */
 import { AfterEvent } from '../after-event';
 import { once } from '../impl';
 import { OnEvent } from '../on-event';
 
 /**
- * Builds an {@link AfterEvent} keeper of events that stops sending them after the first one.
+ * Creates an {@link AfterEvent} keeper of events that stops sending them after the first one.
  *
  * @category Core
  * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
@@ -16,7 +20,7 @@ export function onceEvent<TEvent extends any[]>(
 ): AfterEvent<TEvent>;
 
 /**
- * Builds an {@link OnEvent} sender of events that stops sending them after the first one.
+ * Creates an {@link OnEvent} sender of events that stops sending them after the first one.
  *
  * @category Core
  * @typeParam TEvent - An event type. This is a list of event receiver parameter types.

@@ -7,7 +7,7 @@ import { share } from '../impl';
 import { OnEvent } from '../on-event';
 
 /**
- * Constructs an {@link AfterEvent} keeper that shares events supply among all registered receivers.
+ * Creates an {@link AfterEvent} keeper that shares events supply among all registered receivers.
  *
  * The created keeper receives events from this one and sends to registered receivers. The shared keeper registers
  * a receiver in this one only once, when first receiver registered. And cuts off original events supply once all
@@ -17,12 +17,12 @@ import { OnEvent } from '../on-event';
  * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
  * @param supplier - Event keeper to share events from.
  *
- * @returns An {@link AfterEvent} keeper sharing a common supply of events originating from this keeper.
+ * @returns An {@link AfterEvent} keeper sharing a common supply of events.
  */
 export function shareEvents<TEvent extends any[]>(supplier: AfterEvent<TEvent>): AfterEvent<TEvent>;
 
 /**
- * Constructs an {@link OnEvent} sender that shares events supply among all registered receivers.
+ * Creates an {@link OnEvent} sender that shares events supply among all registered receivers.
  *
  * The created sender receives events from this one and sends to registered receivers. The shared sender registers
  * a receiver in this one only once, when first receiver registered. And cuts off original events supply once all
@@ -32,7 +32,7 @@ export function shareEvents<TEvent extends any[]>(supplier: AfterEvent<TEvent>):
  * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
  * @param supplier - Event sender to share events from.
  *
- * @returns An {@link OnEvent} sender sharing a common supply of events originated from this sender.
+ * @returns An {@link OnEvent} sender sharing a common supply of events.
  */
 export function shareEvents<TEvent extends any[]>(supplier: OnEvent<TEvent>): OnEvent<TEvent>;
 
