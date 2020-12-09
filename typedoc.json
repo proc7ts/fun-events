@@ -1,6 +1,6 @@
 {
   "categorizeByGroup": true,
-  "categoryOrder": ["Core", "State Tracking", "Value Tracking", "DOM Events", "*"],
+  "categoryOrder": ["Core", "State Tracking", "Value Tracking", "*"],
   "disableAutoModuleName": true,
   "exclude": [
     "**/index.ts",
