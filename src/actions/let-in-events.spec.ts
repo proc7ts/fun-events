@@ -2,9 +2,9 @@ import { neverSupply, Supply } from '@proc7ts/primitives';
 import { AfterEvent, afterEventBy } from '../after-event';
 import { EventNotifier, EventReceiver } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
-import { passEventsTillOff } from './pass-events-till-off';
+import { letInEvents } from './let-in-events';
 
-describe('passEventsTillOff', () => {
+describe('letInEvents', () => {
   describe('OnEvent', () => {
 
     let mockRegister: jest.Mock<void, [EventReceiver.Generic<[string]>]>;
@@ -28,7 +28,7 @@ describe('passEventsTillOff', () => {
     });
 
     it('sends original events', () => {
-      onEvent.do(passEventsTillOff, requiredSupply).to(mockReceiver);
+      onEvent.do(letInEvents(requiredSupply)).to(mockReceiver);
       emitter.send('event1');
       emitter.send('event2');
 
@@ -39,7 +39,7 @@ describe('passEventsTillOff', () => {
 
       const whenOff = jest.fn();
 
-      onEvent.do(passEventsTillOff, neverSupply()).to(mockReceiver).whenOff(whenOff);
+      onEvent.do(letInEvents(neverSupply())).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       expect(mockReceiver).not.toHaveBeenCalled();
       expect(whenOff).toHaveBeenCalled();
@@ -48,7 +48,7 @@ describe('passEventsTillOff', () => {
 
       const whenOff = jest.fn();
 
-      onEvent.do(passEventsTillOff, requiredSupply).to(mockReceiver).whenOff(whenOff);
+      onEvent.do(letInEvents(requiredSupply)).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       supply.off('reason');
       emitter.send('event2');
@@ -62,7 +62,7 @@ describe('passEventsTillOff', () => {
 
       const whenOff = jest.fn();
 
-      onEvent.do(passEventsTillOff, requiredSupply).to(mockReceiver).whenOff(whenOff);
+      onEvent.do(letInEvents(requiredSupply)).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       requiredSupply.off('reason');
       emitter.send('event2');
@@ -99,7 +99,7 @@ describe('passEventsTillOff', () => {
     });
 
     it('sends original events', () => {
-      onEvent.do(passEventsTillOff, requiredSupply, dependentSupply).to(mockReceiver);
+      onEvent.do(letInEvents(requiredSupply, dependentSupply)).to(mockReceiver);
       emitter.send('event1');
       emitter.send('event2');
 
@@ -110,7 +110,7 @@ describe('passEventsTillOff', () => {
 
       const whenOff = jest.fn();
 
-      onEvent.do(passEventsTillOff, neverSupply(), dependentSupply).to(mockReceiver).whenOff(whenOff);
+      onEvent.do(letInEvents(neverSupply(), dependentSupply)).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       expect(mockReceiver).not.toHaveBeenCalled();
       expect(whenOff).not.toHaveBeenCalled();
@@ -122,7 +122,7 @@ describe('passEventsTillOff', () => {
 
       const whenOff = jest.fn();
 
-      onEvent.do(passEventsTillOff, requiredSupply, dependentSupply).to(mockReceiver).whenOff(whenOff);
+      onEvent.do(letInEvents(requiredSupply, dependentSupply)).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       supply.off('reason');
       emitter.send('event2');
@@ -139,7 +139,7 @@ describe('passEventsTillOff', () => {
 
       const whenOff = jest.fn();
 
-      onEvent.do(passEventsTillOff, requiredSupply, dependentSupply).to(mockReceiver).whenOff(whenOff);
+      onEvent.do(letInEvents(requiredSupply, dependentSupply)).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       requiredSupply.off('reason');
       emitter.send('event2');
@@ -178,7 +178,7 @@ describe('passEventsTillOff', () => {
     });
 
     it('sends original events', () => {
-      afterEvent.do(passEventsTillOff, requiredSupply).to(mockReceiver);
+      afterEvent.do(letInEvents(requiredSupply)).to(mockReceiver);
       emitter.send('event1');
       emitter.send('event2');
 
@@ -190,7 +190,7 @@ describe('passEventsTillOff', () => {
 
       const whenOff = jest.fn();
 
-      afterEvent.do(passEventsTillOff, neverSupply()).to(mockReceiver).whenOff(whenOff);
+      afterEvent.do(letInEvents(neverSupply())).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       expect(mockReceiver).not.toHaveBeenCalled();
       expect(whenOff).toHaveBeenCalled();
@@ -199,7 +199,7 @@ describe('passEventsTillOff', () => {
 
       const whenOff = jest.fn();
 
-      afterEvent.do(passEventsTillOff, requiredSupply).to(mockReceiver).whenOff(whenOff);
+      afterEvent.do(letInEvents(requiredSupply)).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       supply.off('reason');
       emitter.send('event2');
@@ -214,7 +214,7 @@ describe('passEventsTillOff', () => {
 
       const whenOff = jest.fn();
 
-      afterEvent.do(passEventsTillOff, requiredSupply).to(mockReceiver).whenOff(whenOff);
+      afterEvent.do(letInEvents(requiredSupply)).to(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       requiredSupply.off('reason');
       emitter.send('event2');

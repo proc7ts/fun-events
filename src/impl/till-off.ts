@@ -6,19 +6,19 @@ import { OnEvent } from '../on-event';
  * @internal
  */
 export function tillOff<TEvent extends any[]>(
-    onSource: OnEvent<TEvent>,
+    supplier: OnEvent<TEvent>,
     required: SupplyPeer,
     dependentSupply?: Supply,
 ): (receiver: EventReceiver.Generic<TEvent>) => void {
   return (receiver: EventReceiver.Generic<TEvent>): void => {
     if (dependentSupply) {
-      onSource.to({
+      supplier.to({
         supply: new Supply().needs(required).cuts(dependentSupply),
         receive: (receiver.receive as (...args: any[]) => void).bind(receiver),
       });
     } else {
       receiver.supply.needs(required);
-      onSource.to(receiver);
+      supplier.to(receiver);
     }
   };
 }

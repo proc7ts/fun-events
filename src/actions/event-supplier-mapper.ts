@@ -11,26 +11,26 @@ import { OnEvent } from '../on-event';
  * Such mapper maps {@link OnEvent} sender or {@link AfterEvent} keeper to corresponding one.
  *
  * @category Core
- * @typeParam TInEvent - Input event type. This is a list of input event receiver parameter types.
- * @typeParam TOutEvent - Output event type. This is a list of output event receiver parameter types.
+ * @typeParam TInEvent - Incoming event type. This is a list of incoming event receiver parameter types.
+ * @typeParam TOutEvent - Outgoing event type. This is a list of outgoing event receiver parameter types.
  */
 export interface EventSupplierMapper<TInEvent extends any[], TOutEvent extends any[] = TInEvent> {
 
   /**
    * Maps {@link AfterEvent} keeper to another one.
    *
-   * @param input - Input event keeper to map.
+   * @param input - Incoming event keeper to map.
    *
-   * @returns Mapped (output) event keeper.
+   * @returns Outgoing mapped event keeper.
    */
   (this: void, input: AfterEvent<TInEvent>): AfterEvent<TOutEvent>;
 
   /**
    * Maps {@link OnEvent} sender to another one.
    *
-   * @param input - Input event sender to map.
+   * @param input - Incoming event sender to map.
    *
-   * @returns Mapped (output) event sender.
+   * @returns Outgoing mapped event sender.
    */
   (this: void, input: OnEvent<TInEvent>): OnEvent<TOutEvent>;
 
