@@ -161,27 +161,6 @@ describe('OnDomEvent', () => {
     });
   });
 
-  describe('just', () => {
-    it('builds `OnDomEvent`', () => {
-      expect(onDomEvent.just()).toBeInstanceOf(OnDomEvent);
-    });
-    it('registers event listener', () => {
-      onDomEvent.just(mockListener);
-      expect(mockRegister).toHaveBeenCalled();
-    });
-    it('prevents default', () => {
-      onDomEvent.just(mockListener);
-
-      const event = new KeyboardEvent('click');
-      const stopPropagationSpy = jest.spyOn(event, 'stopPropagation');
-
-      events.send(event);
-
-      expect(stopPropagationSpy).toHaveBeenCalledWith();
-      expect(mockListener).toHaveBeenCalledWith(event);
-    });
-  });
-
   describe('last', () => {
     it('builds `OnDomEvent`', () => {
       expect(onDomEvent.last()).toBeInstanceOf(OnDomEvent);

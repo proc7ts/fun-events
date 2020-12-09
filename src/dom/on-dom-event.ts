@@ -81,50 +81,6 @@ export class OnDomEvent<TEvent extends Event> extends OnEvent<[TEvent]> {
   }
 
   /**
-   * Builds an {@link OnDomEvent} sender of events originate from this sender that registers listeners preventing
-   * further propagation of current event in the capturing and bubbling phases.
-   *
-   * It invokes an `Event.stopPropagation()` method prior to calling the registered listener.
-   *
-   * @returns DOM events sender.
-   */
-  just(): OnDomEvent<TEvent>;
-
-  /**
-   * Registers a listener of DOM events preventing further propagation of current event in the capturing and bubbling
-   * phases.
-   *
-   * This listener invokes an `Event.stopPropagation()` method prior to event handling.
-   *
-   * @param listener - A DOM events listener to register.
-   * @param opts - DOM event listener options to pass to `EventTarget.addEventListener()`.
-   *
-   * @returns A supply of DOM events.
-   */
-  just(listener: DomEventListener<TEvent>, opts?: AddEventListenerOptions | boolean): Supply;
-
-  just(listener?: DomEventListener<TEvent>, opts?: AddEventListenerOptions | boolean): OnDomEvent<TEvent> | Supply {
-    return (this.just = onDomEventBy((
-        listener: DomEventListener<TEvent>,
-        opts?: AddEventListenerOptions | boolean,
-    ) => {
-
-      const receiver = eventReceiver(listener);
-
-      return this.to(
-          {
-            supply: receiver.supply,
-            receive(context, event) {
-              event.stopPropagation();
-              receiver.receive(context, event);
-            },
-          },
-          opts,
-      );
-    }).F)(listener, opts);
-  }
-
-  /**
    * Builds an {@link OnDomEvent} sender of events originated from this sender that registers the last event listener.
    *
    * It invokes an `Event.stopImmediatePropagation()` method prior to calling the registered listener.

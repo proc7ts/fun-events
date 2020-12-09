@@ -14,7 +14,7 @@ import { DomEventListener, OnDomEvent, onDomEventBy } from '../on-dom-event';
  * @typeParam TEvent - DOM event type.
  * @param enable - Whether to enable default handlers. `true` to enable (default value, corresponds to specifying
  * `{ passive: true }` as a second argument to `EventTarget.addEventListener()`), or `false` to disable
- * (causes the listener to invoke an `Event.preventDefault()` method prior to event handling).
+ * (causes listeners to invoke an `Event.preventDefault()` method prior to event handling).
  *
  * @returns {@link OnDomEvent} mapper function.
  */
