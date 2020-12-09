@@ -6,11 +6,11 @@ import { eventReceiver } from '../../base';
 import { DomEventListener, OnDomEvent, onDomEventBy } from '../on-dom-event';
 
 /**
- * Creates an {@link OnDomEvent} sender preventing further propagation of events in the capturing and bubbling phases.
+ * Creates an {@link OnDomEvent} sender preventing other listeners of the same event from being called.
  *
- * Causes listeners to invoke an [Event.stopPropagation()] method prior to event handing.
+ * Causes listeners to invoke an [Event.stopImmediatePropagation()] method prior to event handing.
  *
- * [Event.stopPropagation()]: https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation
+ * [Event.stopImmediatePropagation()]: https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation
  *
  * @category DOM
  * @typeParam TEvent - DOM event type.
@@ -18,7 +18,7 @@ import { DomEventListener, OnDomEvent, onDomEventBy } from '../on-dom-event';
  *
  * @returns DOM events sender.
  */
-export function stopDomEvents<TEvent extends Event>(
+export function interceptDomEvents<TEvent extends Event>(
     supplier: OnDomEvent<TEvent>,
 ): OnDomEvent<TEvent> {
   return onDomEventBy((
@@ -32,7 +32,7 @@ export function stopDomEvents<TEvent extends Event>(
         {
           supply: receiver.supply,
           receive(context, event) {
-            event.stopPropagation();
+            event.stopImmediatePropagation();
             receiver.receive(context, event);
           },
         },

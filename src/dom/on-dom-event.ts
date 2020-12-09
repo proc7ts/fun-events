@@ -80,48 +80,6 @@ export class OnDomEvent<TEvent extends Event> extends OnEvent<[TEvent]> {
     return supply;
   }
 
-  /**
-   * Builds an {@link OnDomEvent} sender of events originated from this sender that registers the last event listener.
-   *
-   * It invokes an `Event.stopImmediatePropagation()` method prior to calling the registered listener.
-   *
-   * @returns DOM event sender.
-   */
-  last(): OnDomEvent<TEvent>;
-
-  /**
-   * Registers the last DOM event listener.
-   *
-   * This listener invokes an `Event.stopImmediatePropagation()` method prior to event handling.
-   *
-   * @param listener - A DOM events listener to register.
-   * @param opts - DOM event listener options to pass to `EventTarget.addEventListener()`.
-   *
-   * @returns A supply of DOM events.
-   */
-  last(listener: DomEventListener<TEvent>, opts?: AddEventListenerOptions | boolean): Supply;
-
-  last(listener?: DomEventListener<TEvent>, opts?: AddEventListenerOptions | boolean): OnDomEvent<TEvent> | Supply {
-    return (this.last = onDomEventBy((
-        listener: DomEventListener<TEvent>,
-        opts?: AddEventListenerOptions | boolean,
-    ) => {
-
-      const receiver = eventReceiver(listener);
-
-      return this.to(
-          {
-            supply: receiver.supply,
-            receive(context, event) {
-              event.stopImmediatePropagation();
-              receiver.receive(context, event);
-            },
-          },
-          opts,
-      );
-    }).F)(listener, opts);
-  }
-
 }
 
 export namespace OnDomEvent {
