@@ -24,18 +24,18 @@ describe('thruAfter', () => {
 
   it('registers event receiver', () => {
 
-    const transforming: AfterEvent<[string]> = afterEvent.do(thruAfter).forAll(
+    const transforming: AfterEvent<[string]> = afterEvent.do(thruAfter(
         (event1: string, event2: string) => `${event1}, ${event2}`,
-    );
+    ));
 
     transforming.to(mockReceiver);
     expect(mockRegister).toHaveBeenCalled();
   });
   it('unregisters event receiver when supply is cut off', () => {
 
-    const transforming = afterEvent.do(thruAfter).forAll(
+    const transforming = afterEvent.do(thruAfter(
         (event1: string, event2: string) => `${event1}, ${event2}`,
-    );
+    ));
 
     const supply1 = transforming.to(mockReceiver);
     const supply2 = transforming.to(jest.fn());
@@ -47,9 +47,9 @@ describe('thruAfter', () => {
   });
   it('transforms original event', () => {
 
-    const transforming = afterEvent.do(thruAfter).forAll(
+    const transforming = afterEvent.do(thruAfter(
         (event1: string, event2: string) => `${event1}, ${event2}`,
-    );
+    ));
 
     transforming.to(mockReceiver);
 
@@ -60,10 +60,10 @@ describe('thruAfter', () => {
   });
   it('skips original event', () => {
 
-    const transforming = afterEvent.do(thruAfter).forAll(
+    const transforming = afterEvent.do(thruAfter(
         (event1: string, event2: string) => event1 < event2 ? nextArgs(event1, event2) : nextSkip,
         (event1: string, event2: string) => `${event1}, ${event2}`,
-    );
+    ));
 
     transforming.to(mockReceiver);
 
@@ -77,9 +77,9 @@ describe('thruAfter', () => {
   it('cuts off events supply when original sender cuts it off', () => {
 
     const mockOff2 = jest.fn();
-    const transforming = afterEvent.do(thruAfter).forAll(
+    const transforming = afterEvent.do(thruAfter(
         (event1: string, event2: string) => `${event1}, ${event2}`,
-    );
+    ));
 
     transforming.to(mockReceiver).whenOff(mockOff2);
 
