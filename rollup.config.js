@@ -11,7 +11,6 @@ export default {
   input: {
     'fun-events': './src/index.ts',
     'fun-events.call-thru': './src/call-thru/index.ts',
-    'fun-events.dom': './src/dom/index.ts',
   },
   plugins: [
     commonjs(),
@@ -30,9 +29,6 @@ export default {
     }
     if (id.startsWith(path.resolve('src', 'call-thru') + path.sep)) {
       return 'fun-events.call-thru';
-    }
-    if (id.startsWith(path.resolve('src', 'dom') + path.sep)) {
-      return 'fun-events.dom';
     }
     if (id.startsWith(path.resolve('src', 'impl') + path.sep)) {
       return 'fun-events.base';

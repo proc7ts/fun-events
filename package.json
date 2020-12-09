@@ -9,7 +9,7 @@
     "event-receiver",
     "event-sender",
     "event-processor",
-    "typescript"
+    "reactive-events"
   ],
   "homepage": "https://github.com/proc7ts/fun-events",
   "repository": {
@@ -33,10 +33,6 @@
     "./call-thru": {
       "import": "./dist/fun-events.call-thru.js",
       "require": "./dist/fun-events.call-thru.cjs"
-    },
-    "./dom": {
-      "import": "./dist/fun-events.dom.js",
-      "require": "./dist/fun-events.dom.cjs"
     }
   },
   "peerDependencies": {
