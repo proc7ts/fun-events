@@ -22,7 +22,7 @@ describe('afterSupplied', () => {
         },
       });
       mockReceiver = jest.fn();
-      supply = afterEvent.to(mockReceiver);
+      supply = afterEvent(mockReceiver);
     });
 
     it('sends the kept event upon receiver registration', () => {
@@ -63,7 +63,7 @@ describe('afterSupplied', () => {
       sender = new EventEmitter();
       afterEvent = afterSupplied(sender, () => ['initial']);
       mockReceiver = jest.fn();
-      supply = afterEvent.to(mockReceiver);
+      supply = afterEvent(mockReceiver);
     });
 
     it('sends the initial event upon receiver registration', () => {
@@ -81,7 +81,7 @@ describe('afterSupplied', () => {
 
       sender.send('other');
       expect(mockReceiver).not.toHaveBeenCalledWith('other');
-      afterEvent.do(onceEvent).to(event => expect(event).toEqual('initial'));
+      afterEvent.do(onceEvent)(event => expect(event).toEqual('initial'));
     });
   });
 
@@ -96,10 +96,10 @@ describe('afterSupplied', () => {
     });
 
     it('throws an exception upon receiver registration', () => {
-      expect(() => afterEvent.to(noop)).toThrow('No events to send');
+      expect(() => afterEvent(noop)).toThrow('No events to send');
     });
     it('throws an exception when requesting the last event', () => {
-      expect(() => afterEvent.do(onceEvent).to(noop)).toThrow('No events to send');
+      expect(() => afterEvent.do(onceEvent)(noop)).toThrow('No events to send');
     });
   });
 });

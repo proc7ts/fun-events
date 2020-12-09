@@ -56,8 +56,6 @@ export class EventNotifier<TEvent extends any[]> implements SupplyPeer {
    *
    * Receivers registered with this method will receive the {@link send emitted} events.
    *
-   * The `[OnEvent__symbol]` method is an alias of this one.
-   *
    * @param receiver - A receiver of events to register.
    *
    * @returns A supply of events to the given `receiver`.

@@ -17,7 +17,7 @@ describe('StateTracker', () => {
 
   describe('[OnEvent__symbol]', () => {
     it('refers `onUpdate`', () => {
-      expect(tracker[OnEvent__symbol]()).toBe(tracker.onUpdate());
+      expect(tracker[OnEvent__symbol]()).toBe(tracker.onUpdate);
     });
   });
 
@@ -87,7 +87,7 @@ describe('StateTracker', () => {
 
     describe('[OnEvent__symbol]', () => {
       it('refers `onUpdate`', () => {
-        expect(onSupplied(part)).toBe(part.onUpdate());
+        expect(onSupplied(part)).toBe(part.onUpdate);
       });
     });
     it('refers itself', () => {

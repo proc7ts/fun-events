@@ -23,7 +23,7 @@ describe('EventEmitter', () => {
 
   describe('[OnEvent__symbol]', () => {
     it('refers to `on`', () => {
-      expect(emitter[OnEvent__symbol]()).toBe(emitter.on());
+      expect(emitter[OnEvent__symbol]()).toBe(emitter.on);
     });
   });
 

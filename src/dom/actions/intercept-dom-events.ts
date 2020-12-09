@@ -28,7 +28,7 @@ export function interceptDomEvents<TEvent extends Event>(
 
     const receiver = eventReceiver(listener);
 
-    return supplier.to(
+    return supplier(
         {
           supply: receiver.supply,
           receive(context, event) {

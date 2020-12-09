@@ -9,10 +9,10 @@ describe('nextAfterEvent', () => {
     const sender = new EventEmitter<[string]>();
     const receiver = jest.fn<void, [string]>();
 
-    sender.on().do(thruOn(
+    sender.on.do(thruOn(
         str => trackValue(str + '!'),
         tracker => nextAfterEvent(tracker),
-    )).to(receiver);
+    ))(receiver);
 
     sender.send('test');
 

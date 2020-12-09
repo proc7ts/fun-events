@@ -28,7 +28,7 @@ describe('thruOn', () => {
         (event1: string, event2: string): string => `${event1}, ${event2}`,
     ));
 
-    transforming.to(mockReceiver);
+    transforming(mockReceiver);
     expect(mockRegister).toHaveBeenCalled();
   });
   it('unregisters event receiver once events supply cut off', () => {
@@ -37,8 +37,8 @@ describe('thruOn', () => {
         (event1: string, event2: string) => `${event1}, ${event2}`,
     ));
 
-    const supply1 = transforming.to(mockReceiver);
-    const supply2 = transforming.to(noop);
+    const supply1 = transforming(mockReceiver);
+    const supply2 = transforming(noop);
 
     supply1.off();
     expect(offSpy).not.toHaveBeenCalled();
@@ -51,7 +51,7 @@ describe('thruOn', () => {
         (event1: string, event2: string) => `${event1}, ${event2}`,
     ));
 
-    transforming.to(mockReceiver);
+    transforming(mockReceiver);
 
     emitter.send('a', 'bb');
 
@@ -64,7 +64,7 @@ describe('thruOn', () => {
         (event1: string, event2: string) => `${event1}, ${event2}`,
     ));
 
-    transforming.to(mockReceiver);
+    transforming(mockReceiver);
 
     emitter.send('a', 'bb');
     expect(mockReceiver).toHaveBeenCalledWith('a, bb');
@@ -80,7 +80,7 @@ describe('thruOn', () => {
         (event1: string, event2: string) => `${event1}, ${event2}`,
     ));
 
-    transforming.to(mockReceiver).whenOff(mockOff);
+    transforming(mockReceiver).whenOff(mockOff);
 
     const reason = 'some reason';
 

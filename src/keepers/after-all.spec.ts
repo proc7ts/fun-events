@@ -19,7 +19,7 @@ describe('afterAll', () => {
   });
 
   it('sends initial event only once', () => {
-    fromAll.to(mockReceiver);
+    fromAll(mockReceiver);
     expect(mockReceiver).toHaveBeenCalledWith({ source1: ['init'], source2: [1] });
     expect(mockReceiver).toHaveBeenCalledTimes(1);
   });
@@ -27,12 +27,12 @@ describe('afterAll', () => {
 
     const receiver = jest.fn();
 
-    afterAll({}).to(receiver);
+    afterAll({})(receiver);
     expect(receiver).toHaveBeenCalledWith({});
     expect(receiver).toHaveBeenCalledTimes(1);
   });
   it('sends updates', () => {
-    fromAll.to(mockReceiver);
+    fromAll(mockReceiver);
     mockReceiver.mockClear();
     source1.it = 'update';
     expect(mockReceiver).toHaveBeenCalledWith({ source1: ['update'], source2: [1] });
@@ -41,7 +41,7 @@ describe('afterAll', () => {
   });
   it('stops sending updates once their supply is cut off', () => {
 
-    const supply = fromAll.to(mockReceiver);
+    const supply = fromAll(mockReceiver);
 
     mockReceiver.mockClear();
     supply.off();
@@ -55,7 +55,7 @@ describe('afterAll', () => {
     const mockOff = jest.fn();
 
     fromAll = afterAll({ source1: stopper, source2 });
-    fromAll.to(mockReceiver).whenOff(mockOff);
+    fromAll(mockReceiver).whenOff(mockOff);
 
     expect(mockReceiver).not.toHaveBeenCalled();
     expect(mockOff).toHaveBeenCalledWith(reason);
@@ -70,7 +70,7 @@ describe('afterAll', () => {
        }),
     };
 
-    fromAll.to(receiver);
+    fromAll(receiver);
     expect(receiver.receive).toHaveBeenCalledWith(expect.anything(), { source1: ['init'], source2: [1] });
     expect(recurrentReceiver).toHaveBeenCalledWith({ source1: ['recurrent'], source2: [1] });
   });

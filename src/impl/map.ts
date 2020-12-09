@@ -12,7 +12,7 @@ export function map<TEvent extends any[], TResult>(
 
     const dispatch = sendEventsTo(receiver);
 
-    supplier.to({
+    supplier({
       supply: receiver.supply,
       receive: (_ctx, ...event) => {
         dispatch(convert(...event));

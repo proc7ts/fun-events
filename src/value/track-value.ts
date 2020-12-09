@@ -3,7 +3,7 @@
  * @module @proc7ts/fun-events
  */
 import { Supply } from '@proc7ts/primitives';
-import { EventKeeper, EventReceiver } from '../base';
+import { EventKeeper } from '../base';
 import { OnEvent } from '../on-event';
 import { EventEmitter } from '../senders';
 import { ValueTracker } from './value-tracker';
@@ -23,10 +23,8 @@ class TrackedValue<T> extends ValueTracker<T> {
     return this._on.supply;
   }
 
-  on(): OnEvent<[T, T]>;
-  on(receiver: EventReceiver<[T, T]>): Supply;
-  on(receiver?: EventReceiver<[T, T]>): OnEvent<[T, T]> | Supply {
-    return (this.on = this._on.on().F)(receiver);
+  get on(): OnEvent<[T, T]> {
+    return this._on.on;
   }
 
   get it(): T {

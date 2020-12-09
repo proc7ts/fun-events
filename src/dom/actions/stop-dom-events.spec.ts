@@ -19,11 +19,11 @@ describe('stopDomEvents', () => {
   });
 
   it('registers event listener', () => {
-    onDomEvent.do(stopDomEvents).to(mockListener);
+    onDomEvent.do(stopDomEvents)(mockListener);
     expect(mockRegister).toHaveBeenCalled();
   });
   it('prevents default', () => {
-    onDomEvent.do(stopDomEvents).to(mockListener);
+    onDomEvent.do(stopDomEvents)(mockListener);
 
     const event = new KeyboardEvent('click');
     const stopPropagationSpy = jest.spyOn(event, 'stopPropagation');

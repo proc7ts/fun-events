@@ -33,16 +33,16 @@ function listenDomEventsPassively<TEvent extends Event>(supplier: OnDomEvent<TEv
       opts?: AddEventListenerOptions | boolean,
   ) => {
     if (opts == null) {
-      return supplier.to(listener, { passive: true });
+      return supplier(listener, { passive: true });
     }
     if (typeof opts === 'boolean') {
-      return supplier.to(listener, { capture: opts, passive: true });
+      return supplier(listener, { capture: opts, passive: true });
     }
     if (opts.passive == null) {
-      return supplier.to(listener, { ...opts, passive: true });
+      return supplier(listener, { ...opts, passive: true });
     }
 
-    return supplier.to(listener, opts);
+    return supplier(listener, opts);
   });
 }
 
@@ -57,7 +57,7 @@ function preventDefaultDomEventHandler<TEvent extends Event>(supplier: OnDomEven
 
     const receiver = eventReceiver(listener);
 
-    return supplier.to(
+    return supplier(
         {
           supply: receiver.supply,
           receive(context, event) {
