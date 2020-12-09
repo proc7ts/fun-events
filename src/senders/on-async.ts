@@ -34,12 +34,13 @@ export function onAsync<TEvent>(from: EventSender<[PromiseLike<TEvent> | TEvent]
 
     const sourceSupply = new Supply();
     let numInProcess = 0;
-    const source = onSupplied(from)
-        .do(letInEvents(supply, sourceSupply))
-        .do(mapEvents(event => {
+    const source = onSupplied(from).do(
+        letInEvents(supply, sourceSupply),
+        mapEvents(event => {
           ++numInProcess;
           return event;
-        }));
+        }),
+    );
     let received: TEvent[] = [];
     let numSent = 1;
     let numReceived = 0;

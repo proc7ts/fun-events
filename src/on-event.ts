@@ -65,19 +65,260 @@ export class OnEvent<TEvent extends any[]> implements EventSender<TEvent> {
   /**
    * Applies the given action to this event supplier.
    *
-   * @typeParam TOut - Action result type.
-   * @typeParam TArgs - Action parameters type.
-   * @param action - A function accepting this sender as its first parameter, and the given arguments as the rest of
-   * them.
-   * @param args - Arguments to pass to action function.
+   * @typeParam TResult - Action result type.
+   * @param action - A function accepting this supplier as its only parameter, and returning action result.
    *
    * @returns Action result.
    */
-  do<TOut, TArgs extends any[]>(
-      action: (this: void, onEvent: this, ...args: TArgs) => TOut,
-      ...args: TArgs
-  ): TOut {
-    return action(this, ...args);
+  do<TResult>(
+      action: (this: void, supplier: this) => TResult,
+  ): TResult;
+
+  /**
+   * Applies the given actions to this event supplier.
+   *
+   * The value returned from each action is passed as argument to the next one. The value returned from the last action
+   * is the result of this method call.
+   *
+   * @typeParam TResult1 - First action result type.
+   * @typeParam TResult1 - Second action result type.
+   * @param action1 - A function accepting this supplier as its only parameter, and returning a result.
+   * @param action2 - A function accepting the first action result as its only parameter, and returning a result.
+   *
+   * @returns Actions application result.
+   */
+  do<
+      TResult1,
+      TResult2,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+  ): TResult2;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+  ): TResult3;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      TResult4,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+      action4: (this: void, arg: TResult3) => TResult4,
+  ): TResult4;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      TResult4,
+      TResult5,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+      action4: (this: void, arg: TResult3) => TResult4,
+      action5: (this: void, arg: TResult4) => TResult5,
+  ): TResult5;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      TResult4,
+      TResult5,
+      TResult6,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+      action4: (this: void, arg: TResult3) => TResult4,
+      action5: (this: void, arg: TResult4) => TResult5,
+      action6: (this: void, arg: TResult5) => TResult6,
+  ): TResult6;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      TResult4,
+      TResult5,
+      TResult6,
+      TResult7,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+      action4: (this: void, arg: TResult3) => TResult4,
+      action5: (this: void, arg: TResult4) => TResult5,
+      action6: (this: void, arg: TResult5) => TResult6,
+      action7: (this: void, arg: TResult6) => TResult7,
+  ): TResult7;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      TResult4,
+      TResult5,
+      TResult6,
+      TResult7,
+      TResult8,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+      action4: (this: void, arg: TResult3) => TResult4,
+      action5: (this: void, arg: TResult4) => TResult5,
+      action6: (this: void, arg: TResult5) => TResult6,
+      action7: (this: void, arg: TResult6) => TResult7,
+      action8: (this: void, arg: TResult7) => TResult8,
+  ): TResult8;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      TResult4,
+      TResult5,
+      TResult6,
+      TResult7,
+      TResult8,
+      TResult9,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+      action4: (this: void, arg: TResult3) => TResult4,
+      action5: (this: void, arg: TResult4) => TResult5,
+      action6: (this: void, arg: TResult5) => TResult6,
+      action7: (this: void, arg: TResult6) => TResult7,
+      action8: (this: void, arg: TResult7) => TResult8,
+      action9: (this: void, arg: TResult8) => TResult9,
+  ): TResult9;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      TResult4,
+      TResult5,
+      TResult6,
+      TResult7,
+      TResult8,
+      TResult9,
+      TResult10,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+      action4: (this: void, arg: TResult3) => TResult4,
+      action5: (this: void, arg: TResult4) => TResult5,
+      action6: (this: void, arg: TResult5) => TResult6,
+      action7: (this: void, arg: TResult6) => TResult7,
+      action8: (this: void, arg: TResult7) => TResult8,
+      action9: (this: void, arg: TResult8) => TResult9,
+      action10: (this: void, arg: TResult9) => TResult10,
+  ): TResult10;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      TResult4,
+      TResult5,
+      TResult6,
+      TResult7,
+      TResult8,
+      TResult9,
+      TResult10,
+      TResult11,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+      action4: (this: void, arg: TResult3) => TResult4,
+      action5: (this: void, arg: TResult4) => TResult5,
+      action6: (this: void, arg: TResult5) => TResult6,
+      action7: (this: void, arg: TResult6) => TResult7,
+      action8: (this: void, arg: TResult7) => TResult8,
+      action9: (this: void, arg: TResult8) => TResult9,
+      action10: (this: void, arg: TResult9) => TResult10,
+      action11: (this: void, arg: TResult10) => TResult11,
+  ): TResult11;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      TResult4,
+      TResult5,
+      TResult6,
+      TResult7,
+      TResult8,
+      TResult9,
+      TResult10,
+      TResult11,
+      TResult12,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+      action4: (this: void, arg: TResult3) => TResult4,
+      action5: (this: void, arg: TResult4) => TResult5,
+      action6: (this: void, arg: TResult5) => TResult6,
+      action7: (this: void, arg: TResult6) => TResult7,
+      action8: (this: void, arg: TResult7) => TResult8,
+      action9: (this: void, arg: TResult8) => TResult9,
+      action10: (this: void, arg: TResult9) => TResult10,
+      action11: (this: void, arg: TResult10) => TResult11,
+      action12: (this: void, arg: TResult11) => TResult12,
+  ): TResult12;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      TResult4,
+      TResult5,
+      TResult6,
+      TResult7,
+      TResult8,
+      TResult9,
+      TResult10,
+      TResult11,
+      TResult12,
+      TResult13,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+      action4: (this: void, arg: TResult3) => TResult4,
+      action5: (this: void, arg: TResult4) => TResult5,
+      action6: (this: void, arg: TResult5) => TResult6,
+      action7: (this: void, arg: TResult6) => TResult7,
+      action8: (this: void, arg: TResult7) => TResult8,
+      action9: (this: void, arg: TResult8) => TResult9,
+      action10: (this: void, arg: TResult9) => TResult10,
+      action11: (this: void, arg: TResult10) => TResult11,
+      action12: (this: void, arg: TResult11) => TResult12,
+      action13: (this: void, arg: TResult12) => TResult13,
+  ): TResult13;
+
+  do(
+      ...actions: ((this: void, arg: any) => any)[]
+  ): any {
+    return actions.reduce((arg, action) => action(arg), this);
   }
 
   /**
