@@ -42,7 +42,7 @@ describe('afterEventBy', () => {
   });
 
   it('builds an `AfterEvent` keeper', () => {
-    afterEvent.to(mockReceiver);
+    afterEvent(mockReceiver);
     expect(mockRegister).toHaveBeenCalled();
     expect(mockReceiver).toHaveBeenCalledWith('fallback');
     expect(mockReceiver).toHaveBeenCalledTimes(1);
@@ -57,7 +57,7 @@ describe('afterEventBy', () => {
       emitter.send('event');
     });
 
-    afterEvent.to(mockReceiver);
+    afterEvent(mockReceiver);
 
     expect(mockReceiver).toHaveBeenCalledWith('event');
     expect(mockReceiver).toHaveBeenCalledTimes(1);
@@ -68,7 +68,7 @@ describe('afterEventBy', () => {
       emitter.send('event');
     });
 
-    afterEvent.to({
+    afterEvent({
       supply: neverSupply(),
       receive(_context, ...event) {
         mockReceiver(...event);
@@ -81,7 +81,7 @@ describe('afterEventBy', () => {
 
     const recurrentReceiver = jest.fn();
 
-    afterEvent.to({
+    afterEvent({
       receive(context, ...event) {
         context.onRecurrent(recurrentReceiver);
         mockReceiver(...event);

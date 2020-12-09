@@ -141,6 +141,10 @@ class SubStateTracker implements StateTracker {
       oldValue: T,
   ) => void;
 
+  readonly onUpdate: OnStateUpdate = onEventBy<[StatePath.Normalized, any, any]>(
+      receiver => this._trackers.on(this._path, receiver),
+  );
+
   constructor(private readonly _trackers: Trackers, private readonly _path: StatePath.Normalized) {
     this.update = <T>(path: StatePath, newValue: T, oldValue: T) => {
       this._trackers.send([...this._path, ...statePath(path)], newValue, oldValue);
@@ -151,16 +155,8 @@ class SubStateTracker implements StateTracker {
     return this;
   }
 
-  onUpdate(): OnStateUpdate;
-  onUpdate(receiver: StateUpdateReceiver): Supply;
-  onUpdate(receiver?: StateUpdateReceiver): OnStateUpdate | Supply {
-    return (this.onUpdate = onEventBy<[StatePath, any, any]>(
-        receiver => this._trackers.on(this._path, receiver),
-    ).F as OnStateUpdate.Fn)(receiver);
-  }
-
   [OnEvent__symbol](): OnStateUpdate {
-    return this.onUpdate();
+    return this.onUpdate;
   }
 
   track(path: StatePath): SubStateTracker {
@@ -195,7 +191,7 @@ export class StateTracker implements EventSender<[StatePath.Normalized, any, any
   readonly _tracker: SubStateTracker = new SubStateTracker(new Trackers(), []);
 
   /**
-   * Builds a {@link OnStateUpdate state updates sender}.
+   * {@link OnStateUpdate state updates sender}.
    *
    * A state update will be sent to it whenever an `update()` function is called.
    *
@@ -203,23 +199,12 @@ export class StateTracker implements EventSender<[StatePath.Normalized, any, any
    *
    * @returns State updates sender.
    */
-  onUpdate(): OnStateUpdate;
-
-  /**
-   * Registers a receiver of state updates.
-   *
-   * @param receiver - State updates receiver to register.
-   *
-   * @returns A supply of state updates.
-   */
-  onUpdate(receiver: StateUpdateReceiver): Supply;
-
-  onUpdate(receiver?: StateUpdateReceiver): OnStateUpdate | Supply {
-    return (this.onUpdate = this._tracker.onUpdate().F)(receiver);
+  get onUpdate(): OnStateUpdate {
+    return this._tracker.onUpdate;
   }
 
   [OnEvent__symbol](): OnStateUpdate {
-    return this.onUpdate();
+    return this.onUpdate;
   }
 
   // noinspection JSCommentMatchesSignature

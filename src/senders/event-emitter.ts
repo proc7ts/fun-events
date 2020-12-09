@@ -2,8 +2,7 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { Supply } from '@proc7ts/primitives';
-import { EventNotifier, EventReceiver, EventSender, OnEvent__symbol } from '../base';
+import { EventNotifier, EventSender, OnEvent__symbol } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
 
 /**
@@ -19,14 +18,10 @@ export class EventEmitter<TEvent extends any[]> extends EventNotifier<TEvent> im
   /**
    * Returns an {@link OnEvent} sender.
    */
-  on(): OnEvent<TEvent>;
-  on(receiver: EventReceiver<TEvent>): Supply;
-  on(receiver?: EventReceiver<TEvent>): OnEvent<TEvent> | Supply {
-    return (this.on = onEventBy<TEvent>(receiver => super.on(receiver)).F)(receiver);
-  }
+  readonly on: OnEvent<TEvent> = onEventBy(receiver => super.on(receiver));
 
   [OnEvent__symbol](): OnEvent<TEvent> {
-    return this.on();
+    return this.on;
   }
 
 }

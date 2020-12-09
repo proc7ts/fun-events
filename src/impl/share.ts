@@ -18,7 +18,7 @@ export function share<TEvent extends any[]>(
       initialEvents = [];
       sharedSupply = new Supply(() => initialEvents = undefined);
 
-      supplier.to({
+      supplier({
         supply: sharedSupply,
         receive(_ctx, ...event) {
           if (initialEvents) {

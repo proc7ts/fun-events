@@ -28,7 +28,7 @@ describe('thruAfter', () => {
         (event1: string, event2: string) => `${event1}, ${event2}`,
     ));
 
-    transforming.to(mockReceiver);
+    transforming(mockReceiver);
     expect(mockRegister).toHaveBeenCalled();
   });
   it('unregisters event receiver when supply is cut off', () => {
@@ -37,8 +37,8 @@ describe('thruAfter', () => {
         (event1: string, event2: string) => `${event1}, ${event2}`,
     ));
 
-    const supply1 = transforming.to(mockReceiver);
-    const supply2 = transforming.to(jest.fn());
+    const supply1 = transforming(mockReceiver);
+    const supply2 = transforming(jest.fn());
 
     supply1.off();
     expect(mockOff).not.toHaveBeenCalled();
@@ -51,7 +51,7 @@ describe('thruAfter', () => {
         (event1: string, event2: string) => `${event1}, ${event2}`,
     ));
 
-    transforming.to(mockReceiver);
+    transforming(mockReceiver);
 
     emitter.send('a', 'bb');
 
@@ -65,7 +65,7 @@ describe('thruAfter', () => {
         (event1: string, event2: string) => `${event1}, ${event2}`,
     ));
 
-    transforming.to(mockReceiver);
+    transforming(mockReceiver);
 
     emitter.send('a', 'bb');
     expect(mockReceiver).toHaveBeenCalledWith('init1, init2');
@@ -81,7 +81,7 @@ describe('thruAfter', () => {
         (event1: string, event2: string) => `${event1}, ${event2}`,
     ));
 
-    transforming.to(mockReceiver).whenOff(mockOff2);
+    transforming(mockReceiver).whenOff(mockOff2);
 
     const reason = 'some reason';
 

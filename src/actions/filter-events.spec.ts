@@ -13,7 +13,7 @@ describe('filterEvents', () => {
   });
 
   it('sends matching events', () => {
-    emitter.on().do(filterEvents(_str => true)).to(mockReceiver);
+    emitter.on.do(filterEvents(_str => true))(mockReceiver);
     emitter.send('event1');
     emitter.send('event2');
 
@@ -21,7 +21,7 @@ describe('filterEvents', () => {
     expect(mockReceiver).toHaveBeenLastCalledWith('event2');
   });
   it('filters out not matching events', () => {
-    emitter.on().do(filterEvents(str => !str.startsWith('-'))).to(mockReceiver);
+    emitter.on.do(filterEvents(str => !str.startsWith('-')))(mockReceiver);
     emitter.send('-event1');
     emitter.send('event2');
 
@@ -33,9 +33,9 @@ describe('filterEvents', () => {
 
     type TargetType = `+${string}`;
 
-    const filtered: OnEvent<[TargetType]> = emitter.on().do(filterEvents(isOfTargetType));
+    const filtered: OnEvent<[TargetType]> = emitter.on.do(filterEvents(isOfTargetType));
 
-    filtered.to(mockReceiver);
+    filtered(mockReceiver);
     emitter.send('+event1');
     emitter.send('-event2');
 

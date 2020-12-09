@@ -26,7 +26,7 @@ export function consumeEvents<TEvent extends any[]>(
     // Do not use `.cuts()` here as `consumerSupply` is mutable
     const supply = new Supply(reason => consumerSupply.off(reason));
 
-    input.to({
+    input({
       supply,
       receive(_ctx, ...event: TEvent) {
 

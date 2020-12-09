@@ -6,7 +6,10 @@ import { noop, Supply, SupplyPeer } from '@proc7ts/primitives';
 import { EventReceiver } from '../base';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 
-const domEventContext: EventReceiver.Context<any> = {
+/**
+ * @internal
+ */
+const OnDomEvent$context: EventReceiver.Context<any> = {
   onRecurrent: noop,
 };
 
@@ -57,7 +60,7 @@ export class DomEventDispatcher implements SupplyPeer {
       if (!supply.isOff) {
 
         // Create unique DOM listener instance
-        const domListener: EventListener = event => listener.receive(domEventContext, event as TEvent);
+        const domListener: EventListener = event => listener.receive(OnDomEvent$context, event as TEvent);
 
         this._target.addEventListener(type, domListener, opts);
         listener.supply.whenOff(() => this._target.removeEventListener(type, domListener));

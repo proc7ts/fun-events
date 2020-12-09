@@ -28,7 +28,7 @@ describe('letInEvents', () => {
     });
 
     it('sends original events', () => {
-      onEvent.do(letInEvents(requiredSupply)).to(mockReceiver);
+      onEvent.do(letInEvents(requiredSupply))(mockReceiver);
       emitter.send('event1');
       emitter.send('event2');
 
@@ -39,7 +39,7 @@ describe('letInEvents', () => {
 
       const whenOff = jest.fn();
 
-      onEvent.do(letInEvents(neverSupply())).to(mockReceiver).whenOff(whenOff);
+      onEvent.do(letInEvents(neverSupply()))(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       expect(mockReceiver).not.toHaveBeenCalled();
       expect(whenOff).toHaveBeenCalled();
@@ -48,7 +48,7 @@ describe('letInEvents', () => {
 
       const whenOff = jest.fn();
 
-      onEvent.do(letInEvents(requiredSupply)).to(mockReceiver).whenOff(whenOff);
+      onEvent.do(letInEvents(requiredSupply))(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       supply.off('reason');
       emitter.send('event2');
@@ -62,7 +62,7 @@ describe('letInEvents', () => {
 
       const whenOff = jest.fn();
 
-      onEvent.do(letInEvents(requiredSupply)).to(mockReceiver).whenOff(whenOff);
+      onEvent.do(letInEvents(requiredSupply))(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       requiredSupply.off('reason');
       emitter.send('event2');
@@ -99,7 +99,7 @@ describe('letInEvents', () => {
     });
 
     it('sends original events', () => {
-      onEvent.do(letInEvents(requiredSupply, dependentSupply)).to(mockReceiver);
+      onEvent.do(letInEvents(requiredSupply, dependentSupply))(mockReceiver);
       emitter.send('event1');
       emitter.send('event2');
 
@@ -110,7 +110,7 @@ describe('letInEvents', () => {
 
       const whenOff = jest.fn();
 
-      onEvent.do(letInEvents(neverSupply(), dependentSupply)).to(mockReceiver).whenOff(whenOff);
+      onEvent.do(letInEvents(neverSupply(), dependentSupply))(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       expect(mockReceiver).not.toHaveBeenCalled();
       expect(whenOff).not.toHaveBeenCalled();
@@ -122,7 +122,7 @@ describe('letInEvents', () => {
 
       const whenOff = jest.fn();
 
-      onEvent.do(letInEvents(requiredSupply, dependentSupply)).to(mockReceiver).whenOff(whenOff);
+      onEvent.do(letInEvents(requiredSupply, dependentSupply))(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       supply.off('reason');
       emitter.send('event2');
@@ -139,7 +139,7 @@ describe('letInEvents', () => {
 
       const whenOff = jest.fn();
 
-      onEvent.do(letInEvents(requiredSupply, dependentSupply)).to(mockReceiver).whenOff(whenOff);
+      onEvent.do(letInEvents(requiredSupply, dependentSupply))(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       requiredSupply.off('reason');
       emitter.send('event2');
@@ -178,7 +178,7 @@ describe('letInEvents', () => {
     });
 
     it('sends original events', () => {
-      afterEvent.do(letInEvents(requiredSupply)).to(mockReceiver);
+      afterEvent.do(letInEvents(requiredSupply))(mockReceiver);
       emitter.send('event1');
       emitter.send('event2');
 
@@ -190,7 +190,7 @@ describe('letInEvents', () => {
 
       const whenOff = jest.fn();
 
-      afterEvent.do(letInEvents(neverSupply())).to(mockReceiver).whenOff(whenOff);
+      afterEvent.do(letInEvents(neverSupply()))(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       expect(mockReceiver).not.toHaveBeenCalled();
       expect(whenOff).toHaveBeenCalled();
@@ -199,7 +199,7 @@ describe('letInEvents', () => {
 
       const whenOff = jest.fn();
 
-      afterEvent.do(letInEvents(requiredSupply)).to(mockReceiver).whenOff(whenOff);
+      afterEvent.do(letInEvents(requiredSupply))(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       supply.off('reason');
       emitter.send('event2');
@@ -214,7 +214,7 @@ describe('letInEvents', () => {
 
       const whenOff = jest.fn();
 
-      afterEvent.do(letInEvents(requiredSupply)).to(mockReceiver).whenOff(whenOff);
+      afterEvent.do(letInEvents(requiredSupply))(mockReceiver).whenOff(whenOff);
       emitter.send('event1');
       requiredSupply.off('reason');
       emitter.send('event2');

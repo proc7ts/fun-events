@@ -18,7 +18,7 @@ describe('consumeEvents', () => {
     nested2 = new EventNotifier();
     receiver = jest.fn();
     consume = jest.fn((nested?: EventNotifier<[string]>) => nested && nested.on(receiver));
-    supply = sender.on().do(consumeEvents(consume));
+    supply = sender.on.do(consumeEvents(consume));
   });
 
   it('receives nested event', () => {
@@ -33,7 +33,7 @@ describe('consumeEvents', () => {
     const supply2 = new Supply();
     let calls = 0;
 
-    source.on().do(consumeEvents(() => {
+    source.on.do(consumeEvents(() => {
 
       const result = !calls ? supply1 : calls === 1 ? supply2 : undefined;
 
@@ -60,7 +60,7 @@ describe('consumeEvents', () => {
     const supply1 = new Supply();
     let calls = 0;
 
-    source.on().do(consumeEvents(() => {
+    source.on.do(consumeEvents(() => {
 
       const result = !calls || calls === 1 ? supply1 : undefined;
 

@@ -21,7 +21,7 @@ export function thru<TEvent extends any[]>(
 
     const chains: ChainEntry[] = [];
 
-    supplier.to({
+    supplier({
       supply: receiver.supply,
       receive(context, ...event) {
 
@@ -62,7 +62,7 @@ export function thru<TEvent extends any[]>(
 
                 const supply = new Supply().needs(entry.supply);
 
-                sender[OnEvent__symbol]().to({
+                sender[OnEvent__symbol]()({
                   supply,
                   receive(_context, ...event): void {
                     handleResult(pass(...event), event, supply);

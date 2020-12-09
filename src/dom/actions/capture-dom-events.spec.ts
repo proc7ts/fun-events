@@ -19,15 +19,15 @@ describe('captureDomEvents', () => {
   });
 
   it('registers event listener', () => {
-    onDomEvent.do(captureDomEvents).to(mockListener);
+    onDomEvent.do(captureDomEvents)(mockListener);
     expect(mockRegister).toHaveBeenCalled();
   });
   it('captures events by default', () => {
-    onDomEvent.do(captureDomEvents).to(mockListener);
+    onDomEvent.do(captureDomEvents)(mockListener);
     expect(mockRegister).toHaveBeenCalledWith(expect.anything(), true);
   });
   it('respects non-capturing registration', () => {
-    onDomEvent.do(captureDomEvents).to(mockListener, false);
+    onDomEvent.do(captureDomEvents)(mockListener, false);
     expect(mockRegister).toHaveBeenCalledWith(expect.anything(), false);
   });
   it('captures events by default when options passed', () => {
@@ -37,7 +37,7 @@ describe('captureDomEvents', () => {
       passive: true,
     };
 
-    onDomEvent.do(captureDomEvents).to(mockListener, opts);
+    onDomEvent.do(captureDomEvents)(mockListener, opts);
     expect(mockRegister).toHaveBeenCalledWith(expect.anything(), { ...opts, capture: true });
   });
   it('respects non-capturing options', () => {
@@ -47,7 +47,7 @@ describe('captureDomEvents', () => {
       capture: false,
     };
 
-    onDomEvent.do(captureDomEvents).to(mockListener, opts);
+    onDomEvent.do(captureDomEvents)(mockListener, opts);
     expect(mockRegister).toHaveBeenCalledWith(expect.anything(), opts);
   });
 });

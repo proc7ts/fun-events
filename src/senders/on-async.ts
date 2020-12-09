@@ -51,7 +51,7 @@ export function onAsync<TEvent>(from: EventSender<[PromiseLike<TEvent> | TEvent]
       }
     });
 
-    onAnyAsync(source).to({
+    onAnyAsync(source)({
       supply,
       receive(_ctx, event, index) {
 

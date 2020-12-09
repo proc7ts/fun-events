@@ -4,7 +4,7 @@
  */
 import { Supply } from '@proc7ts/primitives';
 import { consumeEvents } from '../actions';
-import { EventKeeper, EventReceiver, EventSender, EventSupplier, isEventKeeper } from '../base';
+import { EventKeeper, EventSender, EventSupplier, isEventKeeper } from '../base';
 import { afterSupplied } from '../keepers';
 import { OnEvent } from '../on-event';
 import { EventEmitter, onSupplied } from '../senders';
@@ -34,10 +34,8 @@ export class ValueSync<T> extends ValueTracker<T> {
     this._it = initial;
   }
 
-  on(): OnEvent<[T, T]>;
-  on(receiver: EventReceiver<[T, T]>): Supply;
-  on(receiver?: EventReceiver<[T, T]>): OnEvent<[T, T]> | Supply {
-    return (this.on = this._on.on().F)(receiver);
+  get on(): OnEvent<[T, T]> {
+    return this._on.on;
   }
 
   get supply(): Supply {

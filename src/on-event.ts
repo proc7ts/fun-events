@@ -4,48 +4,32 @@
  */
 import { Supply } from '@proc7ts/primitives';
 import { eventReceiver, EventReceiver, EventSender, OnEvent__symbol } from './base';
-import { then } from './impl';
+import { OnEvent$do, OnEvent$supplier, OnEvent$then } from './impl';
 
 /**
- * An {@link EventSender} implementation able to register event receivers.
+ * Signature of {@link EventSender} implementation able to register event receivers.
  *
  * The registered event receiver starts receiving upcoming events until the returned event supply is cut off.
  *
  * Contains additional event processing methods.
  *
+ * May be constructed using {@link onEventBy} function.
+ *
  * @category Core
  * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
  */
-export class OnEvent<TEvent extends any[]> implements EventSender<TEvent> {
+export interface OnEvent<TEvent extends any[]> extends EventSender<TEvent> {
 
   /**
-   * Generic event receiver registration function. It will be called on each receiver registration,
-   * unless the receiver's {@link EventReceiver.Generic.supply event supply} is cut off already.
-   */
-  protected readonly _on: (receiver: EventReceiver.Generic<TEvent>) => void;
-
-  /**
-   * Constructs {@link OnEvent} instance.
+   * Starts sending events to the given `receiver`.
    *
-   * @param on - Generic event receiver registration function. It will be called on each receiver registration,
-   * unless the receiver's {@link EventReceiver.Generic.supply event supply} is cut off already.
-   */
-  constructor(on: (receiver: EventReceiver.Generic<TEvent>) => void) {
-    this._on = on;
-  }
-
-  /**
-   * Event receiver registration function of this sender.
+   * @param receiver - Target receiver of events.
    *
-   * Delegates to {@link OnEvent.to} method.
+   * @returns A supply of events from this sender to the given `receiver`.
    */
-  get F(): OnEvent.Fn<TEvent> {
-    return this.to.bind(this);
-  }
+  (receiver: EventReceiver<TEvent>): Supply;
 
-  [OnEvent__symbol](): this {
-    return this;
-  }
+  [OnEvent__symbol](): this;
 
   /**
    * Converts a plain event receiver registration function to {@link OnEvent} sender.
@@ -58,9 +42,7 @@ export class OnEvent<TEvent extends any[]> implements EventSender<TEvent> {
    */
   by<TNewEvent extends any[]>(
       register: (this: void, receiver: EventReceiver.Generic<TNewEvent>) => void,
-  ): OnEvent<TNewEvent> {
-    return new OnEvent(register);
-  }
+  ): OnEvent<TNewEvent>;
 
   /**
    * Applies the given action to this event supplier.
@@ -315,53 +297,6 @@ export class OnEvent<TEvent extends any[]> implements EventSender<TEvent> {
       action13: (this: void, arg: TResult12) => TResult13,
   ): TResult13;
 
-  do(
-      ...actions: ((this: void, arg: any) => any)[]
-  ): any {
-    return actions.reduce((arg, action) => action(arg), this);
-  }
-
-  /**
-   * Returns a reference to itself.
-   *
-   * @returns `this` instance.
-   */
-  to(): this;
-
-  /**
-   * Starts sending events to the given `receiver`.
-   *
-   * @param receiver - Target receiver of events.
-   *
-   * @returns A supply of events from this sender to the given `receiver`.
-   */
-  to(receiver: EventReceiver<TEvent>): Supply;
-
-  /**
-   * Either starts sending events to the given `receiver`, or returns a reference to itself.
-   *
-   * @param receiver - Target receiver of events.
-   *
-   * @returns Either a supply of events from this sender to the given `receiver`, or `this` instance when `receiver`
-   * is omitted.
-   */
-  to(receiver?: EventReceiver<TEvent>): this | Supply;
-
-  to(receiver?: EventReceiver<TEvent>): this | Supply {
-    if (!receiver) {
-      return this;
-    }
-
-    const generic = eventReceiver(receiver);
-    const { supply } = generic;
-
-    if (!supply.isOff) {
-      this._on(generic);
-    }
-
-    return supply;
-  }
-
   /**
    * Attaches callbacks to the next event and/or supply cut off reason.
    *
@@ -376,72 +311,7 @@ export class OnEvent<TEvent extends any[]> implements EventSender<TEvent> {
   then<TResult1 = TEvent extends [infer F, ...any[]] ? F : undefined, TResult2 = never>(
       onEvent?: ((...event: TEvent) => TResult1 | PromiseLike<TResult1>) | undefined | null,
       onCutOff?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null,
-  ): Promise<TResult1 | TResult2> {
-    return then(this, onEvent, onCutOff);
-  }
-
-}
-
-export namespace OnEvent {
-
-  /**
-   * A signature of function registering receivers of events sent by event sender.
-   *
-   * When called without parameters it returns an {@link OnEvent} sender. When called with event receiver as parameter
-   * it returns a supply of events from that sender.
-   *
-   * Available as {@link OnEvent.F} property value.
-   *
-   * @typeParam TEvent - An event type. This is a tuple of event receiver parameter types.
-   */
-  export type Fn<TEvent extends any[]> = Method<void, TEvent>;
-
-  /**
-   * A signature of method registering receivers of events sent by event sender.
-   *
-   * When called without parameters it returns an {@link OnEvent} sender. When called with event receiver as parameter
-   * it returns a supply of events from that sender.
-   *
-   * @typeParam TThis - `this` context type.
-   * @typeParam TEvent - An event type. This is a tuple of event receiver parameter types.
-   */
-  export interface Method<TThis, TEvent extends any[]> {
-
-    /**
-     * Returns the event sender.
-     *
-     * @returns {@link OnEvent} sender the events originated from.
-     */
-    (
-        this: TThis,
-    ): OnEvent<TEvent>;
-
-    /**
-     * Registers a receiver of events sent by the sender.
-     *
-     * @param receiver - A receiver of events to register.
-     *
-     * @returns A supply of events from the sender to the given `receiver`.
-     */
-    (
-        this: TThis,
-        receiver: EventReceiver<TEvent>,
-    ): Supply;
-
-    /**
-     * Either registers a receiver of events sent by the sender, or returns the sender itself.
-     *
-     * @param receiver - A receiver of events to register.
-     *
-     * @returns Either a supply of events from the sender to the given `receiver`, or {@link OnEvent} sender the events
-     * originated from when `receiver` is omitted.
-     */
-    (
-        this: TThis,
-        receiver?: EventReceiver<TEvent>,
-    ): Supply | OnEvent<TEvent>;
-
-  }
+  ): Promise<TResult1 | TResult2>;
 
 }
 
@@ -458,5 +328,23 @@ export namespace OnEvent {
 export function onEventBy<TEvent extends any[]>(
     register: (this: void, receiver: EventReceiver.Generic<TEvent>) => void,
 ): OnEvent<TEvent> {
-  return new OnEvent(register);
+
+  const onEvent = ((receiver: EventReceiver<TEvent>): Supply => {
+
+    const generic = eventReceiver(receiver);
+    const { supply } = generic;
+
+    if (!supply.isOff) {
+      register(generic);
+    }
+
+    return supply;
+  }) as OnEvent<TEvent>;
+
+  onEvent[OnEvent__symbol] = OnEvent$supplier;
+  onEvent.by = register => onEventBy(register);
+  onEvent.do = OnEvent$do;
+  onEvent.then = OnEvent$then;
+
+  return onEvent;
 }

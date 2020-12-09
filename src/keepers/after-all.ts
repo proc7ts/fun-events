@@ -36,7 +36,7 @@ export function afterAll<TSrcMap extends { readonly [key: string]: EventKeeper<a
     const result = {} as { [K in keyof TSrcMap]: EventKeeper.Event<TSrcMap[K]> };
 
     keys.forEach(<K extends keyof TSrcMap>(key: K) => {
-      supply.needs(sources[key][AfterEvent__symbol]().to((...event: EventKeeper.Event<TSrcMap[K]>) => {
+      supply.needs(sources[key][AfterEvent__symbol]()((...event: EventKeeper.Event<TSrcMap[K]>) => {
         result[key] = event;
         send();
       }).needs(supply));
@@ -52,7 +52,7 @@ export function afterAll<TSrcMap extends { readonly [key: string]: EventKeeper<a
     const result = {} as { [K in keyof TSrcMap]: EventKeeper.Event<TSrcMap[K]> };
 
     keys.forEach(
-        <K extends keyof TSrcMap>(key: K) => onceEvent(afterSupplied(sources[key])).to(
+        <K extends keyof TSrcMap>(key: K) => onceEvent(afterSupplied(sources[key]))(
             (...event: EventKeeper.Event<TSrcMap[K]>) => result[key as keyof TSrcMap] = event,
         ),
     );

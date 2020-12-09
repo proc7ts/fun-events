@@ -12,7 +12,7 @@ describe('onPromise', () => {
   it('cuts off events supply after resolution', async () => {
 
     const on = onPromise(Promise.resolve('test'));
-    const promise = new Promise(resolve => on.to(noop).whenOff(resolve));
+    const promise = new Promise(resolve => on(noop).whenOff(resolve));
 
     expect(await promise).toBeUndefined();
   });
@@ -20,7 +20,7 @@ describe('onPromise', () => {
 
     const error = new Error('test');
     const on = onPromise(Promise.resolve('test'));
-    const promise = new Promise(resolve => on.to(() => { throw error; }).whenOff(resolve));
+    const promise = new Promise(resolve => on(() => { throw error; }).whenOff(resolve));
 
     expect(await promise).toBe(error);
   });
@@ -28,7 +28,7 @@ describe('onPromise', () => {
 
     const error = new Error('test');
     const on = onPromise(Promise.reject(error));
-    const promise = new Promise(resolve => on.to(noop).whenOff(resolve));
+    const promise = new Promise(resolve => on(noop).whenOff(resolve));
 
     expect(await promise).toBe(error);
   });
@@ -42,7 +42,7 @@ describe('onPromise', () => {
 
     let reported: string | undefined;
 
-    on.to(value => reported = value);
+    on(value => reported = value);
     expect(reported).toBe(value);
   });
   it('cuts off events supply immediately if promise rejected already', async () => {
@@ -54,7 +54,7 @@ describe('onPromise', () => {
     await promise.catch(noop);
 
     let reported: any;
-    on.to(noop).whenOff(reason => reported = reason);
+    on(noop).whenOff(reason => reported = reason);
     expect(reported).toBe(error);
   });
 });

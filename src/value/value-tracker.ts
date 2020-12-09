@@ -36,56 +36,32 @@ export abstract class ValueTracker<T> implements EventSender<[T, T]>, EventKeepe
   private _by = neverSupply();
 
   /**
-   * Returns {@link OnEvent} sender of value changes.
+   * {@link OnEvent} sender of value changes.
    *
    * The `[OnEvent__symbol]` property is an alias of this one.
    *
    * @returns Value changes sender.
    */
-  abstract on(): OnEvent<[T, T]>;
+  abstract readonly on: OnEvent<[T, T]>;
 
   /**
-   * Registers a receiver of value changes.
-   *
-   * The new value is sent as first argument, and the old value as a second one.
-   *
-   * @param receiver - A receiver to register.
-   *
-   * @returns A supply of value changes.
-   */
-  abstract on(receiver: EventReceiver<[T, T]>): Supply;
-
-  /**
-   * Builds an {@link AfterEvent} keeper of current value.
+   * {@link AfterEvent} keeper of current value.
    *
    * The `[AfterEvent__symbol]` property is an alias of this one.
    *
    * @returns Current value keeper.
    */
-  read(): AfterEvent<[T]>;
-
-  /**
-   * Registers a receiver of current values.
-   *
-   * @param receiver - A receiver to register.
-   *
-   * @returns A supply of current value.
-   */
-  read(receiver: EventReceiver<[T]>): Supply;
-
-  read(receiver?: EventReceiver<[T]>): AfterEvent<[T]> | Supply {
-    return (this.read = afterEventBy<[T]>(
-        receiver => this.on(receiveNewValue(receiver)),
-        () => [this.it],
-    ).F)(receiver);
-  }
+  readonly read: AfterEvent<[T]> = afterEventBy(
+      receiver => this.on(receiveNewValue(receiver)),
+      () => [this.it],
+  );
 
   [OnEvent__symbol](): OnEvent<[T, T]> {
-    return this.on();
+    return this.on;
   }
 
   [AfterEvent__symbol](): AfterEvent<[T]> {
-    return this.read();
+    return this.read;
   }
 
   /**
@@ -143,7 +119,7 @@ export abstract class ValueTracker<T> implements EventSender<[T, T]>, EventKeepe
 
       const onValue = isEventKeeper(sender) ? sender[AfterEvent__symbol]() : sender[OnEvent__symbol]();
 
-      return onValue.to(value => this.it = value);
+      return onValue(value => this.it = value);
     };
 
     this.byNone();

@@ -18,7 +18,7 @@ describe('onAny', () => {
     source2 = new EventEmitter();
     fromAny = onAny(source1, source2);
     mockReceiver = jest.fn();
-    supply = fromAny.to(mockReceiver);
+    supply = fromAny(mockReceiver);
   });
 
   it('receives events from any source', () => {

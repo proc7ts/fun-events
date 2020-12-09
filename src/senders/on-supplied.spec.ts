@@ -18,13 +18,13 @@ describe('onSupplied', () => {
 
       const supplier: EventSender<[string]> = {
         [OnEvent__symbol]() {
-          return sender.on();
+          return sender.on;
         },
       };
 
       onEvent = onSupplied(supplier);
       mockReceiver = jest.fn();
-      supply = onEvent.to(mockReceiver);
+      supply = onEvent(mockReceiver);
     });
 
     it('reports events sent by the given sender', () => {
@@ -57,7 +57,7 @@ describe('onSupplied', () => {
       const tracker = trackValue(1);
       const keeper: EventKeeper<[number]> = {
         [AfterEvent__symbol]() {
-          return tracker.read();
+          return tracker.read;
         },
       };
 

@@ -29,8 +29,8 @@ describe('shareEvents', () => {
 
       const shared = onEvent.do(shareEvents);
 
-      shared.to(mockReceiver);
-      shared.to(mockReceiver2);
+      shared(mockReceiver);
+      shared(mockReceiver2);
       emitter.send('a', 'b');
       expect(mockReceiver).toHaveBeenCalledWith('a', 'b');
       expect(mockReceiver2).toHaveBeenCalledWith('a', 'b');
@@ -39,16 +39,16 @@ describe('shareEvents', () => {
 
       const shared = onEvent.do(shareEvents);
 
-      shared.to(mockReceiver);
-      shared.to(mockReceiver2);
+      shared(mockReceiver);
+      shared(mockReceiver2);
 
       expect(mockRegister).toHaveBeenCalledTimes(1);
     });
     it('cuts off events supply from the source when all event supplies do', () => {
 
       const shared = onEvent.do(shareEvents);
-      const supply1 = shared.to(mockReceiver);
-      const supply2 = shared.to(mockReceiver2);
+      const supply1 = shared(mockReceiver);
+      const supply2 = shared(mockReceiver2);
 
       supply1.off('reason1');
       expect(offSpy).not.toHaveBeenCalled();
@@ -64,8 +64,8 @@ describe('shareEvents', () => {
 
       const shared = onEvent.do(shareEvents);
 
-      shared.to(mockReceiver);
-      shared.to(mockReceiver2);
+      shared(mockReceiver);
+      shared(mockReceiver2);
 
       expect(mockReceiver).toHaveBeenCalledWith('init1', '1');
       expect(mockReceiver).toHaveBeenCalledWith('init2', '2');
@@ -88,8 +88,8 @@ describe('shareEvents', () => {
       });
 
       const shared = onEvent.do(shareEvents);
-      const supply1 = shared.to(mockReceiver);
-      const supply2 = shared.to(mockReceiver2);
+      const supply1 = shared(mockReceiver);
+      const supply2 = shared(mockReceiver2);
 
       supply1.off();
       supply2.off();
@@ -97,8 +97,8 @@ describe('shareEvents', () => {
       mockReceiver.mockClear();
       mockReceiver2.mockClear();
 
-      shared.to(mockReceiver);
-      shared.to(mockReceiver2);
+      shared(mockReceiver);
+      shared(mockReceiver2);
       expect(mockReceiver).toHaveBeenCalledWith('init1', '1');
       expect(mockReceiver).toHaveBeenCalledWith('init2', '2');
       expect(mockReceiver).toHaveReturnedTimes(2);
@@ -115,9 +115,9 @@ describe('shareEvents', () => {
 
       const shared = onEvent.do(shareEvents);
 
-      shared.to(mockReceiver);
+      shared(mockReceiver);
       emitter.send('update1', '11');
-      shared.to(mockReceiver2);
+      shared(mockReceiver2);
       emitter.send('update2', '12');
 
       expect(mockReceiver).toHaveBeenCalledWith('init1', '1');
@@ -154,8 +154,8 @@ describe('shareEvents', () => {
 
       const shared = afterEvent.do(shareEvents);
 
-      shared.to(mockReceiver);
-      shared.to(mockReceiver2);
+      shared(mockReceiver);
+      shared(mockReceiver2);
       expect(mockReceiver).toHaveBeenCalledWith(...fallback);
       expect(mockReceiver2).toHaveBeenCalledWith(...fallback);
     });
@@ -163,14 +163,14 @@ describe('shareEvents', () => {
 
       const shared = afterEvent.do(shareEvents);
 
-      shared.do(onceEvent).to((...received) => expect(received).toEqual(fallback));
+      shared.do(onceEvent)((...received) => expect(received).toEqual(fallback));
     });
     it('sends events from the source', () => {
 
       const shared = afterEvent.do(shareEvents);
 
-      shared.to(mockReceiver);
-      shared.to(mockReceiver2);
+      shared(mockReceiver);
+      shared(mockReceiver2);
       emitter.send('a', 'b');
       expect(mockReceiver).toHaveBeenCalledWith('a', 'b');
       expect(mockReceiver2).toHaveBeenCalledWith('a', 'b');

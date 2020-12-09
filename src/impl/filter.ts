@@ -12,7 +12,7 @@ export function filter<TEvent extends any[]>(
 
     const dispatch = sendEventsTo(receiver);
 
-    supplier.to({
+    supplier({
       supply: receiver.supply,
       receive: (_ctx, ...event: TEvent) => test(...event) && dispatch(...event),
     });

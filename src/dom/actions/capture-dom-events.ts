@@ -24,12 +24,12 @@ export function captureDomEvents<TEvent extends Event>(
       opts?: AddEventListenerOptions | boolean,
   ) => {
     if (opts == null) {
-      return supplier.to(listener, true);
+      return supplier(listener, true);
     }
     if (typeof opts === 'object' && opts.capture == null) {
-      return supplier.to(listener, { ...opts, capture: true });
+      return supplier(listener, { ...opts, capture: true });
     }
 
-    return supplier.to(listener, opts);
+    return supplier(listener, opts);
   });
 }

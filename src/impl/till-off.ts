@@ -12,13 +12,13 @@ export function tillOff<TEvent extends any[]>(
 ): (receiver: EventReceiver.Generic<TEvent>) => void {
   return (receiver: EventReceiver.Generic<TEvent>): void => {
     if (dependentSupply) {
-      supplier.to({
+      supplier({
         supply: new Supply().needs(required).cuts(dependentSupply),
         receive: (receiver.receive as (...args: any[]) => void).bind(receiver),
       });
     } else {
       receiver.supply.needs(required);
-      supplier.to(receiver);
+      supplier(receiver);
     }
   };
 }

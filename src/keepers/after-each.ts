@@ -30,7 +30,7 @@ export function afterEach<TEvent extends any[]>(...sources: EventKeeper<TEvent>[
     const result: TEvent[] = [];
 
     sources.forEach((source, index) => {
-      supply.needs(source[AfterEvent__symbol]().to((...event) => {
+      supply.needs(source[AfterEvent__symbol]()((...event) => {
         result[index] = event;
         send();
       }).needs(supply));
@@ -46,7 +46,7 @@ export function afterEach<TEvent extends any[]>(...sources: EventKeeper<TEvent>[
     const result: TEvent[] = [];
 
     sources.forEach(
-        source => onceEvent(afterSupplied(source)).to(
+        source => onceEvent(afterSupplied(source))(
             (...event) => result.push(event),
         ),
     );

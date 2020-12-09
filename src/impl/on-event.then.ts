@@ -6,13 +6,13 @@ import { once } from './once';
 /**
  * @internal
  */
-export function then<TEvent extends any[], TResult1 = TEvent[0], TResult2 = never>(
-    onSource: OnEvent<TEvent>,
+export function OnEvent$then<TEvent extends any[], TResult1 = TEvent[0], TResult2 = never>(
+    this: OnEvent<TEvent>,
     onEvent?: ((...value: TEvent) => TResult1 | PromiseLike<TResult1>) | undefined | null,
     onCutOff?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null,
 ): Promise<TResult1 | TResult2> {
   return new Promise((resolve, reject) => {
-    once(onSource)({
+    once(this)({
       supply: onCutOff
           ? new Supply(reason => {
             try {
