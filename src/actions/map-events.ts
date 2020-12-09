@@ -10,6 +10,7 @@ import { shareEvents } from './share-events';
 /**
  * Creates a mapper that converts incoming events with the given converter function.
  *
+ * @category Core
  * @typeParam TEvent - Incoming event type.
  * @typeParam TResult - Outgoing event value type.
  * @param convert - A converter function that accepts incoming event as parameters and returns outgoing event value.
@@ -31,6 +32,7 @@ export function mapEvents<TEvent extends any[], TResult>(// eslint-disable-line 
  * Creates a mapper that converts incoming events with the given converter function, and does not share the outgoing
  * event supply.
  *
+ * @category Core
  * @typeParam TEvent - Incoming event type.
  * @typeParam TResult - Outgoing event value type.
  * @param convert - A converter function that accepts incoming event as parameters and returns outgoing event value.
