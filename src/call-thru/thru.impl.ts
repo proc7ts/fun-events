@@ -2,13 +2,13 @@ import { isNextCall, NextCall__symbol } from '@proc7ts/call-thru';
 import { neverSupply, noop, Supply } from '@proc7ts/primitives';
 import { EventReceiver, EventSender, OnEvent__symbol } from '../base';
 import { OnEvent } from '../on-event';
-import { OnEventCallChain } from '../passes';
+import { OnEventCallChain } from './index';
 
 /**
  * @internal
  */
 export function thru<TEvent extends any[]>(
-    onSource: OnEvent<TEvent>,
+    supplier: OnEvent<TEvent>,
     passes: ((...args: any[]) => any)[],
 ): (receiver: EventReceiver.Generic<TEvent>) => void {
 
@@ -21,7 +21,7 @@ export function thru<TEvent extends any[]>(
 
     const chains: ChainEntry[] = [];
 
-    onSource.to({
+    supplier.to({
       supply: receiver.supply,
       receive(context, ...event) {
 

@@ -2,12 +2,9 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { neverSupply, Supply, SupplyPeer } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/primitives';
 import { eventReceiver, EventReceiver, EventSender, OnEvent__symbol } from './base';
-import { once, share, then, thru, tillOff } from './impl';
-import { OnEventCallChain } from './passes';
-import Args = OnEventCallChain.Args;
-import Out = OnEventCallChain.Out;
+import { then } from './impl';
 
 /**
  * An {@link EventSender} implementation able to register event receivers.
@@ -48,6 +45,280 @@ export class OnEvent<TEvent extends any[]> implements EventSender<TEvent> {
 
   [OnEvent__symbol](): this {
     return this;
+  }
+
+  /**
+   * Converts a plain event receiver registration function to {@link OnEvent} sender.
+   *
+   * @typeParam TNewEvent - An event type. This is a list of event receiver parameter types.
+   * @param register - Generic event receiver registration function. It will be called on each receiver registration,
+   * unless the receiver's {@link EventReceiver.Generic.supply event supply} is cut off already.
+   *
+   * @returns An {@link OnEvent} sender registering event receivers with the given `register` function.
+   */
+  by<TNewEvent extends any[]>(
+      register: (this: void, receiver: EventReceiver.Generic<TNewEvent>) => void,
+  ): OnEvent<TNewEvent> {
+    return new OnEvent(register);
+  }
+
+  /**
+   * Applies the given action to this event supplier.
+   *
+   * @typeParam TResult - Action result type.
+   * @param action - A function accepting this supplier as its only parameter, and returning action result.
+   *
+   * @returns Action result.
+   */
+  do<TResult>(
+      action: (this: void, supplier: this) => TResult,
+  ): TResult;
+
+  /**
+   * Applies the given actions to this event supplier.
+   *
+   * The value returned from each action is passed as argument to the next one. The value returned from the last action
+   * is the result of this method call.
+   *
+   * @typeParam TResult1 - First action result type.
+   * @typeParam TResult1 - Second action result type.
+   * @param action1 - A function accepting this supplier as its only parameter, and returning a result.
+   * @param action2 - A function accepting the first action result as its only parameter, and returning a result.
+   *
+   * @returns Actions application result.
+   */
+  do<
+      TResult1,
+      TResult2,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+  ): TResult2;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+  ): TResult3;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      TResult4,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+      action4: (this: void, arg: TResult3) => TResult4,
+  ): TResult4;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      TResult4,
+      TResult5,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+      action4: (this: void, arg: TResult3) => TResult4,
+      action5: (this: void, arg: TResult4) => TResult5,
+  ): TResult5;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      TResult4,
+      TResult5,
+      TResult6,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+      action4: (this: void, arg: TResult3) => TResult4,
+      action5: (this: void, arg: TResult4) => TResult5,
+      action6: (this: void, arg: TResult5) => TResult6,
+  ): TResult6;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      TResult4,
+      TResult5,
+      TResult6,
+      TResult7,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+      action4: (this: void, arg: TResult3) => TResult4,
+      action5: (this: void, arg: TResult4) => TResult5,
+      action6: (this: void, arg: TResult5) => TResult6,
+      action7: (this: void, arg: TResult6) => TResult7,
+  ): TResult7;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      TResult4,
+      TResult5,
+      TResult6,
+      TResult7,
+      TResult8,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+      action4: (this: void, arg: TResult3) => TResult4,
+      action5: (this: void, arg: TResult4) => TResult5,
+      action6: (this: void, arg: TResult5) => TResult6,
+      action7: (this: void, arg: TResult6) => TResult7,
+      action8: (this: void, arg: TResult7) => TResult8,
+  ): TResult8;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      TResult4,
+      TResult5,
+      TResult6,
+      TResult7,
+      TResult8,
+      TResult9,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+      action4: (this: void, arg: TResult3) => TResult4,
+      action5: (this: void, arg: TResult4) => TResult5,
+      action6: (this: void, arg: TResult5) => TResult6,
+      action7: (this: void, arg: TResult6) => TResult7,
+      action8: (this: void, arg: TResult7) => TResult8,
+      action9: (this: void, arg: TResult8) => TResult9,
+  ): TResult9;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      TResult4,
+      TResult5,
+      TResult6,
+      TResult7,
+      TResult8,
+      TResult9,
+      TResult10,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+      action4: (this: void, arg: TResult3) => TResult4,
+      action5: (this: void, arg: TResult4) => TResult5,
+      action6: (this: void, arg: TResult5) => TResult6,
+      action7: (this: void, arg: TResult6) => TResult7,
+      action8: (this: void, arg: TResult7) => TResult8,
+      action9: (this: void, arg: TResult8) => TResult9,
+      action10: (this: void, arg: TResult9) => TResult10,
+  ): TResult10;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      TResult4,
+      TResult5,
+      TResult6,
+      TResult7,
+      TResult8,
+      TResult9,
+      TResult10,
+      TResult11,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+      action4: (this: void, arg: TResult3) => TResult4,
+      action5: (this: void, arg: TResult4) => TResult5,
+      action6: (this: void, arg: TResult5) => TResult6,
+      action7: (this: void, arg: TResult6) => TResult7,
+      action8: (this: void, arg: TResult7) => TResult8,
+      action9: (this: void, arg: TResult8) => TResult9,
+      action10: (this: void, arg: TResult9) => TResult10,
+      action11: (this: void, arg: TResult10) => TResult11,
+  ): TResult11;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      TResult4,
+      TResult5,
+      TResult6,
+      TResult7,
+      TResult8,
+      TResult9,
+      TResult10,
+      TResult11,
+      TResult12,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+      action4: (this: void, arg: TResult3) => TResult4,
+      action5: (this: void, arg: TResult4) => TResult5,
+      action6: (this: void, arg: TResult5) => TResult6,
+      action7: (this: void, arg: TResult6) => TResult7,
+      action8: (this: void, arg: TResult7) => TResult8,
+      action9: (this: void, arg: TResult8) => TResult9,
+      action10: (this: void, arg: TResult9) => TResult10,
+      action11: (this: void, arg: TResult10) => TResult11,
+      action12: (this: void, arg: TResult11) => TResult12,
+  ): TResult12;
+
+  do<
+      TResult1,
+      TResult2,
+      TResult3,
+      TResult4,
+      TResult5,
+      TResult6,
+      TResult7,
+      TResult8,
+      TResult9,
+      TResult10,
+      TResult11,
+      TResult12,
+      TResult13,
+      >(
+      action1: (this: void, supplier: this) => TResult1,
+      action2: (this: void, arg: TResult1) => TResult2,
+      action3: (this: void, arg: TResult2) => TResult3,
+      action4: (this: void, arg: TResult3) => TResult4,
+      action5: (this: void, arg: TResult4) => TResult5,
+      action6: (this: void, arg: TResult5) => TResult6,
+      action7: (this: void, arg: TResult6) => TResult7,
+      action8: (this: void, arg: TResult7) => TResult8,
+      action9: (this: void, arg: TResult8) => TResult9,
+      action10: (this: void, arg: TResult9) => TResult10,
+      action11: (this: void, arg: TResult10) => TResult11,
+      action12: (this: void, arg: TResult11) => TResult12,
+      action13: (this: void, arg: TResult12) => TResult13,
+  ): TResult13;
+
+  do(
+      ...actions: ((this: void, arg: any) => any)[]
+  ): any {
+    return actions.reduce((arg, action) => action(arg), this);
   }
 
   /**
@@ -107,585 +378,6 @@ export class OnEvent<TEvent extends any[]> implements EventSender<TEvent> {
       onCutOff?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null,
   ): Promise<TResult1 | TResult2> {
     return then(this, onEvent, onCutOff);
-  }
-
-  /**
-   * Builds an {@link OnEvent} sender of events originated from this one that stops sending them to registered receiver
-   * after the first one.
-   *
-   * @returns Event sender.
-   */
-  once(): OnEvent<TEvent>;
-
-  /**
-   * Registers a receiver of events originated from this sender that stops receiving them after the first one.
-   *
-   * @param receiver - A receiver of events to register.
-   *
-   * @returns A supply of event.
-   */
-  once(receiver: EventReceiver<TEvent>): Supply;
-
-  once(receiver?: EventReceiver<TEvent>): OnEvent<TEvent> | Supply {
-    return (this.once = onEventBy(once(this)).F)(receiver);
-  }
-
-  /**
-   * Builds an {@link OnEvent} sender that sends events from this one until the required `supply` is cut off.
-   *
-   * The outgoing events supply will be cut off once incoming event supply does. Unless a second supply passed in.
-   * In the latter case that supply will be cut off instead.
-   *
-   * @param required - A peer of required event supply.
-   * @param dependentSupply - The supply to cut off on cutting off the incoming events supply.
-   *
-   * @returns New event sender.
-   */
-  tillOff(required: SupplyPeer, dependentSupply?: Supply): OnEvent<TEvent> {
-    return onEventBy(tillOff(this, required, dependentSupply));
-  }
-
-  /**
-   * Consumes events.
-   *
-   * @param consume - A function consuming events. This function may return a {@link SupplyPeer peer of event
-   * supply} when registers a nested event receiver. This supply will be cut off on new event, unless returned again.
-   *
-   * @returns An event supply that will stop consuming events once {@link Supply.off cut off}.
-   */
-  consume(consume: (...event: TEvent) => SupplyPeer | void | undefined): Supply {
-
-    let consumerSupply = neverSupply();
-
-    // Do not use `.cuts()` here as `consumerSupply` is mutable
-    const supply = new Supply(reason => consumerSupply.off(reason));
-
-    this.to({
-      supply,
-      receive(_ctx, ...event: TEvent) {
-
-        const prevSupply = consumerSupply;
-
-        try {
-          consumerSupply = (consume(...event) || neverSupply()).supply;
-        } finally {
-          if (consumerSupply !== prevSupply) {
-            prevSupply.off();
-          }
-        }
-      },
-    });
-
-    return supply;
-  }
-
-  /**
-   * Constructs an {@link OnEvent} sender that shares events supply among all registered receivers.
-   *
-   * The created sender receives events from this one and sends to registered receivers. The shared sender registers
-   * a receiver in this one only once, when first receiver registered. And cuts off original events supply once all
-   * supplies do.
-   *
-   * @returns An {@link OnEvent} sender sharing a common supply of events originated from this sender.
-   */
-  share(): OnEvent<TEvent> {
-    return onEventBy(share(this));
-  }
-
-  /**
-   * Constructs an {@link OnEvent} sender of original events passed trough the chain of transformations.
-   *
-   * The passes are preformed by `@proc7ts/call-thru` library. The event receivers registered by resulting event sender
-   * are called by the last pass in chain. Thus they can be e.g. filtered out or called multiple times.
-   *
-   * @returns An {@link OnEvent} sender of events transformed with provided passes. The returned sender shares
-   * the supply of transformed events among receivers.
-   */
-  thru<
-      TReturn1,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-  ): OnEvent<Out<TReturn1>>;
-
-  thru<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-  ): OnEvent<Out<TReturn2>>;
-
-  thru<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      TArgs4 extends Args<TReturn3>, TReturn4,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-      pass4: (this: void, ...args: TArgs4) => TReturn4,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      TArgs4 extends Args<TReturn3>, TReturn4,
-      TArgs5 extends Args<TReturn4>, TReturn5,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-      pass4: (this: void, ...args: TArgs4) => TReturn4,
-      pass5: (this: void, ...args: TArgs5) => TReturn5,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      TArgs4 extends Args<TReturn3>, TReturn4,
-      TArgs5 extends Args<TReturn4>, TReturn5,
-      TArgs6 extends Args<TReturn5>, TReturn6,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-      pass4: (this: void, ...args: TArgs4) => TReturn4,
-      pass5: (this: void, ...args: TArgs5) => TReturn5,
-      pass6: (this: void, ...args: TArgs6) => TReturn6,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      TArgs4 extends Args<TReturn3>, TReturn4,
-      TArgs5 extends Args<TReturn4>, TReturn5,
-      TArgs6 extends Args<TReturn5>, TReturn6,
-      TArgs7 extends Args<TReturn6>, TReturn7,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-      pass4: (this: void, ...args: TArgs4) => TReturn4,
-      pass5: (this: void, ...args: TArgs5) => TReturn5,
-      pass6: (this: void, ...args: TArgs6) => TReturn6,
-      pass7: (this: void, ...args: TArgs7) => TReturn7,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      TArgs4 extends Args<TReturn3>, TReturn4,
-      TArgs5 extends Args<TReturn4>, TReturn5,
-      TArgs6 extends Args<TReturn5>, TReturn6,
-      TArgs7 extends Args<TReturn6>, TReturn7,
-      TArgs8 extends Args<TReturn7>, TReturn8,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-      pass4: (this: void, ...args: TArgs4) => TReturn4,
-      pass5: (this: void, ...args: TArgs5) => TReturn5,
-      pass6: (this: void, ...args: TArgs6) => TReturn6,
-      pass7: (this: void, ...args: TArgs7) => TReturn7,
-      pass8: (this: void, ...args: TArgs8) => TReturn8,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      TArgs4 extends Args<TReturn3>, TReturn4,
-      TArgs5 extends Args<TReturn4>, TReturn5,
-      TArgs6 extends Args<TReturn5>, TReturn6,
-      TArgs7 extends Args<TReturn6>, TReturn7,
-      TArgs8 extends Args<TReturn7>, TReturn8,
-      TArgs9 extends Args<TReturn8>, TReturn9,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-      pass4: (this: void, ...args: TArgs4) => TReturn4,
-      pass5: (this: void, ...args: TArgs5) => TReturn5,
-      pass6: (this: void, ...args: TArgs6) => TReturn6,
-      pass7: (this: void, ...args: TArgs7) => TReturn7,
-      pass8: (this: void, ...args: TArgs8) => TReturn8,
-      pass9: (this: void, ...args: TArgs9) => TReturn9,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      TArgs4 extends Args<TReturn3>, TReturn4,
-      TArgs5 extends Args<TReturn4>, TReturn5,
-      TArgs6 extends Args<TReturn5>, TReturn6,
-      TArgs7 extends Args<TReturn6>, TReturn7,
-      TArgs8 extends Args<TReturn7>, TReturn8,
-      TArgs9 extends Args<TReturn8>, TReturn9,
-      TArgs10 extends Args<TReturn9>, TReturn10,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-      pass4: (this: void, ...args: TArgs4) => TReturn4,
-      pass5: (this: void, ...args: TArgs5) => TReturn5,
-      pass6: (this: void, ...args: TArgs6) => TReturn6,
-      pass7: (this: void, ...args: TArgs7) => TReturn7,
-      pass8: (this: void, ...args: TArgs8) => TReturn8,
-      pass9: (this: void, ...args: TArgs9) => TReturn9,
-      pass10: (this: void, ...args: TArgs10) => TReturn10,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      TArgs4 extends Args<TReturn3>, TReturn4,
-      TArgs5 extends Args<TReturn4>, TReturn5,
-      TArgs6 extends Args<TReturn5>, TReturn6,
-      TArgs7 extends Args<TReturn6>, TReturn7,
-      TArgs8 extends Args<TReturn7>, TReturn8,
-      TArgs9 extends Args<TReturn8>, TReturn9,
-      TArgs10 extends Args<TReturn9>, TReturn10,
-      TArgs11 extends Args<TReturn10>, TReturn11,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-      pass4: (this: void, ...args: TArgs4) => TReturn4,
-      pass5: (this: void, ...args: TArgs5) => TReturn5,
-      pass6: (this: void, ...args: TArgs6) => TReturn6,
-      pass7: (this: void, ...args: TArgs7) => TReturn7,
-      pass8: (this: void, ...args: TArgs8) => TReturn8,
-      pass9: (this: void, ...args: TArgs9) => TReturn9,
-      pass10: (this: void, ...args: TArgs10) => TReturn10,
-      pass11: (this: void, ...args: TArgs11) => TReturn11,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      TArgs4 extends Args<TReturn3>, TReturn4,
-      TArgs5 extends Args<TReturn4>, TReturn5,
-      TArgs6 extends Args<TReturn5>, TReturn6,
-      TArgs7 extends Args<TReturn6>, TReturn7,
-      TArgs8 extends Args<TReturn7>, TReturn8,
-      TArgs9 extends Args<TReturn8>, TReturn9,
-      TArgs10 extends Args<TReturn9>, TReturn10,
-      TArgs11 extends Args<TReturn10>, TReturn11,
-      TArgs12 extends Args<TReturn11>, TReturn12,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-      pass4: (this: void, ...args: TArgs4) => TReturn4,
-      pass5: (this: void, ...args: TArgs5) => TReturn5,
-      pass6: (this: void, ...args: TArgs6) => TReturn6,
-      pass7: (this: void, ...args: TArgs7) => TReturn7,
-      pass8: (this: void, ...args: TArgs8) => TReturn8,
-      pass9: (this: void, ...args: TArgs9) => TReturn9,
-      pass10: (this: void, ...args: TArgs10) => TReturn10,
-      pass11: (this: void, ...args: TArgs11) => TReturn11,
-      pass12: (this: void, ...args: TArgs12) => TReturn12,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      TArgs4 extends Args<TReturn3>, TReturn4,
-      TArgs5 extends Args<TReturn4>, TReturn5,
-      TArgs6 extends Args<TReturn5>, TReturn6,
-      TArgs7 extends Args<TReturn6>, TReturn7,
-      TArgs8 extends Args<TReturn7>, TReturn8,
-      TArgs9 extends Args<TReturn8>, TReturn9,
-      TArgs10 extends Args<TReturn9>, TReturn10,
-      TArgs11 extends Args<TReturn10>, TReturn11,
-      TArgs12 extends Args<TReturn11>, TReturn12,
-      TArgs13 extends Args<TReturn12>, TReturn13,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-      pass4: (this: void, ...args: TArgs4) => TReturn4,
-      pass5: (this: void, ...args: TArgs5) => TReturn5,
-      pass6: (this: void, ...args: TArgs6) => TReturn6,
-      pass7: (this: void, ...args: TArgs7) => TReturn7,
-      pass8: (this: void, ...args: TArgs8) => TReturn8,
-      pass9: (this: void, ...args: TArgs9) => TReturn9,
-      pass10: (this: void, ...args: TArgs10) => TReturn10,
-      pass11: (this: void, ...args: TArgs11) => TReturn11,
-      pass12: (this: void, ...args: TArgs12) => TReturn12,
-      pass13: (this: void, ...args: TArgs13) => TReturn13,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru(...passes: any[]): OnEvent<any[]> {
-    // eslint-disable-next-line
-    return (this as any).thru_(...passes).share();
-  }
-
-  /**
-   * Constructs an {@link OnEvent} sender of original events passed trough the chain of transformations without sharing
-   * the transformed events supply.
-   *
-   * This method does the same as {@link OnEvent.thru} one, except it does not share the supply of transformed events
-   * among receivers. This may be useful e.g. when the result will be further transformed anyway. It is wise to
-   * {@link share share} the supply of events from final result in this case.
-   *
-   * @returns An {@link OnEvent} sender of events transformed with provided passes.
-   */
-  thru_<
-      TReturn1,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-  ): OnEvent<Out<TReturn1>>;
-
-  thru_<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-  ): OnEvent<Out<TReturn2>>;
-
-  thru_<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru_<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      TArgs4 extends Args<TReturn3>, TReturn4,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-      pass4: (this: void, ...args: TArgs4) => TReturn4,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru_<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      TArgs4 extends Args<TReturn3>, TReturn4,
-      TArgs5 extends Args<TReturn4>, TReturn5,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-      pass4: (this: void, ...args: TArgs4) => TReturn4,
-      pass5: (this: void, ...args: TArgs5) => TReturn5,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru_<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      TArgs4 extends Args<TReturn3>, TReturn4,
-      TArgs5 extends Args<TReturn4>, TReturn5,
-      TArgs6 extends Args<TReturn5>, TReturn6,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-      pass4: (this: void, ...args: TArgs4) => TReturn4,
-      pass5: (this: void, ...args: TArgs5) => TReturn5,
-      pass6: (this: void, ...args: TArgs6) => TReturn6,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru_<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      TArgs4 extends Args<TReturn3>, TReturn4,
-      TArgs5 extends Args<TReturn4>, TReturn5,
-      TArgs6 extends Args<TReturn5>, TReturn6,
-      TArgs7 extends Args<TReturn6>, TReturn7,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-      pass4: (this: void, ...args: TArgs4) => TReturn4,
-      pass5: (this: void, ...args: TArgs5) => TReturn5,
-      pass6: (this: void, ...args: TArgs6) => TReturn6,
-      pass7: (this: void, ...args: TArgs7) => TReturn7,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru_<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      TArgs4 extends Args<TReturn3>, TReturn4,
-      TArgs5 extends Args<TReturn4>, TReturn5,
-      TArgs6 extends Args<TReturn5>, TReturn6,
-      TArgs7 extends Args<TReturn6>, TReturn7,
-      TArgs8 extends Args<TReturn7>, TReturn8,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-      pass4: (this: void, ...args: TArgs4) => TReturn4,
-      pass5: (this: void, ...args: TArgs5) => TReturn5,
-      pass6: (this: void, ...args: TArgs6) => TReturn6,
-      pass7: (this: void, ...args: TArgs7) => TReturn7,
-      pass8: (this: void, ...args: TArgs8) => TReturn8,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru_<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      TArgs4 extends Args<TReturn3>, TReturn4,
-      TArgs5 extends Args<TReturn4>, TReturn5,
-      TArgs6 extends Args<TReturn5>, TReturn6,
-      TArgs7 extends Args<TReturn6>, TReturn7,
-      TArgs8 extends Args<TReturn7>, TReturn8,
-      TArgs9 extends Args<TReturn8>, TReturn9,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-      pass4: (this: void, ...args: TArgs4) => TReturn4,
-      pass5: (this: void, ...args: TArgs5) => TReturn5,
-      pass6: (this: void, ...args: TArgs6) => TReturn6,
-      pass7: (this: void, ...args: TArgs7) => TReturn7,
-      pass8: (this: void, ...args: TArgs8) => TReturn8,
-      pass9: (this: void, ...args: TArgs9) => TReturn9,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru_<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      TArgs4 extends Args<TReturn3>, TReturn4,
-      TArgs5 extends Args<TReturn4>, TReturn5,
-      TArgs6 extends Args<TReturn5>, TReturn6,
-      TArgs7 extends Args<TReturn6>, TReturn7,
-      TArgs8 extends Args<TReturn7>, TReturn8,
-      TArgs9 extends Args<TReturn8>, TReturn9,
-      TArgs10 extends Args<TReturn9>, TReturn10,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-      pass4: (this: void, ...args: TArgs4) => TReturn4,
-      pass5: (this: void, ...args: TArgs5) => TReturn5,
-      pass6: (this: void, ...args: TArgs6) => TReturn6,
-      pass7: (this: void, ...args: TArgs7) => TReturn7,
-      pass8: (this: void, ...args: TArgs8) => TReturn8,
-      pass9: (this: void, ...args: TArgs9) => TReturn9,
-      pass10: (this: void, ...args: TArgs10) => TReturn10,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru_<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      TArgs4 extends Args<TReturn3>, TReturn4,
-      TArgs5 extends Args<TReturn4>, TReturn5,
-      TArgs6 extends Args<TReturn5>, TReturn6,
-      TArgs7 extends Args<TReturn6>, TReturn7,
-      TArgs8 extends Args<TReturn7>, TReturn8,
-      TArgs9 extends Args<TReturn8>, TReturn9,
-      TArgs10 extends Args<TReturn9>, TReturn10,
-      TArgs11 extends Args<TReturn10>, TReturn11,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-      pass4: (this: void, ...args: TArgs4) => TReturn4,
-      pass5: (this: void, ...args: TArgs5) => TReturn5,
-      pass6: (this: void, ...args: TArgs6) => TReturn6,
-      pass7: (this: void, ...args: TArgs7) => TReturn7,
-      pass8: (this: void, ...args: TArgs8) => TReturn8,
-      pass9: (this: void, ...args: TArgs9) => TReturn9,
-      pass10: (this: void, ...args: TArgs10) => TReturn10,
-      pass11: (this: void, ...args: TArgs11) => TReturn11,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru_<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      TArgs4 extends Args<TReturn3>, TReturn4,
-      TArgs5 extends Args<TReturn4>, TReturn5,
-      TArgs6 extends Args<TReturn5>, TReturn6,
-      TArgs7 extends Args<TReturn6>, TReturn7,
-      TArgs8 extends Args<TReturn7>, TReturn8,
-      TArgs9 extends Args<TReturn8>, TReturn9,
-      TArgs10 extends Args<TReturn9>, TReturn10,
-      TArgs11 extends Args<TReturn10>, TReturn11,
-      TArgs12 extends Args<TReturn11>, TReturn12,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-      pass4: (this: void, ...args: TArgs4) => TReturn4,
-      pass5: (this: void, ...args: TArgs5) => TReturn5,
-      pass6: (this: void, ...args: TArgs6) => TReturn6,
-      pass7: (this: void, ...args: TArgs7) => TReturn7,
-      pass8: (this: void, ...args: TArgs8) => TReturn8,
-      pass9: (this: void, ...args: TArgs9) => TReturn9,
-      pass10: (this: void, ...args: TArgs10) => TReturn10,
-      pass11: (this: void, ...args: TArgs11) => TReturn11,
-      pass12: (this: void, ...args: TArgs12) => TReturn12,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru_<
-      TReturn1,
-      TArgs2 extends Args<TReturn1>, TReturn2,
-      TArgs3 extends Args<TReturn2>, TReturn3,
-      TArgs4 extends Args<TReturn3>, TReturn4,
-      TArgs5 extends Args<TReturn4>, TReturn5,
-      TArgs6 extends Args<TReturn5>, TReturn6,
-      TArgs7 extends Args<TReturn6>, TReturn7,
-      TArgs8 extends Args<TReturn7>, TReturn8,
-      TArgs9 extends Args<TReturn8>, TReturn9,
-      TArgs10 extends Args<TReturn9>, TReturn10,
-      TArgs11 extends Args<TReturn10>, TReturn11,
-      TArgs12 extends Args<TReturn11>, TReturn12,
-      TArgs13 extends Args<TReturn12>, TReturn13,
-      >(
-      pass1: (this: void, ...args: TEvent) => TReturn1,
-      pass2: (this: void, ...args: TArgs2) => TReturn2,
-      pass3: (this: void, ...args: TArgs3) => TReturn3,
-      pass4: (this: void, ...args: TArgs4) => TReturn4,
-      pass5: (this: void, ...args: TArgs5) => TReturn5,
-      pass6: (this: void, ...args: TArgs6) => TReturn6,
-      pass7: (this: void, ...args: TArgs7) => TReturn7,
-      pass8: (this: void, ...args: TArgs8) => TReturn8,
-      pass9: (this: void, ...args: TArgs9) => TReturn9,
-      pass10: (this: void, ...args: TArgs10) => TReturn10,
-      pass11: (this: void, ...args: TArgs11) => TReturn11,
-      pass12: (this: void, ...args: TArgs12) => TReturn12,
-      pass13: (this: void, ...args: TArgs13) => TReturn13,
-  ): OnEvent<Out<TReturn3>>;
-
-  thru_(...passes: any[]): OnEvent<any[]> {
-    return onEventBy(thru(this, passes));
   }
 
 }

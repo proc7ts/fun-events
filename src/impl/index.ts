@@ -1,5 +1,6 @@
+export * from './filter';
+export * from './map';
 export * from './once';
 export * from './share';
 export * from './then';
-export * from './thru';
 export * from './till-off';

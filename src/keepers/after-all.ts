@@ -3,6 +3,7 @@
  * @module @proc7ts/fun-events
  */
 import { noop } from '@proc7ts/primitives';
+import { onceEvent, shareEvents } from '../actions';
 import { AfterEvent, afterEventBy } from '../after-event';
 import { AfterEvent__symbol, EventKeeper, EventReceiver, sendEventsTo } from '../base';
 import { afterSupplied } from './after-supplied';
@@ -23,7 +24,7 @@ export function afterAll<TSrcMap extends { readonly [key: string]: EventKeeper<a
 
   const keys = Object.keys(sources);
 
-  return afterEventBy(registerReceiver, latestEvent).share();
+  return shareEvents(afterEventBy(registerReceiver, latestEvent));
 
   function registerReceiver(
       receiver: EventReceiver.Generic<[{ readonly [K in keyof TSrcMap]: EventKeeper.Event<TSrcMap[K]> }]>,
@@ -51,7 +52,7 @@ export function afterAll<TSrcMap extends { readonly [key: string]: EventKeeper<a
     const result = {} as { [K in keyof TSrcMap]: EventKeeper.Event<TSrcMap[K]> };
 
     keys.forEach(
-        <K extends keyof TSrcMap>(key: K) => afterSupplied(sources[key]).once(
+        <K extends keyof TSrcMap>(key: K) => onceEvent(afterSupplied(sources[key])).to(
             (...event: EventKeeper.Event<TSrcMap[K]>) => result[key as keyof TSrcMap] = event,
         ),
     );

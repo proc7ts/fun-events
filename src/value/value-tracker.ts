@@ -3,6 +3,7 @@
  * @module @proc7ts/fun-events
  */
 import { neverSupply, Supply, SupplyPeer } from '@proc7ts/primitives';
+import { consumeEvents } from '../actions';
 import { AfterEvent, afterEventBy } from '../after-event';
 import {
   AfterEvent__symbol,
@@ -155,7 +156,7 @@ export abstract class ValueTracker<T> implements EventSender<[T, T]>, EventKeepe
 
       const container = supplier as EventSupplier<TSrcEvent>;
 
-      this._by = onSupplied(container).consume((...event: TSrcEvent) => {
+      this._by = onSupplied(container).do(consumeEvents((...event) => {
 
         const sender = extract(...event);
 
@@ -164,7 +165,7 @@ export abstract class ValueTracker<T> implements EventSender<[T, T]>, EventKeepe
         }
 
         return;
-      });
+      }));
     }
 
     this._by.whenOff(() => this._by = neverSupply());

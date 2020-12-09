@@ -3,6 +3,7 @@
  * @module @proc7ts/fun-events
  */
 import { noop } from '@proc7ts/primitives';
+import { onceEvent, shareEvents } from '../actions';
 import { AfterEvent, afterEventBy } from '../after-event';
 import { AfterEvent__symbol, EventKeeper, EventReceiver, sendEventsTo } from '../base';
 import { afterSupplied } from './after-supplied';
@@ -19,7 +20,7 @@ import { afterSupplied } from './after-supplied';
  */
 export function afterEach<TEvent extends any[]>(...sources: EventKeeper<TEvent>[]): AfterEvent<TEvent[]> {
 
-  return afterEventBy(registerReceiver, latestEvent).share();
+  return shareEvents(afterEventBy(registerReceiver, latestEvent));
 
   function registerReceiver(receiver: EventReceiver.Generic<TEvent[]>): void {
 
@@ -45,7 +46,7 @@ export function afterEach<TEvent extends any[]>(...sources: EventKeeper<TEvent>[
     const result: TEvent[] = [];
 
     sources.forEach(
-        source => afterSupplied(source).once(
+        source => onceEvent(afterSupplied(source)).to(
             (...event) => result.push(event),
         ),
     );

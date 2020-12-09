@@ -2,9 +2,8 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events/dom
  */
-import { Supply, SupplyPeer } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/primitives';
 import { eventReceiver, EventReceiver } from '../base';
-import { once, tillOff } from '../impl';
 import { OnEvent } from '../on-event';
 
 /**
@@ -79,43 +78,6 @@ export class OnDomEvent<TEvent extends Event> extends OnEvent<[TEvent]> {
     }
 
     return supply;
-  }
-
-  /**
-   * Builds an {@link OnDomEvent} sender of events originated from this one that stops sending them to registered
-   * receiver after the first one.
-   *
-   * @returns DOM event sender.
-   */
-  once(): OnDomEvent<TEvent>;
-
-  /**
-   * Registers a listener of DOM events originated from this sender that stops receiving them after the first one.
-   *
-   * @param listener - A DOM event listener to register.
-   * @param opts - DOM event listener options to pass to `EventTarget.addEventListener()`.
-   *
-   * @returns A supply of DOM event.
-   */
-  once(listener: DomEventListener<TEvent>, opts?: AddEventListenerOptions | boolean): Supply;
-
-  once(listener?: DomEventListener<TEvent>, opts?: AddEventListenerOptions | boolean): OnDomEvent<TEvent> | Supply {
-    return (this.once = onDomEventBy(once(this)).F)(listener, opts);
-  }
-
-  /**
-   * Builds an {@link OnDomEvent} sender that sends events from this one until the required `supply` is cut off.
-   *
-   * The outgoing events supply will be cut off once incoming event supply does. Unless a second supply passed in.
-   * In the latter case that supply will be cut off instead.
-   *
-   * @param required - A peer of required event supply.
-   * @param dependentSupply - The supply to cut off on cutting off the incoming events supply.
-   *
-   * @returns New DOM event sender.
-   */
-  tillOff(required: SupplyPeer, dependentSupply?: Supply): OnDomEvent<TEvent> {
-    return onDomEventBy(tillOff(this, required, dependentSupply));
   }
 
   /**

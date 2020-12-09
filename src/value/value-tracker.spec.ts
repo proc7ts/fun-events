@@ -1,4 +1,5 @@
 import { noop, Supply } from '@proc7ts/primitives';
+import { onceEvent } from '../actions';
 import { AfterEvent__symbol, EventKeeper, EventSender, OnEvent__symbol } from '../base';
 import { EventEmitter } from '../senders';
 import { trackValue, trackValueBy } from './track-value';
@@ -79,8 +80,8 @@ describe('ValueTracker', () => {
       expect(v1.it).toBe('new!');
     });
     it('is supported for initial value', () => {
-      v1.read().once().to({
-        receive(context, value) {
+      v1.read().do(onceEvent).to({
+        receive(context, value: string) {
           context.onRecurrent(noop);
           v1.it = value + '!';
         },
