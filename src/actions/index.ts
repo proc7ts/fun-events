@@ -5,3 +5,4 @@ export * from './let-in-events';
 export * from './map-events';
 export * from './once-event';
 export * from './share-events';
+export * from './value-events';
