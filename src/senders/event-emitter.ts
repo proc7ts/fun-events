@@ -16,7 +16,9 @@ import { OnEvent, onEventBy } from '../on-event';
 export class EventEmitter<TEvent extends any[]> extends EventNotifier<TEvent> implements EventSender<TEvent> {
 
   /**
-   * Returns an {@link OnEvent} sender.
+   * {@link OnEvent} sender of {@link send emitted} events.
+   *
+   * The `[OnEvent__symbol]` method is an alias of this one.
    */
   readonly on: OnEvent<TEvent> = onEventBy(receiver => super.on(receiver));
 
