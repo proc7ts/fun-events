@@ -10,6 +10,7 @@ import typescript from 'typescript';
 export default {
   input: {
     'fun-events': './src/index.ts',
+    'fun-events.call-thru': './src/call-thru/index.ts',
     'fun-events.dom': './src/dom/index.ts',
   },
   plugins: [
@@ -26,6 +27,9 @@ export default {
   manualChunks(id) {
     if (id.startsWith(path.resolve('src', 'base') + path.sep)) {
       return 'fun-events.base';
+    }
+    if (id.startsWith(path.resolve('src', 'call-thru') + path.sep)) {
+      return 'fun-events.call-thru';
     }
     if (id.startsWith(path.resolve('src', 'dom') + path.sep)) {
       return 'fun-events.dom';
@@ -56,6 +60,10 @@ export default {
           tsconfig: 'tsconfig.main.json',
           lib: 'ES2018',
           entries: {
+            'call-thru': {
+              file: 'call-thru/index.d.ts',
+              lib: 'ES2018',
+            },
             dom: {
               file: 'dom/index.d.ts',
               lib: ['ES2018', 'DOM'],

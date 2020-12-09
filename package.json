@@ -30,6 +30,10 @@
       "import": "./dist/fun-events.js",
       "require": "./dist/fun-events.cjs"
     },
+    "./call-thru": {
+      "import": "./dist/fun-events.call-thru.js",
+      "require": "./dist/fun-events.call-thru.cjs"
+    },
     "./dom": {
       "import": "./dist/fun-events.dom.js",
       "require": "./dist/fun-events.dom.cjs"
@@ -37,6 +41,11 @@
   },
   "peerDependencies": {
     "@proc7ts/call-thru": "^4.3.1"
+  },
+  "peerDependenciesMeta": {
+    "@proc7ts/call-thru": {
+      "optional": true
+    }
   },
   "dependencies": {
     "@proc7ts/primitives": "^1.6.0"
