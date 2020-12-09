@@ -7,6 +7,21 @@ import { OnEvent, onEventBy } from '../on-event';
 import { shareEvents } from './share-events';
 
 /**
+ * Creates a mapper that passes incoming values implementing the given type.
+ *
+ * @category Core
+ * @typeParam TValue - Incoming value type.
+ * @typeParam TMatch - Matching value type.
+ * @param test - Test function accepting incoming value as its only parameter, and returning truthy value if the value
+ * implements the given type, or falsy one otherwise.
+ *
+ * @returns {@link OnEvent} sender mapper function.
+ */
+export function filterEvents<TValue, TMatch extends TValue>(
+    test: (this: void, event: TValue) => event is TMatch,
+): (this: void, supplier: OnEvent<[TValue]>) => OnEvent<[TMatch]>;
+
+/**
  * Creates a mapper that passes incoming events matching the given condition.
  *
  * @category Core
@@ -18,12 +33,32 @@ import { shareEvents } from './share-events';
  */
 export function filterEvents<TEvent extends any[]>(
     test: (this: void, ...event: TEvent) => boolean,
+): (this: void, supplier: OnEvent<TEvent>) => OnEvent<TEvent>;
+
+export function filterEvents<TEvent extends any[]>(
+    test: (this: void, ...event: TEvent) => boolean,
 ): (this: void, supplier: OnEvent<TEvent>) => OnEvent<TEvent> {
 
   const map = filterEvents_(test);
 
   return supplier => shareEvents(map(supplier));
 }
+
+/**
+ * Creates a mapper that passes incoming values implementing the given type and does not share the outgoing events
+ * supply.
+ *
+ * @category Core
+ * @typeParam TValue - Incoming value type.
+ * @typeParam TMatch - Matching value type.
+ * @param test - Test function accepting incoming value as its only parameter, and returning truthy value if the value
+ * implements the given type, or falsy one otherwise.
+ *
+ * @returns {@link OnEvent} sender mapper function.
+ */
+export function filterEvents_<TValue, TMatch extends TValue>(// eslint-disable-line @typescript-eslint/naming-convention
+    test: (this: void, event: TValue) => event is TMatch,
+): (this: void, supplier: OnEvent<[TValue]>) => OnEvent<[TMatch]>;
 
 /**
  * Creates a mapper that passes incoming events matching the given condition and does not share the outgoing events
@@ -36,6 +71,10 @@ export function filterEvents<TEvent extends any[]>(
  *
  * @returns {@link OnEvent} sender mapper function.
  */
+export function filterEvents_<TEvent extends any[]>(// eslint-disable-line @typescript-eslint/naming-convention
+    test: (this: void, ...event: TEvent) => boolean,
+): (this: void, supplier: OnEvent<TEvent>) => OnEvent<TEvent>;
+
 export function filterEvents_<TEvent extends any[]>(// eslint-disable-line @typescript-eslint/naming-convention
     test: (this: void, ...event: TEvent) => boolean,
 ): (this: void, supplier: OnEvent<TEvent>) => OnEvent<TEvent> {
