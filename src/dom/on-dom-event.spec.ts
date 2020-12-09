@@ -1,7 +1,6 @@
 import { neverSupply, Supply } from '@proc7ts/primitives';
 import { letInEvents, onceEvent } from '../actions';
 import { EventNotifier, EventReceiver } from '../base';
-import { captureDomEvents } from './actions/capture-dom-events';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 import Mock = jest.Mock;
 import SpyInstance = jest.SpyInstance;
@@ -159,69 +158,6 @@ describe('OnDomEvent', () => {
       expect(mockListener).toHaveBeenCalledTimes(1);
       expect(whenOff).toHaveBeenCalledWith('reason');
       expect(offSpy).toHaveBeenCalledWith('reason');
-    });
-  });
-
-  describe('passive', () => {
-    it('builds `OnDomEvent`', () => {
-      expect(onDomEvent.passive()).toBeInstanceOf(OnDomEvent);
-    });
-    it('registers event listener', () => {
-      onDomEvent.passive(mockListener);
-      expect(mockRegister).toHaveBeenCalled();
-    });
-    it('passivates event listener by default', () => {
-      onDomEvent.passive(mockListener);
-      expect(mockRegister).toHaveBeenCalledWith(expect.anything(), { passive: true });
-    });
-    it('respects capturing registration', () => {
-      onDomEvent.passive(mockListener, false);
-      expect(mockRegister).toHaveBeenCalledWith(expect.anything(), { passive: true, capture: false });
-    });
-    it('passivates event listener by default when options passed', () => {
-
-      const opts: AddEventListenerOptions = {
-        once: true,
-        capture: true,
-      };
-
-      onDomEvent.passive(mockListener, opts);
-      expect(mockRegister).toHaveBeenCalledWith(expect.anything(), { ...opts, passive: true });
-    });
-    it('respects non-passive options', () => {
-
-      const opts: AddEventListenerOptions = {
-        once: true,
-        passive: false,
-      };
-
-      onDomEvent.passive(mockListener, opts);
-      expect(mockRegister).toHaveBeenCalledWith(expect.anything(), opts);
-    });
-    it('combines with `captureDomEvents`', () => {
-      onDomEvent.do(captureDomEvents).passive(mockListener);
-      expect(mockRegister).toHaveBeenCalledWith(expect.anything(), { capture: true, passive: true });
-    });
-  });
-
-  describe('instead', () => {
-    it('builds `OnDomEvent`', () => {
-      expect(onDomEvent.instead()).toBeInstanceOf(OnDomEvent);
-    });
-    it('registers event listener', () => {
-      onDomEvent.instead(mockListener);
-      expect(mockRegister).toHaveBeenCalled();
-    });
-    it('prevents default', () => {
-      onDomEvent.instead(mockListener);
-
-      const event = new KeyboardEvent('click');
-      const preventDefaultSpy = jest.spyOn(event, 'preventDefault');
-
-      events.send(event);
-
-      expect(preventDefaultSpy).toHaveBeenCalledWith();
-      expect(mockListener).toHaveBeenCalledWith(event);
     });
   });
 

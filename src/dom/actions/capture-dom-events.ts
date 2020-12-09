@@ -11,8 +11,8 @@ import { DomEventListener, OnDomEvent, onDomEventBy } from '../on-dom-event';
  * `EventTarget.addEventListener()`.
  *
  * @category DOM
- *
  * @typeParam TEvent - DOM event type.
+ * @param supplier - DOM events sender.
  *
  * @returns DOM events sender.
  */
@@ -29,6 +29,7 @@ export function captureDomEvents<TEvent extends Event>(
     if (typeof opts === 'object' && opts.capture == null) {
       return supplier.to(listener, { ...opts, capture: true });
     }
+
     return supplier.to(listener, opts);
   });
 }

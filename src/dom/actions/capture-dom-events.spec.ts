@@ -18,9 +18,6 @@ describe('captureDomEvents', () => {
     mockListener = jest.fn();
   });
 
-  it('builds `OnDomEvent`', () => {
-    expect(onDomEvent.do(captureDomEvents)).toBeInstanceOf(OnDomEvent);
-  });
   it('registers event listener', () => {
     onDomEvent.do(captureDomEvents).to(mockListener);
     expect(mockRegister).toHaveBeenCalled();

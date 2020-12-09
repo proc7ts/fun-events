@@ -81,49 +81,6 @@ export class OnDomEvent<TEvent extends Event> extends OnEvent<[TEvent]> {
   }
 
   /**
-   * Builds an {@link OnDomEvent} sender of events originated from this sender that registers listeners to invoke
-   * instead of the default action.
-   *
-   * It invokes an `Event.preventDefault()` method prior to calling the registered listener.
-   *
-   * @returns DOM events sender.
-   */
-  instead(): OnDomEvent<TEvent>;
-
-  /**
-   * Registers a listener of DOM events to invoke instead of default action.
-   *
-   * This listener invokes an `Event.preventDefault()` method prior to event handling.
-   *
-   * @param listener - A DOM events listener to register.
-   * @param opts - DOM event listener options to pass to `EventTarget.addEventListener()`.
-   *
-   * @returns A supply of DOM events.
-   */
-  instead(listener: DomEventListener<TEvent>, opts?: AddEventListenerOptions | boolean): Supply;
-
-  instead(listener?: DomEventListener<TEvent>, opts?: AddEventListenerOptions | boolean): OnDomEvent<TEvent> | Supply {
-    return (this.instead = onDomEventBy((
-        listener: DomEventListener<TEvent>,
-        opts?: AddEventListenerOptions | boolean,
-    ) => {
-
-      const receiver = eventReceiver(listener);
-
-      return this.to(
-          {
-            supply: receiver.supply,
-            receive(context, event) {
-              event.preventDefault();
-              receiver.receive(context, event);
-            },
-          },
-          opts,
-      );
-    }).F)(listener, opts);
-  }
-
-  /**
    * Builds an {@link OnDomEvent} sender of events originate from this sender that registers listeners preventing
    * further propagation of current event in the capturing and bubbling phases.
    *
@@ -206,46 +163,6 @@ export class OnDomEvent<TEvent extends Event> extends OnEvent<[TEvent]> {
           },
           opts,
       );
-    }).F)(listener, opts);
-  }
-
-  /**
-   * Builds an {@link OnDomEvent} sender of events originated from this sender that accepts listeners never calling
-   * `Event.preventDefault()`.
-   *
-   * This corresponds to specifying `{ passive: true }` as a second argument to `EventTarget.addEventListener()`.
-   *
-   * @returns DOM event listener.
-   */
-  passive(): OnDomEvent<TEvent>;
-
-  /**
-   * Registers a DOM event listener that never calls `Event.preventDefault()`.
-   *
-   * This corresponds to specifying `{ passive: true }` as a second argument to `EventTarget.addEventListener()`.
-   *
-   * @param listener - A DOM events listener to register.
-   * @param opts - DOM event listener options to pass to `EventTarget.addEventListener()`.
-   *
-   * @returns A supply of DOM events.
-   */
-  passive(listener: DomEventListener<TEvent>, opts?: AddEventListenerOptions | boolean): Supply;
-
-  passive(listener?: DomEventListener<TEvent>, opts?: AddEventListenerOptions | boolean): OnDomEvent<TEvent> | Supply {
-    return (this.passive = onDomEventBy((
-        listener: DomEventListener<TEvent>,
-        opts?: AddEventListenerOptions | boolean,
-    ) => {
-      if (opts == null) {
-        return this.to(listener, { passive: true });
-      }
-      if (typeof opts === 'boolean') {
-        return this.to(listener, { capture: opts, passive: true });
-      }
-      if (opts.passive == null) {
-        return this.to(listener, { ...opts, passive: true });
-      }
-      return this.to(listener, opts);
     }).F)(listener, opts);
   }
 
