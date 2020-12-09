@@ -81,44 +81,6 @@ export class OnDomEvent<TEvent extends Event> extends OnEvent<[TEvent]> {
   }
 
   /**
-   * Builds an {@link OnDomEvent} sender of events originated from this sender that enables event capturing by default.
-   *
-   * This corresponds to specifying `true` or `{ capture: true }` as a second argument to
-   * `EventTarget.addEventListener()`.
-   *
-   * @returns DOM events sender.
-   */
-  capture(): OnDomEvent<TEvent>;
-
-  /**
-   * Registers a capturing listener of DOM events.
-   *
-   * This corresponds to specifying `true` or `{ capture: true }` as a second argument to
-   * `EventTarget.addEventListener()`.
-   *
-   * @param listener - A DOM events listener to register.
-   * @param opts - DOM event listener options to pass to `EventTarget.addEventListener()`.
-   *
-   * @returns A supply of DOM events.
-   */
-  capture(listener: DomEventListener<TEvent>, opts?: AddEventListenerOptions | boolean): Supply;
-
-  capture(listener?: DomEventListener<TEvent>, opts?: AddEventListenerOptions | boolean): OnDomEvent<TEvent> | Supply {
-    return (this.capture = onDomEventBy((
-        listener: DomEventListener<TEvent>,
-        opts?: AddEventListenerOptions | boolean,
-    ) => {
-      if (opts == null) {
-        return this.to(listener, true);
-      }
-      if (typeof opts === 'object' && opts.capture == null) {
-        return this.to(listener, { ...opts, capture: true });
-      }
-      return this.to(listener, opts);
-    }).F)(listener, opts);
-  }
-
-  /**
    * Builds an {@link OnDomEvent} sender of events originated from this sender that registers listeners to invoke
    * instead of the default action.
    *

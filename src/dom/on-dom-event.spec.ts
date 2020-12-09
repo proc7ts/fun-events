@@ -1,6 +1,7 @@
 import { neverSupply, Supply } from '@proc7ts/primitives';
 import { letInEvents, onceEvent } from '../actions';
 import { EventNotifier, EventReceiver } from '../base';
+import { captureDomEvents } from './actions/capture-dom-events';
 import { OnDomEvent, onDomEventBy } from './on-dom-event';
 import Mock = jest.Mock;
 import SpyInstance = jest.SpyInstance;
@@ -161,44 +162,6 @@ describe('OnDomEvent', () => {
     });
   });
 
-  describe('capture', () => {
-    it('builds `OnDomEvent`', () => {
-      expect(onDomEvent.capture()).toBeInstanceOf(OnDomEvent);
-    });
-    it('registers event listener', () => {
-      onDomEvent.capture(mockListener);
-      expect(mockRegister).toHaveBeenCalled();
-    });
-    it('captures events by default', () => {
-      onDomEvent.capture(mockListener);
-      expect(mockRegister).toHaveBeenCalledWith(expect.anything(), true);
-    });
-    it('respects non-capturing registration', () => {
-      onDomEvent.capture(mockListener, false);
-      expect(mockRegister).toHaveBeenCalledWith(expect.anything(), false);
-    });
-    it('captures events by default when options passed', () => {
-
-      const opts: AddEventListenerOptions = {
-        once: true,
-        passive: true,
-      };
-
-      onDomEvent.capture(mockListener, opts);
-      expect(mockRegister).toHaveBeenCalledWith(expect.anything(), { ...opts, capture: true });
-    });
-    it('respects non-capturing options', () => {
-
-      const opts: AddEventListenerOptions = {
-        once: true,
-        capture: false,
-      };
-
-      onDomEvent.capture(mockListener, opts);
-      expect(mockRegister).toHaveBeenCalledWith(expect.anything(), opts);
-    });
-  });
-
   describe('passive', () => {
     it('builds `OnDomEvent`', () => {
       expect(onDomEvent.passive()).toBeInstanceOf(OnDomEvent);
@@ -235,8 +198,8 @@ describe('OnDomEvent', () => {
       onDomEvent.passive(mockListener, opts);
       expect(mockRegister).toHaveBeenCalledWith(expect.anything(), opts);
     });
-    it('combines with `capture`', () => {
-      onDomEvent.capture().passive(mockListener);
+    it('combines with `captureDomEvents`', () => {
+      onDomEvent.do(captureDomEvents).passive(mockListener);
       expect(mockRegister).toHaveBeenCalledWith(expect.anything(), { capture: true, passive: true });
     });
   });
