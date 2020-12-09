@@ -1,4 +1,5 @@
 import { onceEvent } from '../actions';
+import { captureDomEvents } from './actions';
 import { DomEventDispatcher } from './dom-event-dispatcher';
 import Mock = jest.Mock;
 
@@ -35,12 +36,12 @@ describe('DomEventDispatcher', () => {
       expect(mockTarget.addEventListener).toHaveBeenCalledWith('click', registeredListener, undefined);
     });
     it('registers capturing listener', () => {
-      dispatcher.on('click').capture(mockListener);
+      dispatcher.on('click').do(captureDomEvents).to(mockListener);
       expect(mockTarget.addEventListener).toHaveBeenCalledWith('click', registeredListener, true);
     });
     it('unregisters listener', () => {
 
-      const supply = dispatcher.on('click').capture(mockListener);
+      const supply = dispatcher.on('click').do(captureDomEvents).to(mockListener);
 
       supply.off();
 
@@ -53,12 +54,12 @@ describe('DomEventDispatcher', () => {
         expect(mockTarget.addEventListener).toHaveBeenCalledWith('click', registeredListener, undefined);
       });
       it('registers capturing listener', () => {
-        dispatcher.on('click').capture().do(onceEvent).to(mockListener);
+        dispatcher.on('click').do(captureDomEvents, onceEvent).to(mockListener);
         expect(mockTarget.addEventListener).toHaveBeenCalledWith('click', registeredListener, true);
       });
       it('unregisters listener', () => {
 
-        const supply = dispatcher.on('click').capture().do(onceEvent).to(mockListener);
+        const supply = dispatcher.on('click').do(captureDomEvents, onceEvent).to(mockListener);
 
         supply.off();
 
@@ -66,7 +67,7 @@ describe('DomEventDispatcher', () => {
       });
       it('unregisters listener after receiving event', () => {
 
-        const supply = dispatcher.on('click').capture().do(onceEvent).to(mockListener);
+        const supply = dispatcher.on('click').do(captureDomEvents, onceEvent).to(mockListener);
 
         registeredListener(new KeyboardEvent('click'));
 
@@ -85,7 +86,7 @@ describe('DomEventDispatcher', () => {
       expect(dispatcher.dispatch(event)).toBe(true);
     });
     it('notifies registered listener', () => {
-      dispatcher.on('click').capture(mockListener);
+      dispatcher.on('click').do(captureDomEvents).to(mockListener);
 
       const event = new KeyboardEvent('click');
 

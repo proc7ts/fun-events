@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { Supply, SupplyPeer } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/primitives';
 import { OnEvent } from '../on-event';
 import { StatePath } from './state-path';
 import { StateUpdateReceiver } from './state-update-receiver';
@@ -46,19 +46,6 @@ export interface OnStateUpdate extends OnEvent<[StatePath.Normalized, any, any]>
    * `receiver` is omitted.
    */
   to(receiver: StateUpdateReceiver): Supply;
-
-  /**
-   * Builds an {@link OnStateUpdate} sender that sends updated from this one until the required `supply` is cut off.
-   *
-   * The outgoing events supply will be cut off once incoming event supply does. Unless a second supply passed in.
-   * In the latter case that supply will be cut off instead.
-   *
-   * @param required - A peer of required event supply.
-   * @param dependentSupply - The supply to cut off on cutting off the incoming events supply.
-   *
-   * @returns New updates sender.
-   */
-  tillOff(required: SupplyPeer, dependentSupply?: Supply): OnStateUpdate;
 
 }
 
