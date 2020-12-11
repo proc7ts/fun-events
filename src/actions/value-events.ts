@@ -14,16 +14,16 @@ import { shareEvents } from './share-events';
  * @category Core
  * @typeParam TEvent - Incoming event type.
  * @typeParam TValue - Event value type.
- * @param value - A converter function that accepts incoming event as parameters and returns either its value,
+ * @param valueOf - Element value detector function. Accepts incoming event as parameters and returns either its value,
  * or `false`/`null`/`undefined` to ignore it.
  *
- * @returns A mapping function of incoming event supplier.
+ * @returns A mapping function of incoming event supplier to `OnEvent` sender.
  */
 export function valueEvents<TEvent extends any[], TValue>(// eslint-disable-line @typescript-eslint/naming-convention
-    value: (this: void, ...event: TEvent) => TValue | false | null | undefined,
+    valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
 ): (this: void, input: OnEvent<TEvent>) => OnEvent<[TValue]> {
 
-  const mapper = valueEvents_(value);
+  const mapper = valueEvents_(valueOf);
 
   return input => shareEvents(mapper(input));
 }
@@ -34,15 +34,15 @@ export function valueEvents<TEvent extends any[], TValue>(// eslint-disable-line
  * @category Core
  * @typeParam TEvent - Incoming event type.
  * @typeParam TValue - Event value type.
- * @param value - A converter function that accepts incoming event as parameters and returns either its value,
+ * @param valueOf - Element value detector function. Accepts incoming event as parameters and returns either its value,
  * or `false`/`null`/`undefined` to ignore it.
  *
- * @returns A mapping function of incoming event supplier.
+ * @returns A mapping function of incoming event supplier to `OnEvent` sender.
  */
 export function valueEvents_<TEvent extends any[], TValue>(// eslint-disable-line @typescript-eslint/naming-convention
-    value: (this: void, ...event: TEvent) => TValue | false | null | undefined,
+    valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
 ): (this: void, input: OnEvent<TEvent>) => OnEvent<[TValue]> {
-  return input => onEventBy(eventValue(input, value));
+  return input => onEventBy(eventValue(input, valueOf));
 }
 
 /**
@@ -50,7 +50,7 @@ export function valueEvents_<TEvent extends any[], TValue>(// eslint-disable-lin
  */
 export function eventValue<TEvent extends any[], TValue>(
     supplier: OnEvent<TEvent>,
-    value: (...event: TEvent) => TValue | false | null | undefined,
+    valueOf: (...event: TEvent) => TValue | false | null | undefined,
 ): (receiver: EventReceiver.Generic<[TValue]>) => void {
   return receiver => {
 
@@ -60,10 +60,10 @@ export function eventValue<TEvent extends any[], TValue>(
       supply: receiver.supply,
       receive: (_ctx, ...event: TEvent) => {
 
-        const val = value(...event);
+        const value = valueOf(...event);
 
-        if (val != null && val !== false) {
-          dispatch(val);
+        if (value != null && value !== false) {
+          dispatch(value);
         }
       },
     });
