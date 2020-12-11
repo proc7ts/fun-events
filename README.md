@@ -10,10 +10,11 @@ Functional Event Processor
 A simple protocol for sending events to receivers registered in senders:
 
 ```typescript
-import { EventSupply, OnEvent } from '@proc7ts/fun-events';
+import { OnEvent } from '@proc7ts/fun-events';
+import { Supply } from '@proc7ts/primitives';
 
-// API supports arbitrary event receiver signatures
-// An event is a tuple of event receiver arguments
+// API supports arbitrary event receiver signatures.
+// An event is a receiver's parameters.
 function eventReceiver(type: string, event: Event) { 
   console.log('Event of type ', type, event);
 }
@@ -21,13 +22,13 @@ function eventReceiver(type: string, event: Event) {
 // An `OnEvent` event sender accepts event receivers with compatible event signature 
 const onEvent: OnEvent<[string, Event]>;
 
-// Call an `OnEvent.to()` method to register receiver
-// An event supply returned can be cut off to unregister the receiver
-const supply: EventSupply = onEvent.to(eventReceiver);
+// An `OnEvent` sender is a function that registers a receiver.
+// An event supply returned can be cut off to unregister the receiver.
+const supply: Supply = onEvent(eventReceiver);
 
 // ...generate some events...
 
-supply.off(); // The eventReceiver will no longer receive events after this call
+supply.off(); // The `eventReceiver` will no longer receive events after this call.
 ```
 
 
@@ -46,16 +47,17 @@ supply.off(); // The eventReceiver will no longer receive events after this call
 `EventReceiver`
 ---------------
 
-Event receiver is a function that is called on each event sent by event supplier when registered.
+An event receiver is a function that is called on each event sent by event supplier when registered.
 
-To register an event receiver in event supplier just call its registration method with this receiver as argument.
+To register an event receiver in event supplier just call the supplier function with this receiver as argument.
 
 An event receiver can also be in object form:
 ```typescript
-import { EventReceiver, EventSupply, OnEvent } from '@proc7ts/fun-events';
+import { EventReceiver, OnEvent } from '@proc7ts/fun-events';
+import { Supply } from '@proc7ts/primitives';
 
-// API supports arbitrary event receiver signatures
-// An event is a tuple of event receiver arguments
+// API supports arbitrary event receiver signatures.
+// An event is a receiver's `receive` method parameters following revent processing context.
 const eventReceiver: EventReceiver<[string, Event]> = {
   receive(context, type, event) {
     console.log('Event of type ', type, event);
@@ -65,25 +67,26 @@ const eventReceiver: EventReceiver<[string, Event]> = {
 // An `OnEvent` event sender accepts event receivers with compatible event signature 
 const onEvent: OnEvent<[string, Event]>;
 
-// Call an `OnEvent.to()` method to register receiver
-// An event supply returned can be cut off to unregister the receiver
+// An `OnEvent` sender is a function that registers a receiver.
+// An event supply returned can be cut off to unregister the receiver.
 const supply: EventSupply = onEvent.to(eventReceiver);
 
 // ...generate some events...
 
-supply.off(); // The eventReceiver will no longer receive events after this call
+supply.off(); // The `eventReceiver` will no longer receive events after this call.
 ```
-In this form event receiver method accepts _event processing context_ as first parameter.
+In this form the event receiver's `receive` method accepts _event processing context_ as the first parameter.
 
 
 ### Recurrent Events
 
 A _recurrent event_ is an event sent from inside event receiver and targeted the same receiver. Recurrent event
 processing is scheduled until after the current event processing finishes. To handle recurrent events in a specific
-way the event receiver may utilize an _event processing context_ available as first parameter of event receiver method.
+way the event receiver may utilize an _event processing context_ available as first parameter of event receiver's
+`receive` method.
 
 This context has an `onRecurrent()` method. It schedules the given event receiver function to be called to process
-recurrent event(s). If this method is called during event processing, the recurrent events will be sent to the given
+recurrent events. If this method is called during event processing, the recurrent events will be sent to the given
 `receiver` after current event processed instead of original one:
 
 The event receiver then can look like this:
@@ -113,13 +116,19 @@ An event sender interface has only one method returning an `OnEvent` instance. T
 an event receiver. The registered event receiver starts receiving upcoming events until the returned event supply
 is cut off.
 
-The `OnEvent` is an `EventSender` implementation itself. It has additional event processing methods. To convert a plain
-event receiver registration function to `OnEvent`, an `onEventBy()` function can be used.
+The `OnEvent` is a function implementing `EventSender` interface. It has additional event processing methods.
+To convert a plain event receiver registration function to `OnEvent`, an `onEventBy()` function can be used.
 
 
-### `OnEvent.once()`
+### `OnEvent.do()`
 
-Registers the next event receiver. It won't receive any events after receiving the first one.
+[OnEvent.do()]: #oneventdo
+
+Applies the given action or [actions] to this event supplier. The first action receives an `OnEvent` supplier instance
+as its only parameter. The next one receives the result of first action call, etc. The result of the last action call
+is returned from the `.do()` method call.
+
+This method is handy for actions chaining.
 
 
 `EventKeeper`
@@ -131,23 +140,55 @@ It has only one method that returns an `AfterEvent` instance. The latter can be 
 The registered event receiver receives the kept event immediately upon registration, and all upcoming events after that
 until the returned event supply is cut off.
 
-The event keeper _always_ has event to send, unless it is closed. This is handy when tracking some state: the registered
-receiver receives current state, and all updates to it after that.
+The event keeper _always_ has an event to send, unless it is closed. This is handy when tracking some state: the
+registered receiver receives current state, and all updates to it after that.
 
-The `AfterEvent` is an `EventKeeper` implementation itself. It extends `OnEvent` with methods specific to event keeper.
-To convert a plain event receiver registration function to `AfterEvent`, an `afterEventBy()` function can be used.
+The `AfterEvent` is s function implementing `EventKeeper` interface. To convert a plain event receiver registration
+function to `AfterEvent`, an `afterEventBy()` function can be used.
 
 
-`EventSupply`
--------------
+Event Supply
+------------
 
-A supply of events from event supplier to event receiver. It is returned from event receiver registration.
+A supply of events from event supplier to event receiver is returned from event receiver registration call.
 
 When events are no longer needed (or just exhausted) the supply may be cut off by calling its `off()` method.
 
 It also notifies on supply cut off by calling callback functions registered by its `whenOff()` method. 
 
-An event supply may be constructed using `eventSupply()` function.
+
+Actions
+-------
+
+[actions]: #actions
+
+Actions are functions specifically designed to be passed to [OnEvent.do()] method.
+
+They may transform event supplier or can be used to consume events.
+
+The following actions implemented:
+
+- [consumeEvents] - Creates an event consumer function.
+- [filterEvents] - Creates an event supplier mapper function that passes incoming values implementing the given type.
+- [letInEvents] - Creates an event supplier mapper function that passes incoming events until the required supply
+  is cut off.
+- [mapEvents] - Creates an event supplier mapper function that converts incoming events with the given converter function.
+- [onceEvent] - Creates an event supplier of the first incoming event.
+- [resolveEvents] - Creates an event sender of asynchronously resolved incoming events in the order of their resolution.
+- [resolveEventsInOrder] - Creates an event sender of asynchronously resolved incoming events in the order they are
+  received.
+- [shareEvents] - Creates an event supplier that shares events supply among all registered receivers.
+- [valueEvents] - Creates an event supplier mapper function that sends values of incoming events.
+
+[consumeEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#consumeEvents
+[filterEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#filterEvents
+[letInEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#letInEvents
+[mapEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#mapEvents
+[onceEvent]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#onceEvent
+[resolveEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#resolveEvents
+[resolveEventsInOrder]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#resolveEventsInOrder
+[shareEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#shareEvents
+[valueEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#valueEvents
 
 
 `EventEmitter`
@@ -169,48 +210,7 @@ emitter.on(event => console.log(`-${event}`));
 // Send an event
 emitter.send('listen');
 ```
-
-
-State Tracking
---------------
-
-A state is a tree-like structure of sub-states (nodes) available under `StatePath`.
-
-A `StateTracker` can be used to notify on state changes of particular node and its sub-tree.
-
-```typescript
-import { StatePath, StateTracker } from '@proc7ts/fun-events';
-
-const tracker = new StateTracker();
-
-function stateChanged(path: StatePath) {
-  console.log('State path changed:', path);
-}
-
-function property1Changed(path: StatePath, newValue: string, oldValue: string) {
-  console.log('Property 1 changed from', oldValue, 'to', newValue);  
-}
-
-function property2Changed(path: StatePath, newValue: number, oldValue: number) {
-  console.log('Property 2 changed from', oldValue, 'to', newValue);  
-}
-
-tracker.onUpdate(stateChanged); // Will be notified on all changes
-tracker.track('property1').to(property1Changed); // Will be notified on `property1` changes
-tracker.track(['property2']).to(property2Changed); // The path can be long
-
-tracker.update(['some', 'path'], 'new', 'old');
-// State path changed: ['some', 'path'] 
-
-tracker.update('property1', 'new', 'old');
-// State path changed: ['property1']
-// Property 1 changed from old to new
-
-tracker.update('property2', 1, 2);
-// State path changed: ['property1']
-// Property 2 changed from 2 to 1
-```
-
+         
 
 Value Tracking
 --------------
@@ -267,107 +267,42 @@ console.log(sync.it, v1.it === v2.it, v2.it === v3.it, v3.it === sync.it); // 22
 ```
 
 
-DOM Events
-----------
+State Tracking
+--------------
 
-DOM events are supported by `OnDomEvent` and `DomEventDispatcher`. The former extends an `OnEvent` sender with
-DOM-specific functionality. The latter can be attached to arbitrary `EventTarget`. It constructs an `OnDomEvent`
-senders for each event type and dispatches DOM events.
+A state is a tree-like structure of sub-states (nodes) available under `StatePath`.
 
-```typescript
-import { DomEventDispatcher } from '@proc7ts/fun-events';
-
-const dispatcher = new DomEventDispatcher(document.getElementById('my-button'));
-
-dispatcher.on('click').to(submit);
-dispatcher.dispatch(new MouseEvent('click'));
-```
-
-### `OnDomEvent`
-
-An `EventSender` implementation able to register DOM event listeners. It extends `OnEvent` interface with the following
-methods:
-
-
-#### `capture()`
-
-Registers a capturing listener of DOM events.
-
-This corresponds to specifying `true` or `{ capture: true }` as a second argument to `EventTarget.addEventListener()`.
+A `StateTracker` can be used to notify on state changes of particular node and its sub-tree.
 
 ```typescript
-import { DomEventDispatcher } from '@proc7ts/fun-events';
+import { StatePath, StateTracker } from '@proc7ts/fun-events';
 
-const container = document.getElementById('my-container');
+const tracker = new StateTracker();
 
-// Clicking on the inner elements would be handled by container first.
-new DomEventDispatcher(container).on('click').capture(handleContainerClick);
+function stateChanged(path: StatePath) {
+  console.log('State path changed:', path);
+}
 
-// The above is the same as
-container.addEventListener('click', handleContainerClick, true);
-```
+function property1Changed(path: StatePath, newValue: string, oldValue: string) {
+  console.log('Property 1 changed from', oldValue, 'to', newValue);  
+}
 
+function property2Changed(path: StatePath, newValue: number, oldValue: number) {
+  console.log('Property 2 changed from', oldValue, 'to', newValue);  
+}
 
-#### `instead()`
+tracker.onUpdate(stateChanged); // Will be notified on all changes
+tracker.track('property1').to(property1Changed); // Will be notified on `property1` changes
+tracker.track(['property2']).to(property2Changed); // The path can be long
 
-Registers a listener of DOM events to invoke instead of default action.
+tracker.update(['some', 'path'], 'new', 'old');
+// State path changed: ['some', 'path'] 
 
-This listener invokes an `Event.preventDefault()` method prior to event handling.
+tracker.update('property1', 'new', 'old');
+// State path changed: ['property1']
+// Property 1 changed from old to new
 
-```typescript
-import { DomEventDispatcher } from '@proc7ts/fun-events';
-
-// Clicking on the link won't lead to navigation.
-new DomEventDispatcher(document.getElementById('my-href')).on('click').instead(doSomethingElse); 
-```
-
-
-#### `just()`
-
-Registers a listener of DOM events preventing further propagation of current event in the capturing and bubbling phases.
-
-This listener invokes an `Event.stopPropagation()` method prior to event handling.
-
-```typescript
-import { DomEventDispatcher } from '@proc7ts/fun-events';
-
-// The ascendants won't receive a click the div.
-new DomEventDispatcher(document.getElementById('my-div')).on('click').just(handleClick); 
-```
-
-
-#### `last()`
-
-Registers the last DOM event listener.
-
-This listener invokes an `Event.stopImmediatePropagation()` method prior to event handling.
-
-```typescript
-import { DomEventDispatcher } from '@proc7ts/fun-events';
-
-const dispatcher = new DomEventDispatcher(document.getElementById('my-div'))
-const onClick = dispatcher.on('click');
-
-// The ascendants won't receive a click the div.
-onClick.last(() => console.log('1')); // This is the last handler 
-onClick(() => console.log('2'));      // This one won't be called
-
-dispatcher.dispatch(new MouseEvent('click')); // console: 1 
-```
-
-
-#### `passive()`
-
-Registers a DOM event listener that never calls `Event.preventDefault()`.
-
-This corresponds to specifying `{ passive: true }` as a second argument to `EventTarget.addEventListener()`.
-
-```typescript
-import { DomEventDispatcher } from '@proc7ts/fun-events';
-
-// Scrolling events won't be prevented.
-new DomEventDispatcher(document.body).on('scroll').passive(handleScroll);
-
-// The above is the same as
-document.body.addEventListener('scroll', handleScroll, { passive: true });
+tracker.update('property2', 1, 2);
+// State path changed: ['property1']
+// Property 2 changed from 2 to 1
 ```

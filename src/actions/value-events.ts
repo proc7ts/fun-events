@@ -7,7 +7,7 @@ import { OnEvent, onEventBy } from '../on-event';
 import { shareEvents } from './share-events';
 
 /**
- * Creates a mapper that sends values of incoming events.
+ * Creates an event supplier mapper function that sends values of incoming events.
  *
  * Events are valued by provided `value` function. The `null`, `undefined`, and `false` values are dropped.
  *
@@ -29,7 +29,8 @@ export function valueEvents<TEvent extends any[], TValue>(// eslint-disable-line
 }
 
 /**
- * Creates a mapper that sends values of incoming events, and does not share the outgoing event supply.
+ * Creates an event supplier mapper function that sends values of incoming events, and does not share the outgoing event
+ * supply.
  *
  * @category Core
  * @typeParam TEvent - Incoming event type.

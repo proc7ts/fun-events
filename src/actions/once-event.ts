@@ -7,7 +7,9 @@ import { once } from '../impl';
 import { OnEvent } from '../on-event';
 
 /**
- * Creates an {@link AfterEvent} keeper of events that stops sending them after the first one.
+ * Creates an {@link AfterEvent} keeper of the first incoming event.
+ *
+ * Cuts off the outgoing event supply after sending the first event.
  *
  * @category Core
  * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
@@ -20,7 +22,9 @@ export function onceEvent<TEvent extends any[]>(
 ): AfterEvent<TEvent>;
 
 /**
- * Creates an {@link OnEvent} sender of events that stops sending them after the first one.
+ * Creates an {@link OnEvent} sender of the first incoming event.
+ *
+ * Cuts off the outgoing event supply after sending the first event.
  *
  * @category Core
  * @typeParam TEvent - An event type. This is a list of event receiver parameter types.

@@ -10,8 +10,7 @@ import { mapEvents } from './map-events';
 import { resolveEvents } from './resolve-events';
 
 /**
- * Creates an {@link OnEvent} sender of asynchronously resolved event originated from the given sender of event
- * promises in the order they are received.
+ * Creates an {@link OnEvent} sender of asynchronously resolved incoming events in the order they are received.
  *
  * Receives events or their promises from the given event sender, and sends them once they are resolved in the same
  * order as they have been received. Mat send events in batches, e.g. when events resolved out of order.

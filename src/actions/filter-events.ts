@@ -7,7 +7,7 @@ import { OnEvent, onEventBy } from '../on-event';
 import { shareEvents } from './share-events';
 
 /**
- * Creates a mapper that passes incoming values implementing the given type.
+ * Creates an event supplier mapper function that passes incoming values implementing the given type.
  *
  * @category Core
  * @typeParam TValue - Incoming value type.
@@ -22,7 +22,7 @@ export function filterEvents<TValue, TMatch extends TValue>(
 ): (this: void, supplier: OnEvent<[TValue]>) => OnEvent<[TMatch]>;
 
 /**
- * Creates a mapper that passes incoming events matching the given condition.
+ * Creates an event supplier mapper function that passes incoming events matching the given condition.
  *
  * @category Core
  * @typeParam TEvent - An event type. This is a list of the test function parameter types.
@@ -45,8 +45,8 @@ export function filterEvents<TEvent extends any[]>(
 }
 
 /**
- * Creates a mapper that passes incoming values implementing the given type and does not share the outgoing events
- * supply.
+ * Creates an event supplier mapper function that passes incoming values implementing the given type and does not share
+ * the outgoing events supply.
  *
  * @category Core
  * @typeParam TValue - Incoming value type.
@@ -61,8 +61,8 @@ export function filterEvents_<TValue, TMatch extends TValue>(// eslint-disable-l
 ): (this: void, supplier: OnEvent<[TValue]>) => OnEvent<[TMatch]>;
 
 /**
- * Creates a mapper that passes incoming events matching the given condition and does not share the outgoing events
- * supply.
+ * Creates an event supplier mapper function that passes incoming events matching the given condition and does not share
+ * the outgoing events supply.
  *
  * @category Core
  * @typeParam TEvent - An event type. This is a list of the test function parameter types.

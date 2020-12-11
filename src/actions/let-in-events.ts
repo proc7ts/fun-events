@@ -9,7 +9,7 @@ import { EventSupplierMapper } from './event-supplier-mapper';
 import { shareEvents } from './share-events';
 
 /**
- * Creates a mapper that passes incoming events until the the `required` supply is cut off.
+ * Creates an event supplier mapper function that passes incoming events until the `required` supply is cut off.
  *
  * The outgoing events supply will be cut off once incoming event supply does, unless a second supply passed in.
  * In the latter case that supply will be cut off instead.
@@ -34,8 +34,8 @@ export function letInEvents<TEvent extends any[]>(
 }
 
 /**
- * Creates a mapper that passes incoming events until the the `required` supply is cut off, and does not share the
- * outgoing event supply.
+ * Creates an event supplier mapper that passes incoming events until the the `required` supply is cut off, and does not
+ * share the outgoing event supply.
  *
  * The outgoing events supply will be cut off once incoming event supply does, unless a second supply passed in.
  * In the latter case that supply will be cut off instead.
