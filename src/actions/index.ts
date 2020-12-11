@@ -7,4 +7,5 @@ export * from './once-event';
 export * from './resolve-events';
 export * from './resolve-events-in-order';
 export * from './share-events';
+export * from './translate-events';
 export * from './value-events';

@@ -3,7 +3,7 @@
  * @module @proc7ts/fun-events
  */
 import { AfterEvent } from '../after-event';
-import { share } from '../impl';
+import { eventShare } from '../impl';
 import { OnEvent } from '../on-event';
 
 /**
@@ -39,5 +39,5 @@ export function shareEvents<TEvent extends any[]>(supplier: OnEvent<TEvent>): On
 export function shareEvents<TEvent extends any[]>(
     supplier: OnEvent<TEvent>,
 ): OnEvent<TEvent> | AfterEvent<TEvent> {
-  return supplier.by(share(supplier));
+  return supplier.by(eventShare(supplier));
 }
