@@ -3,7 +3,7 @@
  * @module @proc7ts/fun-events
  */
 import { Supply } from '@proc7ts/primitives';
-import { shareEvents } from '../actions/share-events';
+import { shareEvents } from '../actions';
 import { EventReceiver, EventSupplier } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
 import { onNever } from './on-never';
