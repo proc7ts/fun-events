@@ -2,12 +2,12 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { EventSender, OnEvent__symbol, sendEventsTo } from '../base';
+import { sendEventsTo } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
 
 /**
- * Builds an {@link OnEvent} sender of any of asynchronously resolved events originated from the given sender of
- * unresolved events.
+ * Creates an {@link OnEvent} sender of asynchronously resolved events originated from the given sender of event
+ * promises.
  *
  * Receives events or their promises from the given event sender, and sends them once they are resolved. The original
  * order of events is not preserved. Instead each resolved event is sent along with its index in original order.
@@ -17,11 +17,11 @@ import { OnEvent, onEventBy } from '../on-event';
  *
  * @category Core
  * @typeParam T - A type of values the promises resolve to.
- * @param from - Unresolved events sender containing either events or their promises.
+ * @param from - A sender of events or promise-like instances resolved to ones.
  *
  * @returns New `OnEvent` sender of resolved events and their indices in original order starting from `1`.
  */
-export function onAnyAsync<T>(from: EventSender<[PromiseLike<T> | T]>): OnEvent<[T, number]> {
+export function resolveEvents<T>(from: OnEvent<[PromiseLike<T> | T]>): OnEvent<[T, number]> {
   return onEventBy(receiver => {
 
     const { supply } = receiver;
@@ -29,7 +29,7 @@ export function onAnyAsync<T>(from: EventSender<[PromiseLike<T> | T]>): OnEvent<
 
     let lastIndex = 0;
 
-    from[OnEvent__symbol]()({
+    from({
       supply,
       receive(_ctx, promise) {
 

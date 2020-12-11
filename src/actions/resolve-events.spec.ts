@@ -1,9 +1,9 @@
 import { asis, Supply } from '@proc7ts/primitives';
-import { EventEmitter } from './event-emitter';
-import { onAnyAsync } from './on-any-async';
+import { EventEmitter } from '../senders';
+import { resolveEvents } from './resolve-events';
 import Mock = jest.Mock;
 
-describe('onAnyAsync', () => {
+describe('resolveEvents', () => {
 
   let origin: EventEmitter<[(string | Promise<string>)]>;
   let receiver: Mock<void, [string, number]>;
@@ -25,7 +25,7 @@ describe('onAnyAsync', () => {
         received.push(Promise.resolve(event));
       }
     });
-    supply = onAnyAsync(origin)(receiver).whenOff(reason => {
+    supply = origin.on.do(resolveEvents)(receiver).whenOff(reason => {
 
       const resolver = resolvers.shift();
 
