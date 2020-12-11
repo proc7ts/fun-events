@@ -17,7 +17,7 @@ import { shareEvents } from './share-events';
  *
  * @returns A mapping function of incoming event supplier.
  */
-export function mapEvents<TEvent extends any[], TResult>(// eslint-disable-line @typescript-eslint/naming-convention
+export function mapEvents<TEvent extends any[], TResult>(
     convert: (this: void, ...event: TEvent) => TResult,
 ): EventSupplierMapper<TEvent, [TResult]> {
 
