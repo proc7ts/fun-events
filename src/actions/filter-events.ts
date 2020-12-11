@@ -4,7 +4,7 @@
  */
 import { OnEvent } from '../on-event';
 import { shareEvents } from './share-events';
-import { translateEvents_ } from './translate-events';
+import { translateOn_ } from './translate-on';
 
 /**
  * Creates an event supplier mapper function that passes incoming values implementing the given type.
@@ -78,5 +78,5 @@ export function filterEvents_<TEvent extends any[]>(// eslint-disable-line @type
 export function filterEvents_<TEvent extends any[]>(// eslint-disable-line @typescript-eslint/naming-convention
     test: (this: void, ...event: TEvent) => boolean,
 ): (this: void, supplier: OnEvent<TEvent>) => OnEvent<TEvent> {
-  return translateEvents_((send, ...event) => test(...event) && send(...event));
+  return translateOn_((send, ...event) => test(...event) && send(...event));
 }

@@ -178,7 +178,8 @@ The following actions implemented:
 - [resolveEventsInOrder] - Creates an event sender of asynchronously resolved incoming events in the order they are
   received.
 - [shareEvents] - Creates an event supplier that shares events supply among all registered receivers.
-- [translateEvents] - Creates an event supplier mapper function that translates incoming events.  
+- [translateAfter] - Creates an event keeper mapper function that translates incoming events.  
+- [translateOn] - Creates an event sender mapper function that translates incoming events.  
 - [valueEvents] - Creates an event supplier mapper function that sends values of incoming events.
 
 [consumeEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#consumeEvents
@@ -189,7 +190,8 @@ The following actions implemented:
 [resolveEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#resolveEvents
 [resolveEventsInOrder]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#resolveEventsInOrder
 [shareEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#shareEvents
-[translateEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#translateEvents
+[translateAfter]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#translateAfter
+[translateOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#translateOn
 [valueEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#valueEvents
 
 

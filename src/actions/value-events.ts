@@ -4,7 +4,7 @@
  */
 import { OnEvent } from '../on-event';
 import { shareEvents } from './share-events';
-import { translateEvents_ } from './translate-events';
+import { translateOn_ } from './translate-on';
 
 /**
  * Creates an event supplier mapper function that sends values of incoming events.
@@ -43,7 +43,7 @@ export function valueEvents<TEvent extends any[], TValue>(// eslint-disable-line
 export function valueEvents_<TEvent extends any[], TValue>(// eslint-disable-line @typescript-eslint/naming-convention
     valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
 ): (this: void, input: OnEvent<TEvent>) => OnEvent<[TValue]> {
-  return translateEvents_((send, ...event) => {
+  return translateOn_((send, ...event) => {
 
     const value = valueOf(...event);
 
