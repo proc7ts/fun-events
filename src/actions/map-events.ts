@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { map } from '../impl';
+import { eventTranslate } from '../impl/event-translate';
 import { OnEvent } from '../on-event';
 import { EventSupplierMapper } from './event-supplier-mapper';
 import { shareEvents } from './share-events';
@@ -43,6 +43,9 @@ export function mapEvents_<TEvent extends any[], TResult>(// eslint-disable-line
     convert: (this: void, ...event: TEvent) => TResult,
 ): EventSupplierMapper<TEvent, [TResult]> {
   return (
-      (input: OnEvent<TEvent>) => input.by(map(input, convert))
+      (input: OnEvent<TEvent>) => input.by(eventTranslate<TEvent, [TResult]>(
+          input,
+          (send, ...event) => send(convert(...event)),
+      ))
   ) as EventSupplierMapper<TEvent, [TResult]>;
 }

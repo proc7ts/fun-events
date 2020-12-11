@@ -2,9 +2,9 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { EventReceiver, sendEventsTo } from '../base';
-import { OnEvent, onEventBy } from '../on-event';
+import { OnEvent } from '../on-event';
 import { shareEvents } from './share-events';
+import { translateEvents_ } from './translate-events';
 
 /**
  * Creates an event supplier mapper function that sends values of incoming events.
@@ -14,7 +14,7 @@ import { shareEvents } from './share-events';
  * @category Core
  * @typeParam TEvent - Incoming event type.
  * @typeParam TValue - Event value type.
- * @param valueOf - Element value detector function. Accepts incoming event as parameters and returns either its value,
+ * @param valueOf - Event value detector function. Accepts incoming event as parameters and returns either its value,
  * or `false`/`null`/`undefined` to ignore it.
  *
  * @returns A mapping function of incoming event supplier to `OnEvent` sender.
@@ -35,7 +35,7 @@ export function valueEvents<TEvent extends any[], TValue>(// eslint-disable-line
  * @category Core
  * @typeParam TEvent - Incoming event type.
  * @typeParam TValue - Event value type.
- * @param valueOf - Element value detector function. Accepts incoming event as parameters and returns either its value,
+ * @param valueOf - Event value detector function. Accepts incoming event as parameters and returns either its value,
  * or `false`/`null`/`undefined` to ignore it.
  *
  * @returns A mapping function of incoming event supplier to `OnEvent` sender.
@@ -43,30 +43,12 @@ export function valueEvents<TEvent extends any[], TValue>(// eslint-disable-line
 export function valueEvents_<TEvent extends any[], TValue>(// eslint-disable-line @typescript-eslint/naming-convention
     valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
 ): (this: void, input: OnEvent<TEvent>) => OnEvent<[TValue]> {
-  return input => onEventBy(eventValue(input, valueOf));
-}
+  return translateEvents_((send, ...event) => {
 
-/**
- * @internal
- */
-export function eventValue<TEvent extends any[], TValue>(
-    supplier: OnEvent<TEvent>,
-    valueOf: (...event: TEvent) => TValue | false | null | undefined,
-): (receiver: EventReceiver.Generic<[TValue]>) => void {
-  return receiver => {
+    const value = valueOf(...event);
 
-    const dispatch = sendEventsTo(receiver);
-
-    supplier({
-      supply: receiver.supply,
-      receive: (_ctx, ...event: TEvent) => {
-
-        const value = valueOf(...event);
-
-        if (value != null && value !== false) {
-          dispatch(value);
-        }
-      },
-    });
-  };
+    if (value != null && value !== false) {
+      send(value);
+    }
+  });
 }

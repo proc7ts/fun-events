@@ -2,9 +2,9 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { filter } from '../impl';
-import { OnEvent, onEventBy } from '../on-event';
+import { OnEvent } from '../on-event';
 import { shareEvents } from './share-events';
+import { translateEvents_ } from './translate-events';
 
 /**
  * Creates an event supplier mapper function that passes incoming values implementing the given type.
@@ -78,5 +78,5 @@ export function filterEvents_<TEvent extends any[]>(// eslint-disable-line @type
 export function filterEvents_<TEvent extends any[]>(// eslint-disable-line @typescript-eslint/naming-convention
     test: (this: void, ...event: TEvent) => boolean,
 ): (this: void, supplier: OnEvent<TEvent>) => OnEvent<TEvent> {
-  return supplier => onEventBy(filter(supplier, test));
+  return translateEvents_((send, ...event) => test(...event) && send(...event));
 }

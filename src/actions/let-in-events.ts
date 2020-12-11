@@ -3,7 +3,7 @@
  * @module @proc7ts/fun-events
  */
 import { Supply, SupplyPeer } from '@proc7ts/primitives';
-import { tillOff } from '../impl';
+import { eventLetIn } from '../impl';
 import { OnEvent } from '../on-event';
 import { EventSupplierMapper } from './event-supplier-mapper';
 
@@ -25,6 +25,6 @@ export function letInEvents<TEvent extends any[]>(
     dependentSupply?: Supply,
 ): EventSupplierMapper<TEvent> {
   return (
-      (input: OnEvent<TEvent>) => input.by(tillOff(input, required, dependentSupply))
+      (input: OnEvent<TEvent>) => input.by(eventLetIn(input, required, dependentSupply))
   ) as EventSupplierMapper<TEvent>;
 }
