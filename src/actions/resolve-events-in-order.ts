@@ -3,30 +3,32 @@
  * @module @proc7ts/fun-events
  */
 import { Supply } from '@proc7ts/primitives';
-import { letInEvents, mapEvents } from '../actions';
-import { EventSender, sendEventsTo } from '../base';
+import { sendEventsTo } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
-import { onAnyAsync } from './on-any-async';
-import { onSupplied } from './on-supplied';
+import { letInEvents } from './let-in-events';
+import { mapEvents } from './map-events';
+import { resolveEvents } from './resolve-events';
 
 /**
- * Builds an {@link OnEvent} sender of asynchronously resolved events originated from the given sender of unresolved
- * events.
+ * Creates an {@link OnEvent} sender of asynchronously resolved event originated from the given sender of event
+ * promises in the order they are received.
  *
  * Receives events or their promises from the given event sender, and sends them once they are resolved in the same
- * order as they have been received. Possibly in batches, e.g. when events resolved out of order.
+ * order as they have been received. Mat send events in batches, e.g. when events resolved out of order.
  *
- * The resulting events supply is cut if some of incoming event promises rejected. In this case the rejection reason
+ * The resulting events supply is cut off if some of incoming event promises rejected. In this case the rejection reason
  * is used as a reason to cut off. If incoming events supply is cut off, then the resulting event supply will be cut off
  * too, but only after all incoming events resolved and sent.
  *
  * @category Core
  * @typeParam TEvent - Resolved event type.
- * @param from - Unresolved events sender containing either events or their promises.
+ * @param from - A sender of events or promise-like instances resolved to ones.
  *
  * @returns New `OnEvent` sender of resolved events.
  */
-export function onAsync<TEvent>(from: EventSender<[PromiseLike<TEvent> | TEvent]>): OnEvent<[TEvent, ...TEvent[]]> {
+export function resolveEventsInOrder<TEvent>(
+    from: OnEvent<[PromiseLike<TEvent> | TEvent]>,
+): OnEvent<[TEvent, ...TEvent[]]> {
   return onEventBy(receiver => {
 
     const { supply } = receiver;
@@ -34,7 +36,7 @@ export function onAsync<TEvent>(from: EventSender<[PromiseLike<TEvent> | TEvent]
 
     const sourceSupply = new Supply();
     let numInProcess = 0;
-    const source = onSupplied(from).do(
+    const source = from.do(
         letInEvents(supply, sourceSupply),
         mapEvents(event => {
           ++numInProcess;
@@ -51,7 +53,7 @@ export function onAsync<TEvent>(from: EventSender<[PromiseLike<TEvent> | TEvent]
       }
     });
 
-    onAnyAsync(source)({
+    resolveEvents(source)({
       supply,
       receive(_ctx, event, index) {
 
