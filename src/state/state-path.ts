@@ -47,5 +47,5 @@ export function statePath<TKey extends PropertyKey>(key: TKey): readonly [TKey];
 export function statePath(path: StatePath): StatePath.Normalized;
 
 export function statePath(path: StatePath): StatePath.Normalized {
-  return Array.isArray(path) ? path : [path];
+  return (Array.isArray(path) ? path : [path]) as StatePath.Normalized;
 }
