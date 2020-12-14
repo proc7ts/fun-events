@@ -168,6 +168,8 @@ that may transform event suppliers or their events.
 The following event processors implemented:
 
 - [consumeEvents] - Creates an event processor that consumes incoming events.
+- [digAfter] - Creates an event processor that extracts event keepers from events incoming from `AfterEvent` keeper.
+- [digOn] - Creates an event processor that extracts event senders from incoming events.
 - [filterEvents] - Creates an event processor that passes incoming events matching the given condition only.
 - [firstEvent] - A processor of the first incoming event only.
 - [letInEvents] - Creates an event processor that passes incoming events until the required supply is cut off.
@@ -182,10 +184,12 @@ The following event processors implemented:
 - [valueEvents] - Creates an event processor that sends the values of incoming events.
 
 [consumeEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#consumeEvents
+[digAfter]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#digAfter
+[digOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#digOn
 [filterEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#filterEvents
+[firstEvent]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#firstEvent
 [letInEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#letInEvents
 [mapEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#mapEvents
-[onceEvent]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#onceEvent
 [resolveEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#resolveEvents
 [resolveEventsInOrder]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#resolveEventsInOrder
 [shareEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#shareEvents

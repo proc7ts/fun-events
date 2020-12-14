@@ -3,7 +3,7 @@
  * @module @proc7ts/fun-events
  */
 import { AfterEvent } from '../after-event';
-import { eventOnce } from '../impl';
+import { eventFirst } from '../impl';
 import { OnEvent } from '../on-event';
 
 /**
@@ -39,5 +39,5 @@ export function firstEvent<TEvent extends any[]>(
 export function firstEvent<TEvent extends any[]>(
     supplier: OnEvent<TEvent>,
 ): OnEvent<TEvent> | AfterEvent<TEvent> {
-  return supplier.by(eventOnce(supplier));
+  return supplier.by(eventFirst(supplier));
 }

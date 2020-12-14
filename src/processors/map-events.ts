@@ -11,8 +11,8 @@ import { shareEvents } from './share-events';
  * Creates an event processor that converts incoming events with the given converter function.
  *
  * @category Core
- * @typeParam TEvent - Incoming event type.
- * @typeParam TResult - Outgoing event value type.
+ * @typeParam TEvent - Incoming events type.
+ * @typeParam TResult - Outgoing events type.
  * @param convert - A converter function that accepts incoming event as parameters and returns converted outgoing event.
  *
  * @returns New event mapper.
@@ -33,8 +33,8 @@ export function mapEvents<TEvent extends any[], TResult>(
  * outgoing events supply.
  *
  * @category Core
- * @typeParam TEvent - Incoming event type.
- * @typeParam TResult - Outgoing event value type.
+ * @typeParam TEvent - Incoming events type.
+ * @typeParam TResult - Outgoing events type.
  * @param convert - A converter function that accepts incoming event as parameters and returns outgoing event value.
  *
  * @returns New event mapper.

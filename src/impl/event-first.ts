@@ -4,7 +4,7 @@ import { OnEvent } from '../on-event';
 /**
  * @internal
  */
-export function eventOnce<TEvent extends any[]>(
+export function eventFirst<TEvent extends any[]>(
     supplier: OnEvent<TEvent>,
 ): (receiver: EventReceiver.Generic<TEvent>) => void {
   return (receiver: EventReceiver.Generic<TEvent>): void => {
