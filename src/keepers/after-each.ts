@@ -2,10 +2,10 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { noop } from '@proc7ts/primitives';
+import { noop, Supply } from '@proc7ts/primitives';
 import { AfterEvent, afterEventBy } from '../after-event';
 import { AfterEvent__symbol, EventKeeper, EventReceiver, sendEventsTo } from '../base';
-import { firstEvent, shareEvents } from '../processors';
+import { eventFirst, eventShare } from '../impl';
 import { afterSupplied } from './after-supplied';
 
 /**
@@ -20,9 +20,7 @@ import { afterSupplied } from './after-supplied';
  */
 export function afterEach<TEvent extends any[]>(...sources: EventKeeper<TEvent>[]): AfterEvent<TEvent[]> {
 
-  return shareEvents(afterEventBy(registerReceiver, latestEvent));
-
-  function registerReceiver(receiver: EventReceiver.Generic<TEvent[]>): void {
+  const registerReceiver = (receiver: EventReceiver.Generic<TEvent[]>): void => {
 
     const { supply } = receiver;
     const dispatch = sendEventsTo(receiver);
@@ -39,18 +37,21 @@ export function afterEach<TEvent extends any[]>(...sources: EventKeeper<TEvent>[
     if (!supply.isOff) {
       send = () => dispatch(...result);
     }
-  }
+  };
 
-  function latestEvent(): TEvent[] {
+  const latestEvent = (): TEvent[] => {
 
     const result: TEvent[] = [];
 
     sources.forEach(
-        source => firstEvent(afterSupplied(source))(
-            (...event) => result.push(event),
-        ),
+        source => eventFirst(afterSupplied(source))({
+          supply: new Supply(),
+          receive: (_ctx, ...event) => result.push(event),
+        }),
     );
 
     return result;
-  }
+  };
+
+  return afterEventBy(eventShare(afterEventBy(registerReceiver, latestEvent)));
 }

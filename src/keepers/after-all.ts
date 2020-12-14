@@ -2,10 +2,10 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { noop } from '@proc7ts/primitives';
+import { noop, Supply } from '@proc7ts/primitives';
 import { AfterEvent, afterEventBy } from '../after-event';
 import { AfterEvent__symbol, EventKeeper, EventReceiver, sendEventsTo } from '../base';
-import { firstEvent, shareEvents } from '../processors';
+import { eventFirst, eventShare } from '../impl';
 import { afterSupplied } from './after-supplied';
 
 /**
@@ -24,11 +24,9 @@ export function afterAll<TSrcMap extends { readonly [key: string]: EventKeeper<a
 
   const keys = Object.keys(sources);
 
-  return shareEvents(afterEventBy(registerReceiver, latestEvent));
-
-  function registerReceiver(
+  const registerReceiver = (
       receiver: EventReceiver.Generic<[{ readonly [K in keyof TSrcMap]: EventKeeper.Event<TSrcMap[K]> }]>,
-  ): void {
+  ): void => {
 
     const { supply } = receiver;
     const dispatch = sendEventsTo(receiver);
@@ -45,18 +43,21 @@ export function afterAll<TSrcMap extends { readonly [key: string]: EventKeeper<a
     if (!supply.isOff) {
       send = () => dispatch(result);
     }
-  }
+  };
 
-  function latestEvent(): [{ readonly [K in keyof TSrcMap]: EventKeeper.Event<TSrcMap[K]> }] {
+  const latestEvent = (): [{ readonly [K in keyof TSrcMap]: EventKeeper.Event<TSrcMap[K]> }] => {
 
     const result = {} as { [K in keyof TSrcMap]: EventKeeper.Event<TSrcMap[K]> };
 
     keys.forEach(
-        <K extends keyof TSrcMap>(key: K) => firstEvent(afterSupplied(sources[key]))(
-            (...event: EventKeeper.Event<TSrcMap[K]>) => result[key as keyof TSrcMap] = event,
-        ),
+        <K extends keyof TSrcMap>(key: K) => eventFirst(afterSupplied(sources[key]))({
+          supply: new Supply(),
+          receive: (_ctx, ...event: EventKeeper.Event<TSrcMap[K]>) => result[key as keyof TSrcMap] = event,
+        }),
     );
 
     return [result];
-  }
+  };
+
+  return afterEventBy(eventShare(afterEventBy(registerReceiver, latestEvent)));
 }
