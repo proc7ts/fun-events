@@ -7,12 +7,12 @@ import { shareEvents } from './share-events';
 import { translateOn_ } from './translate-on';
 
 /**
- * Creates an event supplier mapper function that passes incoming values implementing the given type.
+ * Creates an event processor that passes incoming events implementing the given type only.
  *
  * @category Core
- * @typeParam TValue - Incoming value type.
- * @typeParam TMatch - Matching value type.
- * @param test - Test function accepting incoming value as its only parameter, and returning truthy value if the value
+ * @typeParam TValue - Incoming value type. This is a list of the test function parameter types.
+ * @typeParam TMatch - Required value type.
+ * @param test - Test function accepting incoming event as its only parameter, and returning truthy value if the value
  * implements the given type, or falsy one otherwise.
  *
  * @returns {@link OnEvent} sender mapper function.
@@ -22,7 +22,7 @@ export function filterEvents<TValue, TMatch extends TValue>(
 ): (this: void, supplier: OnEvent<[TValue]>) => OnEvent<[TMatch]>;
 
 /**
- * Creates an event supplier mapper function that passes incoming events matching the given condition.
+ * Creates an event processor that passes incoming events matching the given condition only.
  *
  * @category Core
  * @typeParam TEvent - An event type. This is a list of the test function parameter types.
@@ -45,13 +45,13 @@ export function filterEvents<TEvent extends any[]>(
 }
 
 /**
- * Creates an event supplier mapper function that passes incoming values implementing the given type and does not share
+ * Creates an event processor that passes incoming events implementing the given type only, and does not share
  * the outgoing events supply.
  *
  * @category Core
- * @typeParam TValue - Incoming value type.
- * @typeParam TMatch - Matching value type.
- * @param test - Test function accepting incoming value as its only parameter, and returning truthy value if the value
+ * @typeParam TValue - Incoming value type. This is a list of the test function parameter types.
+ * @typeParam TMatch - Required value type.
+ * @param test - Test function accepting incoming event as its only parameter, and returning truthy value if the value
  * implements the given type, or falsy one otherwise.
  *
  * @returns {@link OnEvent} sender mapper function.
@@ -61,7 +61,7 @@ export function filterEvents_<TValue, TMatch extends TValue>(// eslint-disable-l
 ): (this: void, supplier: OnEvent<[TValue]>) => OnEvent<[TMatch]>;
 
 /**
- * Creates an event supplier mapper function that passes incoming events matching the given condition and does not share
+ * Creates an event processor that passes incoming events matching the given condition only, and does not share
  * the outgoing events supply.
  *
  * @category Core

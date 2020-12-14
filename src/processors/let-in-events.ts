@@ -5,10 +5,10 @@
 import { Supply, SupplyPeer } from '@proc7ts/primitives';
 import { eventLetIn } from '../impl';
 import { OnEvent } from '../on-event';
-import { EventSupplierMapper } from './event-supplier-mapper';
+import { EventMapper } from './event-mapper';
 
 /**
- * Creates an event supplier mapper function that passes incoming events until the `required` supply is cut off.
+ * Creates an event processor that passes incoming events until the `required` supply is cut off.
  *
  * The outgoing events supply will be cut off once incoming event supply does, unless a second supply passed in.
  * In the latter case that supply will be cut off instead.
@@ -18,13 +18,13 @@ import { EventSupplierMapper } from './event-supplier-mapper';
  * @param required - A peer of required event supply.
  * @param dependentSupply - The supply to cut off on cutting off the incoming events supply.
  *
- * @returns New event keeper.
+ * @returns New event mapper.
  */
 export function letInEvents<TEvent extends any[]>(
     required: SupplyPeer,
     dependentSupply?: Supply,
-): EventSupplierMapper<TEvent> {
+): EventMapper<TEvent> {
   return (
       (input: OnEvent<TEvent>) => input.by(eventLetIn(input, required, dependentSupply))
-  ) as EventSupplierMapper<TEvent>;
+  ) as EventMapper<TEvent>;
 }

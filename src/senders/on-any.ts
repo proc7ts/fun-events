@@ -3,9 +3,9 @@
  * @module @proc7ts/fun-events
  */
 import { Supply } from '@proc7ts/primitives';
-import { shareEvents } from '../actions';
 import { EventReceiver, EventSupplier } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
+import { shareEvents } from '../processors';
 import { onNever } from './on-never';
 import { onSupplied } from './on-supplied';
 

@@ -7,7 +7,8 @@ import { eventShare } from '../impl';
 import { OnEvent } from '../on-event';
 
 /**
- * Creates an {@link AfterEvent} keeper that shares events supply among all registered receivers.
+ * A processor of events incoming from {@link AfterEvent} keeper that shares outgoing events supply among all registered
+ * receivers.
  *
  * The created keeper receives events from this one and sends to registered receivers. The shared keeper registers
  * a receiver in this one only once, when first receiver registered. And cuts off original events supply once all
@@ -22,7 +23,8 @@ import { OnEvent } from '../on-event';
 export function shareEvents<TEvent extends any[]>(supplier: AfterEvent<TEvent>): AfterEvent<TEvent>;
 
 /**
- * Creates an {@link OnEvent} sender that shares events supply among all registered receivers.
+ * A processor of events incoming from {@link OnEvent} sender that shares outgoing events supply among all registered
+ * receivers.
  *
  * The created sender receives events from this one and sends to registered receivers. The shared sender registers
  * a receiver in this one only once, when first receiver registered. And cuts off original events supply once all

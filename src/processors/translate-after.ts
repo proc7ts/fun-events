@@ -7,7 +7,7 @@ import { eventTranslate } from '../impl/event-translate';
 import { shareEvents } from './share-events';
 
 /**
- * Creates an event keeper mapper function that translates incoming events.
+ * Creates an event processor that translates events incoming from {@link AfterEvent} keeper.
  *
  * The translated events expected to be sent by the given `translate` function.
  *
@@ -39,8 +39,8 @@ export function translateAfter<
 }
 
 /**
- * Creates an event keeper mapper function that translates incoming events, and does not share the outgoing event
- * supply.
+ * Creates an event processor that translates events incoming from {@link AfterEvent} keeper, and does not share the
+ * outgoing events supply.
  *
  * The translated events expected to be sent by the given `translate` function.
  *

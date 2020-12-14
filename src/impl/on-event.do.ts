@@ -5,7 +5,7 @@ import { OnEvent } from '../on-event';
  */
 export function OnEvent$do<TEvent extends any[]>(
     this: OnEvent<TEvent>,
-    ...actions: ((this: void, arg: any) => any)[]
+    ...processors: ((this: void, arg: any) => any)[]
 ): any {
-  return actions.reduce((arg, action) => action(arg), this);
+  return processors.reduce((arg, action) => action(arg), this);
 }

@@ -6,15 +6,15 @@ import { AfterEvent } from '../after-event';
 import { OnEvent } from '../on-event';
 
 /**
- * A signature of event supplier mapper function.
+ * A signature of event mapping processor.
  *
- * Such mapper maps {@link OnEvent} sender or {@link AfterEvent} keeper to corresponding one.
+ * Such mapper application results to {@link OnEvent} sender or {@link AfterEvent} keeper respectively.
  *
  * @category Core
  * @typeParam TInEvent - Incoming event type. This is a list of incoming event receiver parameter types.
  * @typeParam TOutEvent - Outgoing event type. This is a list of outgoing event receiver parameter types.
  */
-export interface EventSupplierMapper<TInEvent extends any[], TOutEvent extends any[] = TInEvent> {
+export interface EventMapper<TInEvent extends any[], TOutEvent extends any[] = TInEvent> {
 
   /**
    * Maps {@link AfterEvent} keeper to another one.

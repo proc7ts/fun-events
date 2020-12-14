@@ -2,8 +2,8 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events/call-thru
  */
-import { shareEvents } from '../actions';
 import { OnEvent, onEventBy } from '../on-event';
+import { shareEvents } from '../processors';
 import { OnEventCallChain } from './on-event-call-chain';
 import { thru } from './thru.impl';
 import Args = OnEventCallChain.Args;

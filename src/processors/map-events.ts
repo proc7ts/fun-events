@@ -4,48 +4,48 @@
  */
 import { eventTranslate } from '../impl/event-translate';
 import { OnEvent } from '../on-event';
-import { EventSupplierMapper } from './event-supplier-mapper';
+import { EventMapper } from './event-mapper';
 import { shareEvents } from './share-events';
 
 /**
- * Creates an event supplier mapper function that converts incoming events with the given converter function.
+ * Creates an event processor that converts incoming events with the given converter function.
  *
  * @category Core
  * @typeParam TEvent - Incoming event type.
  * @typeParam TResult - Outgoing event value type.
- * @param convert - A converter function that accepts incoming event as parameters and returns outgoing event value.
+ * @param convert - A converter function that accepts incoming event as parameters and returns converted outgoing event.
  *
- * @returns A mapping function of incoming event supplier.
+ * @returns New event mapper.
  */
 export function mapEvents<TEvent extends any[], TResult>(
     convert: (this: void, ...event: TEvent) => TResult,
-): EventSupplierMapper<TEvent, [TResult]> {
+): EventMapper<TEvent, [TResult]> {
 
   const mapper = mapEvents_(convert);
 
   return (
       (input: OnEvent<TEvent>) => shareEvents(mapper(input))
-  ) as EventSupplierMapper<TEvent, [TResult]>;
+  ) as EventMapper<TEvent, [TResult]>;
 }
 
 /**
- * Creates an event supplier mapper function that converts incoming events with the given converter function, and does
- * not share the outgoing event supply.
+ * Creates an event processor that converts incoming events with the given converter function, and does not share the
+ * outgoing events supply.
  *
  * @category Core
  * @typeParam TEvent - Incoming event type.
  * @typeParam TResult - Outgoing event value type.
  * @param convert - A converter function that accepts incoming event as parameters and returns outgoing event value.
  *
- * @returns A mapping function of incoming event supplier.
+ * @returns New event mapper.
  */
 export function mapEvents_<TEvent extends any[], TResult>(// eslint-disable-line @typescript-eslint/naming-convention
     convert: (this: void, ...event: TEvent) => TResult,
-): EventSupplierMapper<TEvent, [TResult]> {
+): EventMapper<TEvent, [TResult]> {
   return (
       (input: OnEvent<TEvent>) => input.by(eventTranslate<TEvent, [TResult]>(
           input,
           (send, ...event) => send(convert(...event)),
       ))
-  ) as EventSupplierMapper<TEvent, [TResult]>;
+  ) as EventMapper<TEvent, [TResult]>;
 }

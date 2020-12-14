@@ -6,7 +6,7 @@ import { sendEventsTo } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
 
 /**
- * Creates an {@link OnEvent} sender of asynchronously resolved incoming events in the order of their resolution.
+ * A processor that asynchronously resolves incoming events and sends then in the order of their resolution.
  *
  * Receives events or their promises from the given event sender, and sends them once they are resolved. The original
  * order of events is not preserved. Instead each resolved event is sent along with its index in original order.

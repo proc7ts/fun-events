@@ -1,7 +1,7 @@
 import { AfterEvent, afterEventBy } from '../after-event';
 import { EventNotifier, EventReceiver } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
-import { onceEvent } from './once-event';
+import { firstEvent } from './first-event';
 import { shareEvents } from './share-events';
 
 describe('shareEvents', () => {
@@ -163,7 +163,7 @@ describe('shareEvents', () => {
 
       const shared = afterEvent.do(shareEvents);
 
-      shared.do(onceEvent)((...received) => expect(received).toEqual(fallback));
+      shared.do(firstEvent)((...received) => expect(received).toEqual(fallback));
     });
     it('sends events from the source', () => {
 

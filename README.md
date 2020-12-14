@@ -124,11 +124,11 @@ To convert a plain event receiver registration function to `OnEvent`, an `onEven
 
 [OnEvent.do()]: #oneventdo
 
-Applies the given action or [actions] to this event supplier. The first action receives an `OnEvent` supplier instance
-as its only parameter. The next one receives the result of first action call, etc. The result of the last action call
+Processes events with the given [event processors]. The first processor receives an `OnEvent` supplier instance as its
+only parameter. The next one receives the result of the first processor, etc. The result of the last processor
 is returned from the `.do()` method call.
 
-This method is handy for actions chaining.
+This method is handy for chaining multiple processors.
 
 
 `EventKeeper`
@@ -157,30 +157,29 @@ When events are no longer needed (or just exhausted) the supply may be cut off b
 It also notifies on supply cut off by calling callback functions registered by its `whenOff()` method. 
 
 
-Actions
--------
+Event Processors
+----------------
 
-[actions]: #actions
+[event processors]: #event-processors
 
-Actions are functions specifically designed to be passed to [OnEvent.do()] method.
+Event processors are functions specifically designed to be passed to [OnEvent.do()] method. These are functions
+that may transform event suppliers or their events.
 
-They may transform event supplier or can be used to consume events.
+The following event processors implemented:
 
-The following actions implemented:
-
-- [consumeEvents] - Creates an event consumer function.
-- [filterEvents] - Creates an event supplier mapper function that passes incoming values implementing the given type.
-- [letInEvents] - Creates an event supplier mapper function that passes incoming events until the required supply
-  is cut off.
-- [mapEvents] - Creates an event supplier mapper function that converts incoming events with the given converter function.
-- [onceEvent] - Creates an event supplier of the first incoming event.
-- [resolveEvents] - Creates an event sender of asynchronously resolved incoming events in the order of their resolution.
-- [resolveEventsInOrder] - Creates an event sender of asynchronously resolved incoming events in the order they are
-  received.
-- [shareEvents] - Creates an event supplier that shares events supply among all registered receivers.
-- [translateAfter] - Creates an event keeper mapper function that translates incoming events.  
-- [translateOn] - Creates an event sender mapper function that translates incoming events.  
-- [valueEvents] - Creates an event supplier mapper function that sends values of incoming events.
+- [consumeEvents] - Creates an event processor that consumes incoming events.
+- [filterEvents] - Creates an event processor that passes incoming events matching the given condition only.
+- [firstEvent] - A processor of the first incoming event only.
+- [letInEvents] - Creates an event processor that passes incoming events until the required supply is cut off.
+- [mapEvents] - Creates an event processor that converts incoming events with the given converter function.
+- [resolveEvents] - A processor that asynchronously resolves incoming events and sends then in the order of their
+  resolution.
+- [resolveEventsInOrder] - A processor that asynchronously resolves incoming events and sends them in the order they
+  are received.
+- [shareEvents] - A processor of incoming events that shares events supply among all registered receivers.
+- [translateAfter] - Creates an event processor that translates events incoming from `AfterEvent` keeper.
+- [translateOn] - Creates an event processor that translates events incoming from `OnEvent` sender.
+- [valueEvents] - Creates an event processor that sends the values of incoming events.
 
 [consumeEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#consumeEvents
 [filterEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#filterEvents

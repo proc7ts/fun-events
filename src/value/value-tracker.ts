@@ -3,7 +3,6 @@
  * @module @proc7ts/fun-events
  */
 import { neverSupply, Supply, SupplyPeer } from '@proc7ts/primitives';
-import { consumeEvents } from '../actions';
 import { AfterEvent, afterEventBy } from '../after-event';
 import {
   AfterEvent__symbol,
@@ -15,6 +14,7 @@ import {
   OnEvent__symbol,
 } from '../base';
 import { OnEvent } from '../on-event';
+import { consumeEvents } from '../processors';
 import { onSupplied } from '../senders';
 
 /**

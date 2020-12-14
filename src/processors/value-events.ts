@@ -7,7 +7,7 @@ import { shareEvents } from './share-events';
 import { translateOn_ } from './translate-on';
 
 /**
- * Creates an event supplier mapper function that sends values of incoming events.
+ * Creates an event processor that sends the values of incoming events.
  *
  * Events are valued by provided `value` function. The `null`, `undefined`, and `false` values are dropped.
  *
@@ -17,9 +17,9 @@ import { translateOn_ } from './translate-on';
  * @param valueOf - Event value detector function. Accepts incoming event as parameters and returns either its value,
  * or `false`/`null`/`undefined` to ignore it.
  *
- * @returns A mapping function of incoming event supplier to `OnEvent` sender.
+ * @returns New event processor.
  */
-export function valueEvents<TEvent extends any[], TValue>(// eslint-disable-line @typescript-eslint/naming-convention
+export function valueEvents<TEvent extends any[], TValue>(
     valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
 ): (this: void, input: OnEvent<TEvent>) => OnEvent<[TValue]> {
 
@@ -29,8 +29,7 @@ export function valueEvents<TEvent extends any[], TValue>(// eslint-disable-line
 }
 
 /**
- * Creates an event supplier mapper function that sends values of incoming events, and does not share the outgoing event
- * supply.
+ * Creates an event processor that sends the values of incoming events, and does not share the outgoing events supply.
  *
  * @category Core
  * @typeParam TEvent - Incoming event type.
@@ -38,7 +37,7 @@ export function valueEvents<TEvent extends any[], TValue>(// eslint-disable-line
  * @param valueOf - Event value detector function. Accepts incoming event as parameters and returns either its value,
  * or `false`/`null`/`undefined` to ignore it.
  *
- * @returns A mapping function of incoming event supplier to `OnEvent` sender.
+ * @returns New event processor.
  */
 export function valueEvents_<TEvent extends any[], TValue>(// eslint-disable-line @typescript-eslint/naming-convention
     valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,

@@ -2,9 +2,9 @@ import { neverSupply, Supply } from '@proc7ts/primitives';
 import { AfterEvent, afterEventBy } from '../after-event';
 import { EventNotifier, EventReceiver } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
-import { onceEvent } from './once-event';
+import { firstEvent } from './first-event';
 
-describe('onceEvent', () => {
+describe('firstEvent', () => {
   describe('OnEvent', () => {
 
     let mockRegister: jest.Mock<void, [EventReceiver.Generic<[string]>]>;
@@ -26,11 +26,11 @@ describe('onceEvent', () => {
     });
 
     it('registers event receiver', () => {
-      expect(onEvent.do(onceEvent)(mockReceiver)).toBe(supply);
+      expect(onEvent.do(firstEvent)(mockReceiver)).toBe(supply);
       expect(mockRegister).toHaveBeenCalled();
     });
     it('unregisters notified event receiver', () => {
-      onEvent.do(onceEvent)(mockReceiver);
+      onEvent.do(firstEvent)(mockReceiver);
       expect(offSpy).not.toHaveBeenCalled();
 
       emitter.send('event');
@@ -45,14 +45,14 @@ describe('onceEvent', () => {
         emitter.send('event');
       });
 
-      onEvent.do(onceEvent)(mockReceiver);
+      onEvent.do(firstEvent)(mockReceiver);
 
       expect(offSpy).toHaveBeenCalled();
       expect(mockReceiver).toHaveBeenCalledWith('event');
     });
     it('never sends events if their supply is initially cut off', () => {
       supply = neverSupply();
-      onEvent.do(onceEvent)({
+      onEvent.do(firstEvent)({
         supply,
         receive: (_context, ...event: [string]) => mockReceiver(...event),
       });
@@ -60,12 +60,12 @@ describe('onceEvent', () => {
       expect(mockReceiver).not.toHaveBeenCalled();
     });
     it('never sends events after their supply is cut off', () => {
-      onEvent.do(onceEvent)(mockReceiver).off();
+      onEvent.do(firstEvent)(mockReceiver).off();
       emitter.send('event');
       expect(mockReceiver).not.toHaveBeenCalled();
     });
     it('sends only one event', () => {
-      onEvent.do(onceEvent)(mockReceiver);
+      onEvent.do(firstEvent)(mockReceiver);
       emitter.send('event1');
       emitter.send('event2');
       expect(mockReceiver).toHaveBeenCalledTimes(1);
@@ -95,35 +95,35 @@ describe('onceEvent', () => {
     });
 
     it('registers event receiver', () => {
-      afterEvent.do(onceEvent)(mockReceiver);
+      afterEvent.do(firstEvent)(mockReceiver);
       expect(mockRegister).toHaveBeenCalled();
     });
     it('sends initial event', () => {
-      afterEvent.do(onceEvent)(mockReceiver);
+      afterEvent.do(firstEvent)(mockReceiver);
       expect(mockReceiver).toHaveBeenCalledWith('init');
     });
     it('cuts off supply after event received', () => {
 
-      const returnedSupply = afterEvent.do(onceEvent)(mockReceiver);
+      const returnedSupply = afterEvent.do(firstEvent)(mockReceiver);
 
       expect(mockRegister).toHaveBeenCalled();
       expect(returnedSupply.isOff).toBe(true);
       expect(supply.isOff).toBe(true);
     });
     it('unregisters notified event receiver', () => {
-      afterEvent.do(onceEvent)(mockReceiver);
+      afterEvent.do(firstEvent)(mockReceiver);
       expect(offSpy).toHaveBeenCalled();
     });
     it('never sends events if their supply is initially cut off', () => {
       supply = neverSupply();
-      afterEvent.do(onceEvent)({
+      afterEvent.do(firstEvent)({
         supply,
         receive: (_context, ...event: [string]) => mockReceiver(...event),
       });
       expect(mockReceiver).not.toHaveBeenCalled();
     });
     it('sends only one event', () => {
-      afterEvent.do(onceEvent)(mockReceiver);
+      afterEvent.do(firstEvent)(mockReceiver);
       emitter.send('event1');
       emitter.send('event2');
       expect(mockReceiver).toHaveBeenCalledTimes(1);

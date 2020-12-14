@@ -3,9 +3,9 @@
  * @module @proc7ts/fun-events
  */
 import { noop } from '@proc7ts/primitives';
-import { onceEvent, shareEvents } from '../actions';
 import { AfterEvent, afterEventBy } from '../after-event';
 import { AfterEvent__symbol, EventKeeper, EventReceiver, sendEventsTo } from '../base';
+import { firstEvent, shareEvents } from '../processors';
 import { afterSupplied } from './after-supplied';
 
 /**
@@ -46,7 +46,7 @@ export function afterEach<TEvent extends any[]>(...sources: EventKeeper<TEvent>[
     const result: TEvent[] = [];
 
     sources.forEach(
-        source => onceEvent(afterSupplied(source))(
+        source => firstEvent(afterSupplied(source))(
             (...event) => result.push(event),
         ),
     );

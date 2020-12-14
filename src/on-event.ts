@@ -45,36 +45,39 @@ export interface OnEvent<TEvent extends any[]> extends EventSender<TEvent> {
   ): OnEvent<TNewEvent>;
 
   /**
-   * Applies the given action to this event supplier.
+   * Applies the given processor to events.
    *
    * @typeParam TResult - Action result type.
-   * @param action - A function accepting this supplier as its only parameter, and returning action result.
+   * @param processor - An event processor accepting this supplier as its only parameter, and returning application
+   * result.
    *
-   * @returns Action result.
+   * @returns Processing result.
    */
   do<TResult>(
-      action: (this: void, supplier: this) => TResult,
+      processor: (this: void, supplier: this) => TResult,
   ): TResult;
 
   /**
-   * Applies the given actions to this event supplier.
+   * Applies the given processors to events.
    *
-   * The value returned from each action is passed as argument to the next one. The value returned from the last action
-   * is the result of this method call.
+   * The value returned from each processor application is passed as argument to the next one. The value returned from
+   * the last processor application is the result of this method call.
    *
-   * @typeParam TResult1 - First action result type.
-   * @typeParam TResult1 - Second action result type.
-   * @param action1 - A function accepting this supplier as its only parameter, and returning a result.
-   * @param action2 - A function accepting the first action result as its only parameter, and returning a result.
+   * @typeParam TResult1 - The first processor application result type.
+   * @typeParam TResult1 - The second processor application result type.
+   * @param processor1 - An event processor accepting this supplier as its only parameter, and returning application
+   * result.
+   * @param processor2 - An event processor accepting the first one's application result as its only parameter, and
+   * returning its own application result.
    *
-   * @returns Actions application result.
+   * @returns The last processor application result.
    */
   do<
       TResult1,
       TResult2,
       >(
-      action1: (this: void, supplier: this) => TResult1,
-      action2: (this: void, arg: TResult1) => TResult2,
+      processor1: (this: void, supplier: this) => TResult1,
+      processor2: (this: void, arg: TResult1) => TResult2,
   ): TResult2;
 
   do<
@@ -82,9 +85,9 @@ export interface OnEvent<TEvent extends any[]> extends EventSender<TEvent> {
       TResult2,
       TResult3,
       >(
-      action1: (this: void, supplier: this) => TResult1,
-      action2: (this: void, arg: TResult1) => TResult2,
-      action3: (this: void, arg: TResult2) => TResult3,
+      processor1: (this: void, supplier: this) => TResult1,
+      processor2: (this: void, arg: TResult1) => TResult2,
+      processor3: (this: void, arg: TResult2) => TResult3,
   ): TResult3;
 
   do<
@@ -93,10 +96,10 @@ export interface OnEvent<TEvent extends any[]> extends EventSender<TEvent> {
       TResult3,
       TResult4,
       >(
-      action1: (this: void, supplier: this) => TResult1,
-      action2: (this: void, arg: TResult1) => TResult2,
-      action3: (this: void, arg: TResult2) => TResult3,
-      action4: (this: void, arg: TResult3) => TResult4,
+      processor1: (this: void, supplier: this) => TResult1,
+      processor2: (this: void, arg: TResult1) => TResult2,
+      processor3: (this: void, arg: TResult2) => TResult3,
+      processor4: (this: void, arg: TResult3) => TResult4,
   ): TResult4;
 
   do<
@@ -106,11 +109,11 @@ export interface OnEvent<TEvent extends any[]> extends EventSender<TEvent> {
       TResult4,
       TResult5,
       >(
-      action1: (this: void, supplier: this) => TResult1,
-      action2: (this: void, arg: TResult1) => TResult2,
-      action3: (this: void, arg: TResult2) => TResult3,
-      action4: (this: void, arg: TResult3) => TResult4,
-      action5: (this: void, arg: TResult4) => TResult5,
+      processor1: (this: void, supplier: this) => TResult1,
+      processor2: (this: void, arg: TResult1) => TResult2,
+      processor3: (this: void, arg: TResult2) => TResult3,
+      processor4: (this: void, arg: TResult3) => TResult4,
+      processor5: (this: void, arg: TResult4) => TResult5,
   ): TResult5;
 
   do<
@@ -121,12 +124,12 @@ export interface OnEvent<TEvent extends any[]> extends EventSender<TEvent> {
       TResult5,
       TResult6,
       >(
-      action1: (this: void, supplier: this) => TResult1,
-      action2: (this: void, arg: TResult1) => TResult2,
-      action3: (this: void, arg: TResult2) => TResult3,
-      action4: (this: void, arg: TResult3) => TResult4,
-      action5: (this: void, arg: TResult4) => TResult5,
-      action6: (this: void, arg: TResult5) => TResult6,
+      processor1: (this: void, supplier: this) => TResult1,
+      processor2: (this: void, arg: TResult1) => TResult2,
+      processor3: (this: void, arg: TResult2) => TResult3,
+      processor4: (this: void, arg: TResult3) => TResult4,
+      processor5: (this: void, arg: TResult4) => TResult5,
+      processor6: (this: void, arg: TResult5) => TResult6,
   ): TResult6;
 
   do<
@@ -138,13 +141,13 @@ export interface OnEvent<TEvent extends any[]> extends EventSender<TEvent> {
       TResult6,
       TResult7,
       >(
-      action1: (this: void, supplier: this) => TResult1,
-      action2: (this: void, arg: TResult1) => TResult2,
-      action3: (this: void, arg: TResult2) => TResult3,
-      action4: (this: void, arg: TResult3) => TResult4,
-      action5: (this: void, arg: TResult4) => TResult5,
-      action6: (this: void, arg: TResult5) => TResult6,
-      action7: (this: void, arg: TResult6) => TResult7,
+      processor1: (this: void, supplier: this) => TResult1,
+      processor2: (this: void, arg: TResult1) => TResult2,
+      processor3: (this: void, arg: TResult2) => TResult3,
+      processor4: (this: void, arg: TResult3) => TResult4,
+      processor5: (this: void, arg: TResult4) => TResult5,
+      processor6: (this: void, arg: TResult5) => TResult6,
+      processor7: (this: void, arg: TResult6) => TResult7,
   ): TResult7;
 
   do<
@@ -157,14 +160,14 @@ export interface OnEvent<TEvent extends any[]> extends EventSender<TEvent> {
       TResult7,
       TResult8,
       >(
-      action1: (this: void, supplier: this) => TResult1,
-      action2: (this: void, arg: TResult1) => TResult2,
-      action3: (this: void, arg: TResult2) => TResult3,
-      action4: (this: void, arg: TResult3) => TResult4,
-      action5: (this: void, arg: TResult4) => TResult5,
-      action6: (this: void, arg: TResult5) => TResult6,
-      action7: (this: void, arg: TResult6) => TResult7,
-      action8: (this: void, arg: TResult7) => TResult8,
+      processor1: (this: void, supplier: this) => TResult1,
+      processor2: (this: void, arg: TResult1) => TResult2,
+      processor3: (this: void, arg: TResult2) => TResult3,
+      processor4: (this: void, arg: TResult3) => TResult4,
+      processor5: (this: void, arg: TResult4) => TResult5,
+      processor6: (this: void, arg: TResult5) => TResult6,
+      processor7: (this: void, arg: TResult6) => TResult7,
+      processor8: (this: void, arg: TResult7) => TResult8,
   ): TResult8;
 
   do<
@@ -178,15 +181,15 @@ export interface OnEvent<TEvent extends any[]> extends EventSender<TEvent> {
       TResult8,
       TResult9,
       >(
-      action1: (this: void, supplier: this) => TResult1,
-      action2: (this: void, arg: TResult1) => TResult2,
-      action3: (this: void, arg: TResult2) => TResult3,
-      action4: (this: void, arg: TResult3) => TResult4,
-      action5: (this: void, arg: TResult4) => TResult5,
-      action6: (this: void, arg: TResult5) => TResult6,
-      action7: (this: void, arg: TResult6) => TResult7,
-      action8: (this: void, arg: TResult7) => TResult8,
-      action9: (this: void, arg: TResult8) => TResult9,
+      processor1: (this: void, supplier: this) => TResult1,
+      processor2: (this: void, arg: TResult1) => TResult2,
+      processor3: (this: void, arg: TResult2) => TResult3,
+      processor4: (this: void, arg: TResult3) => TResult4,
+      processor5: (this: void, arg: TResult4) => TResult5,
+      processor6: (this: void, arg: TResult5) => TResult6,
+      processor7: (this: void, arg: TResult6) => TResult7,
+      processor8: (this: void, arg: TResult7) => TResult8,
+      processor9: (this: void, arg: TResult8) => TResult9,
   ): TResult9;
 
   do<
@@ -201,16 +204,16 @@ export interface OnEvent<TEvent extends any[]> extends EventSender<TEvent> {
       TResult9,
       TResult10,
       >(
-      action1: (this: void, supplier: this) => TResult1,
-      action2: (this: void, arg: TResult1) => TResult2,
-      action3: (this: void, arg: TResult2) => TResult3,
-      action4: (this: void, arg: TResult3) => TResult4,
-      action5: (this: void, arg: TResult4) => TResult5,
-      action6: (this: void, arg: TResult5) => TResult6,
-      action7: (this: void, arg: TResult6) => TResult7,
-      action8: (this: void, arg: TResult7) => TResult8,
-      action9: (this: void, arg: TResult8) => TResult9,
-      action10: (this: void, arg: TResult9) => TResult10,
+      processor1: (this: void, supplier: this) => TResult1,
+      processor2: (this: void, arg: TResult1) => TResult2,
+      processor3: (this: void, arg: TResult2) => TResult3,
+      processor4: (this: void, arg: TResult3) => TResult4,
+      processor5: (this: void, arg: TResult4) => TResult5,
+      processor6: (this: void, arg: TResult5) => TResult6,
+      processor7: (this: void, arg: TResult6) => TResult7,
+      processor8: (this: void, arg: TResult7) => TResult8,
+      processor9: (this: void, arg: TResult8) => TResult9,
+      processor10: (this: void, arg: TResult9) => TResult10,
   ): TResult10;
 
   do<
@@ -226,17 +229,17 @@ export interface OnEvent<TEvent extends any[]> extends EventSender<TEvent> {
       TResult10,
       TResult11,
       >(
-      action1: (this: void, supplier: this) => TResult1,
-      action2: (this: void, arg: TResult1) => TResult2,
-      action3: (this: void, arg: TResult2) => TResult3,
-      action4: (this: void, arg: TResult3) => TResult4,
-      action5: (this: void, arg: TResult4) => TResult5,
-      action6: (this: void, arg: TResult5) => TResult6,
-      action7: (this: void, arg: TResult6) => TResult7,
-      action8: (this: void, arg: TResult7) => TResult8,
-      action9: (this: void, arg: TResult8) => TResult9,
-      action10: (this: void, arg: TResult9) => TResult10,
-      action11: (this: void, arg: TResult10) => TResult11,
+      processor1: (this: void, supplier: this) => TResult1,
+      processor2: (this: void, arg: TResult1) => TResult2,
+      processor3: (this: void, arg: TResult2) => TResult3,
+      processor4: (this: void, arg: TResult3) => TResult4,
+      processor5: (this: void, arg: TResult4) => TResult5,
+      processor6: (this: void, arg: TResult5) => TResult6,
+      processor7: (this: void, arg: TResult6) => TResult7,
+      processor8: (this: void, arg: TResult7) => TResult8,
+      processor9: (this: void, arg: TResult8) => TResult9,
+      processor10: (this: void, arg: TResult9) => TResult10,
+      processor11: (this: void, arg: TResult10) => TResult11,
   ): TResult11;
 
   do<
@@ -253,18 +256,18 @@ export interface OnEvent<TEvent extends any[]> extends EventSender<TEvent> {
       TResult11,
       TResult12,
       >(
-      action1: (this: void, supplier: this) => TResult1,
-      action2: (this: void, arg: TResult1) => TResult2,
-      action3: (this: void, arg: TResult2) => TResult3,
-      action4: (this: void, arg: TResult3) => TResult4,
-      action5: (this: void, arg: TResult4) => TResult5,
-      action6: (this: void, arg: TResult5) => TResult6,
-      action7: (this: void, arg: TResult6) => TResult7,
-      action8: (this: void, arg: TResult7) => TResult8,
-      action9: (this: void, arg: TResult8) => TResult9,
-      action10: (this: void, arg: TResult9) => TResult10,
-      action11: (this: void, arg: TResult10) => TResult11,
-      action12: (this: void, arg: TResult11) => TResult12,
+      processor1: (this: void, supplier: this) => TResult1,
+      processor2: (this: void, arg: TResult1) => TResult2,
+      processor3: (this: void, arg: TResult2) => TResult3,
+      processor4: (this: void, arg: TResult3) => TResult4,
+      processor5: (this: void, arg: TResult4) => TResult5,
+      processor6: (this: void, arg: TResult5) => TResult6,
+      processor7: (this: void, arg: TResult6) => TResult7,
+      processor8: (this: void, arg: TResult7) => TResult8,
+      processor9: (this: void, arg: TResult8) => TResult9,
+      processor10: (this: void, arg: TResult9) => TResult10,
+      processor11: (this: void, arg: TResult10) => TResult11,
+      processor12: (this: void, arg: TResult11) => TResult12,
   ): TResult12;
 
   do<
@@ -282,19 +285,19 @@ export interface OnEvent<TEvent extends any[]> extends EventSender<TEvent> {
       TResult12,
       TResult13,
       >(
-      action1: (this: void, supplier: this) => TResult1,
-      action2: (this: void, arg: TResult1) => TResult2,
-      action3: (this: void, arg: TResult2) => TResult3,
-      action4: (this: void, arg: TResult3) => TResult4,
-      action5: (this: void, arg: TResult4) => TResult5,
-      action6: (this: void, arg: TResult5) => TResult6,
-      action7: (this: void, arg: TResult6) => TResult7,
-      action8: (this: void, arg: TResult7) => TResult8,
-      action9: (this: void, arg: TResult8) => TResult9,
-      action10: (this: void, arg: TResult9) => TResult10,
-      action11: (this: void, arg: TResult10) => TResult11,
-      action12: (this: void, arg: TResult11) => TResult12,
-      action13: (this: void, arg: TResult12) => TResult13,
+      processor1: (this: void, supplier: this) => TResult1,
+      processor2: (this: void, arg: TResult1) => TResult2,
+      processor3: (this: void, arg: TResult2) => TResult3,
+      processor4: (this: void, arg: TResult3) => TResult4,
+      processor5: (this: void, arg: TResult4) => TResult5,
+      processor6: (this: void, arg: TResult5) => TResult6,
+      processor7: (this: void, arg: TResult6) => TResult7,
+      processor8: (this: void, arg: TResult7) => TResult8,
+      processor9: (this: void, arg: TResult8) => TResult9,
+      processor10: (this: void, arg: TResult9) => TResult10,
+      processor11: (this: void, arg: TResult10) => TResult11,
+      processor12: (this: void, arg: TResult11) => TResult12,
+      processor13: (this: void, arg: TResult12) => TResult13,
   ): TResult13;
 
   /**
