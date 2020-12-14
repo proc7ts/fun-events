@@ -12,7 +12,6 @@
     "importHelpers": true,
     "noEmitHelpers": true,
     "lib": [
-      "DOM",
       "ES2018"
     ],
     "types": [

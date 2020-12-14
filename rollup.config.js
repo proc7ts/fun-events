@@ -54,15 +54,10 @@ export default {
       plugins: [
         flatDts({
           tsconfig: 'tsconfig.main.json',
-          lib: 'ES2018',
+          lib: true,
           entries: {
             'call-thru': {
               file: 'call-thru/index.d.ts',
-              lib: 'ES2018',
-            },
-            dom: {
-              file: 'dom/index.d.ts',
-              lib: ['ES2018', 'DOM'],
             },
           },
         }),
