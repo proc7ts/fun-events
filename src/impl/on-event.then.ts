@@ -1,7 +1,7 @@
 import { Supply } from '@proc7ts/primitives';
 import { EventReceiver } from '../base';
 import { OnEvent } from '../on-event';
-import { eventOnce } from './event-once';
+import { eventFirst } from './event-first';
 
 /**
  * @internal
@@ -12,7 +12,7 @@ export function OnEvent$then<TEvent extends any[], TResult1 = TEvent[0], TResult
     onCutOff?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null,
 ): Promise<TResult1 | TResult2> {
   return new Promise((resolve, reject) => {
-    eventOnce(this)({
+    eventFirst(this)({
       supply: onCutOff
           ? new Supply(reason => {
             try {
