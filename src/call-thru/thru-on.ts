@@ -3,7 +3,7 @@
  * @module @proc7ts/fun-events/call-thru
  */
 import { OnEvent, onEventBy } from '../on-event';
-import { shareEvents } from '../processors';
+import { shareOn } from '../processors';
 import { OnEventCallChain } from './on-event-call-chain';
 import { thru } from './thru.impl';
 import Args = OnEventCallChain.Args;
@@ -280,7 +280,7 @@ export function thruOn<TEvent extends any[], TReturn extends any[]>(
       ) => OnEvent<TReturn>
   )(...passes);
 
-  return input => shareEvents(map(input));
+  return input => shareOn(map(input));
 }
 
 /**

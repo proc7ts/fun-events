@@ -1,10 +1,10 @@
 import { AfterEvent, afterEventBy } from '../after-event';
 import { EventNotifier, EventReceiver } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
-import { firstEvent } from './first-event';
-import { shareEvents } from './share-events';
+import { onceOn } from './once-on';
+import { shareOn } from './share-on';
 
-describe('shareEvents', () => {
+describe('shareOn', () => {
   describe('OnEvent', () => {
 
     let mockRegister: jest.Mock<void, [EventReceiver.Generic<[string, string]>]>;
@@ -27,7 +27,7 @@ describe('shareEvents', () => {
 
     it('sends events from the source', () => {
 
-      const shared = onEvent.do(shareEvents);
+      const shared = onEvent.do(shareOn);
 
       shared(mockReceiver);
       shared(mockReceiver2);
@@ -37,7 +37,7 @@ describe('shareEvents', () => {
     });
     it('registers exactly one source receiver', () => {
 
-      const shared = onEvent.do(shareEvents);
+      const shared = onEvent.do(shareOn);
 
       shared(mockReceiver);
       shared(mockReceiver2);
@@ -46,7 +46,7 @@ describe('shareEvents', () => {
     });
     it('cuts off events supply from the source when all event supplies do', () => {
 
-      const shared = onEvent.do(shareEvents);
+      const shared = onEvent.do(shareOn);
       const supply1 = shared(mockReceiver);
       const supply2 = shared(mockReceiver2);
 
@@ -62,7 +62,7 @@ describe('shareEvents', () => {
         emitter.send('init2', '2');
       });
 
-      const shared = onEvent.do(shareEvents);
+      const shared = onEvent.do(shareOn);
 
       shared(mockReceiver);
       shared(mockReceiver2);
@@ -87,7 +87,7 @@ describe('shareEvents', () => {
         offSpy = jest.spyOn(receiver.supply, 'off');
       });
 
-      const shared = onEvent.do(shareEvents);
+      const shared = onEvent.do(shareOn);
       const supply1 = shared(mockReceiver);
       const supply2 = shared(mockReceiver2);
 
@@ -113,7 +113,7 @@ describe('shareEvents', () => {
         emitter.send('init2', '2');
       });
 
-      const shared = onEvent.do(shareEvents);
+      const shared = onEvent.do(shareOn);
 
       shared(mockReceiver);
       emitter.send('update1', '11');
@@ -152,7 +152,7 @@ describe('shareEvents', () => {
 
     it('sends fallback event from the source', () => {
 
-      const shared = afterEvent.do(shareEvents);
+      const shared = afterEvent.do(shareOn);
 
       shared(mockReceiver);
       shared(mockReceiver2);
@@ -161,13 +161,13 @@ describe('shareEvents', () => {
     });
     it('keeps initial event from the source', () => {
 
-      const shared = afterEvent.do(shareEvents);
+      const shared = afterEvent.do(shareOn);
 
-      shared.do(firstEvent)((...received) => expect(received).toEqual(fallback));
+      shared.do(onceOn)((...received) => expect(received).toEqual(fallback));
     });
     it('sends events from the source', () => {
 
-      const shared = afterEvent.do(shareEvents);
+      const shared = afterEvent.do(shareOn);
 
       shared(mockReceiver);
       shared(mockReceiver2);

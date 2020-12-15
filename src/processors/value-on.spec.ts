@@ -1,11 +1,11 @@
 import { EventEmitter } from '../senders';
-import { valueEvents } from './value-events';
+import { valueOn } from './value-on';
 
-describe('valueEvents', () => {
+describe('valueOn', () => {
   it('values event', () => {
 
     const emitter = new EventEmitter<[number, number]>();
-    const onEvent = emitter.on.do(valueEvents((a: number, b: number) => a + b));
+    const onEvent = emitter.on.do(valueOn((a: number, b: number) => a + b));
     const receiver = jest.fn<void, [number]>();
 
     onEvent(receiver);
@@ -16,7 +16,7 @@ describe('valueEvents', () => {
   it('filters out non-valued matching events', () => {
 
     const emitter = new EventEmitter<[string?]>();
-    const onEvent = emitter.on.do(valueEvents(
+    const onEvent = emitter.on.do(valueOn(
         str => str && !str.startsWith('-') && (str.startsWith('+') ? str : `+${str}`),
     ));
     const receiver = jest.fn<void, [string]>();

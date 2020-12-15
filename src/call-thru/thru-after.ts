@@ -3,7 +3,7 @@
  * @module @proc7ts/fun-events/call-thru
  */
 import { AfterEvent, afterEventBy } from '../after-event';
-import { shareEvents } from '../processors';
+import { shareAfter } from '../processors';
 import { OnEventCallChain } from './on-event-call-chain';
 import { thru } from './thru.impl';
 import Args = OnEventCallChain.Args;
@@ -284,7 +284,7 @@ export function thruAfter<TEvent extends any[], TReturn extends any[]>(
       ) => AfterEvent<TReturn>
   )(...passes);
 
-  return input => shareEvents(map(input));
+  return input => shareAfter(map(input));
 }
 
 /**

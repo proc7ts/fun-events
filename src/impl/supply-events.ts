@@ -5,7 +5,7 @@ import { OnEvent } from '../on-event';
 /**
  * @internal
  */
-export function eventLetIn<TEvent extends any[]>(
+export function supplyEvents<TEvent extends any[]>(
     supplier: OnEvent<TEvent>,
     required: SupplyPeer,
     dependentSupply?: Supply,

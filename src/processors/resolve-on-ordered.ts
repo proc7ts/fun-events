@@ -5,9 +5,9 @@
 import { Supply } from '@proc7ts/primitives';
 import { sendEventsTo } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
-import { letInEvents } from './let-in-events';
-import { mapEvents } from './map-events';
-import { resolveEvents } from './resolve-events';
+import { mapOn } from './map-on';
+import { resolveOn } from './resolve-on';
+import { supplyOn } from './supply-on';
 
 /**
  * A processor that asynchronously resolves incoming events and sends them in the order they are received.
@@ -25,7 +25,7 @@ import { resolveEvents } from './resolve-events';
  *
  * @returns New `OnEvent` sender of resolved events.
  */
-export function resolveEventsInOrder<TEvent>(
+export function resolveOnOrdered<TEvent>(
     from: OnEvent<[PromiseLike<TEvent> | TEvent]>,
 ): OnEvent<[TEvent, ...TEvent[]]> {
   return onEventBy(receiver => {
@@ -36,8 +36,8 @@ export function resolveEventsInOrder<TEvent>(
     const sourceSupply = new Supply();
     let numInProcess = 0;
     const source = from.do(
-        letInEvents(supply, sourceSupply),
-        mapEvents(event => {
+        supplyOn(supply, sourceSupply),
+        mapOn(event => {
           ++numInProcess;
           return event;
         }),
@@ -52,7 +52,7 @@ export function resolveEventsInOrder<TEvent>(
       }
     });
 
-    resolveEvents(source)({
+    resolveOn(source)({
       supply,
       receive(_ctx, event, index) {
 

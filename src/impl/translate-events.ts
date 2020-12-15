@@ -4,7 +4,7 @@ import { OnEvent } from '../on-event';
 /**
  * @internal
  */
-export function eventTranslate<TInEvent extends any[], TOutEvent extends any[]>(
+export function translateEvents<TInEvent extends any[], TOutEvent extends any[]>(
     supplier: OnEvent<TInEvent>,
     translate: (this: void, send: (...event: TOutEvent) => void, ...event: TInEvent) => void,
 ): (receiver: EventReceiver.Generic<TOutEvent>) => void {

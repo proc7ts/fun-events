@@ -3,7 +3,7 @@
  * @module @proc7ts/fun-events
  */
 import { OnEvent } from '../on-event';
-import { shareEvents } from './share-events';
+import { shareOn } from './share-on';
 import { translateOn_ } from './translate-on';
 
 /**
@@ -19,13 +19,13 @@ import { translateOn_ } from './translate-on';
  *
  * @returns New event processor.
  */
-export function valueEvents<TEvent extends any[], TValue>(
+export function valueOn<TEvent extends any[], TValue>(
     valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
 ): (this: void, input: OnEvent<TEvent>) => OnEvent<[TValue]> {
 
-  const mapper = valueEvents_(valueOf);
+  const mapper = valueOn_(valueOf);
 
-  return input => shareEvents(mapper(input));
+  return input => shareOn(mapper(input));
 }
 
 /**
@@ -39,7 +39,7 @@ export function valueEvents<TEvent extends any[], TValue>(
  *
  * @returns New event processor.
  */
-export function valueEvents_<TEvent extends any[], TValue>(// eslint-disable-line @typescript-eslint/naming-convention
+export function valueOn_<TEvent extends any[], TValue>(// eslint-disable-line @typescript-eslint/naming-convention
     valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
 ): (this: void, input: OnEvent<TEvent>) => OnEvent<[TValue]> {
   return translateOn_((send, ...event) => {

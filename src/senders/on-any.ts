@@ -4,7 +4,7 @@
  */
 import { Supply } from '@proc7ts/primitives';
 import { EventReceiver, EventSupplier } from '../base';
-import { eventShare } from '../impl';
+import { shareEvents } from '../impl';
 import { OnEvent, onEventBy } from '../on-event';
 import { onNever } from './on-never';
 import { onSupplied } from './on-supplied';
@@ -25,7 +25,7 @@ export function onAny<TEvent extends any[]>(...suppliers: EventSupplier<TEvent>[
     return onNever as OnEvent<TEvent>;
   }
 
-  return onEventBy(eventShare(onEventBy<TEvent>(receiver => {
+  return onEventBy(shareEvents(onEventBy<TEvent>(receiver => {
 
     const { supply } = receiver;
     let remained = suppliers.length;
