@@ -34,19 +34,6 @@ export interface AfterEvent<TEvent extends any[]> extends OnEvent<TEvent>, Event
 
   [AfterEvent__symbol](): this;
 
-  /**
-   * Converts a plain event receiver registration function to {@link AfterEvent} keeper.
-   *
-   * @typeParam TNewEvent - An event type. This is a list of event receiver parameter types.
-   * @param register - Generic event receiver registration function. It will be called on each receiver registration,
-   * unless the receiver's {@link EventReceiver.Generic.supply event supply} is cut off already.
-   *
-   * @returns An {@link AfterEvent} keeper registering event receivers with the given `register` function.
-   */
-  by<TNewEvent extends any[]>(
-      register: (this: void, receiver: EventReceiver.Generic<TNewEvent>) => void,
-  ): AfterEvent<TNewEvent>;
-
 }
 
 /**
@@ -117,7 +104,6 @@ export function afterEventBy<TEvent extends any[]>(
   }) as AfterEvent<TEvent>;
 
   afterEvent[OnEvent__symbol] = OnEvent$supplier;
-  afterEvent.by = register => afterEventBy(register);
   afterEvent.do = OnEvent$do;
   afterEvent.then = OnEvent$then;
   afterEvent[AfterEvent__symbol] = OnEvent$supplier;

@@ -32,19 +32,6 @@ export interface OnEvent<TEvent extends any[]> extends EventSender<TEvent> {
   [OnEvent__symbol](): this;
 
   /**
-   * Converts a plain event receiver registration function to {@link OnEvent} sender.
-   *
-   * @typeParam TNewEvent - An event type. This is a list of event receiver parameter types.
-   * @param register - Generic event receiver registration function. It will be called on each receiver registration,
-   * unless the receiver's {@link EventReceiver.Generic.supply event supply} is cut off already.
-   *
-   * @returns An {@link OnEvent} sender registering event receivers with the given `register` function.
-   */
-  by<TNewEvent extends any[]>(
-      register: (this: void, receiver: EventReceiver.Generic<TNewEvent>) => void,
-  ): OnEvent<TNewEvent>;
-
-  /**
    * Applies the given processor to events.
    *
    * @typeParam TResult - Action result type.
@@ -345,7 +332,6 @@ export function onEventBy<TEvent extends any[]>(
   }) as OnEvent<TEvent>;
 
   onEvent[OnEvent__symbol] = OnEvent$supplier;
-  onEvent.by = register => onEventBy(register);
   onEvent.do = OnEvent$do;
   onEvent.then = OnEvent$then;
 
