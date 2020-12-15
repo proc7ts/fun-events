@@ -15,4 +15,5 @@ export * from './supply-after';
 export * from './supply-on';
 export * from './translate-after';
 export * from './translate-on';
-export * from './value-events';
+export * from './value-after';
+export * from './value-on';
