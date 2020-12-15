@@ -6,7 +6,7 @@ import { AfterEvent, afterEventBy } from '../after-event';
 import { EventKeeper } from '../base';
 import { eventDig } from '../impl';
 import { afterSupplied } from '../keepers';
-import { shareEvents } from './share-events';
+import { shareAfter } from './share-after';
 
 /**
  * Creates an event processor that extracts event keepers from events incoming from `{@link AfterEvent} keeper.
@@ -29,7 +29,7 @@ export function digAfter<
 
   const processor = digAfter_(extract);
 
-  return input => shareEvents(processor(input));
+  return input => shareAfter(processor(input));
 }
 
 /**

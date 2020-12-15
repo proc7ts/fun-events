@@ -3,7 +3,7 @@
  * @module @proc7ts/fun-events
  */
 import { OnEvent } from '../on-event';
-import { shareEvents } from './share-events';
+import { shareOn } from './share-on';
 import { translateOn_ } from './translate-on';
 
 /**
@@ -25,7 +25,7 @@ export function valueEvents<TEvent extends any[], TValue>(
 
   const mapper = valueEvents_(valueOf);
 
-  return input => shareEvents(mapper(input));
+  return input => shareOn(mapper(input));
 }
 
 /**

@@ -2,9 +2,9 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { eventTranslate } from '../impl/event-translate';
+import { translateEvents } from '../impl';
 import { OnEvent, onEventBy } from '../on-event';
-import { shareEvents } from './share-events';
+import { shareOn } from './share-on';
 
 /**
  * Creates an event processor that translates events incoming from `OnEvent` sender.
@@ -28,7 +28,7 @@ export function translateOn<
 
   const mapper = translateOn_(translate);
 
-  return input => shareEvents(mapper(input));
+  return input => shareOn(mapper(input));
 }
 
 /**
@@ -51,5 +51,5 @@ export function translateOn_<// eslint-disable-line @typescript-eslint/naming-co
     >(
     translate: (this: void, send: (...event: TOutEvent) => void, ...event: TInEvent) => void,
 ): (this: void, input: OnEvent<TInEvent>) => OnEvent<TOutEvent> {
-  return input => onEventBy(eventTranslate(input, translate));
+  return input => onEventBy(translateEvents(input, translate));
 }

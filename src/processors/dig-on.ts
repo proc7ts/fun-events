@@ -6,7 +6,7 @@ import { EventSupplier } from '../base';
 import { eventDig } from '../impl';
 import { OnEvent, onEventBy } from '../on-event';
 import { onSupplied } from '../senders';
-import { shareEvents } from './share-events';
+import { shareOn } from './share-on';
 
 /**
  * Creates an event processor that extracts event senders from incoming events.
@@ -29,7 +29,7 @@ export function digOn<
 
   const processor = digOn_(extract);
 
-  return input => shareEvents(processor(input));
+  return input => shareOn(processor(input));
 }
 
 /**

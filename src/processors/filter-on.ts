@@ -3,7 +3,7 @@
  * @module @proc7ts/fun-events
  */
 import { OnEvent } from '../on-event';
-import { shareEvents } from './share-events';
+import { shareOn } from './share-on';
 import { translateOn_ } from './translate-on';
 
 /**
@@ -41,7 +41,7 @@ export function filterOn<TEvent extends any[]>(
 
   const map = filterOn_(test);
 
-  return supplier => shareEvents(map(supplier));
+  return supplier => shareOn(map(supplier));
 }
 
 /**

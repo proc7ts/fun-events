@@ -3,8 +3,8 @@
  * @module @proc7ts/fun-events
  */
 import { AfterEvent, afterEventBy } from '../after-event';
-import { eventTranslate } from '../impl/event-translate';
-import { shareEvents } from './share-events';
+import { translateEvents } from '../impl';
+import { shareAfter } from './share-after';
 
 /**
  * Creates an event processor that translates events incoming from {@link AfterEvent} keeper.
@@ -35,7 +35,7 @@ export function translateAfter<
 
   const mapper = translateAfter_(translate, fallback);
 
-  return input => shareEvents(mapper(input));
+  return input => shareAfter(mapper(input));
 }
 
 /**
@@ -65,5 +65,5 @@ export function translateAfter_<// eslint-disable-line @typescript-eslint/naming
     translate: (this: void, send: (...event: TOutEvent) => void, ...event: TInEvent) => void,
     fallback?: (this: void) => TOutEvent,
 ): (this: void, input: AfterEvent<TInEvent>) => AfterEvent<TOutEvent> {
-  return input => afterEventBy(eventTranslate(input, translate), fallback);
+  return input => afterEventBy(translateEvents(input, translate), fallback);
 }
