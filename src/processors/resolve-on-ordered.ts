@@ -5,7 +5,7 @@
 import { Supply } from '@proc7ts/primitives';
 import { sendEventsTo } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
-import { mapEvents } from './map-events';
+import { mapOn } from './map-on';
 import { resolveOn } from './resolve-on';
 import { supplyOn } from './supply-on';
 
@@ -37,7 +37,7 @@ export function resolveOnOrdered<TEvent>(
     let numInProcess = 0;
     const source = from.do(
         supplyOn(supply, sourceSupply),
-        mapEvents(event => {
+        mapOn(event => {
           ++numInProcess;
           return event;
         }),
