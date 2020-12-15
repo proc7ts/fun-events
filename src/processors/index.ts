@@ -7,7 +7,7 @@ export * from './map-events';
 export * from './once-after';
 export * from './once-on';
 export * from './resolve-on';
-export * from './resolve-events-in-order';
+export * from './resolve-on-ordered';
 export * from './share-events';
 export * from './supply-after';
 export * from './supply-on';

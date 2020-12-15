@@ -25,7 +25,7 @@ import { supplyOn } from './supply-on';
  *
  * @returns New `OnEvent` sender of resolved events.
  */
-export function resolveEventsInOrder<TEvent>(
+export function resolveOnOrdered<TEvent>(
     from: OnEvent<[PromiseLike<TEvent> | TEvent]>,
 ): OnEvent<[TEvent, ...TEvent[]]> {
   return onEventBy(receiver => {

@@ -1,9 +1,9 @@
 import { asis, Supply } from '@proc7ts/primitives';
 import { EventEmitter } from '../senders';
-import { resolveEventsInOrder } from './resolve-events-in-order';
+import { resolveOnOrdered } from './resolve-on-ordered';
 import Mock = jest.Mock;
 
-describe('resolveEventsInOrder', () => {
+describe('resolveOnOrdered', () => {
 
   let origin: EventEmitter<[(string | Promise<string>)]>;
   let receiver: Mock<void, string[]>;
@@ -25,7 +25,7 @@ describe('resolveEventsInOrder', () => {
         received.push(Promise.resolve(event));
       }
     });
-    supply = origin.on.do(resolveEventsInOrder)(receiver).whenOff(reason => {
+    supply = origin.on.do(resolveOnOrdered)(receiver).whenOff(reason => {
 
       const resolver = resolvers.shift();
 
