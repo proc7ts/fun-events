@@ -168,34 +168,39 @@ that may transform event suppliers or their events.
 The following event processors implemented:
 
 - [consumeEvents] - Creates an event processor that consumes incoming events.
-- [digAfter] - Creates an event processor that extracts event keepers from events incoming from `AfterEvent` keeper.
-- [digOn] - Creates an event processor that extracts event senders from incoming events.
-- [filterEvents] - Creates an event processor that passes incoming events matching the given condition only.
-- [firstEvent] - A processor of the first incoming event only.
-- [letInEvents] - Creates an event processor that passes incoming events until the required supply is cut off.
-- [mapEvents] - Creates an event processor that converts incoming events with the given converter function.
-- [resolveEvents] - A processor that asynchronously resolves incoming events and sends then in the order of their
+- [digOn]/[digAfter] - Creates an event processor that extracts event suppliers from incoming events.
+- [filterOn] - Creates an event processor that passes incoming events matching the given condition only.
+- [mapOn]/[mapAfter] - Creates an event processor that converts incoming events with the given converter function.
+- [onceOn]/[onceAfter] - A processor of the first incoming event only.
+- [resolveOn] - A processor that asynchronously resolves incoming events and sends then in the order of their
   resolution.
-- [resolveEventsInOrder] - A processor that asynchronously resolves incoming events and sends them in the order they
+- [resolveOnOrdered] - A processor that asynchronously resolves incoming events and sends them in the order they
   are received.
-- [shareEvents] - A processor of incoming events that shares events supply among all registered receivers.
-- [translateAfter] - Creates an event processor that translates events incoming from `AfterEvent` keeper.
-- [translateOn] - Creates an event processor that translates events incoming from `OnEvent` sender.
-- [valueEvents] - Creates an event processor that sends the values of incoming events.
+- [shareOn]/[shareAfter] - A processor of incoming events that shares events supply among all registered receivers.
+- [supplyOn]/[supplyAfter] - Creates an event processor that passes incoming events until the required supply is cut
+  off.
+- [translateOn]/[translateAfter] - Creates an event processor that translates incoming events.
+- [valueOn]/[valueAfter] - Creates an event processor that sends the values of incoming events.
+
+The `...On` processors produce an `OnEvent` senders, while `...After` ones produce an `AfterEvent` keepers.
 
 [consumeEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#consumeEvents
 [digAfter]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#digAfter
 [digOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#digOn
-[filterEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#filterEvents
-[firstEvent]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#firstEvent
-[letInEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#letInEvents
-[mapEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#mapEvents
-[resolveEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#resolveEvents
-[resolveEventsInOrder]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#resolveEventsInOrder
-[shareEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#shareEvents
+[filterOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#filterOn
+[mapAfter]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#mapAfter
+[mapOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#mapOn
+[onceAfter]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#onceAfter
+[onceOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#onceOn
+[resolveOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#resolveOn
+[resolveOnOrdered]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#resolveOnOrdered
+[shareOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#shareOn
+[supplyAfter]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#supplyAfter
+[supplyOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#supplyOn
 [translateAfter]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#translateAfter
 [translateOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#translateOn
-[valueEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#valueEvents
+[valueAfter]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#valueAfter
+[valueOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#valueOn
 
 
 `EventEmitter`
