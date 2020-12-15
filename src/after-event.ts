@@ -49,68 +49,6 @@ export interface AfterEvent<TEvent extends any[]> extends OnEvent<TEvent>, Event
 
 }
 
-export namespace AfterEvent {
-
-  /**
-   * A signature of function registering receivers of events sent by event keeper.
-   *
-   * When called without parameters it returns an {@link AfterEvent} keeper. When called with event receiver as
-   * parameter it returns a supply of events from that keeper.
-   *
-   * Available as {@link AfterEvent.F} property value.
-   *
-   * @typeParam TEvent - An event type. This is a tuple of event receiver parameter types.
-   */
-  export type Fn<TEvent extends any[]> = Method<void, TEvent>;
-
-  /**
-   * A signature of method registering receivers of events sent by event keeper.
-   *
-   * When called without parameters it returns an {@link AfterEvent} keeper. When called with event receiver as
-   * parameter it returns a supply of events from that keeper.
-   *
-   * @typeParam TThis - `this` context type.
-   * @typeParam TEvent - An event type. This is a tuple of event receiver parameter types.
-   */
-  export interface Method<TThis, TEvent extends any[]> {
-
-    /**
-     * Returns the event keeper.
-     *
-     * @returns {@link AfterEvent} keeper the events originated from.
-     */
-    (
-        this: TThis,
-    ): AfterEvent<TEvent>;
-
-    /**
-     * Registers a receiver of events sent by the keeper.
-     *
-     * @param receiver - A receiver of events to register.
-     *
-     * @returns A supply of events from the keeper to the given `receiver`.
-     */
-    (
-        this: TThis,
-        receiver: EventReceiver<TEvent>,
-    ): Supply;
-
-    /**
-     * Either registers a receiver of events sent by the keeper, or returns the keeper itself.
-     *
-     * @param receiver - A receiver of events to register.
-     *
-     * @returns Either a supply of events from the keeper to the given `receiver`, or {@link AfterEvent} keeper
-     * the events originated from when `receiver` is omitted.
-     */
-    (
-        this: TThis,
-        receiver?: EventReceiver<TEvent>,
-    ): Supply | AfterEvent<TEvent>;
-  }
-
-}
-
 /**
  * Converts a plain event receiver registration function to {@link AfterEvent} keeper with a fallback.
  *
