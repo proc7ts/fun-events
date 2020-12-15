@@ -5,7 +5,7 @@
 import { noop, Supply } from '@proc7ts/primitives';
 import { AfterEvent, afterEventBy } from '../after-event';
 import { AfterEvent__symbol, EventKeeper, EventReceiver, sendEventsTo } from '../base';
-import { eventFirst, eventShare } from '../impl';
+import { eventShare, onceEvent } from '../impl';
 
 /**
  * Builds an {@link AfterEvent} keeper of events sent by all event keepers in `sources` map.
@@ -49,7 +49,7 @@ export function afterAll<TSrcMap extends { readonly [key: string]: EventKeeper<a
     const result = {} as { [K in keyof TSrcMap]: EventKeeper.Event<TSrcMap[K]> };
 
     keys.forEach(
-        <K extends keyof TSrcMap>(key: K) => eventFirst(sources[key][AfterEvent__symbol]())({
+        <K extends keyof TSrcMap>(key: K) => onceEvent(sources[key][AfterEvent__symbol]())({
           supply: new Supply(),
           receive: (_ctx, ...event: EventKeeper.Event<TSrcMap[K]>) => result[key as keyof TSrcMap] = event,
         }),
