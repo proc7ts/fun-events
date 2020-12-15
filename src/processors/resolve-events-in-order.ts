@@ -6,7 +6,7 @@ import { Supply } from '@proc7ts/primitives';
 import { sendEventsTo } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
 import { mapEvents } from './map-events';
-import { resolveEvents } from './resolve-events';
+import { resolveOn } from './resolve-on';
 import { supplyOn } from './supply-on';
 
 /**
@@ -52,7 +52,7 @@ export function resolveEventsInOrder<TEvent>(
       }
     });
 
-    resolveEvents(source)({
+    resolveOn(source)({
       supply,
       receive(_ctx, event, index) {
 

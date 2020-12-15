@@ -20,7 +20,7 @@ import { OnEvent, onEventBy } from '../on-event';
  *
  * @returns New `OnEvent` sender of resolved events and their indices in original order starting from `1`.
  */
-export function resolveEvents<T>(from: OnEvent<[PromiseLike<T> | T]>): OnEvent<[T, number]> {
+export function resolveOn<T>(from: OnEvent<[PromiseLike<T> | T]>): OnEvent<[T, number]> {
   return onEventBy(receiver => {
 
     const { supply } = receiver;

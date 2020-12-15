@@ -6,7 +6,7 @@ export * from './filter-on';
 export * from './map-events';
 export * from './once-after';
 export * from './once-on';
-export * from './resolve-events';
+export * from './resolve-on';
 export * from './resolve-events-in-order';
 export * from './share-events';
 export * from './supply-after';

@@ -1,9 +1,9 @@
 import { asis, Supply } from '@proc7ts/primitives';
 import { EventEmitter } from '../senders';
-import { resolveEvents } from './resolve-events';
+import { resolveOn } from './resolve-on';
 import Mock = jest.Mock;
 
-describe('resolveEvents', () => {
+describe('resolveOn', () => {
 
   let origin: EventEmitter<[(string | Promise<string>)]>;
   let receiver: Mock<void, [string, number]>;
@@ -25,7 +25,7 @@ describe('resolveEvents', () => {
         received.push(Promise.resolve(event));
       }
     });
-    supply = origin.on.do(resolveEvents)(receiver).whenOff(reason => {
+    supply = origin.on.do(resolveOn)(receiver).whenOff(reason => {
 
       const resolver = resolvers.shift();
 
