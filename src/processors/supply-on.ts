@@ -3,7 +3,7 @@
  * @module @proc7ts/fun-events
  */
 import { Supply, SupplyPeer } from '@proc7ts/primitives';
-import { eventLetIn } from '../impl';
+import { supplyEvents } from '../impl';
 import { OnEvent, onEventBy } from '../on-event';
 
 /**
@@ -24,5 +24,5 @@ export function supplyOn<TEvent extends any[]>(
     required: SupplyPeer,
     dependentSupply?: Supply,
 ): (this: void, input: OnEvent<TEvent>) => OnEvent<TEvent> {
-  return (input: OnEvent<TEvent>) => onEventBy(eventLetIn(input, required, dependentSupply));
+  return (input: OnEvent<TEvent>) => onEventBy(supplyEvents(input, required, dependentSupply));
 }

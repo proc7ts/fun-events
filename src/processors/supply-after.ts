@@ -4,7 +4,7 @@
  */
 import { Supply, SupplyPeer } from '@proc7ts/primitives';
 import { AfterEvent, afterEventBy } from '../after-event';
-import { eventLetIn } from '../impl';
+import { supplyEvents } from '../impl';
 
 /**
  * Creates an event processor that passes events incoming from {@link AfterEvent} keeper until the `required` supply
@@ -24,5 +24,5 @@ export function supplyAfter<TEvent extends any[]>(
     required: SupplyPeer,
     dependentSupply?: Supply,
 ): (this: void, input: AfterEvent<TEvent>) => AfterEvent<TEvent> {
-  return (input: AfterEvent<TEvent>) => afterEventBy(eventLetIn(input, required, dependentSupply));
+  return (input: AfterEvent<TEvent>) => afterEventBy(supplyEvents(input, required, dependentSupply));
 }
