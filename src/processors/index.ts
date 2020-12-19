@@ -1,7 +1,6 @@
 export * from './consume-events';
 export * from './dig-after';
 export * from './dig-on';
-export * from './event-mapper';
 export * from './filter-on';
 export * from './map-after';
 export * from './map-on';
