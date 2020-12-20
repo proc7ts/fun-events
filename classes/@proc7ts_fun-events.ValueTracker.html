@@ -81,7 +81,7 @@
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
-						<h4>T = <span class="tsd-signature-type">any</span></h4>
+						<h4>T</h4>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
 								<p>Tracked value type.</p>
@@ -108,7 +108,7 @@
 				<ul class="tsd-hierarchy">
 					<li><a href="../modules/@proc7ts_fun-events.EventSender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					<li><a href="../modules/@proc7ts_fun-events.EventKeeper.html" class="tsd-signature-type">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
-					<li><a href="../interfaces/@proc7ts_fun-events.EventSupplyPeer.html" class="tsd-signature-type">EventSupplyPeer</a></li>
+					<li><span class="tsd-signature-type">SupplyPeer</span></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -118,9 +118,11 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="@proc7ts_fun-events.ValueTracker.html#_EventSupply__symbol_" class="tsd-kind-icon">[<wbr>Event<wbr>Supply__symbol]</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="@proc7ts_fun-events.ValueTracker.html#_by" class="tsd-kind-icon">_by</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="@proc7ts_fun-events.ValueTracker.html#it" class="tsd-kind-icon">it</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="@proc7ts_fun-events.ValueTracker.html#on" class="tsd-kind-icon">on</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="@proc7ts_fun-events.ValueTracker.html#read" class="tsd-kind-icon">read</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="@proc7ts_fun-events.ValueTracker.html#supply" class="tsd-kind-icon">supply</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -130,9 +132,6 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="@proc7ts_fun-events.ValueTracker.html#_OnEvent__symbol_" class="tsd-kind-icon">[<wbr>OnEvent__symbol]</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="@proc7ts_fun-events.ValueTracker.html#by" class="tsd-kind-icon">by</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="@proc7ts_fun-events.ValueTracker.html#byNone" class="tsd-kind-icon">by<wbr>None</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="@proc7ts_fun-events.ValueTracker.html#done" class="tsd-kind-icon">done</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="@proc7ts_fun-events.ValueTracker.html#on" class="tsd-kind-icon">on</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="@proc7ts_fun-events.ValueTracker.html#read" class="tsd-kind-icon">read</a></li>
 							</ul>
 						</section>
 					</div>
@@ -140,29 +139,13 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="_EventSupply__symbol_" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> <span class="tsd-flag ts-flagAbstract">Abstract</span> [<wbr>Event<wbr>Supply__symbol]</h3>
-					<div class="tsd-signature tsd-kind-icon">[<wbr>Event<wbr>Supply__symbol]<span class="tsd-signature-symbol">:</span> <a href="@proc7ts_fun-events.EventSupply.html" class="tsd-signature-type">EventSupply</a></div>
-					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/@proc7ts_fun-events.EventSupplyPeer.html">EventSupplyPeer</a>.<a href="../interfaces/@proc7ts_fun-events.EventSupplyPeer.html#_EventSupply__symbol_">[EventSupply__symbol]</a></p>
-						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/82296a9/src/value/value-tracker.ts#L97">fun-events/src/value/value-tracker.ts:97</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>An event supply of this value tracker.</p>
-						</div>
-					</div>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="_by" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _by</h3>
-					<div class="tsd-signature tsd-kind-icon">_by<span class="tsd-signature-symbol">:</span> <a href="@proc7ts_fun-events.EventSupply.html" class="tsd-signature-type">EventSupply</a><span class="tsd-signature-symbol"> = noEventSupply()</span></div>
+					<div class="tsd-signature tsd-kind-icon">_by<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Supply</span><span class="tsd-signature-symbol"> = neverSupply()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/82296a9/src/value/value-tracker.ts#L39">fun-events/src/value/value-tracker.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/9404ccf/src/value/value-tracker.ts#L36">fun-events/src/value/value-tracker.ts:36</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -178,12 +161,69 @@
 					<div class="tsd-signature tsd-kind-icon">it<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/82296a9/src/value/value-tracker.ts#L102">fun-events/src/value/value-tracker.ts:102</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/9404ccf/src/value/value-tracker.ts#L75">fun-events/src/value/value-tracker.ts:75</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>The tracked value.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="on" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> <span class="tsd-flag ts-flagAbstract">Abstract</span> on</h3>
+					<div class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">:</span> <a href="../interfaces/@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/9404ccf/src/value/value-tracker.ts#L45">fun-events/src/value/value-tracker.ts:45</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p><a href="../interfaces/@proc7ts_fun-events.OnEvent.html">OnEvent</a> sender of value changes.</p>
+						</div>
+						<p>The <code>[OnEvent__symbol]</code> property is an alias of this one.</p>
+						<dl class="tsd-comment-tags">
+							<dt>returns</dt>
+							<dd><p>Value changes sender.</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="read" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> read</h3>
+					<div class="tsd-signature tsd-kind-icon">read<span class="tsd-signature-symbol">:</span> <a href="../interfaces/@proc7ts_fun-events.AfterEvent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = afterEventBy(receiver &#x3D;&gt; this.on(receiveNewValue(receiver)),() &#x3D;&gt; [this.it],)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/9404ccf/src/value/value-tracker.ts#L54">fun-events/src/value/value-tracker.ts:54</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p><a href="../interfaces/@proc7ts_fun-events.AfterEvent.html">AfterEvent</a> keeper of current value.</p>
+						</div>
+						<p>The <code>[AfterEvent__symbol]</code> property is an alias of this one.</p>
+						<dl class="tsd-comment-tags">
+							<dt>returns</dt>
+							<dd><p>Current value keeper.</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="supply" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> <span class="tsd-flag ts-flagAbstract">Abstract</span> supply</h3>
+					<div class="tsd-signature tsd-kind-icon">supply<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Supply</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/9404ccf/src/value/value-tracker.ts#L70">fun-events/src/value/value-tracker.ts:70</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An event supply of this value tracker.</p>
 						</div>
 					</div>
 				</section>
@@ -194,16 +234,16 @@
 					<a name="_AfterEvent__symbol_" class="tsd-anchor"></a>
 					<h3>[<wbr>After<wbr>Event__symbol]</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">[<wbr>After<wbr>Event__symbol]<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.AfterEvent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">[<wbr>After<wbr>Event__symbol]<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/@proc7ts_fun-events.AfterEvent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/82296a9/src/value/value-tracker.ts#L90">fun-events/src/value/value-tracker.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/9404ccf/src/value/value-tracker.ts#L63">fun-events/src/value/value-tracker.ts:63</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="@proc7ts_fun-events.AfterEvent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/@proc7ts_fun-events.AfterEvent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -211,16 +251,16 @@
 					<a name="_OnEvent__symbol_" class="tsd-anchor"></a>
 					<h3>[<wbr>OnEvent__symbol]</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">[<wbr>OnEvent__symbol]<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">[<wbr>OnEvent__symbol]<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/82296a9/src/value/value-tracker.ts#L86">fun-events/src/value/value-tracker.ts:86</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/9404ccf/src/value/value-tracker.ts#L59">fun-events/src/value/value-tracker.ts:59</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -229,13 +269,13 @@
 					<h3>by</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
 						<li class="tsd-signature tsd-kind-icon">by<span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="../modules/@proc7ts_fun-events.html#EventSupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
-						<li class="tsd-signature tsd-kind-icon">by&lt;S&gt;<span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="../modules/@proc7ts_fun-events.html#EventSupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span>, extract<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="../modules/@proc7ts_fun-events.html#EventSupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">by&lt;TSrcEvent&gt;<span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="../modules/@proc7ts_fun-events.html#EventSupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSrcEvent</span><span class="tsd-signature-symbol">&gt;</span>, extract<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSrcEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="../modules/@proc7ts_fun-events.html#EventSupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/82296a9/src/value/value-tracker.ts#L117">fun-events/src/value/value-tracker.ts:117</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/9404ccf/src/value/value-tracker.ts#L90">fun-events/src/value/value-tracker.ts:90</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -261,7 +301,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/82296a9/src/value/value-tracker.ts#L135">fun-events/src/value/value-tracker.ts:135</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/9404ccf/src/value/value-tracker.ts#L108">fun-events/src/value/value-tracker.ts:108</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -275,22 +315,22 @@
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>S<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
+									<h4>TSrcEvent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
 									<div class="tsd-comment tsd-typography">
-										<p>Source value type.</p>
+										<p>Source event type.</p>
 									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>supplier: <a href="../modules/@proc7ts_fun-events.html#EventSupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>supplier: <a href="../modules/@proc7ts_fun-events.html#EventSupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TSrcEvent</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>The event supplier to extract value suppliers from.</p>
 									</div>
 								</li>
 								<li>
-									<h5>extract: <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="../modules/@proc7ts_fun-events.html#EventSupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
+									<h5>extract: <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSrcEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="../modules/@proc7ts_fun-events.html#EventSupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>A function extracting value supplier from event received from <code>supplier</code>.
 										May return <code>undefined</code> to suspend receiving values.</p>
@@ -298,7 +338,7 @@
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">S</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/@proc7ts_fun-events.html#EventSupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TSrcEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/@proc7ts_fun-events.html#EventSupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
@@ -308,7 +348,7 @@
 															<h5>this: <span class="tsd-signature-type">void</span></h5>
 														</li>
 														<li>
-															<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>event: <span class="tsd-signature-type">S</span></h5>
+															<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>event: <span class="tsd-signature-type">TSrcEvent</span></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <a href="../modules/@proc7ts_fun-events.html#EventSupplier" class="tsd-signature-type">EventSupplier</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h4>
@@ -333,7 +373,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/82296a9/src/value/value-tracker.ts#L188">fun-events/src/value/value-tracker.ts:188</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/9404ccf/src/value/value-tracker.ts#L161">fun-events/src/value/value-tracker.ts:161</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -356,136 +396,6 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="done" class="tsd-anchor"></a>
-					<h3>done</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">done<span class="tsd-signature-symbol">(</span>reason<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/82296a9/src/value/value-tracker.ts#L202">fun-events/src/value/value-tracker.ts:202</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Removes all registered event receivers and cuts off corresponding event supplies.</p>
-								</div>
-								<p>After this method call they won&#39;t receive events.</p>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> reason: <span class="tsd-signature-type">any</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>A reason to stop sending events.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-							<p><code>this</code> instance.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="on" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagAbstract">Abstract</span> on</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
-						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="../modules/@proc7ts_fun-events.EventReceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.EventSupply.html" class="tsd-signature-type">EventSupply</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/82296a9/src/value/value-tracker.ts#L48">fun-events/src/value/value-tracker.ts:48</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Returns <a href="@proc7ts_fun-events.OnEvent.html">OnEvent</a> sender of value changes.</p>
-								</div>
-								<p>The <code>[OnEvent__symbol]</code> property is an alias of this one.</p>
-							</div>
-							<h4 class="tsd-returns-title">Returns <a href="@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Value changes sender.</p>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/82296a9/src/value/value-tracker.ts#L59">fun-events/src/value/value-tracker.ts:59</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Registers a receiver of value changes.</p>
-								</div>
-								<p>The new value is sent as first argument, and the old value as a second one.</p>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>receiver: <a href="../modules/@proc7ts_fun-events.EventReceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>A receiver to register.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="@proc7ts_fun-events.EventSupply.html" class="tsd-signature-type">EventSupply</a></h4>
-							<p>A supply of value changes.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="read" class="tsd-anchor"></a>
-					<h3>read</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">read<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.AfterEvent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></li>
-						<li class="tsd-signature tsd-kind-icon">read<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="../modules/@proc7ts_fun-events.EventReceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.EventSupply.html" class="tsd-signature-type">EventSupply</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/82296a9/src/value/value-tracker.ts#L68">fun-events/src/value/value-tracker.ts:68</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Builds an <a href="@proc7ts_fun-events.AfterEvent.html">AfterEvent</a> keeper of current value.</p>
-								</div>
-								<p>The <code>[AfterEvent__symbol]</code> property is an alias of this one.</p>
-							</div>
-							<h4 class="tsd-returns-title">Returns <a href="@proc7ts_fun-events.AfterEvent.html" class="tsd-signature-type">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Current value keeper.</p>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/82296a9/src/value/value-tracker.ts#L77">fun-events/src/value/value-tracker.ts:77</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Registers a receiver of current values.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>receiver: <a href="../modules/@proc7ts_fun-events.EventReceiver.html" class="tsd-signature-type">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>A receiver to register.</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="@proc7ts_fun-events.EventSupply.html" class="tsd-signature-type">EventSupply</a></h4>
-							<p>A supply of current value.</p>
-						</li>
-					</ul>
-				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -498,7 +408,7 @@
 						<a href="../modules/@proc7ts_fun-events.html">@proc7ts/fun-<wbr>events</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/@proc7ts_fun-events_dom.html">@proc7ts/fun-<wbr>events/dom</a>
+						<a href="../modules/@proc7ts_fun-events_call-thru.html">@proc7ts/fun-<wbr>events/call-<wbr>thru</a>
 					</li>
 				</ul>
 			</nav>
@@ -509,14 +419,20 @@
 					<li class="current tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="@proc7ts_fun-events.ValueTracker.html" class="tsd-kind-icon">Value<wbr>Tracker</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="@proc7ts_fun-events.ValueTracker.html#_EventSupply__symbol_" class="tsd-kind-icon">[<wbr>Event<wbr>Supply__symbol]</a>
-							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="@proc7ts_fun-events.ValueTracker.html#_by" class="tsd-kind-icon">_by</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="@proc7ts_fun-events.ValueTracker.html#it" class="tsd-kind-icon">it</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="@proc7ts_fun-events.ValueTracker.html#on" class="tsd-kind-icon">on</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="@proc7ts_fun-events.ValueTracker.html#read" class="tsd-kind-icon">read</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="@proc7ts_fun-events.ValueTracker.html#supply" class="tsd-kind-icon">supply</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="@proc7ts_fun-events.ValueTracker.html#_AfterEvent__symbol_" class="tsd-kind-icon">[<wbr>After<wbr>Event__symbol]</a>
@@ -529,15 +445,6 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="@proc7ts_fun-events.ValueTracker.html#byNone" class="tsd-kind-icon">by<wbr>None</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="@proc7ts_fun-events.ValueTracker.html#done" class="tsd-kind-icon">done</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="@proc7ts_fun-events.ValueTracker.html#on" class="tsd-kind-icon">on</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="@proc7ts_fun-events.ValueTracker.html#read" class="tsd-kind-icon">read</a>
 							</li>
 						</ul>
 					</li>
@@ -555,7 +462,6 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
@@ -567,6 +473,7 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>

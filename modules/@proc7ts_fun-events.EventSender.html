@@ -60,7 +60,7 @@
 					<a href="@proc7ts_fun-events.EventSender.html">EventSender</a>
 				</li>
 			</ul>
-			<h1>Namespace EventSender&lt;E&gt;</h1>
+			<h1>Namespace EventSender&lt;TEvent&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -72,14 +72,14 @@
 					<div class="lead">
 						<p>A sender of events.</p>
 					</div>
-					<p>Contains an <a href="../classes/@proc7ts_fun-events.OnEvent.html">OnEvent</a> instance registering event receivers.</p>
+					<p>Contains an <a href="../interfaces/@proc7ts_fun-events.OnEvent.html">OnEvent</a> instance registering event receivers.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
-						<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
+						<h4>TEvent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
 								<p>An event type. This is a tuple of event receiver parameter types.</p>
@@ -93,16 +93,18 @@
 				<ul class="tsd-hierarchy">
 					<li>
 						<span class="target">EventSender</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<a href="../interfaces/@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</section>
 			<section class="tsd-panel">
 				<h3>Implemented by</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../classes/@proc7ts_fun-events.AfterEvent.html" class="tsd-signature-type">AfterEvent</a></li>
 					<li><a href="../classes/@proc7ts_fun-events.EventEmitter.html" class="tsd-signature-type">EventEmitter</a></li>
-					<li><a href="../classes/@proc7ts_fun-events_dom.OnDomEvent.html" class="tsd-signature-type">OnDomEvent</a></li>
-					<li><a href="../classes/@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a></li>
 					<li><a href="../classes/@proc7ts_fun-events.StateTracker.html" class="tsd-signature-type">StateTracker</a></li>
 					<li><a href="../classes/@proc7ts_fun-events.ValueSync.html" class="tsd-signature-type">ValueSync</a></li>
 					<li><a href="../classes/@proc7ts_fun-events.ValueTracker.html" class="tsd-signature-type">ValueTracker</a></li>
@@ -132,10 +134,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
 					<a name="Event" class="tsd-anchor"></a>
 					<h3>Event</h3>
-					<div class="tsd-signature tsd-kind-icon">Event&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">EventSender</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">infer </span> E<span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">never</span></div>
+					<div class="tsd-signature tsd-kind-icon">Event&lt;TSender&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TSender</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">EventSender</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">infer </span> TEvent<span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">never</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/82296a9/src/base/event-sender.ts#L40">fun-events/src/base/event-sender.ts:40</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/9404ccf/src/base/event-sender.ts#L40">fun-events/src/base/event-sender.ts:40</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -146,7 +148,7 @@
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
 					<ul class="tsd-type-parameters">
 						<li>
-							<h4>T<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.EventSender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4>TSender<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.EventSender.html" class="tsd-signature-type">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Target event sender.</p>
@@ -162,22 +164,22 @@
 					<a name="_OnEvent__symbol_" class="tsd-anchor"></a>
 					<h3>[<wbr>OnEvent__symbol]</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-namespace">
-						<li class="tsd-signature tsd-kind-icon">[<wbr>OnEvent__symbol]<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">[<wbr>OnEvent__symbol]<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/82296a9/src/base/event-sender.ts#L29">fun-events/src/base/event-sender.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/9404ccf/src/base/event-sender.ts#L29">fun-events/src/base/event-sender.ts:29</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Returns an <a href="../classes/@proc7ts_fun-events.OnEvent.html">OnEvent</a> instance of this event sender.</p>
+									<p>Returns an <a href="../interfaces/@proc7ts_fun-events.OnEvent.html">OnEvent</a> instance of this event sender.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <a href="../classes/@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p><a href="../classes/@proc7ts_fun-events.OnEvent.html">OnEvent</a> instance registering event receivers sent by this sender.</p>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/@proc7ts_fun-events.OnEvent.html" class="tsd-signature-type">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p><a href="../interfaces/@proc7ts_fun-events.OnEvent.html">OnEvent</a> instance registering event receivers sent by this sender.</p>
 						</li>
 					</ul>
 				</section>
@@ -211,16 +213,16 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 			</ul>
 		</div>
 	</div>

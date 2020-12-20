@@ -63,7 +63,7 @@
 					<a href="@proc7ts_fun-events.EventReceiver.Object.html">Object</a>
 				</li>
 			</ul>
-			<h1>Interface Object&lt;E&gt;</h1>
+			<h1>Interface Object&lt;TEvent&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -81,7 +81,7 @@
 				<h3>Type parameters</h3>
 				<ul class="tsd-type-parameters">
 					<li>
-						<h4>E<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
+						<h4>TEvent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
 								<p>An event type. This is a tuple of event receiver parameter types.</p>
@@ -130,17 +130,17 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="supply" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> supply</h3>
-					<div class="tsd-signature tsd-kind-icon">supply<span class="tsd-signature-symbol">:</span> <a href="../classes/@proc7ts_fun-events.EventSupply.html" class="tsd-signature-type">EventSupply</a></div>
+					<div class="tsd-signature tsd-kind-icon">supply<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Supply</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/surol/fun-events/blob/82296a9/src/base/event-receiver.ts#L57">fun-events/src/base/event-receiver.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/9404ccf/src/base/event-receiver.ts#L56">fun-events/src/base/event-receiver.ts:56</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Event supply to this receiver.</p>
 						</div>
-						<p>Events will be supplied to this receiver until this supply is <a href="../classes/@proc7ts_fun-events.EventSupply.html#off">cut off</a>.</p>
+						<p>Events will be supplied to this receiver until this supply is {@link Supply.off cut off}.</p>
 						<p>When omitted a new supply will be created per receiver registration within event supplier.</p>
 					</div>
 				</section>
@@ -151,13 +151,13 @@
 					<a name="receive" class="tsd-anchor"></a>
 					<h3>receive</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">receive<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.EventReceiver.Context.html" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">receive<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="@proc7ts_fun-events.EventReceiver.Context.html" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/surol/fun-events/blob/82296a9/src/base/event-receiver.ts#L65">fun-events/src/base/event-receiver.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/9404ccf/src/base/event-receiver.ts#L64">fun-events/src/base/event-receiver.ts:64</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -168,13 +168,13 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>context: <a href="@proc7ts_fun-events.EventReceiver.Context.html" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">E</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>context: <a href="@proc7ts_fun-events.EventReceiver.Context.html" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>An event processing context.</p>
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>event: <span class="tsd-signature-type">E</span></h5>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>event: <span class="tsd-signature-type">TEvent</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>An event represented as the rest of arguments.</p>
 									</div>
@@ -232,12 +232,12 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
 				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
