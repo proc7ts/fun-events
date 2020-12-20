@@ -246,7 +246,7 @@ export class StateTracker implements EventSender<[StatePath.Normalized, any, any
    *
    * After this method call the updates receivers of this partial state and all nested states won't receive any updates.
    *
-   * @param reason  An optional reason to stop tracking.
+   * @param reason - An optional reason to stop tracking.
    */
   done(reason?: unknown): void {
     this._tracker.done(reason);

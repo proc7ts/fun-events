@@ -46,18 +46,18 @@ export function thru<TEvent extends any[]>(
 
           const entry: ChainEntry = {
             chain: {
-              call<A extends any[]>(fn: (...args: A) => any, args: A): void {
+              call<TArgs extends any[]>(fn: (...args: TArgs) => any, args: TArgs): void {
                 handleResult(fn(...args), args);
               },
-              pass<A>(fn: (arg: A) => any, arg: A): void {
+              pass<TArgs>(fn: (arg: TArgs) => any, arg: TArgs): void {
                 handleResult(fn(arg), [arg]);
               },
               skip(): void {
                 entry.supply.off();
               },
-              onEvent<E extends any[]>(
-                  pass: (this: void, ...event: E) => void,
-                  sender: EventSender<E>,
+              onEvent<TEvent extends any[]>(
+                  pass: (this: void, ...event: TEvent) => void,
+                  sender: EventSender<TEvent>,
               ): void {
 
                 const supply = new Supply().needs(entry.supply);

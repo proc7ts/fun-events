@@ -32,8 +32,8 @@ export function afterAll<TSrcMap extends { readonly [key: string]: EventKeeper<a
     let send: () => void = noop;
     const result = {} as { [K in keyof TSrcMap]: EventKeeper.Event<TSrcMap[K]> };
 
-    keys.forEach(<K extends keyof TSrcMap>(key: K) => {
-      supply.needs(sources[key][AfterEvent__symbol]()((...event: EventKeeper.Event<TSrcMap[K]>) => {
+    keys.forEach(<TSrcKey extends keyof TSrcMap>(key: TSrcKey) => {
+      supply.needs(sources[key][AfterEvent__symbol]()((...event: EventKeeper.Event<TSrcMap[TSrcKey]>) => {
         result[key] = event;
         send();
       }).needs(supply));
@@ -49,9 +49,9 @@ export function afterAll<TSrcMap extends { readonly [key: string]: EventKeeper<a
     const result = {} as { [K in keyof TSrcMap]: EventKeeper.Event<TSrcMap[K]> };
 
     keys.forEach(
-        <K extends keyof TSrcMap>(key: K) => onceEvent(sources[key][AfterEvent__symbol]())({
+        <TSrcKey extends keyof TSrcMap>(key: TSrcKey) => onceEvent(sources[key][AfterEvent__symbol]())({
           supply: new Supply(),
-          receive: (_ctx, ...event: EventKeeper.Event<TSrcMap[K]>) => result[key as keyof TSrcMap] = event,
+          receive: (_ctx, ...event: EventKeeper.Event<TSrcMap[TSrcKey]>) => result[key as keyof TSrcMap] = event,
         }),
     );
 
