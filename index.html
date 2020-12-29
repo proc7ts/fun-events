@@ -7,6 +7,7 @@
 	<meta name="description" content="Documentation for Functional Event Processor">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
@@ -49,11 +50,6 @@
 	</div>
 	<div class="tsd-page-title">
 		<div class="container">
-			<ul class="tsd-breadcrumb">
-				<li>
-					<a href="globals.html">Globals</a>
-				</li>
-			</ul>
 			<h1>Functional Event Processor</h1>
 		</div>
 	</div>
@@ -71,52 +67,54 @@
 					<a href="https://github.com/proc7ts/fun-events"><img src="https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational" alt="GitHub Project"></a>
 				<a href="https://proc7ts.github.io/fun-events/"><img src="https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational" alt="API Documentation"></a></p>
 				<p>A simple protocol for sending events to receivers registered in senders:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { OnEvent } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/fun-events&#x27;</span>;
-<span class="hljs-keyword">import</span> { Supply } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/primitives&#x27;</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">OnEvent</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/fun-events&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Supply</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/primitives&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// API supports arbitrary event receiver signatures.</span>
-<span class="hljs-comment">// An event is a receiver&#x27;s parameters.</span>
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">eventReceiver</span>(<span class="hljs-params"><span class="hljs-keyword">type</span>: <span class="hljs-built_in">string</span>, event: Event</span>) </span>{ 
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;Event of type &#x27;</span>, <span class="hljs-keyword">type</span>, event);
-}
+<span style="color: #008000">// API supports arbitrary event receiver signatures.</span>
+<span style="color: #008000">// An event is a receiver&#039;s parameters.</span>
+<span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">eventReceiver</span><span style="color: #000000">(</span><span style="color: #001080">type</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">: </span><span style="color: #267F99">Event</span><span style="color: #000000">) { </span>
+<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Event of type &#039;</span><span style="color: #000000">, </span><span style="color: #001080">type</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">);</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-comment">// An `OnEvent` event sender accepts event receivers with compatible event signature </span>
-<span class="hljs-keyword">const</span> onEvent: OnEvent&lt;[<span class="hljs-built_in">string</span>, Event]&gt;;
+<span style="color: #008000">// An `OnEvent` event sender accepts event receivers with compatible event signature </span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">onEvent</span><span style="color: #000000">: </span><span style="color: #267F99">OnEvent</span><span style="color: #000000">&lt;[</span><span style="color: #267F99">string</span><span style="color: #000000">, </span><span style="color: #267F99">Event</span><span style="color: #000000">]&gt;;</span>
 
-<span class="hljs-comment">// An `OnEvent` sender is a function that registers a receiver.</span>
-<span class="hljs-comment">// An event supply returned can be cut off to unregister the receiver.</span>
-<span class="hljs-keyword">const</span> supply: Supply = onEvent(eventReceiver);
+<span style="color: #008000">// An `OnEvent` sender is a function that registers a receiver.</span>
+<span style="color: #008000">// An event supply returned can be cut off to unregister the receiver.</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">supply</span><span style="color: #000000">: </span><span style="color: #267F99">Supply</span><span style="color: #000000"> = </span><span style="color: #795E26">onEvent</span><span style="color: #000000">(</span><span style="color: #001080">eventReceiver</span><span style="color: #000000">);</span>
 
-<span class="hljs-comment">// ...generate some events...</span>
+<span style="color: #008000">// ...generate some events...</span>
 
-supply.off(); <span class="hljs-comment">// The `eventReceiver` will no longer receive events after this call.</span></code></pre>
+<span style="color: #001080">supply</span><span style="color: #000000">.</span><span style="color: #795E26">off</span><span style="color: #000000">(); </span><span style="color: #008000">// The `eventReceiver` will no longer receive events after this call.</span>
+</code></pre>
 				<a href="#eventreceiver" id="eventreceiver" style="color: inherit; text-decoration: none;">
 					<h2><code>EventReceiver</code></h2>
 				</a>
 				<p>An event receiver is a function that is called on each event sent by event supplier when registered.</p>
 				<p>To register an event receiver in event supplier just call the supplier function with this receiver as argument.</p>
 				<p>An event receiver can also be in object form:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EventReceiver, OnEvent } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/fun-events&#x27;</span>;
-<span class="hljs-keyword">import</span> { Supply } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/primitives&#x27;</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">EventReceiver</span><span style="color: #000000">, </span><span style="color: #001080">OnEvent</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/fun-events&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Supply</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/primitives&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// API supports arbitrary event receiver signatures.</span>
-<span class="hljs-comment">// An event is a receiver&#x27;s `receive` method parameters following revent processing context.</span>
-<span class="hljs-keyword">const</span> eventReceiver: EventReceiver&lt;[<span class="hljs-built_in">string</span>, Event]&gt; = {
-  <span class="hljs-function"><span class="hljs-title">receive</span>(<span class="hljs-params">context, <span class="hljs-keyword">type</span>, event</span>)</span> {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;Event of type &#x27;</span>, <span class="hljs-keyword">type</span>, event);
-  }
-};
+<span style="color: #008000">// API supports arbitrary event receiver signatures.</span>
+<span style="color: #008000">// An event is a receiver&#039;s `receive` method parameters following revent processing context.</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">eventReceiver</span><span style="color: #000000">: </span><span style="color: #267F99">EventReceiver</span><span style="color: #000000">&lt;[</span><span style="color: #267F99">string</span><span style="color: #000000">, </span><span style="color: #267F99">Event</span><span style="color: #000000">]&gt; = {</span>
+<span style="color: #000000">  </span><span style="color: #795E26">receive</span><span style="color: #000000">(</span><span style="color: #001080">context</span><span style="color: #000000">, </span><span style="color: #001080">type</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Event of type &#039;</span><span style="color: #000000">, </span><span style="color: #001080">type</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">);</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">};</span>
 
-<span class="hljs-comment">// An `OnEvent` event sender accepts event receivers with compatible event signature </span>
-<span class="hljs-keyword">const</span> onEvent: OnEvent&lt;[<span class="hljs-built_in">string</span>, Event]&gt;;
+<span style="color: #008000">// An `OnEvent` event sender accepts event receivers with compatible event signature </span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">onEvent</span><span style="color: #000000">: </span><span style="color: #267F99">OnEvent</span><span style="color: #000000">&lt;[</span><span style="color: #267F99">string</span><span style="color: #000000">, </span><span style="color: #267F99">Event</span><span style="color: #000000">]&gt;;</span>
 
-<span class="hljs-comment">// An `OnEvent` sender is a function that registers a receiver.</span>
-<span class="hljs-comment">// An event supply returned can be cut off to unregister the receiver.</span>
-<span class="hljs-keyword">const</span> supply: EventSupply = onEvent.to(eventReceiver);
+<span style="color: #008000">// An `OnEvent` sender is a function that registers a receiver.</span>
+<span style="color: #008000">// An event supply returned can be cut off to unregister the receiver.</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">supply</span><span style="color: #000000">: </span><span style="color: #267F99">EventSupply</span><span style="color: #000000"> = </span><span style="color: #001080">onEvent</span><span style="color: #000000">.</span><span style="color: #795E26">to</span><span style="color: #000000">(</span><span style="color: #001080">eventReceiver</span><span style="color: #000000">);</span>
 
-<span class="hljs-comment">// ...generate some events...</span>
+<span style="color: #008000">// ...generate some events...</span>
 
-supply.off(); <span class="hljs-comment">// The `eventReceiver` will no longer receive events after this call.</span></code></pre>
+<span style="color: #001080">supply</span><span style="color: #000000">.</span><span style="color: #795E26">off</span><span style="color: #000000">(); </span><span style="color: #008000">// The `eventReceiver` will no longer receive events after this call.</span>
+</code></pre>
 				<p>In this form the event receiver&#39;s <code>receive</code> method accepts <em>event processing context</em> as the first parameter.</p>
 				<a href="#recurrent-events" id="recurrent-events" style="color: inherit; text-decoration: none;">
 					<h3>Recurrent Events</h3>
@@ -129,21 +127,22 @@ supply.off(); <span class="hljs-comment">// The `eventReceiver` will no longer r
 					recurrent events. If this method is called during event processing, the recurrent events will be sent to the given
 				<code>receiver</code> after current event processed instead of original one:</p>
 				<p>The event receiver then can look like this:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EventReceiver } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/fun-events&#x27;</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">EventReceiver</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/fun-events&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-comment">// API supports arbitrary event receiver signatures</span>
-<span class="hljs-comment">// An event is a tuple of event receiver arguments</span>
-<span class="hljs-keyword">const</span> eventReceiver: EventReceiver&lt;[<span class="hljs-built_in">string</span>, Event]&gt; = {
-  <span class="hljs-function"><span class="hljs-title">receive</span>(<span class="hljs-params">context, <span class="hljs-keyword">type</span>, event</span>)</span> { 
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;Event of type &#x27;</span>, <span class="hljs-keyword">type</span>, event);
-    context.onRecurrent(<span class="hljs-function">(<span class="hljs-params">recurrentType, recurrentEvent</span>) =&gt;</span> {
-      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;Recurrent event of type &#x27;</span>, recurrentType, recurrentEvent);
-    });
+<span style="color: #008000">// API supports arbitrary event receiver signatures</span>
+<span style="color: #008000">// An event is a tuple of event receiver arguments</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">eventReceiver</span><span style="color: #000000">: </span><span style="color: #267F99">EventReceiver</span><span style="color: #000000">&lt;[</span><span style="color: #267F99">string</span><span style="color: #000000">, </span><span style="color: #267F99">Event</span><span style="color: #000000">]&gt; = {</span>
+<span style="color: #000000">  </span><span style="color: #795E26">receive</span><span style="color: #000000">(</span><span style="color: #001080">context</span><span style="color: #000000">, </span><span style="color: #001080">type</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">) { </span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Event of type &#039;</span><span style="color: #000000">, </span><span style="color: #001080">type</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">);</span>
+<span style="color: #000000">    </span><span style="color: #001080">context</span><span style="color: #000000">.</span><span style="color: #795E26">onRecurrent</span><span style="color: #000000">((</span><span style="color: #001080">recurrentType</span><span style="color: #000000">, </span><span style="color: #001080">recurrentEvent</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">      </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Recurrent event of type &#039;</span><span style="color: #000000">, </span><span style="color: #001080">recurrentType</span><span style="color: #000000">, </span><span style="color: #001080">recurrentEvent</span><span style="color: #000000">);</span>
+<span style="color: #000000">    });</span>
 
-    <span class="hljs-comment">// ...event processing potentially leading to sending event to this receiver again...</span>
+<span style="color: #000000">    </span><span style="color: #008000">// ...event processing potentially leading to sending event to this receiver again...</span>
 
-  }
-};</code></pre>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">};</span>
+</code></pre>
 				<a href="#eventsender" id="eventsender" style="color: inherit; text-decoration: none;">
 					<h2><code>EventSender</code></h2>
 				</a>
@@ -204,107 +203,112 @@ supply.off(); <span class="hljs-comment">// The `eventReceiver` will no longer r
 				</a>
 				<p>Event emitter is a handy implementation of <code>EventSender</code>.</p>
 				<p>It manages a list of registered event receivers, and removes them from the list once their supplies are cut off.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { EventEmitter } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/fun-events&#x27;</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">EventEmitter</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/fun-events&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">const</span> emitter = <span class="hljs-keyword">new</span> EventEmitter&lt;[<span class="hljs-built_in">string</span>]&gt;();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">emitter</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">EventEmitter</span><span style="color: #000000">&lt;[</span><span style="color: #267F99">string</span><span style="color: #000000">]&gt;();</span>
 
-<span class="hljs-comment">// Register receivers</span>
-emitter.on(<span class="hljs-function"><span class="hljs-params">event</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`<span class="hljs-subst">${event}</span>-`</span>));
-emitter.on(<span class="hljs-function"><span class="hljs-params">event</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`-<span class="hljs-subst">${event}</span>`</span>));
+<span style="color: #008000">// Register receivers</span>
+<span style="color: #001080">emitter</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #001080">event</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">event</span><span style="color: #0000FF">}</span><span style="color: #A31515">-`</span><span style="color: #000000">));</span>
+<span style="color: #001080">emitter</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #001080">event</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`-</span><span style="color: #0000FF">${</span><span style="color: #001080">event</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">));</span>
 
-<span class="hljs-comment">// Send an event</span>
-emitter.send(<span class="hljs-string">&#x27;listen&#x27;</span>);</code></pre>
+<span style="color: #008000">// Send an event</span>
+<span style="color: #001080">emitter</span><span style="color: #000000">.</span><span style="color: #795E26">send</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;listen&#039;</span><span style="color: #000000">);</span>
+</code></pre>
 				<a href="#value-tracking" id="value-tracking" style="color: inherit; text-decoration: none;">
 					<h2>Value Tracking</h2>
 				</a>
 				<p>A <code>ValueTracker</code> class represents an accessor to some value which changes can be tracked.</p>
 				<p>A simple <code>ValueTracker</code> can be constructed using a <code>trackValue()</code> function:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { trackValue } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/fun-events&#x27;</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">trackValue</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/fun-events&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">const</span> value = trackValue(<span class="hljs-number">1</span>);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">value</span><span style="color: #000000"> = </span><span style="color: #795E26">trackValue</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">);</span>
 
-value.on(<span class="hljs-function">(<span class="hljs-params">newValue, oldValue</span>) =&gt;</span> <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;Value changed from&#x27;</span>, oldValue, <span class="hljs-string">&#x27;to&#x27;</span>, newValue));
+<span style="color: #001080">value</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">((</span><span style="color: #001080">newValue</span><span style="color: #000000">, </span><span style="color: #001080">oldValue</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Value changed from&#039;</span><span style="color: #000000">, </span><span style="color: #001080">oldValue</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;to&#039;</span><span style="color: #000000">, </span><span style="color: #001080">newValue</span><span style="color: #000000">));</span>
 
-<span class="hljs-built_in">console</span>.log(value.it); <span class="hljs-comment">// 1</span>
-value.it = <span class="hljs-number">2</span>; <span class="hljs-comment">// Value changed from 1 to 2</span>
-<span class="hljs-built_in">console</span>.log(value.it); <span class="hljs-comment">// 2 </span></code></pre>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">); </span><span style="color: #008000">// 1</span>
+<span style="color: #001080">value</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> = </span><span style="color: #098658">2</span><span style="color: #000000">; </span><span style="color: #008000">// Value changed from 1 to 2</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">); </span><span style="color: #008000">// 2 </span>
+</code></pre>
 				<p>It is also possible to bind one value to another:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { trackValue } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/fun-events&#x27;</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">trackValue</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/fun-events&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">const</span> value1 = trackValue(<span class="hljs-number">1</span>);
-<span class="hljs-keyword">const</span> value2 = trackValue(<span class="hljs-number">0</span>).by(value1);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">value1</span><span style="color: #000000"> = </span><span style="color: #795E26">trackValue</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">value2</span><span style="color: #000000"> = </span><span style="color: #795E26">trackValue</span><span style="color: #000000">(</span><span style="color: #098658">0</span><span style="color: #000000">).</span><span style="color: #795E26">by</span><span style="color: #000000">(</span><span style="color: #001080">value1</span><span style="color: #000000">);</span>
 
-<span class="hljs-built_in">console</span>.log(value2.it); <span class="hljs-comment">// 1</span>
-value1.it = <span class="hljs-number">2</span>;
-<span class="hljs-built_in">console</span>.log(value2.it); <span class="hljs-comment">// 2</span></code></pre>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value2</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">); </span><span style="color: #008000">// 1</span>
+<span style="color: #001080">value1</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> = </span><span style="color: #098658">2</span><span style="color: #000000">;</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value2</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">); </span><span style="color: #008000">// 2</span>
+</code></pre>
 				<p>To synchronize multiple values with each other a <code>ValueSync</code> can be used:</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { trackValue, ValueSync } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/fun-events&#x27;</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">trackValue</span><span style="color: #000000">, </span><span style="color: #001080">ValueSync</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/fun-events&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">const</span> v1 = trackValue(<span class="hljs-number">1</span>);
-<span class="hljs-keyword">const</span> v2 = trackValue(<span class="hljs-number">2</span>);
-<span class="hljs-keyword">const</span> v3 = trackValue(<span class="hljs-number">3</span>);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">v1</span><span style="color: #000000"> = </span><span style="color: #795E26">trackValue</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">v2</span><span style="color: #000000"> = </span><span style="color: #795E26">trackValue</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">v3</span><span style="color: #000000"> = </span><span style="color: #795E26">trackValue</span><span style="color: #000000">(</span><span style="color: #098658">3</span><span style="color: #000000">);</span>
 
-<span class="hljs-keyword">const</span> sync = <span class="hljs-keyword">new</span> ValueSync(<span class="hljs-number">0</span>);
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">sync</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">ValueSync</span><span style="color: #000000">(</span><span style="color: #098658">0</span><span style="color: #000000">);</span>
 
-sync.sync(v1);
-sync.sync(v2);
-sync.sync(v3);
+<span style="color: #001080">sync</span><span style="color: #000000">.</span><span style="color: #795E26">sync</span><span style="color: #000000">(</span><span style="color: #001080">v1</span><span style="color: #000000">);</span>
+<span style="color: #001080">sync</span><span style="color: #000000">.</span><span style="color: #795E26">sync</span><span style="color: #000000">(</span><span style="color: #001080">v2</span><span style="color: #000000">);</span>
+<span style="color: #001080">sync</span><span style="color: #000000">.</span><span style="color: #795E26">sync</span><span style="color: #000000">(</span><span style="color: #001080">v3</span><span style="color: #000000">);</span>
 
-<span class="hljs-built_in">console</span>.log(sync.it, v1.it === v2.it, v2.it === v3.it, v3.it === sync.it); <span class="hljs-comment">// 0 true true true</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">sync</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">, </span><span style="color: #001080">v1</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> === </span><span style="color: #001080">v2</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">, </span><span style="color: #001080">v2</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> === </span><span style="color: #001080">v3</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">, </span><span style="color: #001080">v3</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> === </span><span style="color: #001080">sync</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">); </span><span style="color: #008000">// 0 true true true</span>
 
-v2.it = <span class="hljs-number">11</span>;
-<span class="hljs-built_in">console</span>.log(sync.it, v1.it === v2.it, v2.it === v3.it, v3.it === sync.it); <span class="hljs-comment">// 11 true true true</span>
+<span style="color: #001080">v2</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> = </span><span style="color: #098658">11</span><span style="color: #000000">;</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">sync</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">, </span><span style="color: #001080">v1</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> === </span><span style="color: #001080">v2</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">, </span><span style="color: #001080">v2</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> === </span><span style="color: #001080">v3</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">, </span><span style="color: #001080">v3</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> === </span><span style="color: #001080">sync</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">); </span><span style="color: #008000">// 11 true true true</span>
 
-sync.it = <span class="hljs-number">22</span>;
-<span class="hljs-built_in">console</span>.log(sync.it, v1.it === v2.it, v2.it === v3.it, v3.it === sync.it); <span class="hljs-comment">// 22 true true true</span></code></pre>
+<span style="color: #001080">sync</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> = </span><span style="color: #098658">22</span><span style="color: #000000">;</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">sync</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">, </span><span style="color: #001080">v1</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> === </span><span style="color: #001080">v2</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">, </span><span style="color: #001080">v2</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> === </span><span style="color: #001080">v3</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">, </span><span style="color: #001080">v3</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> === </span><span style="color: #001080">sync</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">); </span><span style="color: #008000">// 22 true true true</span>
+</code></pre>
 				<a href="#state-tracking" id="state-tracking" style="color: inherit; text-decoration: none;">
 					<h2>State Tracking</h2>
 				</a>
 				<p>A state is a tree-like structure of sub-states (nodes) available under <code>StatePath</code>.</p>
 				<p>A <code>StateTracker</code> can be used to notify on state changes of particular node and its sub-tree.</p>
-				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { StatePath, StateTracker } <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;@proc7ts/fun-events&#x27;</span>;
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">StatePath</span><span style="color: #000000">, </span><span style="color: #001080">StateTracker</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/fun-events&#039;</span><span style="color: #000000">;</span>
 
-<span class="hljs-keyword">const</span> tracker = <span class="hljs-keyword">new</span> StateTracker();
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">tracker</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">StateTracker</span><span style="color: #000000">();</span>
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">stateChanged</span>(<span class="hljs-params">path: StatePath</span>) </span>{
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;State path changed:&#x27;</span>, path);
-}
+<span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">stateChanged</span><span style="color: #000000">(</span><span style="color: #001080">path</span><span style="color: #000000">: </span><span style="color: #267F99">StatePath</span><span style="color: #000000">) {</span>
+<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;State path changed:&#039;</span><span style="color: #000000">, </span><span style="color: #001080">path</span><span style="color: #000000">);</span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">property1Changed</span>(<span class="hljs-params">path: StatePath, newValue: <span class="hljs-built_in">string</span>, oldValue: <span class="hljs-built_in">string</span></span>) </span>{
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;Property 1 changed from&#x27;</span>, oldValue, <span class="hljs-string">&#x27;to&#x27;</span>, newValue);  
-}
+<span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">property1Changed</span><span style="color: #000000">(</span><span style="color: #001080">path</span><span style="color: #000000">: </span><span style="color: #267F99">StatePath</span><span style="color: #000000">, </span><span style="color: #001080">newValue</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">, </span><span style="color: #001080">oldValue</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">) {</span>
+<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Property 1 changed from&#039;</span><span style="color: #000000">, </span><span style="color: #001080">oldValue</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;to&#039;</span><span style="color: #000000">, </span><span style="color: #001080">newValue</span><span style="color: #000000">);  </span>
+<span style="color: #000000">}</span>
 
-<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">property2Changed</span>(<span class="hljs-params">path: StatePath, newValue: <span class="hljs-built_in">number</span>, oldValue: <span class="hljs-built_in">number</span></span>) </span>{
-  <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;Property 2 changed from&#x27;</span>, oldValue, <span class="hljs-string">&#x27;to&#x27;</span>, newValue);  
-}
+<span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">property2Changed</span><span style="color: #000000">(</span><span style="color: #001080">path</span><span style="color: #000000">: </span><span style="color: #267F99">StatePath</span><span style="color: #000000">, </span><span style="color: #001080">newValue</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000">, </span><span style="color: #001080">oldValue</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000">) {</span>
+<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Property 2 changed from&#039;</span><span style="color: #000000">, </span><span style="color: #001080">oldValue</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;to&#039;</span><span style="color: #000000">, </span><span style="color: #001080">newValue</span><span style="color: #000000">);  </span>
+<span style="color: #000000">}</span>
 
-tracker.onUpdate(stateChanged); <span class="hljs-comment">// Will be notified on all changes</span>
-tracker.track(<span class="hljs-string">&#x27;property1&#x27;</span>).to(property1Changed); <span class="hljs-comment">// Will be notified on `property1` changes</span>
-tracker.track([<span class="hljs-string">&#x27;property2&#x27;</span>]).to(property2Changed); <span class="hljs-comment">// The path can be long</span>
+<span style="color: #001080">tracker</span><span style="color: #000000">.</span><span style="color: #795E26">onUpdate</span><span style="color: #000000">(</span><span style="color: #001080">stateChanged</span><span style="color: #000000">); </span><span style="color: #008000">// Will be notified on all changes</span>
+<span style="color: #001080">tracker</span><span style="color: #000000">.</span><span style="color: #795E26">track</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;property1&#039;</span><span style="color: #000000">).</span><span style="color: #795E26">to</span><span style="color: #000000">(</span><span style="color: #001080">property1Changed</span><span style="color: #000000">); </span><span style="color: #008000">// Will be notified on `property1` changes</span>
+<span style="color: #001080">tracker</span><span style="color: #000000">.</span><span style="color: #795E26">track</span><span style="color: #000000">([</span><span style="color: #A31515">&#039;property2&#039;</span><span style="color: #000000">]).</span><span style="color: #795E26">to</span><span style="color: #000000">(</span><span style="color: #001080">property2Changed</span><span style="color: #000000">); </span><span style="color: #008000">// The path can be long</span>
 
-tracker.update([<span class="hljs-string">&#x27;some&#x27;</span>, <span class="hljs-string">&#x27;path&#x27;</span>], <span class="hljs-string">&#x27;new&#x27;</span>, <span class="hljs-string">&#x27;old&#x27;</span>);
-<span class="hljs-comment">// State path changed: [&#x27;some&#x27;, &#x27;path&#x27;] </span>
+<span style="color: #001080">tracker</span><span style="color: #000000">.</span><span style="color: #795E26">update</span><span style="color: #000000">([</span><span style="color: #A31515">&#039;some&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;path&#039;</span><span style="color: #000000">], </span><span style="color: #A31515">&#039;new&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;old&#039;</span><span style="color: #000000">);</span>
+<span style="color: #008000">// State path changed: [&#039;some&#039;, &#039;path&#039;] </span>
 
-tracker.update(<span class="hljs-string">&#x27;property1&#x27;</span>, <span class="hljs-string">&#x27;new&#x27;</span>, <span class="hljs-string">&#x27;old&#x27;</span>);
-<span class="hljs-comment">// State path changed: [&#x27;property1&#x27;]</span>
-<span class="hljs-comment">// Property 1 changed from old to new</span>
+<span style="color: #001080">tracker</span><span style="color: #000000">.</span><span style="color: #795E26">update</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;property1&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;new&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;old&#039;</span><span style="color: #000000">);</span>
+<span style="color: #008000">// State path changed: [&#039;property1&#039;]</span>
+<span style="color: #008000">// Property 1 changed from old to new</span>
 
-tracker.update(<span class="hljs-string">&#x27;property2&#x27;</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>);
-<span class="hljs-comment">// State path changed: [&#x27;property1&#x27;]</span>
-<span class="hljs-comment">// Property 2 changed from 2 to 1</span></code></pre>
+<span style="color: #001080">tracker</span><span style="color: #000000">.</span><span style="color: #795E26">update</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;property2&#039;</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">);</span>
+<span style="color: #008000">// State path changed: [&#039;property1&#039;]</span>
+<span style="color: #008000">// Property 2 changed from 2 to 1</span>
+</code></pre>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="modules.html">Modules</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/@proc7ts_fun-events.html">@proc7ts/fun-<wbr>events</a>
+						<a href="modules/_proc7ts_fun_events.html">@proc7ts/fun-<wbr>events</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/@proc7ts_fun-events_call-thru.html">@proc7ts/fun-<wbr>events/call-<wbr>thru</a>
+						<a href="modules/_proc7ts_fun_events_call_thru.html">@proc7ts/fun-<wbr>events/call-<wbr>thru</a>
 					</li>
 				</ul>
 			</nav>
@@ -323,6 +327,7 @@ tracker.update(<span class="hljs-string">&#x27;property2&#x27;</span>, <span cla
 				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">

@@ -7,6 +7,7 @@
 	<meta name="description" content="Documentation for Functional Event Processor">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
@@ -51,51 +52,22 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../globals.html">Globals</a>
+					<a href="../modules.html">Functional Event Processor</a>
 				</li>
 				<li>
-					<a href="@proc7ts_fun-events.html">@proc7ts/fun-events</a>
+					<a href="_proc7ts_fun_events.html">@proc7ts/fun-events</a>
 				</li>
 				<li>
-					<a href="@proc7ts_fun-events.EventReceiver.html">EventReceiver</a>
+					<a href="_proc7ts_fun_events.eventreceiver.html">EventReceiver</a>
 				</li>
 			</ul>
-			<h1>Namespace EventReceiver&lt;TEvent&gt;</h1>
+			<h1>Namespace EventReceiver</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
-			<section class="tsd-panel tsd-comment">
-				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Event receiver is called on each event sent by <a href="@proc7ts_fun-events.EventSender.html">EventSender</a> when registered.</p>
-					</div>
-					<p>A receiver may be represented either by <a href="@proc7ts_fun-events.EventReceiver.html#Function">function</a>, or by
-						<a href="../interfaces/@proc7ts_fun-events.EventReceiver.Object.html">object</a>. The former is a simplest form. The latter allows control all aspects of event
-					processing.</p>
-					<p>To register an event receiver just call the event sender&#39;s <code>[OnEvent__symbol]</code> or event keeper&#39;s
-					<code>[AfterEvent__symbol]</code> method with this event receiver as argument.</p>
-					<p>A <em>recurrent event</em> is an event sent from inside event receiver and targeted the same receiver. Recurrent event
-						processing is scheduled until after the current event processing finishes. To handle recurrent events in a specific
-						way the event receiver may utilize an <a href="../interfaces/@proc7ts_fun-events.EventReceiver.Context.html">event processing context</a> available as
-					a first parameter of <a href="../interfaces/@proc7ts_fun-events.EventReceiver.Object.html#receive">EventReceiver.Object.receive</a> method.</p>
-				</div>
-			</section>
-			<section class="tsd-panel tsd-type-parameters">
-				<h3>Type parameters</h3>
-				<ul class="tsd-type-parameters">
-					<li>
-						<h4>TEvent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>An event type. This is a tuple of event receiver parameter types.</p>
-							</div>
-						</div>
-					</li>
-				</ul>
-			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -103,15 +75,15 @@
 						<section class="tsd-index-section ">
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter"><a href="../interfaces/@proc7ts_fun-events.EventReceiver.Context.html" class="tsd-kind-icon">Context</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter"><a href="../interfaces/@proc7ts_fun-events.EventReceiver.Generic.html" class="tsd-kind-icon">Generic</a></li>
-								<li class="tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter"><a href="../interfaces/@proc7ts_fun-events.EventReceiver.Object.html" class="tsd-kind-icon">Object</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter"><a href="../interfaces/_proc7ts_fun_events.eventreceiver.context.html" class="tsd-kind-icon">Context</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter"><a href="../interfaces/_proc7ts_fun_events.eventreceiver.generic.html" class="tsd-kind-icon">Generic</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter"><a href="../interfaces/_proc7ts_fun_events.eventreceiver.object.html" class="tsd-kind-icon">Object</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter"><a href="@proc7ts_fun-events.EventReceiver.html#Function" class="tsd-kind-icon">Function</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter"><a href="_proc7ts_fun_events.eventreceiver.html#function" class="tsd-kind-icon">Function</a></li>
 							</ul>
 						</section>
 					</div>
@@ -120,12 +92,12 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Type aliases</h2>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
-					<a name="Function" class="tsd-anchor"></a>
+					<a name="function" class="tsd-anchor"></a>
 					<h3>Function</h3>
 					<div class="tsd-signature tsd-kind-icon">Function&lt;TEvent&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/9404ccf/src/base/event-receiver.ts#L36">fun-events/src/base/event-receiver.ts:36</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/91ac358/src/base/event-receiver.ts#L39">fun-events/src/base/event-receiver.ts:39</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -149,13 +121,11 @@
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-signature">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-namespace">
 									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
-										<div class="tsd-comment tsd-typography">
-										</div>
 										<h4 class="tsd-parameters-title">Parameters</h4>
 										<ul class="tsd-parameters">
 											<li>
@@ -164,9 +134,7 @@
 											<li>
 												<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>event: <span class="tsd-signature-type">TEvent</span></h5>
 												<div class="tsd-comment tsd-typography">
-													<div class="lead">
-														<p>An event represented by function call arguments.</p>
-													</div>
+													<p>An event represented by function call arguments.</p>
 												</div>
 											</li>
 										</ul>
@@ -182,24 +150,24 @@
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="../globals.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="../modules.html">Modules</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
-						<a href="../interfaces/@proc7ts_fun-events.EventReceiver.Context.html" class="tsd-kind-icon">Context</a>
+						<a href="../interfaces/_proc7ts_fun_events.eventreceiver.context.html" class="tsd-kind-icon">Context</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
-						<a href="../interfaces/@proc7ts_fun-events.EventReceiver.Generic.html" class="tsd-kind-icon">Generic</a>
+						<a href="../interfaces/_proc7ts_fun_events.eventreceiver.generic.html" class="tsd-kind-icon">Generic</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
-						<a href="../interfaces/@proc7ts_fun-events.EventReceiver.Object.html" class="tsd-kind-icon">Object</a>
+						<a href="../interfaces/_proc7ts_fun_events.eventreceiver.object.html" class="tsd-kind-icon">Object</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
-						<a href="@proc7ts_fun-events.EventReceiver.html#Function" class="tsd-kind-icon">Function</a>
+						<a href="_proc7ts_fun_events.eventreceiver.html#function" class="tsd-kind-icon">Function</a>
 					</li>
 				</ul>
 			</nav>
@@ -214,6 +182,7 @@
 				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
