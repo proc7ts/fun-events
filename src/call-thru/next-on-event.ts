@@ -13,7 +13,6 @@ import { OnEventCallChain } from './on-event-call-chain';
  *
  * The event supply from the given supplier will be cut off each time the call is applied.
  *
- * @category Core
  * @typeParam TEvent - An event type. This is a tuple of argument types of the next pass.
  * @param supplier - A supplier of events to pass down the chain.
  *

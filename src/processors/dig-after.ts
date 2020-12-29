@@ -13,6 +13,7 @@ import { shareAfter } from './share-after';
  *
  * The outgoing events supply is cut off once the incoming events supply do.
  *
+ * @category Event Processing
  * @typeParam TInEvent - Incoming events type.
  * @typeParam TOutEvent - Extracted events type.
  * @param extract - A function extracting outgoing event keeper from incoming event. May return `undefined` when
@@ -38,6 +39,7 @@ export function digAfter<
  *
  * The outgoing events supply is cut off once the incoming events supply do.
  *
+ * @category Event Processing
  * @typeParam TInEvent - Incoming events type.
  * @typeParam TOutEvent - Extracted events type.
  * @param extract - A function extracting outgoing event keeper from incoming event. May return `undefined` when

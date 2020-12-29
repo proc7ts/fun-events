@@ -31,6 +31,9 @@ export interface EventKeeper<TEvent extends any[]> {
 
 }
 
+/**
+ * @category Core
+ */
 export namespace EventKeeper {
 
   /**

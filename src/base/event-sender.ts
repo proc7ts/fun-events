@@ -30,6 +30,9 @@ export interface EventSender<TEvent extends any[]> {
 
 }
 
+/**
+ * @category Core
+ */
 export namespace EventSender {
 
   /**

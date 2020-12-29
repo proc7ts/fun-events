@@ -13,7 +13,7 @@ import { OnEvent, onEventBy } from '../on-event';
  * a receiver in this one only once, when first receiver registered. And cuts off original events supply once all
  * supplies do.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
  * @param supplier - Event sender to share events from.
  *

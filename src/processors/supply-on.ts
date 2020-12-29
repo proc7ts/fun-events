@@ -13,7 +13,7 @@ import { OnEvent, onEventBy } from '../on-event';
  * The outgoing events supply will be cut off once incoming event supply does, unless a second supply passed in.
  * In the latter case that supply will be cut off instead.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
  * @param required - A peer of required event supply.
  * @param dependentSupply - The supply to cut off on cutting off the incoming events supply.

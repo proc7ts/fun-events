@@ -12,7 +12,7 @@ import { translateAfter_ } from './translate-after';
  *
  * Events are valued by provided `value` function. The `null`, `undefined`, and `false` values are dropped.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TEvent - Incoming event type.
  * @typeParam TValue - Event value type.
  * @param valueOf - Event value detector function. Accepts incoming event as parameters and returns either its value,
@@ -29,7 +29,7 @@ export function valueAfter<TEvent extends any[], TValue>(
  *
  * Events are valued by provided `value` function. The `null`, `undefined`, and `false` values are dropped.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TEvent - Incoming event type.
  * @typeParam TValue - Event value type.
  * @param valueOf - Event value detector function. Accepts incoming event as parameters and returns either its value,
@@ -57,7 +57,7 @@ export function valueAfter<TEvent extends any[], TValue>(
  * Creates an event processor that sends the values of events incoming from {@link AfterEvent} keeper, and does not
  * share the outgoing events supply.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TEvent - Incoming event type.
  * @typeParam TValue - Event value type.
  * @param valueOf - Event value detector function. Accepts incoming event as parameters and returns either its value,
@@ -73,7 +73,7 @@ export function valueAfter_<TEvent extends any[], TValue>(// eslint-disable-line
  * Creates an event processor that sends the values of events incoming from {@link OnEvent} sender or a fallback value,
  * and does not share the outgoing events supply.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TEvent - Incoming event type.
  * @typeParam TValue - Event value type.
  * @param valueOf - Event value detector function. Accepts incoming event as parameters and returns either its value,

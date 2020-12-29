@@ -11,7 +11,7 @@ import { shareOn } from './share-on';
  *
  * The translated events expected to be sent by the given `translate` function.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TInEvent - Incoming event type.
  * @typeParam TOutEvent - Outgoing translated event type.
  * @param translate - Event translation function. Accepts an outgoing event sender function as first parameter,
@@ -37,7 +37,7 @@ export function translateOn<
  *
  * The translated events expected to be sent by the given `translate` function.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TInEvent - Incoming event type.
  * @typeParam TOutEvent - Outgoing translated event type.
  * @param translate - Event translation function. Accepts an outgoing event sender function as first parameter,

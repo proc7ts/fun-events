@@ -11,7 +11,7 @@ import { OnEvent, onEventBy } from '../on-event';
  *
  * Cuts off the outgoing event supply after sending the first event.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
  * @param supplier - Event sender to receive an event from.
  *

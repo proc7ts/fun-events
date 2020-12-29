@@ -11,7 +11,7 @@ import { translateOn_ } from './translate-on';
  *
  * Events are valued by provided `value` function. The `null`, `undefined`, and `false` values are dropped.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TEvent - Incoming event type.
  * @typeParam TValue - Event value type.
  * @param valueOf - Event value detector function. Accepts incoming event as parameters and returns either its value,
@@ -31,7 +31,7 @@ export function valueOn<TEvent extends any[], TValue>(
 /**
  * Creates an event processor that sends the values of incoming events, and does not share the outgoing events supply.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TEvent - Incoming event type.
  * @typeParam TValue - Event value type.
  * @param valueOf - Event value detector function. Accepts incoming event as parameters and returns either its value,

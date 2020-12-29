@@ -15,7 +15,6 @@ import Out = OnEventCallChain.Out;
  * Transformations performed by `@proc7ts/call-thru` library. The event receivers registered by resulting event sender
  * are called by the last pass in chain. Thus the events can be e.g. filtered out or sent multiple times.
  *
- * @category Core
  * @typeParam TInEvent - A type of incoming events to transform.
  * @typeParam TReturn1 A type of outgoing transformed events.
  *
@@ -289,7 +288,6 @@ export function thruOn<TEvent extends any[], TReturn extends any[]>(
  * Transformations performed by `@proc7ts/call-thru` library. The event receivers registered by resulting event sender
  * are called by the last pass in chain. Thus the events can be e.g. filtered out or sent multiple times.
  *
- * @category Core
  * @typeParam TInEvent - A type of incoming events to transform.
  * @typeParam TReturn1 A type of outgoing transformed events.
  *

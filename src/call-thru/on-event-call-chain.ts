@@ -5,9 +5,6 @@
 import { CallChain, NextCall, NextSkip } from '@proc7ts/call-thru';
 import { EventSender } from '../base';
 
-/**
- * @category Core
- */
 export interface OnEventCallChain extends CallChain {
 
   /**

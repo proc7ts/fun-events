@@ -16,7 +16,7 @@ import { shareAfter } from './share-after';
  * keeper instead of {@link OnEvent} sender. This can not be always done without a `fallback`, as not every
  * transformation results to valid {@link EventKeeper}. E.g. when some events filtered out.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TInEvent - Incoming event type.
  * @typeParam TOutEvent - Outgoing translated event type.
  * @param translate - Event translation function. Accepts an outgoing event sender function as first parameter,
@@ -40,7 +40,7 @@ export function translateAfter<
  * keeper instead of {@link OnEvent} sender. This can not be always done without a `fallback`, as not every
  * transformation results to valid {@link EventKeeper}. E.g. when some events filtered out.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TInEvent - Incoming event type.
  * @typeParam TOutEvent - Outgoing translated event type.
  * @param translate - Event translation function. Accepts an outgoing event sender function as first parameter,
@@ -80,7 +80,7 @@ export function translateAfter<
  * keeper instead of {@link OnEvent} sender. This can not be always done without a `fallback`, as not every
  * transformation results to valid {@link EventKeeper}. E.g. when some events filtered out.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TInEvent - Incoming event type.
  * @typeParam TOutEvent - Outgoing translated event type.
  * @param translate - Event translation function. Accepts an outgoing event sender function as first parameter,
@@ -105,7 +105,7 @@ export function translateAfter_<// eslint-disable-line @typescript-eslint/naming
  * keeper instead of {@link OnEvent} sender. This can not be always done without a `fallback`, as not every
  * transformation results to valid {@link EventKeeper}. E.g. when some events filtered out.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TInEvent - Incoming event type.
  * @typeParam TOutEvent - Outgoing translated event type.
  * @param translate - Event translation function. Accepts an outgoing event sender function as first parameter,
@@ -132,7 +132,7 @@ export function translateAfter_<// eslint-disable-line @typescript-eslint/naming
  * keeper instead of {@link OnEvent} sender. This can not be always done without a `fallback`, as not every
  * transformation results to valid {@link EventKeeper}. E.g. when some events filtered out.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TInEvent - Incoming event type.
  * @typeParam TOutEvent - Outgoing translated event type.
  * @param translate - Event translation function. Accepts an outgoing event sender function as first parameter,

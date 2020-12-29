@@ -15,6 +15,9 @@
  */
 export type StatePath = PropertyKey | StatePath.Normalized;
 
+/**
+ * @category State Tracking
+ */
 export namespace StatePath {
 
   /**

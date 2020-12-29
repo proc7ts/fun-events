@@ -1,15 +1,7 @@
 {
-  "categorizeByGroup": true,
-  "categoryOrder": ["Core", "State Tracking", "Value Tracking", "*"],
-  "disableAutoModuleName": true,
-  "exclude": [
-    "**/index.ts",
-    "**/impl/**/*.ts",
-    "**/*.impl.ts",
-    "**/*.spec.ts"
-  ],
-  "excludeNotExported": true,
-  "mode": "modules",
+  "categorizeByGroup": false,
+  "categoryOrder": ["Core", "Event Processing", "State Tracking", "Value Tracking", "*"],
+  "entryPoints": ["src/index.ts", "src/call-thru/index.ts"],
   "name": "Functional Event Processor",
   "out": "./target/typedoc",
   "tsconfig": "tsconfig.main.json"

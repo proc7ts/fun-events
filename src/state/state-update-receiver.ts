@@ -14,6 +14,9 @@ import { StatePath } from './state-path';
  */
 export type StateUpdateReceiver = StateUpdateReceiver.Function | StateUpdateReceiver.Object;
 
+/**
+ * @category State Tracking
+ */
 export namespace StateUpdateReceiver {
 
   /**

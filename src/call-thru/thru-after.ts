@@ -19,7 +19,6 @@ import Out = OnEventCallChain.Out;
  * instead of {@link OnEvent} sender. This can not be always done, as not every transformation results
  * to {@link EventKeeper}. E.g. when some events filtered out.
  *
- * @category Core
  * @typeParam TInEvent - A type of incoming events to transform.
  * @typeParam TReturn1 A type of outgoing transformed events.
  *
@@ -298,7 +297,6 @@ export function thruAfter<TEvent extends any[], TReturn extends any[]>(
  * instead of {@link OnEvent} sender. This can not be always done, as not every transformation results
  * to {@link EventKeeper}. E.g. when some events filtered out.
  *
- * @category Core
  * @typeParam TInEvent - A type of incoming events to transform.
  * @typeParam TReturn1 A type of outgoing transformed events.
  *

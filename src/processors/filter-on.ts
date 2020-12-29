@@ -9,7 +9,7 @@ import { translateOn_ } from './translate-on';
 /**
  * Creates an event processor that passes incoming events implementing the given type only.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TValue - Incoming value type. This is a list of the test function parameter types.
  * @typeParam TMatch - Required value type.
  * @param test - Test function accepting incoming event as its only parameter, and returning truthy value if the value
@@ -24,7 +24,7 @@ export function filterOn<TValue, TMatch extends TValue>(
 /**
  * Creates an event processor that passes incoming events matching the given condition only.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TEvent - An event type. This is a list of the test function parameter types.
  * @param test - Test function accepting incoming event as its parameters, and returning truthy value for matching
  * events, or falsy one otherwise.
@@ -48,7 +48,7 @@ export function filterOn<TEvent extends any[]>(
  * Creates an event processor that passes incoming events implementing the given type only, and does not share
  * the outgoing events supply.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TValue - Incoming value type. This is a list of the test function parameter types.
  * @typeParam TMatch - Required value type.
  * @param test - Test function accepting incoming event as its only parameter, and returning truthy value if the value
@@ -64,7 +64,7 @@ export function filterOn_<TValue, TMatch extends TValue>(// eslint-disable-line 
  * Creates an event processor that passes incoming events matching the given condition only, and does not share
  * the outgoing events supply.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TEvent - An event type. This is a list of the test function parameter types.
  * @param test - Test function accepting incoming event as its parameters, and returning truthy value for matching
  * events, or falsy one otherwise.

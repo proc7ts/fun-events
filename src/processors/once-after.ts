@@ -10,7 +10,7 @@ import { onceEvent } from '../impl';
  *
  * Cuts off the outgoing events supply after sending the first event.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
  * @param supplier - Event keeper to receive an event from.
  *

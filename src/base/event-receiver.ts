@@ -24,6 +24,9 @@ import { noop, Supply } from '@proc7ts/primitives';
  */
 export type EventReceiver<TEvent extends any[]> = EventReceiver.Function<TEvent> | EventReceiver.Object<TEvent>;
 
+/**
+ * @category Core
+ */
 export namespace EventReceiver {
 
   /**

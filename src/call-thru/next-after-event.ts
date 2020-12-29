@@ -17,7 +17,6 @@ import { OnEventCallChain } from './on-event-call-chain';
  * and {@link EventKeeper} interfaces such as {@link ValueTracker}. {@link nextOnEvent} would prefer the former,
  * while this one would prefer the latter.
  *
- * @category Core
  * @typeParam TEvent - An event type. This is a tuple of argument types of the next pass.
  * @param keeper - A keeper of events to pass down the chain.
  *

@@ -8,7 +8,7 @@ import { OnEvent } from '../on-event';
 /**
  * Creates an event processor that consumes incoming events.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TEvent - Incoming event type. This is a list of consumer function parameter types.
  * @param consume - A function consuming events. This function may return a {@link SupplyPeer peer of event supply},
  * e.g. when registers a nested event receiver. This supply will be cut off on new event, unless returned again.

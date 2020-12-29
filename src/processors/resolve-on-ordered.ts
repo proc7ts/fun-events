@@ -19,7 +19,7 @@ import { supplyOn } from './supply-on';
  * is used as a reason to cut off. If incoming events supply is cut off, then the resulting event supply will be cut off
  * too, but only after all incoming events resolved and sent.
  *
- * @category Core
+ * @category Event Processing
  * @typeParam TEvent - Resolved event type.
  * @param from - A sender of events or promise-like instances resolved to ones.
  *
