@@ -44,7 +44,7 @@
     }
   },
   "dependencies": {
-    "@proc7ts/primitives": "^1.6.0"
+    "@proc7ts/primitives": "^1.6.1"
   },
   "devDependencies": {
     "@proc7ts/call-thru": "^4.3.1",
@@ -69,7 +69,7 @@
     "shx": "^0.3.3",
     "ts-jest": "^26.4.4",
     "tslib": "^2.0.3",
-    "typedoc": "^0.20.1",
+    "typedoc": "^0.20.4",
     "typescript": "^4.1.3"
   },
   "scripts": {
