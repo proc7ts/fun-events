@@ -1,4 +1,4 @@
-import { neverSupply, Supply } from '@proc7ts/primitives';
+import { alwaysSupply, neverSupply, Supply } from '@proc7ts/primitives';
 import { AfterEvent, afterEventBy } from '../after-event';
 import { EventNotifier, EventReceiver } from '../base';
 import { supplyAfter } from './supply-after';
@@ -43,6 +43,9 @@ describe('supplyAfter', () => {
     emitter.send('event1');
     expect(mockReceiver).not.toHaveBeenCalled();
     expect(whenOff).toHaveBeenCalled();
+  });
+  it('does not modify the input supply when `alwaysSupply()` specified', () => {
+    expect(afterEvent.do(supplyAfter(alwaysSupply()))).toBe(afterEvent);
   });
   it('no longer sends events after original supply is cut off', () => {
 

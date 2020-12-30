@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { Supply, SupplyPeer } from '@proc7ts/primitives';
+import { asis, isAlwaysSupply, Supply, SupplyPeer } from '@proc7ts/primitives';
 import { supplyEvents } from '../impl';
 import { OnEvent, onEventBy } from '../on-event';
 
@@ -15,7 +15,8 @@ import { OnEvent, onEventBy } from '../on-event';
  *
  * @category Event Processing
  * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
- * @param required - A peer of required event supply.
+ * @param required - A peer of required event supply. The returned processor does nothing when `alwaysSupply()`
+ * specified.
  * @param dependentSupply - The supply to cut off on cutting off the incoming events supply.
  *
  * @returns New event mapper.
@@ -24,5 +25,7 @@ export function supplyOn<TEvent extends any[]>(
     required: SupplyPeer,
     dependentSupply?: Supply,
 ): (this: void, input: OnEvent<TEvent>) => OnEvent<TEvent> {
-  return (input: OnEvent<TEvent>) => onEventBy(supplyEvents(input, required, dependentSupply));
+  return isAlwaysSupply(required.supply)
+      ? asis
+      : (input: OnEvent<TEvent>) => onEventBy(supplyEvents(input, required, dependentSupply));
 }
