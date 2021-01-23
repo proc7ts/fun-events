@@ -51,8 +51,10 @@ export namespace EventSender {
  * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
  * @param value - An object to check.
  *
- * @returns `true` if `value` contains {@link OnEvent__symbol} property, or `false` otherwise.
+ * @returns `true` if `value` contains an {@link OnEvent__symbol} method, or `false` otherwise.
  */
-export function isEventSender<TEvent extends any[]>(value: object): value is EventSender<TEvent> {
-  return OnEvent__symbol in value;
+export function isEventSender<TEvent extends any[]>(value: unknown): value is EventSender<TEvent> {
+  return !!value
+      && (typeof value === 'object' || typeof value === 'function')
+      && typeof (value as Partial<EventSender<TEvent>>)[OnEvent__symbol] === 'function';
 }
