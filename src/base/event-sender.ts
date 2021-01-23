@@ -56,5 +56,5 @@ export namespace EventSender {
 export function isEventSender<TEvent extends any[]>(value: unknown): value is EventSender<TEvent> {
   return !!value
       && (typeof value === 'object' || typeof value === 'function')
-      && typeof (value as EventSender<TEvent>)[OnEvent__symbol] === 'function';
+      && typeof (value as Partial<EventSender<TEvent>>)[OnEvent__symbol] === 'function';
 }
