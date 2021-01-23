@@ -46,13 +46,13 @@ export namespace EventKeeper {
 }
 
 /**
- * Checks whether the given object implements an {@link EventKeeper} interface.
+ * Checks whether the given value implements an {@link EventKeeper} interface.
  *
  * @category Core
  * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
- * @param value - An object to check.
+ * @param value - A value to check.
  *
- * @returns `true` if `value` contains an {@link AfterEvent__symbol} method, or `false` otherwise.
+ * @returns `true` if the `value` contains an {@link AfterEvent__symbol} method, or `false` otherwise.
  */
 export function isEventKeeper<TEvent extends any[]>(value: unknown): value is EventKeeper<TEvent> {
   return !!value
