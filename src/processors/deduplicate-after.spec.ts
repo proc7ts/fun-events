@@ -1,8 +1,8 @@
-import { asis, Supply } from '@proc7ts/primitives';
+import { asis, Supply, valueProvider } from '@proc7ts/primitives';
 import { AfterEvent } from '../after-event';
 import { afterSent } from '../keepers';
 import { EventEmitter } from '../senders';
-import { deduplicateAfter } from './deduplicate-after';
+import { deduplicateAfter, deduplicateAfter_ } from './deduplicate-after';
 
 describe('deduplicateAfter', () => {
 
@@ -67,5 +67,16 @@ describe('deduplicateAfter', () => {
   it('is cut off when the source cut off', async () => {
     source.supply.off('reason');
     expect(await supply.whenDone().catch(asis)).toBe('reason');
+  });
+  it('caches default processors', () => {
+    expect(deduplicateAfter()).toBe(deduplicateAfter());
+    expect(deduplicateAfter_()).toBe(deduplicateAfter_());
+  });
+  it('does not cache non-default processors', () => {
+
+    const isDuplicate = valueProvider(true);
+
+    expect(deduplicateAfter(isDuplicate)).not.toBe(deduplicateAfter(isDuplicate));
+    expect(deduplicateAfter_(isDuplicate)).not.toBe(deduplicateAfter_(isDuplicate));
   });
 });

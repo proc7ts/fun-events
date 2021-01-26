@@ -1,6 +1,10 @@
 import { AfterEvent, afterEventBy } from '../after-event';
 import { shareAfter } from './share-after';
 
+let deduplicateAfter$default:// eslint-disable-line @typescript-eslint/naming-convention
+    | ((this: void, input: AfterEvent<any>) => AfterEvent<any>)
+    | undefined;
+
 /**
  * Creates an event processor that ensures the same event incoming from `{@link AfterEvent} keeper are not reported
  * twice.
@@ -19,11 +23,23 @@ import { shareAfter } from './share-after';
 export function deduplicateAfter<TEvent extends any[]>(
     isDuplicate?: (this: void, prior: TEvent, next: TEvent) => boolean,
 ): (this: void, input: AfterEvent<TEvent>) => AfterEvent<TEvent> {
+  return isDuplicate
+      ? deduplicateAfter$create(isDuplicate)
+      : (deduplicateAfter$default || (deduplicateAfter$default = deduplicateAfter$create()));
+}
+
+function deduplicateAfter$create<TEvent extends any[]>(
+    isDuplicate?: (this: void, prior: TEvent, next: TEvent) => boolean,
+): (this: void, input: AfterEvent<TEvent>) => AfterEvent<TEvent> {
 
   const processor = deduplicateAfter_(isDuplicate);
 
   return input => shareAfter(processor(input));
 }
+
+let deduplicateAfter_$default:// eslint-disable-line @typescript-eslint/naming-convention
+    | ((this: void, input: AfterEvent<any>) => AfterEvent<any>)
+    | undefined;
 
 /**
  * Creates an event processor that ensures the same event incoming from `{@link AfterEvent} keeper are not reported
@@ -41,7 +57,18 @@ export function deduplicateAfter<TEvent extends any[]>(
  * @returns Deduplicating processor of events incoming from {@link @AfterEvent} keeper.
  */
 export function deduplicateAfter_<TEvent extends any[]>(// eslint-disable-line @typescript-eslint/naming-convention
-    isDuplicate: (this: void, prior: TEvent, next: TEvent) => boolean = deduplicateAfter$isDuplicate,
+    isDuplicate?: (this: void, prior: TEvent, next: TEvent) => boolean,
+): (this: void, input: AfterEvent<TEvent>) => AfterEvent<TEvent> {
+  return isDuplicate
+      ? deduplicateAfter_$create(isDuplicate)
+      : (deduplicateAfter_$default || (deduplicateAfter_$default = deduplicateAfter_$create(
+          deduplicateAfter$isDuplicate,
+      ))
+  );
+}
+
+function deduplicateAfter_$create<TEvent extends any[]>(// eslint-disable-line @typescript-eslint/naming-convention
+    isDuplicate: (this: void, prior: TEvent, next: TEvent) => boolean,
 ): (this: void, input: AfterEvent<TEvent>) => AfterEvent<TEvent> {
   return input => {
 
