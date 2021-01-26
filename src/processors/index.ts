@@ -1,4 +1,5 @@
 export * from './consume-events';
+export * from './deduplicate-after';
 export * from './dig-after';
 export * from './dig-on';
 export * from './filter-on';
