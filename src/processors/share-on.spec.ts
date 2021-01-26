@@ -1,3 +1,4 @@
+import { asis } from '@proc7ts/primitives';
 import { AfterEvent, afterEventBy } from '../after-event';
 import { EventNotifier, EventReceiver } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
@@ -174,6 +175,13 @@ describe('shareOn', () => {
       emitter.send('a', 'b');
       expect(mockReceiver).toHaveBeenCalledWith('a', 'b');
       expect(mockReceiver2).toHaveBeenCalledWith('a', 'b');
+    });
+    it('handles immediate source supply cut off', async () => {
+      mockRegister.mockImplementation(({ supply }) => supply.off('reason'));
+
+      const shared = afterEvent.do(shareOn);
+
+      expect(await shared(mockReceiver).whenDone().catch(asis)).toBe('reason');
     });
   });
 });
