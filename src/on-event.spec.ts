@@ -1,4 +1,4 @@
-import { asis, neverSupply, noop } from '@proc7ts/primitives';
+import { asis, noop } from '@proc7ts/primitives';
 import { EventNotifier, EventReceiver, OnEvent__symbol } from './base';
 import { OnEvent, onEventBy } from './on-event';
 import Mock = jest.Mock;
@@ -7,7 +7,7 @@ describe('OnEvent', () => {
   describe('[OnEvent__symbol]', () => {
     it('refers to itself', () => {
 
-      const onEvent = onEventBy(neverSupply);
+      const onEvent = onEventBy(({ supply }) => supply.off());
 
       expect(onEvent[OnEvent__symbol]()).toBe(onEvent);
     });
@@ -85,4 +85,18 @@ describe('OnEvent', () => {
       }).catch(asis)).toBe(error);
     });
   });
+});
+
+describe('onEventBy', () => {
+
+  it('cuts off event supply on receiver registration failure', async () => {
+
+    const error = new Error('!!!');
+    const onEvent = onEventBy(() => {
+      throw error;
+    });
+
+    expect(await onEvent(noop).whenDone().catch(asis)).toBe(error);
+  });
+
 });

@@ -325,7 +325,11 @@ export function onEventBy<TEvent extends any[]>(
     const { supply } = generic;
 
     if (!supply.isOff) {
-      register(generic);
+      try {
+        register(generic);
+      } catch (error) {
+        supply.off(error);
+      }
     }
 
     return supply;

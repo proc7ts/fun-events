@@ -1,5 +1,5 @@
 export * from './after-event.no-fallback';
-export * from './event-dig';
+export * from './dig-events';
 export * from './on-event.do';
 export * from './on-event.supplier';
 export * from './on-event.then';

@@ -126,10 +126,7 @@ export namespace EventReceiver {
  */
 export function eventReceiver<TEvent extends any[]>(receiver: EventReceiver<TEvent>): EventReceiver.Generic<TEvent> {
 
-  let generic: {
-    readonly supply: Supply;
-    receive: (context: EventReceiver.Context<TEvent>, ...event: TEvent) => void;
-  };
+  let generic: EventReceiver.Generic<TEvent>;
 
   if (typeof receiver === 'function') {
     generic = {
@@ -139,10 +136,13 @@ export function eventReceiver<TEvent extends any[]>(receiver: EventReceiver<TEve
       },
     };
   } else {
+
+    const { supply = new Supply() } = receiver;
+
     generic = {
-      supply: receiver.supply || new Supply(),
+      supply,
       receive(context, ...event) {
-        if (!this.supply.isOff) {
+        if (!supply.isOff) {
           // Supply cut off callback may be called before the receiver disabled.
           // Such callback may send an event that should not be received.
           receiver.receive(context, ...event);

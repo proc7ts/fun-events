@@ -4,7 +4,7 @@
  */
 import { AfterEvent, afterEventBy } from '../after-event';
 import { EventKeeper } from '../base';
-import { eventDig } from '../impl';
+import { digEvents } from '../impl';
 import { afterSupplied } from '../keepers';
 import { shareAfter } from './share-after';
 
@@ -61,5 +61,5 @@ export function digAfter_<// eslint-disable-line @typescript-eslint/naming-conve
     return extracted && afterSupplied(extracted);
   };
 
-  return input => afterEventBy(eventDig(input, extractKeeper));
+  return input => afterEventBy(digEvents(input, extractKeeper));
 }

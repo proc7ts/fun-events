@@ -80,7 +80,7 @@ describe('digOn', () => {
     expect(extract).not.toHaveBeenCalled();
     expect(sender.size).toBe(0);
   });
-  it('does not cut off supply when nested events supply cut off', () => {
+  it('cuts off supply when nested events supply cut off', () => {
 
     const whenOff = jest.fn();
 
@@ -93,13 +93,13 @@ describe('digOn', () => {
     nested1.supply.off(reason);
     nested1.send('value2');
 
-    expect(whenOff).not.toHaveBeenCalledWith(reason);
+    expect(whenOff).toHaveBeenCalledWith(reason);
 
     sender.send(nested2);
     nested2.send('value3');
 
     expect(receiver).toHaveBeenCalledWith('value1');
     expect(receiver).not.toHaveBeenCalledWith('value2');
-    expect(receiver).toHaveBeenCalledWith('value3');
+    expect(receiver).not.toHaveBeenCalledWith('value3');
   });
 });
