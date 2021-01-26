@@ -73,26 +73,39 @@ export function afterEventBy<TEvent extends any[]>(
     const supply = new Supply().needs(generic);
     let reported = false;
 
-    register({
-      supply,
-      receive: (context, ...event: TEvent) => {
-        reported = true;
-        lastEvent = event;
-        dest(context, ...event);
-      },
-    });
     ++numReceivers;
+    try {
+      register({
+        supply,
+        receive: (context, ...event: TEvent) => {
+          reported = true;
+          lastEvent = event;
+          dest(context, ...event);
+        },
+      });
+    } catch (error) {
+      supply.off(error);
+    }
 
     if (!supply.isOff || reported) {
-      generic.receive(
-          {
-            onRecurrent(recurrent) {
-              dest = (_context, ...event) => recurrent(...event);
+      if (!lastEvent) {
+        try {
+          lastEvent = fallback();
+        } catch (error) {
+          supply.off(error);
+        }
+      }
+      if (lastEvent) {
+        generic.receive(
+            {
+              onRecurrent(recurrent) {
+                dest = (_context, ...event) => recurrent(...event);
+              },
             },
-          },
-          ...(lastEvent || (lastEvent = fallback())),
-      );
-      dest = (context, ...event) => generic.receive(context, ...event);
+            ...lastEvent,
+        );
+        dest = (context, ...event) => generic.receive(context, ...event);
+      }
     }
 
     return supply.whenOff(reason => {

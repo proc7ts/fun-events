@@ -1,6 +1,6 @@
-import { noop, Supply } from '@proc7ts/primitives';
+import { asis, noop, Supply } from '@proc7ts/primitives';
 import { AfterEvent } from '../after-event';
-import { AfterEvent__symbol, EventReceiver } from '../base';
+import { AfterEvent__symbol, EventReceiver, NoEventsError } from '../base';
 import { onceOn } from '../processors';
 import { EventEmitter } from '../senders';
 import { trackValue, ValueTracker } from '../value';
@@ -95,11 +95,8 @@ describe('afterSupplied', () => {
       afterEvent = afterSupplied(sender);
     });
 
-    it('throws an exception upon receiver registration', () => {
-      expect(() => afterEvent(noop)).toThrow('No events to send');
-    });
-    it('throws an exception when requesting the last event', () => {
-      expect(() => afterEvent.do(onceOn)(noop)).toThrow('No events to send');
+    it('cuts off event supply upon receiver registration', async () => {
+      expect(await afterEvent(noop).whenDone().catch(asis)).toBeInstanceOf(NoEventsError);
     });
   });
 });

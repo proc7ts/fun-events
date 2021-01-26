@@ -1,4 +1,4 @@
-import { neverSupply, noop } from '@proc7ts/primitives';
+import { asis, neverSupply, noop } from '@proc7ts/primitives';
 import { AfterEvent, afterEventBy } from './after-event';
 import { AfterEvent__symbol, EventNotifier, EventReceiver, OnEvent__symbol } from './base';
 import Mock = jest.Mock;
@@ -91,5 +91,14 @@ describe('afterEventBy', () => {
 
     expect(mockReceiver).toHaveBeenCalledWith('fallback');
     expect(recurrentReceiver).toHaveBeenCalledWith('recurrent');
+  });
+  it('cuts off event supply on receiver registration failure', async () => {
+
+    const error = new Error('!!!');
+    const onEvent = afterEventBy(() => {
+      throw error;
+    });
+
+    expect(await onEvent(noop).whenDone().catch(asis)).toBe(error);
   });
 });
