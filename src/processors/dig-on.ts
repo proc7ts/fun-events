@@ -3,7 +3,7 @@
  * @module @proc7ts/fun-events
  */
 import { EventSupplier } from '../base';
-import { eventDig } from '../impl';
+import { digEvents } from '../impl';
 import { OnEvent, onEventBy } from '../on-event';
 import { onSupplied } from '../senders';
 import { shareOn } from './share-on';
@@ -61,5 +61,5 @@ export function digOn_<// eslint-disable-line @typescript-eslint/naming-conventi
     return extracted && onSupplied(extracted);
   };
 
-  return input => onEventBy(eventDig(input, extractSender));
+  return input => onEventBy(digEvents(input, extractSender));
 }

@@ -5,7 +5,7 @@ import { OnEvent } from '../on-event';
 /**
  * @internal
  */
-export function eventDig<
+export function digEvents<
     TInEvent extends any[],
     TOutEvent extends any[],
     >(
@@ -25,21 +25,22 @@ export function eventDig<
         const prevSupply = nestedSupply;
         const extracted = extract(...event);
 
-        try {
-          nestedSupply = extracted
-              ? extracted({
+        nestedSupply = extracted
+            ? extracted({
 
-                supply: new Supply().needs(receiver.supply),
+              supply: new Supply(reason => {
+                if (reason !== digEvents) {
+                  receiver.supply.off(reason);
+                }
+              }).needs(receiver),
 
-                receive(context, ...event: TOutEvent) {
-                  receiver.receive(context, ...event);
-                },
+              receive(context, ...event: TOutEvent) {
+                receiver.receive(context, ...event);
+              },
 
-              })
-              : neverSupply();
-        } finally {
-          prevSupply.off();
-        }
+            })
+            : neverSupply();
+        prevSupply.off(digEvents);
       },
     });
   };
