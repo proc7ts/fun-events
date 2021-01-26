@@ -48,12 +48,14 @@ export interface AfterEvent<TEvent extends any[]> extends OnEvent<TEvent>, Event
  * unless the receiver's {@link EventReceiver.Generic.supply event supply} is cut off already.
  * @param fallback - A function creating fallback event. When omitted, the initial event is expected to be sent by
  * `register` function. A receiver registration would lead to an error otherwise.
+ * @param cleanup - A function that will be called once all registered event supplies cut off.
  *
  * @returns An {@link AfterEvent} keeper registering event receivers with the given `register` function.
  */
 export function afterEventBy<TEvent extends any[]>(
     register: (this: void, receiver: EventReceiver.Generic<TEvent>) => void,
     fallback: (this: void) => TEvent = AfterEvent$noFallback,
+    cleanup: (this: void, reason?: unknown) => void = AfterEvent$noCleanup,
 ): AfterEvent<TEvent> {
 
   let lastEvent: TEvent | undefined;
@@ -68,7 +70,7 @@ export function afterEventBy<TEvent extends any[]>(
       return generic.supply;
     }
 
-    const supply = new Supply().needs(generic.supply);
+    const supply = new Supply().needs(generic);
     let reported = false;
 
     register({
@@ -93,14 +95,15 @@ export function afterEventBy<TEvent extends any[]>(
       dest = (context, ...event) => generic.receive(context, ...event);
     }
 
-    supply.whenOff(reason => {
+    return supply.whenOff(reason => {
       if (!--numReceivers) {
         lastEvent = undefined;
       }
       generic.supply.off(reason);
+      if (!numReceivers) {
+        cleanup(reason);
+      }
     });
-
-    return supply;
   }) as AfterEvent<TEvent>;
 
   afterEvent[OnEvent__symbol] = OnEvent$supplier;
@@ -109,4 +112,8 @@ export function afterEventBy<TEvent extends any[]>(
   afterEvent[AfterEvent__symbol] = OnEvent$supplier;
 
   return afterEvent;
+}
+
+function AfterEvent$noCleanup(_reason: unknown): void {
+  // No-op `AfterEvent` cleanup
 }
