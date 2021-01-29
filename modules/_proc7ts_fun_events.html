@@ -77,6 +77,7 @@
 								<li class="tsd-kind-namespace tsd-parent-kind-module"><a href="_proc7ts_fun_events.eventsender.html" class="tsd-kind-icon">Event<wbr>Sender</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_proc7ts_fun_events.eventemitter.html" class="tsd-kind-icon">Event<wbr>Emitter</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/_proc7ts_fun_events.eventnotifier.html" class="tsd-kind-icon">Event<wbr>Notifier</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/_proc7ts_fun_events.noeventserror.html" class="tsd-kind-icon">No<wbr>Events<wbr>Error</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter"><a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-kind-icon">After<wbr>Event</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter"><a href="../interfaces/_proc7ts_fun_events.eventkeeper-1.html" class="tsd-kind-icon">Event<wbr>Keeper</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter"><a href="../interfaces/_proc7ts_fun_events.eventsender-1.html" class="tsd-kind-icon">Event<wbr>Sender</a></li>
@@ -107,6 +108,8 @@
 							<h3>Event Processing</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_proc7ts_fun_events.html#consumeevents" class="tsd-kind-icon">consume<wbr>Events</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_proc7ts_fun_events.html#deduplicateafter" class="tsd-kind-icon">deduplicate<wbr>After</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_proc7ts_fun_events.html#deduplicateafter_" class="tsd-kind-icon">deduplicate<wbr>After_</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_proc7ts_fun_events.html#digafter" class="tsd-kind-icon">dig<wbr>After</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_proc7ts_fun_events.html#digafter_" class="tsd-kind-icon">dig<wbr>After_</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter"><a href="_proc7ts_fun_events.html#digon" class="tsd-kind-icon">dig<wbr>On</a></li>
@@ -175,7 +178,7 @@
 					<div class="tsd-signature tsd-kind-icon">Event<wbr>Receiver&lt;TEvent&gt;<span class="tsd-signature-symbol">:</span> <a href="_proc7ts_fun_events.eventreceiver.html#function" class="tsd-signature-type" data-tsd-kind="Type alias">Function</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_proc7ts_fun_events.eventreceiver.object.html" class="tsd-signature-type" data-tsd-kind="Interface">Object</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/base/event-receiver.ts#L25">fun-events/src/base/event-receiver.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/base/event-receiver.ts#L25">proc7ts/fun-events/src/base/event-receiver.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -210,7 +213,7 @@
 					<div class="tsd-signature tsd-kind-icon">Event<wbr>Supplier&lt;TEvent&gt;<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_proc7ts_fun_events.eventsender-1.html" class="tsd-signature-type" data-tsd-kind="Interface">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_proc7ts_fun_events.eventkeeper-1.html" class="tsd-signature-type" data-tsd-kind="Interface">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/base/event-supplier.ts#L16">fun-events/src/base/event-supplier.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/base/event-supplier.ts#L16">proc7ts/fun-events/src/base/event-supplier.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -237,7 +240,7 @@
 					<div class="tsd-signature tsd-kind-icon">After<wbr>Event__symbol<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">typeof </span><a href="_proc7ts_fun_events.html#afterevent__symbol" class="tsd-signature-type" data-tsd-kind="Variable">AfterEvent__symbol</a><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/base/event-keeper.ts#L12">fun-events/src/base/event-keeper.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/base/event-keeper.ts#L12">proc7ts/fun-events/src/base/event-keeper.ts:12</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -252,7 +255,7 @@
 					<div class="tsd-signature tsd-kind-icon">On<wbr>Event__symbol<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">typeof </span><a href="_proc7ts_fun_events.html#onevent__symbol" class="tsd-signature-type" data-tsd-kind="Variable">OnEvent__symbol</a><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/base/event-sender.ts#L12">fun-events/src/base/event-sender.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/base/event-sender.ts#L12">proc7ts/fun-events/src/base/event-sender.ts:12</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -267,7 +270,7 @@
 					<div class="tsd-signature tsd-kind-icon">after<wbr>Never<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/keepers/after-never.ts#L13">fun-events/src/keepers/after-never.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/keepers/after-never.ts#L13">proc7ts/fun-events/src/keepers/after-never.ts:13</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -282,7 +285,7 @@
 					<div class="tsd-signature tsd-kind-icon">on<wbr>Never<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_proc7ts_fun_events.onevent.html" class="tsd-signature-type" data-tsd-kind="Interface">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/senders/on-never.ts#L13">fun-events/src/senders/on-never.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/senders/on-never.ts#L13">proc7ts/fun-events/src/senders/on-never.ts:13</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -301,7 +304,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/keepers/after-all.ts#L20">fun-events/src/keepers/after-all.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/keepers/after-all.ts#L20">proc7ts/fun-events/src/keepers/after-all.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -343,7 +346,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/keepers/after-each.ts#L20">fun-events/src/keepers/after-each.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/keepers/after-each.ts#L20">proc7ts/fun-events/src/keepers/after-each.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -379,13 +382,13 @@
 					<a name="aftereventby" class="tsd-anchor"></a>
 					<h3>after<wbr>Event<wbr>By</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">after<wbr>Event<wbr>By&lt;TEvent&gt;<span class="tsd-signature-symbol">(</span>register<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">: </span><a href="../interfaces/_proc7ts_fun_events.eventreceiver.generic.html" class="tsd-signature-type" data-tsd-kind="Interface">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span>, fallback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">after<wbr>Event<wbr>By&lt;TEvent&gt;<span class="tsd-signature-symbol">(</span>register<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, receiver<span class="tsd-signature-symbol">: </span><a href="../interfaces/_proc7ts_fun_events.eventreceiver.generic.html" class="tsd-signature-type" data-tsd-kind="Interface">Generic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span>, fallback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TEvent</span>, cleanup<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, reason<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/after-event.ts#L54">fun-events/src/after-event.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/after-event.ts#L55">proc7ts/fun-events/src/after-event.ts:55</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -459,6 +462,33 @@
 										</li>
 									</ul>
 								</li>
+								<li>
+									<h5>cleanup: <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, reason<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> = ...</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A function that will be called once all registered event supplies cut off.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, reason<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>this: <span class="tsd-signature-type">void</span></h5>
+														</li>
+														<li>
+															<h5><span class="tsd-flag ts-flagOptional">Optional</span> reason: <span class="tsd-signature-type">unknown</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h4>
 							<p>An <a href="../interfaces/_proc7ts_fun_events.afterevent.html">AfterEvent</a> keeper registering event receivers with the given <code>register</code> function.</p>
@@ -475,7 +505,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/keepers/after-sent.ts#L22">fun-events/src/keepers/after-sent.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/keepers/after-sent.ts#L22">proc7ts/fun-events/src/keepers/after-sent.ts:22</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -544,7 +574,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/keepers/after-supplied.ts#L18">fun-events/src/keepers/after-supplied.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/keepers/after-supplied.ts#L18">proc7ts/fun-events/src/keepers/after-supplied.ts:18</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -576,7 +606,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/keepers/after-supplied.ts#L34">fun-events/src/keepers/after-supplied.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/keepers/after-supplied.ts#L34">proc7ts/fun-events/src/keepers/after-supplied.ts:34</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -644,7 +674,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/keepers/after-the.ts#L17">fun-events/src/keepers/after-the.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/keepers/after-the.ts#L17">proc7ts/fun-events/src/keepers/after-the.ts:17</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -685,7 +715,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/base/event-receiver.ts#L127">fun-events/src/base/event-receiver.ts:127</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/base/event-receiver.ts#L127">proc7ts/fun-events/src/base/event-receiver.ts:127</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -727,7 +757,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/base/event-keeper.ts#L57">fun-events/src/base/event-keeper.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/base/event-keeper.ts#L57">proc7ts/fun-events/src/base/event-keeper.ts:57</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -768,7 +798,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/base/event-sender.ts#L56">fun-events/src/base/event-sender.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/base/event-sender.ts#L56">proc7ts/fun-events/src/base/event-sender.ts:56</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -809,7 +839,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/senders/on-any.ts#L23">fun-events/src/senders/on-any.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/senders/on-any.ts#L23">proc7ts/fun-events/src/senders/on-any.ts:23</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -851,7 +881,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/on-event.ts#L318">fun-events/src/on-event.ts:318</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/on-event.ts#L318">proc7ts/fun-events/src/on-event.ts:318</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -914,7 +944,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/senders/on-promise.ts#L23">fun-events/src/senders/on-promise.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/senders/on-promise.ts#L23">proc7ts/fun-events/src/senders/on-promise.ts:23</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -958,7 +988,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/senders/on-supplied.ts#L17">fun-events/src/senders/on-supplied.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/senders/on-supplied.ts#L17">proc7ts/fun-events/src/senders/on-supplied.ts:17</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -999,7 +1029,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/base/send-events-to.ts#L19">fun-events/src/base/send-events-to.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/base/send-events-to.ts#L19">proc7ts/fun-events/src/base/send-events-to.ts:19</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1064,7 +1094,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/consume-events.ts#L19">fun-events/src/processors/consume-events.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/consume-events.ts#L19">proc7ts/fun-events/src/processors/consume-events.ts:19</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1140,6 +1170,244 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="deduplicateafter" class="tsd-anchor"></a>
+					<h3>deduplicate<wbr>After</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">deduplicate<wbr>After&lt;TEvent&gt;<span class="tsd-signature-symbol">(</span>isDuplicate<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, prior<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span>, preserve<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, input<span class="tsd-signature-symbol">: </span><a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/deduplicate-after.ts#L26">proc7ts/fun-events/src/processors/deduplicate-after.ts:26</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates an event processor that ensures the same event incoming from `<a href="../interfaces/_proc7ts_fun_events.afterevent.html">AfterEvent</a> keeper are not reported
+									twice.</p>
+								</div>
+								<p>The outgoing events supply is cut off once the incoming events supply do.</p>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>TEvent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
+									<div class="tsd-comment tsd-typography">
+										<p>An event type.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> isDuplicate: <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, prior<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A function that checks whether the next incoming event is a duplicate of a previously reported
+											one. Accepts a prior and next event tuples as parameters, and returns a truthy value if they are duplicates.
+											By default, treats event tuples as duplicates if they have the same number of elements, and each element is
+										strictly equals to corresponding one.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, prior<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>this: <span class="tsd-signature-type">void</span></h5>
+														</li>
+														<li>
+															<h5>prior: <span class="tsd-signature-type">TEvent</span></h5>
+														</li>
+														<li>
+															<h5>next: <span class="tsd-signature-type">TEvent</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> preserve: <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TEvent</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A function that constructs a preserved event tuple. Accepts an event tuple and returns one to
+										preserve and compare next time. By default, returns an event as is.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>this: <span class="tsd-signature-type">void</span></h5>
+														</li>
+														<li>
+															<h5>value: <span class="tsd-signature-type">TEvent</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TEvent</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, input<span class="tsd-signature-symbol">: </span><a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Deduplicating processor of events incoming from {@link @AfterEvent} keeper.</p>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-signature">
+									<ul class="tsd-signatures tsd-kind-type-literal">
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, input<span class="tsd-signature-symbol">: </span><a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></li>
+									</ul>
+									<ul class="tsd-descriptions">
+										<li class="tsd-description">
+											<h4 class="tsd-parameters-title">Parameters</h4>
+											<ul class="tsd-parameters">
+												<li>
+													<h5>this: <span class="tsd-signature-type">void</span></h5>
+												</li>
+												<li>
+													<h5>input: <a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h5>
+												</li>
+											</ul>
+											<h4 class="tsd-returns-title">Returns <a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h4>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="deduplicateafter_" class="tsd-anchor"></a>
+					<h3>deduplicate<wbr>After_</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">deduplicate<wbr>After_&lt;TEvent&gt;<span class="tsd-signature-symbol">(</span>isDuplicate<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, prior<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span>, preserve<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, input<span class="tsd-signature-symbol">: </span><a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/deduplicate-after.ts#L66">proc7ts/fun-events/src/processors/deduplicate-after.ts:66</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates an event processor that ensures the same event incoming from `<a href="../interfaces/_proc7ts_fun_events.afterevent.html">AfterEvent</a> keeper are not reported
+									twice, and does not share the outgoing events supply.</p>
+								</div>
+								<p>The outgoing events supply is cut off once the incoming events supply do.</p>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>TEvent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
+									<div class="tsd-comment tsd-typography">
+										<p>An event type.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> isDuplicate: <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, prior<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A function that checks whether the next incoming event is a duplicate of a previously reported
+											one. Accepts a prior and next event tuples as parameters, and returns a truthy value if they are duplicates.
+											By default, treats event tuples as duplicates if they have the same number of elements, and each element is
+										strictly equals to corresponding one.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, prior<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>this: <span class="tsd-signature-type">void</span></h5>
+														</li>
+														<li>
+															<h5>prior: <span class="tsd-signature-type">TEvent</span></h5>
+														</li>
+														<li>
+															<h5>next: <span class="tsd-signature-type">TEvent</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> preserve: <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TEvent</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A function that constructs a preserved event tuple. Accepts an event tuple and returns one to
+										preserve and compare next time. By default, returns an event as is.</p>
+									</div>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>this: <span class="tsd-signature-type">void</span></h5>
+														</li>
+														<li>
+															<h5>value: <span class="tsd-signature-type">TEvent</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TEvent</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, input<span class="tsd-signature-symbol">: </span><a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>Deduplicating processor of events incoming from {@link @AfterEvent} keeper.</p>
+							<ul class="tsd-parameters">
+								<li class="tsd-parameter-signature">
+									<ul class="tsd-signatures tsd-kind-type-literal">
+										<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, input<span class="tsd-signature-symbol">: </span><a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></li>
+									</ul>
+									<ul class="tsd-descriptions">
+										<li class="tsd-description">
+											<h4 class="tsd-parameters-title">Parameters</h4>
+											<ul class="tsd-parameters">
+												<li>
+													<h5>this: <span class="tsd-signature-type">void</span></h5>
+												</li>
+												<li>
+													<h5>input: <a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h5>
+												</li>
+											</ul>
+											<h4 class="tsd-returns-title">Returns <a href="../interfaces/_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h4>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 					<a name="digafter" class="tsd-anchor"></a>
 					<h3>dig<wbr>After</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
@@ -1149,7 +1417,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/dig-after.ts#L24">fun-events/src/processors/dig-after.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/dig-after.ts#L24">proc7ts/fun-events/src/processors/dig-after.ts:24</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1240,7 +1508,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/dig-after.ts#L50">fun-events/src/processors/dig-after.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/dig-after.ts#L50">proc7ts/fun-events/src/processors/dig-after.ts:50</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1332,7 +1600,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/dig-on.ts#L24">fun-events/src/processors/dig-on.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/dig-on.ts#L24">proc7ts/fun-events/src/processors/dig-on.ts:24</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1423,7 +1691,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/dig-on.ts#L50">fun-events/src/processors/dig-on.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/dig-on.ts#L50">proc7ts/fun-events/src/processors/dig-on.ts:50</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1516,7 +1784,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/filter-on.ts#L20">fun-events/src/processors/filter-on.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/filter-on.ts#L20">proc7ts/fun-events/src/processors/filter-on.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1597,7 +1865,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/filter-on.ts#L34">fun-events/src/processors/filter-on.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/filter-on.ts#L34">proc7ts/fun-events/src/processors/filter-on.ts:34</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1682,7 +1950,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/filter-on.ts#L20">fun-events/src/processors/filter-on.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/filter-on.ts#L20">proc7ts/fun-events/src/processors/filter-on.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1763,7 +2031,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/filter-on.ts#L34">fun-events/src/processors/filter-on.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/filter-on.ts#L34">proc7ts/fun-events/src/processors/filter-on.ts:34</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1848,7 +2116,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/filter-on.ts#L59">fun-events/src/processors/filter-on.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/filter-on.ts#L59">proc7ts/fun-events/src/processors/filter-on.ts:59</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1930,7 +2198,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/filter-on.ts#L74">fun-events/src/processors/filter-on.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/filter-on.ts#L74">proc7ts/fun-events/src/processors/filter-on.ts:74</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2016,7 +2284,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/filter-on.ts#L59">fun-events/src/processors/filter-on.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/filter-on.ts#L59">proc7ts/fun-events/src/processors/filter-on.ts:59</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2098,7 +2366,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/filter-on.ts#L74">fun-events/src/processors/filter-on.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/filter-on.ts#L74">proc7ts/fun-events/src/processors/filter-on.ts:74</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2184,7 +2452,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/map-after.ts#L21">fun-events/src/processors/map-after.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/map-after.ts#L21">proc7ts/fun-events/src/processors/map-after.ts:21</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2265,7 +2533,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/map-after.ts#L37">fun-events/src/processors/map-after.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/map-after.ts#L37">proc7ts/fun-events/src/processors/map-after.ts:37</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2374,7 +2642,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/map-after.ts#L21">fun-events/src/processors/map-after.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/map-after.ts#L21">proc7ts/fun-events/src/processors/map-after.ts:21</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2455,7 +2723,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/map-after.ts#L37">fun-events/src/processors/map-after.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/map-after.ts#L37">proc7ts/fun-events/src/processors/map-after.ts:37</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2564,7 +2832,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/map-after.ts#L63">fun-events/src/processors/map-after.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/map-after.ts#L63">proc7ts/fun-events/src/processors/map-after.ts:63</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2645,7 +2913,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/map-after.ts#L79">fun-events/src/processors/map-after.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/map-after.ts#L79">proc7ts/fun-events/src/processors/map-after.ts:79</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2754,7 +3022,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/map-after.ts#L63">fun-events/src/processors/map-after.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/map-after.ts#L63">proc7ts/fun-events/src/processors/map-after.ts:63</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2835,7 +3103,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/map-after.ts#L79">fun-events/src/processors/map-after.ts:79</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/map-after.ts#L79">proc7ts/fun-events/src/processors/map-after.ts:79</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2943,7 +3211,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/map-on.ts#L20">fun-events/src/processors/map-on.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/map-on.ts#L20">proc7ts/fun-events/src/processors/map-on.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3033,7 +3301,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/map-on.ts#L40">fun-events/src/processors/map-on.ts:40</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/map-on.ts#L40">proc7ts/fun-events/src/processors/map-on.ts:40</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3123,7 +3391,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/once-after.ts#L19">fun-events/src/processors/once-after.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/once-after.ts#L19">proc7ts/fun-events/src/processors/once-after.ts:19</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3165,7 +3433,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/once-on.ts#L20">fun-events/src/processors/once-on.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/once-on.ts#L20">proc7ts/fun-events/src/processors/once-on.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3207,7 +3475,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/resolve-on.ts#L23">fun-events/src/processors/resolve-on.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/resolve-on.ts#L23">proc7ts/fun-events/src/processors/resolve-on.ts:23</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3252,7 +3520,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/resolve-on-ordered.ts#L28">fun-events/src/processors/resolve-on-ordered.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/resolve-on-ordered.ts#L28">proc7ts/fun-events/src/processors/resolve-on-ordered.ts:28</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3298,7 +3566,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/share-after.ts#L22">fun-events/src/processors/share-after.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/share-after.ts#L22">proc7ts/fun-events/src/processors/share-after.ts:22</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3343,7 +3611,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/share-on.ts#L22">fun-events/src/processors/share-on.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/share-on.ts#L22">proc7ts/fun-events/src/processors/share-on.ts:22</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3388,7 +3656,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/supply-after.ts#L24">fun-events/src/processors/supply-after.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/supply-after.ts#L24">proc7ts/fun-events/src/processors/supply-after.ts:24</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3460,7 +3728,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/supply-on.ts#L24">fun-events/src/processors/supply-on.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/supply-on.ts#L24">proc7ts/fun-events/src/processors/supply-on.ts:24</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3533,7 +3801,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/translate-after.ts#L27">fun-events/src/processors/translate-after.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/translate-after.ts#L27">proc7ts/fun-events/src/processors/translate-after.ts:27</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3639,7 +3907,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/translate-after.ts#L52">fun-events/src/processors/translate-after.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/translate-after.ts#L52">proc7ts/fun-events/src/processors/translate-after.ts:52</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3779,7 +4047,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/translate-after.ts#L27">fun-events/src/processors/translate-after.ts:27</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/translate-after.ts#L27">proc7ts/fun-events/src/processors/translate-after.ts:27</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -3885,7 +4153,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/translate-after.ts#L52">fun-events/src/processors/translate-after.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/translate-after.ts#L52">proc7ts/fun-events/src/processors/translate-after.ts:52</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4025,7 +4293,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/translate-after.ts#L91">fun-events/src/processors/translate-after.ts:91</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/translate-after.ts#L91">proc7ts/fun-events/src/processors/translate-after.ts:91</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4132,7 +4400,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/translate-after.ts#L117">fun-events/src/processors/translate-after.ts:117</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/translate-after.ts#L117">proc7ts/fun-events/src/processors/translate-after.ts:117</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4273,7 +4541,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/translate-after.ts#L91">fun-events/src/processors/translate-after.ts:91</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/translate-after.ts#L91">proc7ts/fun-events/src/processors/translate-after.ts:91</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4380,7 +4648,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/translate-after.ts#L117">fun-events/src/processors/translate-after.ts:117</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/translate-after.ts#L117">proc7ts/fun-events/src/processors/translate-after.ts:117</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4520,7 +4788,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/translate-on.ts#L22">fun-events/src/processors/translate-on.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/translate-on.ts#L22">proc7ts/fun-events/src/processors/translate-on.ts:22</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4632,7 +4900,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/translate-on.ts#L48">fun-events/src/processors/translate-on.ts:48</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/translate-on.ts#L48">proc7ts/fun-events/src/processors/translate-on.ts:48</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4746,7 +5014,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/value-after.ts#L23">fun-events/src/processors/value-after.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/value-after.ts#L23">proc7ts/fun-events/src/processors/value-after.ts:23</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4828,7 +5096,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/value-after.ts#L41">fun-events/src/processors/value-after.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/value-after.ts#L41">proc7ts/fun-events/src/processors/value-after.ts:41</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -4944,7 +5212,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/value-after.ts#L23">fun-events/src/processors/value-after.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/value-after.ts#L23">proc7ts/fun-events/src/processors/value-after.ts:23</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5026,7 +5294,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/value-after.ts#L41">fun-events/src/processors/value-after.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/value-after.ts#L41">proc7ts/fun-events/src/processors/value-after.ts:41</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5142,7 +5410,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/value-after.ts#L68">fun-events/src/processors/value-after.ts:68</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/value-after.ts#L68">proc7ts/fun-events/src/processors/value-after.ts:68</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5224,7 +5492,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/value-after.ts#L85">fun-events/src/processors/value-after.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/value-after.ts#L85">proc7ts/fun-events/src/processors/value-after.ts:85</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5340,7 +5608,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/value-after.ts#L68">fun-events/src/processors/value-after.ts:68</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/value-after.ts#L68">proc7ts/fun-events/src/processors/value-after.ts:68</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5422,7 +5690,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/value-after.ts#L85">fun-events/src/processors/value-after.ts:85</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/value-after.ts#L85">proc7ts/fun-events/src/processors/value-after.ts:85</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5537,7 +5805,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/value-on.ts#L22">fun-events/src/processors/value-on.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/value-on.ts#L22">proc7ts/fun-events/src/processors/value-on.ts:22</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5628,7 +5896,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/processors/value-on.ts#L42">fun-events/src/processors/value-on.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/processors/value-on.ts#L42">proc7ts/fun-events/src/processors/value-on.ts:42</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5717,7 +5985,7 @@
 					<div class="tsd-signature tsd-kind-icon">State<wbr>Path<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PropertyKey</span><span class="tsd-signature-symbol"> | </span><a href="_proc7ts_fun_events.statepath.html#normalized" class="tsd-signature-type" data-tsd-kind="Type alias">Normalized</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/state/state-path.ts#L16">fun-events/src/state/state-path.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/state/state-path.ts#L16">proc7ts/fun-events/src/state/state-path.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -5735,7 +6003,7 @@
 					<div class="tsd-signature tsd-kind-icon">State<wbr>Update<wbr>Receiver<span class="tsd-signature-symbol">:</span> <a href="_proc7ts_fun_events.stateupdatereceiver.html#function" class="tsd-signature-type" data-tsd-kind="Type alias">Function</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_proc7ts_fun_events.stateupdatereceiver.object.html" class="tsd-signature-type" data-tsd-kind="Interface">Object</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/state/state-update-receiver.ts#L15">fun-events/src/state/state-update-receiver.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/state/state-update-receiver.ts#L15">proc7ts/fun-events/src/state/state-update-receiver.ts:15</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -5756,7 +6024,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/state/state-path.ts#L41">fun-events/src/state/state-path.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/state/state-path.ts#L41">proc7ts/fun-events/src/state/state-path.ts:41</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5788,7 +6056,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/state/state-path.ts#L50">fun-events/src/state/state-path.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/state/state-path.ts#L50">proc7ts/fun-events/src/state/state-path.ts:50</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5824,7 +6092,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/value/track-value.ts#L54">fun-events/src/value/track-value.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/value/track-value.ts#L54">proc7ts/fun-events/src/value/track-value.ts:54</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5853,7 +6121,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/value/track-value.ts#L63">fun-events/src/value/track-value.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/value/track-value.ts#L63">proc7ts/fun-events/src/value/track-value.ts:63</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5892,7 +6160,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/value/track-value.ts#L83">fun-events/src/value/track-value.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/value/track-value.ts#L83">proc7ts/fun-events/src/value/track-value.ts:83</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -5924,7 +6192,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/6d43e88/src/value/track-value.ts#L100">fun-events/src/value/track-value.ts:100</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/4c49b5b/src/value/track-value.ts#L100">proc7ts/fun-events/src/value/track-value.ts:100</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -6013,6 +6281,9 @@
 						<a href="../classes/_proc7ts_fun_events.eventnotifier.html" class="tsd-kind-icon">Event<wbr>Notifier</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/_proc7ts_fun_events.noeventserror.html" class="tsd-kind-icon">No<wbr>Events<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/_proc7ts_fun_events.statetracker.html" class="tsd-kind-icon">State<wbr>Tracker</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
@@ -6080,6 +6351,12 @@
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_proc7ts_fun_events.html#consumeevents" class="tsd-kind-icon">consume<wbr>Events</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="_proc7ts_fun_events.html#deduplicateafter" class="tsd-kind-icon">deduplicate<wbr>After</a>
+					</li>
+					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="_proc7ts_fun_events.html#deduplicateafter_" class="tsd-kind-icon">deduplicate<wbr>After_</a>
 					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_proc7ts_fun_events.html#digafter" class="tsd-kind-icon">dig<wbr>After</a>
