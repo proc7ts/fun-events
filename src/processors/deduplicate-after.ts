@@ -1,3 +1,4 @@
+import { asis } from '@proc7ts/primitives';
 import { AfterEvent, afterEventBy } from '../after-event';
 import { shareAfter } from './share-after';
 
@@ -17,22 +18,26 @@ let deduplicateAfter$default:// eslint-disable-line @typescript-eslint/naming-co
  * one. Accepts a prior and next event tuples as parameters, and returns a truthy value if they are duplicates.
  * By default, treats event tuples as duplicates if they have the same number of elements, and each element is
  * strictly equals to corresponding one.
+ * @param preserve - A function that constructs a preserved event tuple. Accepts an event tuple and returns one to
+ * preserve and compare next time. By default, returns an event as is.
  *
  * @returns Deduplicating processor of events incoming from {@link @AfterEvent} keeper.
  */
 export function deduplicateAfter<TEvent extends any[]>(
     isDuplicate?: (this: void, prior: TEvent, next: TEvent) => boolean,
+    preserve?: (this: void, value: TEvent) => TEvent,
 ): (this: void, input: AfterEvent<TEvent>) => AfterEvent<TEvent> {
-  return isDuplicate
-      ? deduplicateAfter$create(isDuplicate)
+  return isDuplicate || preserve
+      ? deduplicateAfter$create(isDuplicate, preserve)
       : (deduplicateAfter$default || (deduplicateAfter$default = deduplicateAfter$create()));
 }
 
 function deduplicateAfter$create<TEvent extends any[]>(
     isDuplicate?: (this: void, prior: TEvent, next: TEvent) => boolean,
+    preserve?: (this: void, value: TEvent) => TEvent,
 ): (this: void, input: AfterEvent<TEvent>) => AfterEvent<TEvent> {
 
-  const processor = deduplicateAfter_(isDuplicate);
+  const processor = deduplicateAfter_(isDuplicate, preserve);
 
   return input => shareAfter(processor(input));
 }
@@ -53,22 +58,24 @@ let deduplicateAfter_$default:// eslint-disable-line @typescript-eslint/naming-c
  * one. Accepts a prior and next event tuples as parameters, and returns a truthy value if they are duplicates.
  * By default, treats event tuples as duplicates if they have the same number of elements, and each element is
  * strictly equals to corresponding one.
+ * @param preserve - A function that constructs a preserved event tuple. Accepts an event tuple and returns one to
+ * preserve and compare next time. By default, returns an event as is.
  *
  * @returns Deduplicating processor of events incoming from {@link @AfterEvent} keeper.
  */
 export function deduplicateAfter_<TEvent extends any[]>(// eslint-disable-line @typescript-eslint/naming-convention
     isDuplicate?: (this: void, prior: TEvent, next: TEvent) => boolean,
+    preserve?: (this: void, value: TEvent) => TEvent,
 ): (this: void, input: AfterEvent<TEvent>) => AfterEvent<TEvent> {
-  return isDuplicate
-      ? deduplicateAfter_$create(isDuplicate)
-      : (deduplicateAfter_$default || (deduplicateAfter_$default = deduplicateAfter_$create(
-          deduplicateAfter$isDuplicate,
-      ))
+  return isDuplicate || preserve
+      ? deduplicateAfter_$create(isDuplicate, preserve)
+      : (deduplicateAfter_$default || (deduplicateAfter_$default = deduplicateAfter_$create())
   );
 }
 
 function deduplicateAfter_$create<TEvent extends any[]>(// eslint-disable-line @typescript-eslint/naming-convention
-    isDuplicate: (this: void, prior: TEvent, next: TEvent) => boolean,
+    isDuplicate: (this: void, prior: TEvent, next: TEvent) => boolean = deduplicateAfter$isDuplicate,
+    preserve: (this: void, value: TEvent) => TEvent = asis,
 ): (this: void, input: AfterEvent<TEvent>) => AfterEvent<TEvent> {
   return input => {
 
@@ -80,7 +87,7 @@ function deduplicateAfter_$create<TEvent extends any[]>(// eslint-disable-line @
             supply: receiver.supply,
             receive(ctx, ...next) {
               if (!prior || !isDuplicate(prior, next)) {
-                prior = next;
+                prior = preserve(next);
                 receiver.receive(ctx, ...next);
               }
             },

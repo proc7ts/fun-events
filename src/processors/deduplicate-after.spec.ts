@@ -78,5 +78,7 @@ describe('deduplicateAfter', () => {
 
     expect(deduplicateAfter(isDuplicate)).not.toBe(deduplicateAfter(isDuplicate));
     expect(deduplicateAfter_(isDuplicate)).not.toBe(deduplicateAfter_(isDuplicate));
+    expect(deduplicateAfter(undefined, asis)).not.toBe(deduplicateAfter(isDuplicate));
+    expect(deduplicateAfter_(undefined, asis)).not.toBe(deduplicateAfter_(isDuplicate));
   });
 });
