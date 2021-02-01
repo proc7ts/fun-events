@@ -44,7 +44,7 @@
     }
   },
   "dependencies": {
-    "@proc7ts/primitives": "^1.6.1"
+    "@proc7ts/primitives": "^1.7.0"
   },
   "devDependencies": {
     "@proc7ts/call-thru": "^4.3.1",
