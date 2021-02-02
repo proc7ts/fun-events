@@ -47,7 +47,24 @@ describe('deduplicateAfter', () => {
     expect(receiver).toHaveBeenLastCalledWith('update', '2');
     expect(receiver).toHaveBeenCalledTimes(3);
   });
-  it('reports updates after cutting off', async () => {
+  it('finds similarities by event cues', () => {
+    dedup = afterSent<[string?, string?]>(
+        source,
+        () => [],
+    ).do(
+        deduplicateAfter((a, b) => a === b, ([a]) => a),
+    );
+    supply = dedup(receiver = jest.fn());
+
+    source.send('update', '1');
+    source.send('update', '2');
+    source.send('update2', '2');
+    expect(receiver).toHaveBeenCalledWith('update', '1');
+    expect(receiver).not.toHaveBeenCalledWith('update', '2');
+    expect(receiver).toHaveBeenLastCalledWith('update2', '2');
+    expect(receiver).toHaveBeenCalledTimes(3);
+  });
+  it('reports updates to another receiver after cutting off', async () => {
     source.send('update');
     supply.off();
 
@@ -78,7 +95,7 @@ describe('deduplicateAfter', () => {
 
     expect(deduplicateAfter(isDuplicate)).not.toBe(deduplicateAfter(isDuplicate));
     expect(deduplicateAfter_(isDuplicate)).not.toBe(deduplicateAfter_(isDuplicate));
-    expect(deduplicateAfter(undefined, asis)).not.toBe(deduplicateAfter(isDuplicate));
-    expect(deduplicateAfter_(undefined, asis)).not.toBe(deduplicateAfter_(isDuplicate));
+    expect(deduplicateAfter<[boolean], [boolean]>(undefined!, asis)).not.toBe(deduplicateAfter(isDuplicate));
+    expect(deduplicateAfter_<[boolean], [boolean]>(undefined!, asis)).not.toBe(deduplicateAfter_(isDuplicate));
   });
 });
