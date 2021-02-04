@@ -118,7 +118,7 @@ export function deduplicateAfter_<// eslint-disable-line @typescript-eslint/nami
   return isSimilar || getCue
       ? deduplicateAfter_$create(isSimilar, getCue)
       : (deduplicateAfter_$default || (deduplicateAfter_$default = deduplicateAfter_$create())
-  );
+      );
 }
 
 const deduplicateAfter$noPrior = {/* magic value meaning there is no cue */};
@@ -135,20 +135,18 @@ function deduplicateAfter_$create<// eslint-disable-line @typescript-eslint/nami
     let prior: TCue | typeof deduplicateAfter$noPrior = deduplicateAfter$noPrior;
 
     return afterEventBy(
-        receiver => {
-          input({
-            supply: receiver.supply,
-            receive(ctx, ...nextEvent) {
+        ({ supply, receive }) => input({
+          supply,
+          receive(ctx, ...nextEvent) {
 
-              const next = getCue(nextEvent);
+            const next = getCue(nextEvent);
 
-              if (prior === deduplicateAfter$noPrior || !isSimilar(prior as TCue, next)) {
-                prior = next;
-                receiver.receive(ctx, ...nextEvent);
-              }
-            },
-          });
-        },
+            if (prior === deduplicateAfter$noPrior || !isSimilar(prior as TCue, next)) {
+              prior = next;
+              receive(ctx, ...nextEvent);
+            }
+          },
+        }),
         undefined,
         _ => prior = deduplicateAfter$noPrior,
     );

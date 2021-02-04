@@ -3,7 +3,7 @@
  * @module @proc7ts/fun-events
  */
 import { Supply } from '@proc7ts/primitives';
-import { EventReceiver, EventSupplier } from '../base';
+import { EventSupplier } from '../base';
 import { shareEvents } from '../impl';
 import { OnEvent, onEventBy } from '../on-event';
 import { onNever } from './on-never';
@@ -25,17 +25,13 @@ export function onAny<TEvent extends any[]>(...suppliers: EventSupplier<TEvent>[
     return onNever as OnEvent<TEvent>;
   }
 
-  return onEventBy(shareEvents(onEventBy<TEvent>(receiver => {
+  return onEventBy(shareEvents(onEventBy<TEvent>(({ supply, receive }) => {
 
-    const { supply } = receiver;
     let remained = suppliers.length;
     const removeSupplier = (reason?: any): void => {
       if (!--remained) {
         supply.off(reason);
       }
-    };
-    const receive = (context: EventReceiver.Context<TEvent>, ...event: TEvent): void => {
-      receiver.receive(context, ...event);
     };
 
     suppliers.forEach(

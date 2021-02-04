@@ -78,7 +78,7 @@ export function resolveOnOrdered<TEvent>(
 
           dispatch(...(toSend as [TEvent, ...TEvent[]]));
           if (!numInProcess && sourceSupply.isOff) {
-            receiver.supply.needs(sourceSupply);
+            supply.needs(sourceSupply);
           }
         }
       },

@@ -7,12 +7,12 @@ import { OnEvent } from '../on-event';
 export function onceEvent<TEvent extends any[]>(
     supplier: OnEvent<TEvent>,
 ): (receiver: EventReceiver.Generic<TEvent>) => void {
-  return (receiver: EventReceiver.Generic<TEvent>): void => {
+  return ({ supply, receive }: EventReceiver.Generic<TEvent>): void => {
     supplier({
-      supply: receiver.supply,
+      supply,
       receive: (context, ...event) => {
-        receiver.receive(context, ...event);
-        receiver.supply.off();
+        receive(context, ...event);
+        supply.off();
       },
     });
   };

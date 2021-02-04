@@ -14,7 +14,7 @@ export function supplyEvents<TEvent extends any[]>(
     if (dependentSupply) {
       supplier({
         supply: new Supply().needs(required).cuts(dependentSupply),
-        receive: (receiver.receive as (...args: any[]) => void).bind(receiver),
+        receive: receiver.receive,
       });
     } else {
       receiver.supply.needs(required);

@@ -12,13 +12,13 @@ export function digEvents<
     input: OnEvent<TInEvent>,
     extract: (this: void, ...event: TInEvent) => OnEvent<TOutEvent> | void | undefined,
 ): (receiver: EventReceiver.Generic<TOutEvent>) => void {
-  return (receiver: EventReceiver.Generic<TOutEvent>) => {
+  return ({ supply, receive }: EventReceiver.Generic<TOutEvent>) => {
 
     let nestedSupply = neverSupply();
 
     input({
 
-      supply: receiver.supply,
+      supply,
 
       receive: (_context, ...event: TInEvent) => {
 
@@ -30,13 +30,11 @@ export function digEvents<
 
               supply: new Supply(reason => {
                 if (reason !== digEvents) {
-                  receiver.supply.off(reason);
+                  supply.off(reason);
                 }
-              }).needs(receiver),
+              }).needs(supply),
 
-              receive(context, ...event: TOutEvent) {
-                receiver.receive(context, ...event);
-              },
+              receive,
 
             })
             : neverSupply();
