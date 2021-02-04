@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module @proc7ts/fun-events
  */
-import { noop, Supply } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/primitives';
 
 /**
  * Event receiver is called on each event sent by {@link EventSender} when registered.
@@ -79,7 +79,25 @@ export namespace EventReceiver {
    */
   export interface Generic<TEvent extends any[]> extends Object<TEvent> {
 
+    /**
+     * Event supply to this receiver.
+     *
+     * Events will be supplied to this receiver until this supply is {@link Supply.off cut off}.
+     */
     readonly supply: Supply;
+
+    /**
+     * Receives an event.
+     *
+     * This method does not require a `this` context. So it is possible to deconstruct the event receiver like this:
+     * ```typescript
+     * const { supply, receive } = eventReceiver(receiver);
+     * ```
+     *
+     * @param context - An event processing context.
+     * @param event - An event represented as the rest of arguments.
+     */
+    receive(this: void, context: Context<TEvent>, ...event: TEvent): void;
 
   }
 
@@ -126,34 +144,36 @@ export namespace EventReceiver {
  */
 export function eventReceiver<TEvent extends any[]>(receiver: EventReceiver<TEvent>): EventReceiver.Generic<TEvent> {
 
-  let generic: EventReceiver.Generic<TEvent>;
+  let supply: Supply;
+  let receive: (context: EventReceiver.Context<TEvent>, ...event: TEvent) => void;
 
   if (typeof receiver === 'function') {
-    generic = {
-      supply: new Supply(),
-      receive(_context, ...event) {
-        receiver(...event);
-      },
-    };
+    supply = new Supply();
+    receive = (_context, ...event) => receiver(...event);
   } else {
-
-    const { supply = new Supply() } = receiver;
-
-    generic = {
-      supply,
-      receive(context, ...event) {
-        if (!supply.isOff) {
-          // Supply cut off callback may be called before the receiver disabled.
-          // Such callback may send an event that should not be received.
-          receiver.receive(context, ...event);
-        }
-      },
+    supply = receiver.supply || new Supply();
+    receive = (context, ...event) => {
+      if (!supply.isOff) {
+        // Supply cut off callback may be called before the receiver disabled.
+        // Such callback may send an event that should not be received.
+        receiver.receive(context, ...event);
+      }
     };
   }
 
   // Disable receiver when event supply is cut off. But see the comment above.
   // For function receiver this callback is always the first one.
-  generic.supply.whenOff(() => generic.receive = noop);
+  supply.whenOff(() => receive = EventReceiver$doDonReceive);
 
-  return generic;
+  return {
+    supply,
+    receive: (context, ...event) => receive(context, ...event),
+  };
+}
+
+function EventReceiver$doDonReceive<TEvent extends any[]>(
+    _context: EventReceiver.Context<TEvent>,
+    ..._event: TEvent
+): void {
+  // Do not receive event.
 }

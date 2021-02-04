@@ -45,10 +45,11 @@ describe('EventReceiver', () => {
     it('disables event reception when event supply cut off', () => {
 
       const receiver = jest.fn();
-      const generic = eventReceiver<[string, string]>(receiver);
+      const { supply, receive } = eventReceiver<[string, string]>(receiver);
 
-      generic.supply.off();
-      expect(generic.receive).toBe(noop);
+      supply.off();
+      receive({} as any, 'test', 'test');
+      expect(receiver).not.toHaveBeenCalled();
     });
     it('prevents event reception during event supply cut off', () => {
 
@@ -62,6 +63,15 @@ describe('EventReceiver', () => {
       generic = eventReceiver(receiver);
       generic.supply.off();
       expect(receiver.receive).not.toHaveBeenCalled();
+    });
+    it('prevents receiver call during event supply cut off', () => {
+
+      const receiver = jest.fn();
+      const { supply, receive } = eventReceiver(receiver);
+
+      supply.whenOff(() => receive(context, 'foo', 'bar'));
+      supply.off();
+      expect(receiver).not.toHaveBeenCalled();
     });
   });
 });
