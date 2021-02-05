@@ -119,7 +119,7 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="_proc7ts_fun_events.eventreceiver.generic.html#receive" class="tsd-kind-icon">receive</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="_proc7ts_fun_events.eventreceiver.generic.html#receive" class="tsd-kind-icon">receive</a></li>
 							</ul>
 						</section>
 					</div>
@@ -134,31 +134,40 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="_proc7ts_fun_events.eventreceiver.object.html">Object</a>.<a href="_proc7ts_fun_events.eventreceiver.object.html#supply">supply</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/c2d6808/src/base/event-receiver.ts#L82">proc7ts/fun-events/src/base/event-receiver.ts:82</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/base/event-receiver.ts#L87">proc7ts/fun-events/src/base/event-receiver.ts:87</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Event supply to this receiver.</p>
+						</div>
+						<p>Events will be supplied to this receiver until this supply is {@link Supply.off cut off}.</p>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
 					<a name="receive" class="tsd-anchor"></a>
 					<h3>receive</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
 						<li class="tsd-signature tsd-kind-icon">receive<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.eventreceiver.context.html" class="tsd-signature-type" data-tsd-kind="Interface">Context</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_proc7ts_fun_events.eventreceiver.object.html">Object</a>.<a href="_proc7ts_fun_events.eventreceiver.object.html#receive">receive</a></p>
+								<p>Overrides <a href="_proc7ts_fun_events.eventreceiver.object.html">Object</a>.<a href="_proc7ts_fun_events.eventreceiver.object.html#receive">receive</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/c2d6808/src/base/event-receiver.ts#L67">proc7ts/fun-events/src/base/event-receiver.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/base/event-receiver.ts#L100">proc7ts/fun-events/src/base/event-receiver.ts:100</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Receives an event.</p>
 								</div>
+								<p>This method does not require a <code>this</code> context. So it is possible to deconstruct the event receiver like this:</p>
+								<pre><code class="language-typescript"><span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">supply</span><span style="color: #000000">, </span><span style="color: #0070C1">receive</span><span style="color: #000000"> } = </span><span style="color: #795E26">eventReceiver</span><span style="color: #000000">(</span><span style="color: #001080">receiver</span><span style="color: #000000">);</span>
+</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -202,7 +211,7 @@
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-overwrite">
 								<a href="_proc7ts_fun_events.eventreceiver.generic.html#supply" class="tsd-kind-icon">supply</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
 								<a href="_proc7ts_fun_events.eventreceiver.generic.html#receive" class="tsd-kind-icon">receive</a>
 							</li>
 						</ul>
@@ -235,6 +244,7 @@
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
