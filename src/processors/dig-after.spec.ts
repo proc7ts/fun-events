@@ -1,6 +1,7 @@
 import { asis, Supply } from '@proc7ts/primitives';
 import { AfterEvent } from '../after-event';
 import { isEventKeeper } from '../base';
+import { EventEmitter } from '../senders';
 import { trackValue, ValueTracker } from '../value';
 import { digAfter } from './dig-after';
 
@@ -31,10 +32,31 @@ describe('digAfter', () => {
     expect(isEventKeeper(result)).toBe(true);
   });
   it('receives nested events', () => {
-    expect(receiver).toHaveBeenCalledWith('1');
+    expect(receiver).toHaveBeenLastCalledWith('1');
     tracker.it = nested2;
-    expect(receiver).toHaveBeenCalledWith('2');
+    expect(receiver).toHaveBeenLastCalledWith('2');
     nested2.it = '3';
-    expect(receiver).toHaveBeenCalledWith('3');
+    expect(receiver).toHaveBeenLastCalledWith('3');
+  });
+
+  describe('from event sender', () => {
+
+    let source: EventEmitter<[ValueTracker<string>]>;
+
+    beforeEach(() => {
+      source = new EventEmitter();
+      result = source.on.do(digAfter(extract, () => ['fallback']));
+      supply = result(receiver);
+    });
+
+    it('receives nested events', () => {
+      expect(receiver).toHaveBeenLastCalledWith('fallback');
+      source.send(nested1);
+      expect(receiver).toHaveBeenLastCalledWith('1');
+      source.send(nested2);
+      expect(receiver).toHaveBeenLastCalledWith('2');
+      nested2.it = '3';
+      expect(receiver).toHaveBeenLastCalledWith('3');
+    });
   });
 });
