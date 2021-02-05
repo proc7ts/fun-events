@@ -36,12 +36,12 @@ export function mapAfter<TEvent extends any[], TResult>(
  */
 export function mapAfter<TEvent extends any[], TResult>(
     convert: (this: void, ...event: TEvent) => TResult,
-    fallback: () => TResult,
+    fallback: (this: void) => TResult,
 ): (this: void, input: OnEvent<TEvent>) => AfterEvent<[TResult]>;
 
 export function mapAfter<TEvent extends any[], TResult>(
     convert: (this: void, ...event: TEvent) => TResult,
-    fallback?: () => TResult,
+    fallback?: (this: void) => TResult,
 ): (this: void, input: AfterEvent<TEvent>) => AfterEvent<[TResult]> {
 
   const mapper = mapAfter_(convert, fallback!);
@@ -78,12 +78,12 @@ export function mapAfter_<TEvent extends any[], TResult>(// eslint-disable-line 
  */
 export function mapAfter_<TEvent extends any[], TResult>(// eslint-disable-line @typescript-eslint/naming-convention
     convert: (this: void, ...event: TEvent) => TResult,
-    fallback: () => TResult,
+    fallback: (this: void) => TResult,
 ): (this: void, input: OnEvent<TEvent>) => AfterEvent<[TResult]>;
 
 export function mapAfter_<TEvent extends any[], TResult>(// eslint-disable-line @typescript-eslint/naming-convention
     convert: (this: void, ...event: TEvent) => TResult,
-    fallback?: () => TResult,
+    fallback?: (this: void) => TResult,
 ): (this: void, input: OnEvent<TEvent>) => AfterEvent<[TResult]> {
   return input => afterEventBy(
       translateEvents(
