@@ -1,4 +1,4 @@
-import { asis } from '@proc7ts/primitives';
+import { arraysAreEqual, asis, countArgs } from '@proc7ts/primitives';
 import { AfterEvent, afterEventBy } from '../after-event';
 import { shareAfter } from './share-after';
 
@@ -16,8 +16,7 @@ let deduplicateAfter$default:// eslint-disable-line @typescript-eslint/naming-co
  * @typeParam TEvent - An event type.
  * @param isDuplicate - A function that checks whether the next incoming event is a duplicate of a previously reported
  * one. Accepts a prior and next event tuples as parameters, and returns a truthy value if they are duplicates.
- * By default, treats event tuples as duplicates if they have the same number of elements, and each element is
- * strictly equals to corresponding one.
+ * By default, treats event tuples as duplicates if corresponding meaningful arguments are strictly equal.
  *
  * @returns Deduplicating processor of events incoming from {@link @AfterEvent} keeper.
  */
@@ -78,8 +77,7 @@ let deduplicateAfter_$default:// eslint-disable-line @typescript-eslint/naming-c
  * @typeParam TEvent - An event type.
  * @param isDuplicate - A function that checks whether the next incoming event is a duplicate of a previously reported
  * one. Accepts a prior and next event tuples as parameters, and returns a truthy value if they are duplicates.
- * By default, treats event tuples as duplicates if they have the same number of elements, and each element is
- * strictly equals to corresponding one.
+ * By default, treats event tuples as duplicates if corresponding meaningful arguments are strictly equal.
  *
  * @returns Deduplicating processor of events incoming from {@link @AfterEvent} keeper.
  */
@@ -154,5 +152,5 @@ function deduplicateAfter_$create<// eslint-disable-line @typescript-eslint/nami
 }
 
 function deduplicateAfter$isDuplicate<TEvent extends any[]>(prior: TEvent, next: TEvent): boolean {
-  return prior.length === next.length && prior.every((e, i) => e === next[i]);
+  return arraysAreEqual(prior, next, Math.max(countArgs(prior), countArgs(next)));
 }
