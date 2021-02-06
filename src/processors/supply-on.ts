@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @proc7ts/fun-events
- */
 import { asis, isAlwaysSupply, Supply, SupplyPeer } from '@proc7ts/primitives';
 import { supplyEvents } from '../impl';
 import { OnEvent, onEventBy } from '../on-event';

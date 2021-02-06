@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @proc7ts/fun-events
- */
 import { OnEvent } from '../on-event';
 
 /**

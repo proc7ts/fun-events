@@ -1,8 +1,4 @@
 /**
- * @packageDocumentation
- * @module @proc7ts/fun-events
- */
-/**
  * A path to state or its part. E.g. property value.
  *
  * May consist of one or more property keys.

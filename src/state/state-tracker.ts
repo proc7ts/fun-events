@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @proc7ts/fun-events
- */
 import { noop, Supply } from '@proc7ts/primitives';
 import { EventSender, OnEvent__symbol } from '../base';
 import { onEventBy } from '../on-event';

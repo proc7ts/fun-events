@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @proc7ts/fun-events
- */
 import { Supply } from '@proc7ts/primitives';
 import { EventKeeper } from '../base';
 import { OnEvent } from '../on-event';

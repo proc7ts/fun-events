@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @proc7ts/fun-events
- */
 import { Supply, SupplyPeer } from '@proc7ts/primitives';
 import { receiveByEach } from './event-notifier.impl';
 import { eventReceiver, EventReceiver } from './event-receiver';

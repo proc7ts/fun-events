@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @proc7ts/fun-events
- */
 import { neverSupply, Supply, SupplyPeer } from '@proc7ts/primitives';
 import { AfterEvent, afterEventBy } from '../after-event';
 import {

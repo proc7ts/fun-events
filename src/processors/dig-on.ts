@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @proc7ts/fun-events
- */
 import { EventSupplier } from '../base';
 import { digEvents } from '../impl';
 import { OnEvent, onEventBy } from '../on-event';

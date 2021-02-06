@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @proc7ts/fun-events
- */
 import { AfterEvent, afterEventBy } from '../after-event';
 import { shareEvents } from '../impl';
 

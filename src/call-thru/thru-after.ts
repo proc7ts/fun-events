@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @proc7ts/fun-events/call-thru
- */
 import { AfterEvent, afterEventBy } from '../after-event';
 import { shareAfter } from '../processors';
 import { OnEventCallChain } from './on-event-call-chain';

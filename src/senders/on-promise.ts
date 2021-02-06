@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @proc7ts/fun-events
- */
 import { EventReceiver } from '../base';
 import { alwaysReceiveValue, neverReceiveBecause } from '../base/impl';
 import { OnEvent, onEventBy } from '../on-event';

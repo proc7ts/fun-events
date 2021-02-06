@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module @proc7ts/fun-events
+ * @module Module @proc7ts/fun-events
  */
 export * from './after-event';
 export * from './base';

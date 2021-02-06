@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @proc7ts/fun-events/call-thru
- */
 import { NextCall, nextCall } from '@proc7ts/call-thru';
 import { EventSupplier } from '../base';
 import { onSupplied } from '../senders';

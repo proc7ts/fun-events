@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @proc7ts/fun-events
- */
 import { noop, Supply } from '@proc7ts/primitives';
 import { AfterEvent__symbol, EventKeeper, eventReceiver, EventReceiver, OnEvent__symbol } from './base';
 import { AfterEvent$noFallback, OnEvent$do, OnEvent$supplier, OnEvent$then } from './impl';

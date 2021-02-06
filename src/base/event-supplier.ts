@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @proc7ts/fun-events
- */
 import { EventKeeper } from './event-keeper';
 import { EventSender } from './event-sender';
 

@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @proc7ts/fun-events
- */
 import { Supply } from '@proc7ts/primitives';
 import { eventReceiver, EventReceiver, EventSender, OnEvent__symbol } from './base';
 import { OnEvent$do, OnEvent$supplier, OnEvent$then } from './impl';

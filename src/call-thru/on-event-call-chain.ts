@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @proc7ts/fun-events/call-thru
- */
 import { CallChain, NextCall, NextSkip } from '@proc7ts/call-thru';
 import { EventSender } from '../base';
 

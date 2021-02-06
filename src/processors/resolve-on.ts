@@ -1,7 +1,3 @@
-/**
- * @packageDocumentation
- * @module @proc7ts/fun-events
- */
 import { sendEventsTo } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
 
