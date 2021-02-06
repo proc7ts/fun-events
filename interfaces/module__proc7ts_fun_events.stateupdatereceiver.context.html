@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>EventSender | Functional Event Processor</title>
+	<title>Context | Functional Event Processor</title>
 	<meta name="description" content="Documentation for Functional Event Processor">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,57 +55,78 @@
 					<a href="../modules.html">Functional Event Processor</a>
 				</li>
 				<li>
-					<a href="_proc7ts_fun_events.html">@proc7ts/fun-events</a>
+					<a href="../modules/module__proc7ts_fun_events.html">Module @proc7ts/fun-events</a>
 				</li>
 				<li>
-					<a href="_proc7ts_fun_events.eventsender.html">EventSender</a>
+					<a href="../modules/module__proc7ts_fun_events.stateupdatereceiver.html">StateUpdateReceiver</a>
+				</li>
+				<li>
+					<a href="module__proc7ts_fun_events.stateupdatereceiver.context.html">Context</a>
 				</li>
 			</ul>
-			<h1>Namespace EventSender</h1>
+			<h1>Interface Context</h1>
 		</div>
 	</div>
 </header>
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>State update processing context.</p>
+					</div>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<a href="module__proc7ts_fun_events.eventreceiver.context.html" class="tsd-signature-type" data-tsd-kind="Interface">Context</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../modules/module__proc7ts_fun_events.statepath.html#normalized" class="tsd-signature-type" data-tsd-kind="Type alias">Normalized</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">Context</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Type aliases</h3>
+							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter"><a href="_proc7ts_fun_events.eventsender.html#event" class="tsd-kind-icon">Event</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="module__proc7ts_fun_events.stateupdatereceiver.context.html#onrecurrent" class="tsd-kind-icon">on<wbr>Recurrent</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Type aliases</h2>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
-					<a name="event" class="tsd-anchor"></a>
-					<h3>Event</h3>
-					<div class="tsd-signature tsd-kind-icon">Event&lt;TSender&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TSender</span><span class="tsd-signature-symbol"> extends </span><a href="../interfaces/_proc7ts_fun_events.eventsender-1.html" class="tsd-signature-type" data-tsd-kind="Interface">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">infer </span> TEvent<span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">never</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/base/event-sender.ts#L43">proc7ts/fun-events/src/base/event-sender.ts:43</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>A type of events sent by the given event sender.</p>
-						</div>
-					</div>
-					<h4 class="tsd-type-parameters-title">Type parameters</h4>
-					<ul class="tsd-type-parameters">
-						<li>
-							<h4>TSender<span class="tsd-signature-symbol">: </span><a href="../interfaces/_proc7ts_fun_events.eventsender-1.html" class="tsd-signature-type" data-tsd-kind="Interface">EventSender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Target event sender.</p>
-								</div>
-							</div>
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+					<a name="onrecurrent" class="tsd-anchor"></a>
+					<h3>on<wbr>Recurrent</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">on<wbr>Recurrent<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="../modules/module__proc7ts_fun_events.stateupdatereceiver.html#function" class="tsd-signature-type" data-tsd-kind="Type alias">Function</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="module__proc7ts_fun_events.eventreceiver.context.html">Context</a>.<a href="module__proc7ts_fun_events.eventreceiver.context.html#onrecurrent">onRecurrent</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/94c86c2/src/state/state-update-receiver.ts#L23">proc7ts/fun-events/src/state/state-update-receiver.ts:23</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>receiver: <a href="../modules/module__proc7ts_fun_events.stateupdatereceiver.html#function" class="tsd-signature-type" data-tsd-kind="Type alias">Function</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -121,8 +142,23 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
-						<a href="_proc7ts_fun_events.eventsender.html#event" class="tsd-kind-icon">Event</a>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="module__proc7ts_fun_events.stateupdatereceiver.context.html" class="tsd-kind-icon">Context</a>
+						<ul>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
+								<a href="module__proc7ts_fun_events.stateupdatereceiver.context.html#onrecurrent" class="tsd-kind-icon">on<wbr>Recurrent</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="module__proc7ts_fun_events.stateupdatereceiver.object.html" class="tsd-kind-icon">Object</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="../modules/module__proc7ts_fun_events.stateupdatereceiver.html#function" class="tsd-kind-icon">Function</a>
 					</li>
 				</ul>
 			</nav>
@@ -143,6 +179,7 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AfterEvent | Functional Event Processor</title>
+	<title>OnStateUpdate | Functional Event Processor</title>
 	<meta name="description" content="Documentation for Functional Event Processor">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,13 +55,13 @@
 					<a href="../modules.html">Functional Event Processor</a>
 				</li>
 				<li>
-					<a href="../modules/_proc7ts_fun_events.html">@proc7ts/fun-events</a>
+					<a href="../modules/module__proc7ts_fun_events.html">Module @proc7ts/fun-events</a>
 				</li>
 				<li>
-					<a href="_proc7ts_fun_events.afterevent.html">AfterEvent</a>
+					<a href="module__proc7ts_fun_events.onstateupdate.html">OnStateUpdate</a>
 				</li>
 			</ul>
-			<h1>Interface AfterEvent&lt;TEvent&gt;</h1>
+			<h1>Interface OnStateUpdate</h1>
 		</div>
 	</div>
 </header>
@@ -71,39 +71,18 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Signature of <a href="../modules/_proc7ts_fun_events.eventkeeper.html">EventKeeper</a> implementation able to register the receivers of kept and upcoming events.</p>
+						<p>Signature of <a href="../modules/module__proc7ts_fun_events.eventsender.html">EventSender</a> implementation able to register state update receivers.</p>
 					</div>
-					<p>The registered event receiver receives the kept event immediately upon registration, and all upcoming events
-					after that until the returned event supply is cut off.</p>
-					<p>To convert a plain event receiver registration function to {@link AfterEvent} an <a href="../modules/_proc7ts_fun_events.html#aftereventby">afterEventBy</a> function can
-					be used.</p>
-					<p>May be constructed using <a href="../modules/_proc7ts_fun_events.html#aftereventby">afterEventBy</a> function.</p>
 				</div>
-			</section>
-			<section class="tsd-panel tsd-type-parameters">
-				<h3>Type parameters</h3>
-				<ul class="tsd-type-parameters">
-					<li>
-						<h4>TEvent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
-						<div class="tsd-comment tsd-typography">
-							<div class="lead">
-								<p>An event type. This is a list of event receiver parameter types.</p>
-							</div>
-						</div>
-					</li>
-				</ul>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="_proc7ts_fun_events.onevent.html" class="tsd-signature-type" data-tsd-kind="Interface">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span>
-					</li>
-					<li>
-						<a href="_proc7ts_fun_events.eventkeeper-1.html" class="tsd-signature-type" data-tsd-kind="Interface">EventKeeper</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span>
+						<a href="module__proc7ts_fun_events.onevent.html" class="tsd-signature-type" data-tsd-kind="Interface">OnEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../modules/module__proc7ts_fun_events.statepath.html#normalized" class="tsd-signature-type" data-tsd-kind="Type alias">Normalized</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">AfterEvent</span>
+								<span class="target">OnStateUpdate</span>
 							</li>
 						</ul>
 					</li>
@@ -111,59 +90,49 @@
 			</section>
 			<section class="tsd-panel">
 				<h3 class="tsd-before-signature">Callable</h3>
-				<ul class="tsd-signatures tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
-					<li class="tsd-signature tsd-kind-icon">After<wbr>Event<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="../modules/_proc7ts_fun_events.eventreceiver.html" class="tsd-signature-type" data-tsd-kind="Namespace">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Supply</span></li>
-					<li class="tsd-signature tsd-kind-icon">After<wbr>Event<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="../modules/_proc7ts_fun_events.eventreceiver.html" class="tsd-signature-type" data-tsd-kind="Namespace">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Supply</span></li>
+				<ul class="tsd-signatures tsd-kind-interface tsd-parent-kind-module">
+					<li class="tsd-signature tsd-kind-icon">On<wbr>State<wbr>Update<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="../modules/module__proc7ts_fun_events.stateupdatereceiver.html" class="tsd-signature-type" data-tsd-kind="Namespace">StateUpdateReceiver</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Supply</span></li>
+					<li class="tsd-signature tsd-kind-icon">On<wbr>State<wbr>Update<span class="tsd-signature-symbol">(</span>receiver<span class="tsd-signature-symbol">: </span><a href="../modules/module__proc7ts_fun_events.eventreceiver.html" class="tsd-signature-type" data-tsd-kind="Namespace">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../modules/module__proc7ts_fun_events.statepath.html#normalized" class="tsd-signature-type" data-tsd-kind="Type alias">Normalized</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Supply</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/after-event.ts#L24">proc7ts/fun-events/src/after-event.ts:24</a></li>
+								<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/94c86c2/src/state/on-state-update.ts#L11">proc7ts/fun-events/src/state/on-state-update.ts:11</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
-								<p>Starts sending events to the given <code>receiver</code>.</p>
+								<p>Starts sending state updates to the given <code>receiver</code>.</p>
 							</div>
-							<p>The registered event receiver receives the kept event immediately upon registration, and all upcoming events
-							after that until the returned event supply is cut off.</p>
-							<p>To convert a plain event receiver registration function to {@link AfterEvent} an <a href="../modules/_proc7ts_fun_events.html#aftereventby">afterEventBy</a> function can
-							be used.</p>
-							<p>May be constructed using <a href="../modules/_proc7ts_fun_events.html#aftereventby">afterEventBy</a> function.</p>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
-								<h5>receiver: <a href="../modules/_proc7ts_fun_events.eventreceiver.html" class="tsd-signature-type" data-tsd-kind="Namespace">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								<h5>receiver: <a href="../modules/module__proc7ts_fun_events.stateupdatereceiver.html" class="tsd-signature-type" data-tsd-kind="Namespace">StateUpdateReceiver</a></h5>
 								<div class="tsd-comment tsd-typography">
-									<p>Target receiver of events.</p>
+									<p>Target receiver of state updates.</p>
 								</div>
 							</li>
 						</ul>
 						<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Supply</span></h4>
-						<p>A supply of events from this keeper to the given <code>receiver</code>.</p>
+						<p>A supply of state updates from this sender to the given <code>receiver</code>.</p>
 					</li>
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/on-event.ts#L21">proc7ts/fun-events/src/on-event.ts:21</a></li>
+								<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/94c86c2/src/on-event.ts#L17">proc7ts/fun-events/src/on-event.ts:17</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
 								<p>Starts sending events to the given <code>receiver</code>.</p>
 							</div>
-							<p>The registered event receiver receives the kept event immediately upon registration, and all upcoming events
-							after that until the returned event supply is cut off.</p>
-							<p>To convert a plain event receiver registration function to {@link AfterEvent} an <a href="../modules/_proc7ts_fun_events.html#aftereventby">afterEventBy</a> function can
-							be used.</p>
-							<p>May be constructed using <a href="../modules/_proc7ts_fun_events.html#aftereventby">afterEventBy</a> function.</p>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
 							<li>
-								<h5>receiver: <a href="../modules/_proc7ts_fun_events.eventreceiver.html" class="tsd-signature-type" data-tsd-kind="Namespace">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								<h5>receiver: <a href="../modules/module__proc7ts_fun_events.eventreceiver.html" class="tsd-signature-type" data-tsd-kind="Namespace">EventReceiver</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">[</span><a href="../modules/module__proc7ts_fun_events.statepath.html#normalized" class="tsd-signature-type" data-tsd-kind="Type alias">Normalized</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								<div class="tsd-comment tsd-typography">
 									<p>Target receiver of events.</p>
 								</div>
@@ -181,10 +150,9 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite"><a href="_proc7ts_fun_events.afterevent.html#___afterevent__symbol_3637" class="tsd-kind-icon">__@<wbr>After<wbr>Event__symbol@3637</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="_proc7ts_fun_events.afterevent.html#___onevent__symbol_3912" class="tsd-kind-icon">__@<wbr>OnEvent__symbol@3912</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="_proc7ts_fun_events.afterevent.html#do" class="tsd-kind-icon">do</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="_proc7ts_fun_events.afterevent.html#then" class="tsd-kind-icon">then</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="module__proc7ts_fun_events.onstateupdate.html#___onevent__symbol_3912" class="tsd-kind-icon">__@<wbr>OnEvent__symbol@3912</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="module__proc7ts_fun_events.onstateupdate.html#do" class="tsd-kind-icon">do</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited"><a href="module__proc7ts_fun_events.onstateupdate.html#then" class="tsd-kind-icon">then</a></li>
 							</ul>
 						</section>
 					</div>
@@ -192,39 +160,21 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-					<a name="___afterevent__symbol_3637" class="tsd-anchor"></a>
-					<h3>__@<wbr>After<wbr>Event__symbol@3637</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">__@<wbr>After<wbr>Event__symbol@3637<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Overrides <a href="_proc7ts_fun_events.eventkeeper-1.html">EventKeeper</a>.<a href="_proc7ts_fun_events.eventkeeper-1.html#___afterevent__symbol_3637">__@AfterEvent__symbol@3637</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/after-event.ts#L35">proc7ts/fun-events/src/after-event.ts:35</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
 					<a name="___onevent__symbol_3912" class="tsd-anchor"></a>
 					<h3>__@<wbr>OnEvent__symbol@3912</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">__@<wbr>OnEvent__symbol@3912<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">__@<wbr>OnEvent__symbol@3912<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="_proc7ts_fun_events.onevent.html#___onevent__symbol_3912">__@OnEvent__symbol@3912</a></p>
+								<p>Inherited from <a href="module__proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="module__proc7ts_fun_events.onevent.html#___onevent__symbol_3912">__@OnEvent__symbol@3912</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/on-event.ts#L32">proc7ts/fun-events/src/on-event.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/94c86c2/src/on-event.ts#L28">proc7ts/fun-events/src/on-event.ts:28</a></li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -232,26 +182,26 @@
 					<a name="do" class="tsd-anchor"></a>
 					<h3>do</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">do&lt;TResult&gt;<span class="tsd-signature-symbol">(</span>processor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult</span></li>
-						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span></li>
-						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span></li>
-						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3, TResult4&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span>, processor4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult4</span></li>
-						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3, TResult4, TResult5&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span>, processor4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult4</span>, processor5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult5</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult5</span></li>
-						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3, TResult4, TResult5, TResult6&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span>, processor4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult4</span>, processor5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult5</span>, processor6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult5</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult6</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult6</span></li>
-						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span>, processor4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult4</span>, processor5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult5</span>, processor6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult5</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult6</span>, processor7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult6</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult7</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult7</span></li>
-						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7, TResult8&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span>, processor4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult4</span>, processor5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult5</span>, processor6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult5</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult6</span>, processor7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult6</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult7</span>, processor8<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult7</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult8</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult8</span></li>
-						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7, TResult8, TResult9&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span>, processor4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult4</span>, processor5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult5</span>, processor6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult5</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult6</span>, processor7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult6</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult7</span>, processor8<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult7</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult8</span>, processor9<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult8</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult9</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult9</span></li>
-						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7, TResult8, TResult9, TResult10&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span>, processor4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult4</span>, processor5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult5</span>, processor6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult5</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult6</span>, processor7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult6</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult7</span>, processor8<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult7</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult8</span>, processor9<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult8</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult9</span>, processor10<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult9</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult10</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult10</span></li>
-						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7, TResult8, TResult9, TResult10, TResult11&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span>, processor4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult4</span>, processor5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult5</span>, processor6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult5</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult6</span>, processor7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult6</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult7</span>, processor8<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult7</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult8</span>, processor9<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult8</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult9</span>, processor10<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult9</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult10</span>, processor11<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult10</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult11</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult11</span></li>
-						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7, TResult8, TResult9, TResult10, TResult11, TResult12&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span>, processor4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult4</span>, processor5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult5</span>, processor6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult5</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult6</span>, processor7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult6</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult7</span>, processor8<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult7</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult8</span>, processor9<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult8</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult9</span>, processor10<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult9</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult10</span>, processor11<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult10</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult11</span>, processor12<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult11</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult12</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult12</span></li>
-						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7, TResult8, TResult9, TResult10, TResult11, TResult12, TResult13&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span>, processor4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult4</span>, processor5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult5</span>, processor6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult5</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult6</span>, processor7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult6</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult7</span>, processor8<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult7</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult8</span>, processor9<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult8</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult9</span>, processor10<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult9</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult10</span>, processor11<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult10</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult11</span>, processor12<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult11</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult12</span>, processor13<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult12</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult13</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult13</span></li>
+						<li class="tsd-signature tsd-kind-icon">do&lt;TResult&gt;<span class="tsd-signature-symbol">(</span>processor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult</span></li>
+						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span></li>
+						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span></li>
+						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3, TResult4&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span>, processor4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult4</span></li>
+						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3, TResult4, TResult5&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span>, processor4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult4</span>, processor5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult5</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult5</span></li>
+						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3, TResult4, TResult5, TResult6&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span>, processor4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult4</span>, processor5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult5</span>, processor6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult5</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult6</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult6</span></li>
+						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span>, processor4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult4</span>, processor5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult5</span>, processor6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult5</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult6</span>, processor7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult6</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult7</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult7</span></li>
+						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7, TResult8&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span>, processor4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult4</span>, processor5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult5</span>, processor6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult5</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult6</span>, processor7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult6</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult7</span>, processor8<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult7</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult8</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult8</span></li>
+						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7, TResult8, TResult9&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span>, processor4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult4</span>, processor5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult5</span>, processor6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult5</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult6</span>, processor7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult6</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult7</span>, processor8<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult7</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult8</span>, processor9<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult8</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult9</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult9</span></li>
+						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7, TResult8, TResult9, TResult10&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span>, processor4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult4</span>, processor5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult5</span>, processor6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult5</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult6</span>, processor7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult6</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult7</span>, processor8<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult7</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult8</span>, processor9<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult8</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult9</span>, processor10<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult9</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult10</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult10</span></li>
+						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7, TResult8, TResult9, TResult10, TResult11&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span>, processor4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult4</span>, processor5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult5</span>, processor6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult5</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult6</span>, processor7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult6</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult7</span>, processor8<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult7</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult8</span>, processor9<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult8</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult9</span>, processor10<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult9</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult10</span>, processor11<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult10</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult11</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult11</span></li>
+						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7, TResult8, TResult9, TResult10, TResult11, TResult12&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span>, processor4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult4</span>, processor5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult5</span>, processor6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult5</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult6</span>, processor7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult6</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult7</span>, processor8<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult7</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult8</span>, processor9<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult8</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult9</span>, processor10<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult9</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult10</span>, processor11<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult10</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult11</span>, processor12<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult11</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult12</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult12</span></li>
+						<li class="tsd-signature tsd-kind-icon">do&lt;TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7, TResult8, TResult9, TResult10, TResult11, TResult12, TResult13&gt;<span class="tsd-signature-symbol">(</span>processor1<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span>, processor2<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span>, processor3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult3</span>, processor4<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult4</span>, processor5<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult4</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult5</span>, processor6<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult5</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult6</span>, processor7<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult6</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult7</span>, processor8<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult7</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult8</span>, processor9<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult8</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult9</span>, processor10<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult9</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult10</span>, processor11<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult10</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult11</span>, processor12<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult11</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult12</span>, processor13<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>arg<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult12</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult13</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult13</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="_proc7ts_fun_events.onevent.html#do">do</a></p>
+								<p>Inherited from <a href="module__proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="module__proc7ts_fun_events.onevent.html#do">do</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/on-event.ts#L43">proc7ts/fun-events/src/on-event.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/94c86c2/src/on-event.ts#L39">proc7ts/fun-events/src/on-event.ts:39</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -271,7 +221,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>processor: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult</span></h5>
+									<h5>processor: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>An event processor accepting this supplier as its only parameter, and returning application
 										result.</p>
@@ -279,14 +229,14 @@
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5>supplier: <a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h5>
+															<h5>supplier: <a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult</span></h4>
@@ -301,9 +251,9 @@
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="_proc7ts_fun_events.onevent.html#do">do</a></p>
+								<p>Inherited from <a href="module__proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="module__proc7ts_fun_events.onevent.html#do">do</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/on-event.ts#L62">proc7ts/fun-events/src/on-event.ts:62</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/94c86c2/src/on-event.ts#L58">proc7ts/fun-events/src/on-event.ts:58</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -333,7 +283,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
+									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>An event processor accepting this supplier as its only parameter, and returning application
 										result.</p>
@@ -341,14 +291,14 @@
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5>supplier: <a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h5>
+															<h5>supplier: <a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult1</span></h4>
@@ -388,9 +338,9 @@
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="_proc7ts_fun_events.onevent.html#do">do</a></p>
+								<p>Inherited from <a href="module__proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="module__proc7ts_fun_events.onevent.html#do">do</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/on-event.ts#L70">proc7ts/fun-events/src/on-event.ts:70</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/94c86c2/src/on-event.ts#L66">proc7ts/fun-events/src/on-event.ts:66</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -408,18 +358,18 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
+									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5>supplier: <a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h5>
+															<h5>supplier: <a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult1</span></h4>
@@ -475,9 +425,9 @@
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="_proc7ts_fun_events.onevent.html#do">do</a></p>
+								<p>Inherited from <a href="module__proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="module__proc7ts_fun_events.onevent.html#do">do</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/on-event.ts#L80">proc7ts/fun-events/src/on-event.ts:80</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/94c86c2/src/on-event.ts#L76">proc7ts/fun-events/src/on-event.ts:76</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -498,18 +448,18 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
+									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5>supplier: <a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h5>
+															<h5>supplier: <a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult1</span></h4>
@@ -586,9 +536,9 @@
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="_proc7ts_fun_events.onevent.html#do">do</a></p>
+								<p>Inherited from <a href="module__proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="module__proc7ts_fun_events.onevent.html#do">do</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/on-event.ts#L92">proc7ts/fun-events/src/on-event.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/94c86c2/src/on-event.ts#L88">proc7ts/fun-events/src/on-event.ts:88</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -612,18 +562,18 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
+									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5>supplier: <a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h5>
+															<h5>supplier: <a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult1</span></h4>
@@ -721,9 +671,9 @@
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="_proc7ts_fun_events.onevent.html#do">do</a></p>
+								<p>Inherited from <a href="module__proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="module__proc7ts_fun_events.onevent.html#do">do</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/on-event.ts#L106">proc7ts/fun-events/src/on-event.ts:106</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/94c86c2/src/on-event.ts#L102">proc7ts/fun-events/src/on-event.ts:102</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -750,18 +700,18 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
+									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5>supplier: <a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h5>
+															<h5>supplier: <a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult1</span></h4>
@@ -880,9 +830,9 @@
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="_proc7ts_fun_events.onevent.html#do">do</a></p>
+								<p>Inherited from <a href="module__proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="module__proc7ts_fun_events.onevent.html#do">do</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/on-event.ts#L122">proc7ts/fun-events/src/on-event.ts:122</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/94c86c2/src/on-event.ts#L118">proc7ts/fun-events/src/on-event.ts:118</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -912,18 +862,18 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
+									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5>supplier: <a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h5>
+															<h5>supplier: <a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult1</span></h4>
@@ -1063,9 +1013,9 @@
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="_proc7ts_fun_events.onevent.html#do">do</a></p>
+								<p>Inherited from <a href="module__proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="module__proc7ts_fun_events.onevent.html#do">do</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/on-event.ts#L140">proc7ts/fun-events/src/on-event.ts:140</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/94c86c2/src/on-event.ts#L136">proc7ts/fun-events/src/on-event.ts:136</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1098,18 +1048,18 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
+									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5>supplier: <a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h5>
+															<h5>supplier: <a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult1</span></h4>
@@ -1270,9 +1220,9 @@
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="_proc7ts_fun_events.onevent.html#do">do</a></p>
+								<p>Inherited from <a href="module__proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="module__proc7ts_fun_events.onevent.html#do">do</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/on-event.ts#L160">proc7ts/fun-events/src/on-event.ts:160</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/94c86c2/src/on-event.ts#L156">proc7ts/fun-events/src/on-event.ts:156</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1308,18 +1258,18 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
+									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5>supplier: <a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h5>
+															<h5>supplier: <a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult1</span></h4>
@@ -1501,9 +1451,9 @@
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="_proc7ts_fun_events.onevent.html#do">do</a></p>
+								<p>Inherited from <a href="module__proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="module__proc7ts_fun_events.onevent.html#do">do</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/on-event.ts#L182">proc7ts/fun-events/src/on-event.ts:182</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/94c86c2/src/on-event.ts#L178">proc7ts/fun-events/src/on-event.ts:178</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1542,18 +1492,18 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
+									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5>supplier: <a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h5>
+															<h5>supplier: <a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult1</span></h4>
@@ -1756,9 +1706,9 @@
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="_proc7ts_fun_events.onevent.html#do">do</a></p>
+								<p>Inherited from <a href="module__proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="module__proc7ts_fun_events.onevent.html#do">do</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/on-event.ts#L206">proc7ts/fun-events/src/on-event.ts:206</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/94c86c2/src/on-event.ts#L202">proc7ts/fun-events/src/on-event.ts:202</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -1800,18 +1750,18 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
+									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5>supplier: <a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h5>
+															<h5>supplier: <a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult1</span></h4>
@@ -2035,9 +1985,9 @@
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="_proc7ts_fun_events.onevent.html#do">do</a></p>
+								<p>Inherited from <a href="module__proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="module__proc7ts_fun_events.onevent.html#do">do</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/on-event.ts#L232">proc7ts/fun-events/src/on-event.ts:232</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/94c86c2/src/on-event.ts#L228">proc7ts/fun-events/src/on-event.ts:228</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2082,18 +2032,18 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
+									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5>supplier: <a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h5>
+															<h5>supplier: <a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult1</span></h4>
@@ -2338,9 +2288,9 @@
 						</li>
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="_proc7ts_fun_events.onevent.html#do">do</a></p>
+								<p>Inherited from <a href="module__proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="module__proc7ts_fun_events.onevent.html#do">do</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/on-event.ts#L260">proc7ts/fun-events/src/on-event.ts:260</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/94c86c2/src/on-event.ts#L256">proc7ts/fun-events/src/on-event.ts:256</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -2388,18 +2338,18 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
+									<h5>processor1: <span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>supplier<span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TResult1</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5>supplier: <a href="_proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h5>
+															<h5>supplier: <a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-signature-type" data-tsd-kind="Interface">OnStateUpdate</a></h5>
 														</li>
 													</ul>
 													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">TResult1</span></h4>
@@ -2669,14 +2619,14 @@
 					<a name="then" class="tsd-anchor"></a>
 					<h3>then</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">then&lt;TResult1, TResult2&gt;<span class="tsd-signature-symbol">(</span>onEvent<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">PromiseLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span>, onCutOff<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>reason<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">PromiseLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">then&lt;TResult1, TResult2&gt;<span class="tsd-signature-symbol">(</span>onEvent<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><a href="../modules/module__proc7ts_fun_events.statepath.html#normalized" class="tsd-signature-type" data-tsd-kind="Type alias">Normalized</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">PromiseLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span>, onCutOff<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>reason<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">PromiseLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">TResult2</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="_proc7ts_fun_events.onevent.html#then">then</a></p>
+								<p>Inherited from <a href="module__proc7ts_fun_events.onevent.html">OnEvent</a>.<a href="module__proc7ts_fun_events.onevent.html#then">then</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/bbe9e6b/src/on-event.ts#L301">proc7ts/fun-events/src/on-event.ts:301</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/94c86c2/src/on-event.ts#L297">proc7ts/fun-events/src/on-event.ts:297</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2689,7 +2639,7 @@
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>TResult1 = <span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">...</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-type">F</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">undefined</span></h4>
+									<h4>TResult1 = <a href="../modules/module__proc7ts_fun_events.statepath.html#normalized" class="tsd-signature-type" data-tsd-kind="Type alias">Normalized</a></h4>
 								</li>
 								<li>
 									<h4>TResult2 = <span class="tsd-signature-type">never</span></h4>
@@ -2698,7 +2648,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> onEvent: <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">PromiseLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> onEvent: <span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">[</span><a href="../modules/module__proc7ts_fun_events.statepath.html#normalized" class="tsd-signature-type" data-tsd-kind="Type alias">Normalized</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">PromiseLike</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TResult1</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>The callback to execute when next event received.</p>
 									</div>
@@ -2724,10 +2674,10 @@
 						<a href="../modules.html">Modules</a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="../modules/_proc7ts_fun_events.html">@proc7ts/fun-<wbr>events</a>
+						<a href="../modules/module__proc7ts_fun_events.html">Module @proc7ts/fun-<wbr>events</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/_proc7ts_fun_events_call_thru.html">@proc7ts/fun-<wbr>events/call-<wbr>thru</a>
+						<a href="../modules/module__proc7ts_fun_events_call_thru.html">Module @proc7ts/fun-<wbr>events/call-<wbr>thru</a>
 					</li>
 				</ul>
 			</nav>
@@ -2735,20 +2685,17 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="_proc7ts_fun_events.afterevent.html" class="tsd-kind-icon">After<wbr>Event</a>
+					<li class="current tsd-kind-interface tsd-parent-kind-module">
+						<a href="module__proc7ts_fun_events.onstateupdate.html" class="tsd-kind-icon">On<wbr>State<wbr>Update</a>
 						<ul>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-overwrite">
-								<a href="_proc7ts_fun_events.afterevent.html#___afterevent__symbol_3637" class="tsd-kind-icon">__@<wbr>After<wbr>Event__symbol@3637</a>
-							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="_proc7ts_fun_events.afterevent.html#___onevent__symbol_3912" class="tsd-kind-icon">__@<wbr>OnEvent__symbol@3912</a>
+								<a href="module__proc7ts_fun_events.onstateupdate.html#___onevent__symbol_3912" class="tsd-kind-icon">__@<wbr>OnEvent__symbol@3912</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited">
-								<a href="_proc7ts_fun_events.afterevent.html#do" class="tsd-kind-icon">do</a>
+								<a href="module__proc7ts_fun_events.onstateupdate.html#do" class="tsd-kind-icon">do</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter tsd-is-inherited">
-								<a href="_proc7ts_fun_events.afterevent.html#then" class="tsd-kind-icon">then</a>
+								<a href="module__proc7ts_fun_events.onstateupdate.html#then" class="tsd-kind-icon">then</a>
 							</li>
 						</ul>
 					</li>
@@ -2773,7 +2720,6 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
