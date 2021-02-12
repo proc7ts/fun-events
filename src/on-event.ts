@@ -341,6 +341,7 @@ export function onEventBy<TEvent extends any[]>(
 /**
  * Checks whether the given value is an {@link OnEvent} sender.
  *
+ * @category Core
  * @typeParam TEvent - Expected event type.
  * @typeParam TOther - Another type the value may have.
  * @param value - A value to check.

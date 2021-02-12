@@ -130,6 +130,7 @@ function AfterEvent$noCleanup(_reason: unknown): void {
 /**
  * Checks whether the given value is an {@link AfterEvent} keeper.
  *
+ * @category Core
  * @typeParam TEvent - Expected event type.
  * @typeParam TOther - Another type the value may have.
  * @param value - A value to check.
