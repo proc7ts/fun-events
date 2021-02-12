@@ -337,3 +337,22 @@ export function onEventBy<TEvent extends any[]>(
 
   return onEvent;
 }
+
+/**
+ * Checks whether the given value is an {@link OnEvent} sender.
+ *
+ * @typeParam TEvent - Expected event type.
+ * @typeParam TOther - Another type the value may have.
+ * @param value - A value to check.
+ *
+ * @returns `true` if the `value` has been created by {@link onEventBy} function or in compatible way,
+ * or `false` otherwise.
+ */
+export function isOnEvent<TEvent extends any[], TOther = unknown>(
+    value: OnEvent<TEvent> | TOther,
+): value is OnEvent<TEvent> {
+  return typeof value === 'function'
+      && (value as Partial<OnEvent<TEvent>>)[OnEvent__symbol] === OnEvent$supplier
+      && (value as Partial<OnEvent<TEvent>>).do === OnEvent$do
+      && (value as Partial<OnEvent<TEvent>>).then === OnEvent$then;
+}
