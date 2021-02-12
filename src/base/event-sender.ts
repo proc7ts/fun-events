@@ -44,12 +44,15 @@ export namespace EventSender {
  * Checks whether the given value implements an {@link EventSender} interface.
  *
  * @category Core
- * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
+ * @typeParam TEvent - Expected event type.
+ * @typeParam TOther - Another type the value may have.
  * @param value - A value to check.
  *
  * @returns `true` if the `value` contains an {@link OnEvent__symbol} method, or `false` otherwise.
  */
-export function isEventSender<TEvent extends any[]>(value: unknown): value is EventSender<TEvent> {
+export function isEventSender<TEvent extends any[], TOther>(
+    value: EventSender<TEvent> | TOther,
+): value is EventSender<TEvent> {
   return !!value
       && (typeof value === 'object' || typeof value === 'function')
       && typeof (value as Partial<EventSender<TEvent>>)[OnEvent__symbol] === 'function';
