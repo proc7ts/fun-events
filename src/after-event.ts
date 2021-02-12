@@ -1,7 +1,7 @@
 import { noop, Supply } from '@proc7ts/primitives';
 import { AfterEvent__symbol, EventKeeper, eventReceiver, EventReceiver, OnEvent__symbol } from './base';
 import { AfterEvent$noFallback, OnEvent$do, OnEvent$supplier, OnEvent$then } from './impl';
-import { OnEvent } from './on-event';
+import { isOnEvent, OnEvent } from './on-event';
 
 /**
  * Signature of {@link EventKeeper} implementation able to register the receivers of kept and upcoming events.
@@ -125,4 +125,20 @@ export function afterEventBy<TEvent extends any[]>(
 
 function AfterEvent$noCleanup(_reason: unknown): void {
   // No-op `AfterEvent` cleanup
+}
+
+/**
+ * Checks whether the given value is an {@link AfterEvent} keeper.
+ *
+ * @typeParam TEvent - Expected event type.
+ * @typeParam TOther - Another type the value may have.
+ * @param value - A value to check.
+ *
+ * @returns `true` if the `value` has been created by {@link afterEventBy} function or in compatible way,
+ * or `false` otherwise.
+ */
+export function isAfterEvent<TEvent extends any[], TOther = unknown>(
+    value: AfterEvent<TEvent> | TOther,
+): value is AfterEvent<TEvent> {
+  return isOnEvent(value) && (value as Partial<AfterEvent<TEvent>>)[AfterEvent__symbol] === OnEvent$supplier;
 }

@@ -1,6 +1,7 @@
 import { asis, neverSupply, noop } from '@proc7ts/primitives';
-import { AfterEvent, afterEventBy } from './after-event';
+import { AfterEvent, afterEventBy, isAfterEvent } from './after-event';
 import { AfterEvent__symbol, EventNotifier, EventReceiver, OnEvent__symbol } from './base';
+import { onEventBy } from './on-event';
 import Mock = jest.Mock;
 
 describe('AfterEvent', () => {
@@ -101,4 +102,23 @@ describe('afterEventBy', () => {
 
     expect(await onEvent(noop).whenDone().catch(asis)).toBe(error);
   });
+});
+
+describe('isAfterEvent', () => {
+
+  it('returns `true` for `afterEventBy()` result', () => {
+    expect(isAfterEvent(afterEventBy(noop))).toBe(true);
+  });
+  it('returns `false` for incompatible `AfterEvent` implementation', () => {
+
+    const afterEvent = afterEventBy(noop);
+
+    afterEvent[AfterEvent__symbol] = noop as any;
+
+    expect(isAfterEvent(afterEvent)).toBe(false);
+  });
+  it('returns `false` for `onEventBy()` result', () => {
+    expect(isAfterEvent(onEventBy(noop))).toBe(false);
+  });
+
 });

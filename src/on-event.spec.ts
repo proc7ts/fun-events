@@ -111,7 +111,7 @@ describe('isOnEvent', () => {
 
     const onEvent = onEventBy(noop);
 
-    onEvent.then = null!;
+    onEvent.then = noop as any;
 
     expect(isOnEvent(onEvent)).toBe(false);
   });
