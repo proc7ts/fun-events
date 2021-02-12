@@ -1,6 +1,7 @@
 import { asis, noop } from '@proc7ts/primitives';
 import { EventNotifier, EventReceiver, OnEvent__symbol } from './base';
-import { OnEvent, onEventBy } from './on-event';
+import { isOnEvent, OnEvent, onEventBy } from './on-event';
+import { EventEmitter } from './senders';
 import Mock = jest.Mock;
 
 describe('OnEvent', () => {
@@ -97,6 +98,28 @@ describe('onEventBy', () => {
     });
 
     expect(await onEvent(noop).whenDone().catch(asis)).toBe(error);
+  });
+
+});
+
+describe('isOnEvent', () => {
+
+  it('returns `true` for `onEventBy()` result', () => {
+    expect(isOnEvent(onEventBy(noop))).toBe(true);
+  });
+  it('returns `false` for incompatible `OnEvent` implementation', () => {
+
+    const onEvent = onEventBy(noop);
+
+    onEvent.then = noop as any;
+
+    expect(isOnEvent(onEvent)).toBe(false);
+  });
+  it('returns `false` for arbitrary event sender', () => {
+    expect(isOnEvent(new EventEmitter())).toBe(false);
+  });
+  it('returns `false` for `null`', () => {
+    expect(isOnEvent(null)).toBe(false);
   });
 
 });
