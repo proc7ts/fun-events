@@ -50,7 +50,7 @@ export namespace EventSender {
  *
  * @returns `true` if the `value` contains an {@link OnEvent__symbol} method, or `false` otherwise.
  */
-export function isEventSender<TEvent extends any[], TOther>(
+export function isEventSender<TEvent extends any[], TOther = unknown>(
     value: EventSender<TEvent> | TOther,
 ): value is EventSender<TEvent> {
   return !!value
