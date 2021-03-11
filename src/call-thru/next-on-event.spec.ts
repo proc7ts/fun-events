@@ -1,5 +1,6 @@
 import { nextSkip } from '@proc7ts/call-thru';
-import { Supply } from '@proc7ts/primitives';
+import { noop } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 import { EventSender } from '../base';
 import { OnEvent } from '../on-event';
 import { EventEmitter } from '../senders';
@@ -20,7 +21,9 @@ describe('nextOnEvent', () => {
   beforeEach(() => {
     sender = new EventEmitter();
     nested1 = new EventEmitter();
+    nested1.supply.whenOff(noop);
     nested2 = new EventEmitter();
+    nested2.supply.whenOff(noop);
     receiver = jest.fn();
     extract = jest.fn((nested?: EventEmitter<[string]>) => nested);
     result = sender.on.do(thruOn(notifier => {

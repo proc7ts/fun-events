@@ -1,4 +1,4 @@
-import { Supply } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 
 /**
  * Event receiver is called on each event sent by {@link EventSender} when registered.

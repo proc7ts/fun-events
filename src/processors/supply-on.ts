@@ -1,4 +1,5 @@
-import { asis, isAlwaysSupply, Supply, SupplyPeer } from '@proc7ts/primitives';
+import { asis } from '@proc7ts/primitives';
+import { isAlwaysSupply, Supply, SupplyPeer } from '@proc7ts/supply';
 import { supplyEvents } from '../impl';
 import { OnEvent, onEventBy } from '../on-event';
 

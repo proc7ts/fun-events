@@ -1,4 +1,4 @@
-import { Supply } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 import { AfterEvent__symbol, EventKeeper, EventReceiver, EventSender, OnEvent__symbol } from '../base';
 import { OnEvent } from '../on-event';
 import { trackValue } from '../value';

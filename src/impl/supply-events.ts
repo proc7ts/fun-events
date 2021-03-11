@@ -1,4 +1,4 @@
-import { Supply, SupplyPeer } from '@proc7ts/primitives';
+import { Supply, SupplyPeer } from '@proc7ts/supply';
 import { EventReceiver } from '../base';
 import { OnEvent } from '../on-event';
 

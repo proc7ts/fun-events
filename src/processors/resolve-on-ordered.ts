@@ -1,4 +1,4 @@
-import { Supply } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 import { sendEventsTo } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
 import { mapOn } from './map-on';

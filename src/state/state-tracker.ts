@@ -1,4 +1,5 @@
-import { noop, Supply } from '@proc7ts/primitives';
+import { noop } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 import { EventSender, OnEvent__symbol } from '../base';
 import { onEventBy } from '../on-event';
 import { EventEmitter } from '../senders';

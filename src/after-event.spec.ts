@@ -1,4 +1,5 @@
-import { asis, neverSupply, noop } from '@proc7ts/primitives';
+import { asis, noop } from '@proc7ts/primitives';
+import { neverSupply, Supply } from '@proc7ts/supply';
 import { AfterEvent, afterEventBy, isAfterEvent } from './after-event';
 import { AfterEvent__symbol, EventNotifier, EventReceiver, OnEvent__symbol } from './base';
 import { onEventBy } from './on-event';
@@ -100,7 +101,7 @@ describe('afterEventBy', () => {
       throw error;
     });
 
-    expect(await onEvent(noop).whenDone().catch(asis)).toBe(error);
+    expect(await onEvent({ supply: new Supply(noop), receive: noop }).whenDone().catch(asis)).toBe(error);
   });
 });
 

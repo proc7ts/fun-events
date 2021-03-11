@@ -1,4 +1,5 @@
-import { asis, Supply } from '@proc7ts/primitives';
+import { asis } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 import { EventEmitter } from '../senders';
 import { trackValue } from './track-value';
 import { ValueSync } from './value-sync';

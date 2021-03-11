@@ -1,4 +1,4 @@
-import { Supply } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 import { OnEvent } from '../on-event';
 import { StatePath } from './state-path';
 import { StateUpdateReceiver } from './state-update-receiver';

@@ -1,4 +1,4 @@
-import { Supply } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 import { eventReceiver, EventReceiver, EventSender, OnEvent__symbol } from './base';
 import { OnEvent$do, OnEvent$supplier, OnEvent$then } from './impl';
 
