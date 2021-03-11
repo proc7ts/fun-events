@@ -1,4 +1,4 @@
-import { Supply } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 import { EventNotifier } from '../base';
 import { EventEmitter } from '../senders';
 import { consumeEvents } from './consume-events';

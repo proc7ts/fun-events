@@ -1,4 +1,4 @@
-import { alwaysSupply, neverSupply, Supply } from '@proc7ts/primitives';
+import { alwaysSupply, neverSupply, Supply } from '@proc7ts/supply';
 import { AfterEvent, afterEventBy } from '../after-event';
 import { EventNotifier, EventReceiver } from '../base';
 import { supplyAfter } from './supply-after';

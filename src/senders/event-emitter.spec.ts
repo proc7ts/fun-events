@@ -1,4 +1,4 @@
-import { Supply } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 import { OnEvent__symbol } from '../base';
 import { EventEmitter } from './event-emitter';
 import Mock = jest.Mock;

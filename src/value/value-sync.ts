@@ -1,4 +1,4 @@
-import { Supply } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 import { EventKeeper, EventSender, EventSupplier, isEventKeeper } from '../base';
 import { afterSupplied } from '../keepers';
 import { OnEvent } from '../on-event';

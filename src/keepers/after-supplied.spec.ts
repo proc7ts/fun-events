@@ -1,4 +1,5 @@
-import { asis, noop, Supply } from '@proc7ts/primitives';
+import { asis, noop } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 import { AfterEvent } from '../after-event';
 import { AfterEvent__symbol, EventReceiver, NoEventsError } from '../base';
 import { onceOn } from '../processors';

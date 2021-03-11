@@ -1,5 +1,6 @@
 import { isNextCall, NextCall__symbol } from '@proc7ts/call-thru';
-import { neverSupply, noop, Supply } from '@proc7ts/primitives';
+import { noop } from '@proc7ts/primitives';
+import { neverSupply, Supply } from '@proc7ts/supply';
 import { EventReceiver, EventSender, OnEvent__symbol } from '../base';
 import { OnEvent } from '../on-event';
 import { OnEventCallChain } from './index';
@@ -83,7 +84,7 @@ export function thru<TEvent extends any[]>(
               parentSupply = entry.supply,
           ): void {
 
-            const [nextChain, prevSupply] = chain(index, new Supply().needs(parentSupply));
+            const [nextChain, prevSupply] = chain(index, new Supply(noop).needs(parentSupply));
 
             try {
               if (isNextCall(callResult)) {
@@ -99,7 +100,7 @@ export function thru<TEvent extends any[]>(
           }
         };
 
-        const [firstChain, prevSupply] = chain(0, new Supply().needs(receiver.supply));
+        const [firstChain, prevSupply] = chain(0, new Supply(noop).needs(receiver.supply));
 
         try {
           firstChain.call(passes[0], event);

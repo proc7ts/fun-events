@@ -1,4 +1,4 @@
-import { Supply } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 import { EventSupplier } from '../base';
 import { shareEvents } from '../impl';
 import { OnEvent, onEventBy } from '../on-event';

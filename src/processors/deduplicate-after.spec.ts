@@ -1,4 +1,5 @@
-import { asis, Supply, valueProvider } from '@proc7ts/primitives';
+import { asis, valueProvider } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 import { AfterEvent } from '../after-event';
 import { afterSent } from '../keepers';
 import { EventEmitter } from '../senders';

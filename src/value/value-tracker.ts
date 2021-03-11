@@ -1,4 +1,4 @@
-import { neverSupply, Supply, SupplyPeer } from '@proc7ts/primitives';
+import { neverSupply, Supply, SupplyPeer } from '@proc7ts/supply';
 import { AfterEvent, afterEventBy } from '../after-event';
 import {
   AfterEvent__symbol,

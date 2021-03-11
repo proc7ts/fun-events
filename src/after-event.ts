@@ -1,4 +1,5 @@
-import { noop, Supply } from '@proc7ts/primitives';
+import { noop } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 import { AfterEvent__symbol, EventKeeper, eventReceiver, EventReceiver, OnEvent__symbol } from './base';
 import { AfterEvent$noFallback, OnEvent$do, OnEvent$supplier, OnEvent$then } from './impl';
 import { isOnEvent, OnEvent } from './on-event';
@@ -66,7 +67,7 @@ export function afterEventBy<TEvent extends any[]>(
       return generic.supply;
     }
 
-    const supply = new Supply().needs(generic);
+    const supply = new Supply(noop).needs(generic);
     let reported = false;
 
     ++numReceivers;

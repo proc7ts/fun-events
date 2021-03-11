@@ -1,4 +1,5 @@
-import { alwaysSupply, neverSupply, Supply } from '@proc7ts/primitives';
+import { noop } from '@proc7ts/primitives';
+import { alwaysSupply, neverSupply, Supply } from '@proc7ts/supply';
 import { EventNotifier, EventReceiver } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
 import { supplyOn } from './supply-on';
@@ -95,7 +96,7 @@ describe('letInEvents', () => {
       onEvent = onEventBy(mockRegister);
       mockReceiver = jest.fn();
       requiredSupply = new Supply();
-      dependentSupply = new Supply();
+      dependentSupply = new Supply(noop);
     });
 
     it('sends original events', () => {

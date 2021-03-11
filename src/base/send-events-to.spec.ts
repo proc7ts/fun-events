@@ -1,4 +1,4 @@
-import { neverSupply, Supply } from '@proc7ts/primitives';
+import { neverSupply, Supply } from '@proc7ts/supply';
 import { sendEventsTo } from './send-events-to';
 
 describe('sendEventsTo', () => {

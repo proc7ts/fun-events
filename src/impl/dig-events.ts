@@ -1,4 +1,4 @@
-import { neverSupply, Supply } from '@proc7ts/primitives';
+import { neverSupply, Supply } from '@proc7ts/supply';
 import { EventReceiver } from '../base';
 import { OnEvent } from '../on-event';
 

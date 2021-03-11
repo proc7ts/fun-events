@@ -1,4 +1,4 @@
-import { neverSupply, Supply, SupplyPeer } from '@proc7ts/primitives';
+import { neverSupply, Supply, SupplyPeer } from '@proc7ts/supply';
 import { OnEvent } from '../on-event';
 
 /**

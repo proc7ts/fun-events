@@ -1,4 +1,5 @@
-import { asis, Supply } from '@proc7ts/primitives';
+import { asis } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 import { EventSender } from '../base';
 import { EventEmitter } from '../senders';
 import { digOn } from './dig-on';
