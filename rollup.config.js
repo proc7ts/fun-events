@@ -60,6 +60,9 @@ export default {
               file: 'call-thru/index.d.ts',
             },
           },
+          compilerOptions: {
+            declarationMap: true,
+          },
         }),
       ],
     },

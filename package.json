@@ -76,7 +76,7 @@
     "all": "run-z build,lint,test",
     "build": "run-z +z --then rollup --config ./rollup.config.js",
     "ci:all": "run-z all +test/--ci/--runInBand",
-    "clean": "run-z +z --then shx rm -rf index.d.ts '*/index.d.ts' dist target",
+    "clean": "run-z +z --then shx rm -rf 'index.d.ts?(.map)' '*/index.d.ts?(.map)' dist target",
     "doc": "run-z +z --then typedoc",
     "doc:publish": "run-z doc --then gh-pages --dist target/typedoc --dotfiles",
     "lint": "run-z +z --then eslint . --ext .js,.ts",
