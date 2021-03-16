@@ -55,13 +55,13 @@ export default {
         flatDts({
           tsconfig: 'tsconfig.main.json',
           lib: true,
+          compilerOptions: {
+            declarationMap: true,
+          },
           entries: {
             'call-thru': {
               file: 'call-thru/index.d.ts',
             },
-          },
-          compilerOptions: {
-            declarationMap: true,
           },
         }),
       ],
