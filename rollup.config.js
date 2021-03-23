@@ -60,7 +60,7 @@ export default {
           },
           entries: {
             'call-thru': {
-              file: 'call-thru.d.ts',
+              file: 'call-thru/index.d.ts',
             },
           },
         }),
