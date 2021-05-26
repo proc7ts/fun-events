@@ -1,16 +1,17 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { asis, noop } from '@proc7ts/primitives';
+import { Mock } from 'jest-mock';
 import { EventNotifier, EventReceiver, OnEvent__symbol } from './base';
 import { isOnEvent, OnEvent, onEventBy } from './on-event';
 import { EventEmitter } from './senders';
-import Mock = jest.Mock;
 
 describe('OnEvent', () => {
   describe('[OnEvent__symbol]', () => {
-    it('refers to itself', () => {
+    it('refers to itself', async () => {
 
       const onEvent = onEventBy(({ supply }) => supply.off());
 
-      expect(onEvent[OnEvent__symbol]()).toBe(onEvent);
+      await expect(onEvent[OnEvent__symbol]()).toBe(onEvent);
     });
   });
 

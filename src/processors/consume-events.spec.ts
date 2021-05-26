@@ -1,4 +1,6 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { Supply } from '@proc7ts/supply';
+import { Mock } from 'jest-mock';
 import { EventNotifier } from '../base';
 import { EventEmitter } from '../senders';
 import { consumeEvents } from './consume-events';
@@ -8,8 +10,8 @@ describe('consumeEvents', () => {
   let sender: EventEmitter<[EventNotifier<[string]>?]>;
   let nested1: EventNotifier<[string]>;
   let nested2: EventNotifier<[string]>;
-  let consume: jest.Mock<Supply | undefined, [EventNotifier<[string]>?]>;
-  let receiver: jest.Mock<void, [string]>;
+  let consume: Mock<Supply | undefined, [EventNotifier<[string]>?]>;
+  let receiver: Mock<void, [string]>;
   let supply: Supply;
 
   beforeEach(() => {

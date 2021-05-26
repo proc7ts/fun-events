@@ -1,3 +1,4 @@
+import { describe, expect, it, jest } from '@jest/globals';
 import { valueProvider } from '@proc7ts/primitives';
 import { AfterEvent } from '../after-event';
 import { EventEmitter } from '../senders';

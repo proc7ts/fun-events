@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { statePath } from './state-path';
 
 describe('statePath', () => {

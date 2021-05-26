@@ -1,15 +1,17 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { nextArgs, nextSkip } from '@proc7ts/call-thru';
+import { Mock } from 'jest-mock';
 import { AfterEvent, afterEventBy } from '../after-event';
 import { EventNotifier, EventReceiver } from '../base';
 import { thruAfter } from './thru-after';
 
 describe('thruAfter', () => {
 
-  let mockRegister: jest.Mock<void, [EventReceiver.Generic<[string, string]>]>;
-  let mockOff: jest.Mock<void, [any?]>;
+  let mockRegister: Mock<void, [EventReceiver.Generic<[string, string]>]>;
+  let mockOff: Mock<void, [any?]>;
   let emitter: EventNotifier<[string, string]>;
   let afterEvent: AfterEvent<[string, string]>;
-  let mockReceiver: jest.Mock<void, [string]>;
+  let mockReceiver: Mock<void, [string]>;
 
   beforeEach(() => {
     emitter = new EventNotifier();

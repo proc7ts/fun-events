@@ -1,16 +1,18 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { alwaysSupply, neverSupply, Supply } from '@proc7ts/supply';
+import { Mock } from 'jest-mock';
 import { AfterEvent, afterEventBy } from '../after-event';
 import { EventNotifier, EventReceiver } from '../base';
 import { supplyAfter } from './supply-after';
 
 describe('supplyAfter', () => {
 
-  let mockRegister: jest.Mock<void, [EventReceiver.Generic<[string]>]>;
+  let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
   let afterEvent: AfterEvent<[string]>;
   let supply: Supply;
-  let offSpy: jest.Mock;
+  let offSpy: Mock<Supply, [unknown?]>;
   let emitter: EventNotifier<[string]>;
-  let mockReceiver: jest.Mock<void, [string]>;
+  let mockReceiver: Mock<void, [string]>;
   let requiredSupply: Supply;
 
   beforeEach(() => {
@@ -44,8 +46,8 @@ describe('supplyAfter', () => {
     expect(mockReceiver).not.toHaveBeenCalled();
     expect(whenOff).toHaveBeenCalled();
   });
-  it('does not modify the input supply when `alwaysSupply()` specified', () => {
-    expect(afterEvent.do(supplyAfter(alwaysSupply()))).toBe(afterEvent);
+  it('does not modify the input supply when `alwaysSupply()` specified', async () => {
+    await expect(afterEvent.do(supplyAfter(alwaysSupply()))).toBe(afterEvent);
   });
   it('no longer sends events after original supply is cut off', () => {
 

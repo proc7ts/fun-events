@@ -1,16 +1,18 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { neverSupply, Supply } from '@proc7ts/supply';
+import { Mock, SpyInstance } from 'jest-mock';
 import { EventNotifier, EventReceiver } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
 import { onceOn } from './once-on';
 
 describe('onceOn', () => {
 
-  let mockRegister: jest.Mock<void, [EventReceiver.Generic<[string]>]>;
+  let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
   let onEvent: OnEvent<[string]>;
   let supply: Supply;
-  let whenOff: jest.SpyInstance;
+  let whenOff: Mock<void, [unknown?]>;
   let emitter: EventNotifier<[string]>;
-  let mockReceiver: jest.Mock<void, [string]>;
+  let mockReceiver: Mock<void, [string]>;
 
   beforeEach(() => {
     emitter = new EventNotifier();
@@ -36,16 +38,18 @@ describe('onceOn', () => {
     expect(whenOff).toHaveBeenCalled();
   });
   it('unregisters immediately notified event receiver', () => {
+
+    let offSpy!: SpyInstance<Supply, [unknown?]>;
     mockRegister.mockImplementation(receiver => {
       emitter.on(receiver);
       supply = receiver.supply;
-      whenOff = jest.spyOn(supply, 'off');
+      offSpy = jest.spyOn(supply, 'off');
       emitter.send('event');
     });
 
     onEvent.do(onceOn)(mockReceiver);
 
-    expect(whenOff).toHaveBeenCalled();
+    expect(offSpy).toHaveBeenCalled();
     expect(mockReceiver).toHaveBeenCalledWith('event');
   });
   it('never sends events if their supply is initially cut off', () => {

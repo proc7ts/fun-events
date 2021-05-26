@@ -1,16 +1,18 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { neverSupply, Supply } from '@proc7ts/supply';
+import { Mock } from 'jest-mock';
 import { AfterEvent, afterEventBy } from '../after-event';
 import { EventNotifier, EventReceiver } from '../base';
 import { onceAfter } from './once-after';
 
 describe('onceAfter', () => {
 
-  let mockRegister: jest.Mock<void, [EventReceiver.Generic<[string]>]>;
+  let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
   let afterEvent: AfterEvent<[string]>;
   let supply: Supply;
-  let whenOff: jest.Mock;
+  let whenOff: Mock<void, [unknown?]>;
   let emitter: EventNotifier<[string]>;
-  let mockReceiver: jest.Mock<void, [string]>;
+  let mockReceiver: Mock<void, [string]>;
 
   beforeEach(() => {
     emitter = new EventNotifier();

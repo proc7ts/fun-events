@@ -1,8 +1,9 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import { Mock } from 'jest-mock';
 import { AfterEvent, afterEventBy } from '../after-event';
 import { EventReceiver } from '../base';
 import { trackValue, ValueTracker } from '../value';
 import { afterAll } from './after-all';
-import Mock = jest.Mock;
 
 describe('afterAll', () => {
 

@@ -1,12 +1,13 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { nextSkip } from '@proc7ts/call-thru';
 import { noop } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
+import { Mock } from 'jest-mock';
 import { EventSender } from '../base';
 import { OnEvent } from '../on-event';
 import { EventEmitter } from '../senders';
 import { nextOnEvent } from './next-on-event';
 import { thruOn } from './thru-on';
-import Mock = jest.Mock;
 
 describe('nextOnEvent', () => {
 

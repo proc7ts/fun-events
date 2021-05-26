@@ -1,26 +1,27 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { asis, noop } from '@proc7ts/primitives';
 import { neverSupply, Supply } from '@proc7ts/supply';
+import { Mock } from 'jest-mock';
 import { AfterEvent, afterEventBy, isAfterEvent } from './after-event';
 import { AfterEvent__symbol, EventNotifier, EventReceiver, OnEvent__symbol } from './base';
 import { onEventBy } from './on-event';
-import Mock = jest.Mock;
 
 describe('AfterEvent', () => {
   describe('[OnEvent__symbol]', () => {
-    it('refers to itself', () => {
+    it('refers to itself', async () => {
 
       const afterEvent = afterEventBy(noop);
 
-      expect(afterEvent[OnEvent__symbol]()).toBe(afterEvent);
+      await expect(afterEvent[OnEvent__symbol]()).toBe(afterEvent);
     });
   });
 
   describe('[AfterEvent__symbol]', () => {
-    it('refers to itself', () => {
+    it('refers to itself', async () => {
 
       const afterEvent = afterEventBy(noop);
 
-      expect(afterEvent[AfterEvent__symbol]()).toBe(afterEvent);
+      await expect(afterEvent[AfterEvent__symbol]()).toBe(afterEvent);
     });
   });
 });

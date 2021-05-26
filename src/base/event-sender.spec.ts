@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { valueProvider } from '@proc7ts/primitives';
 import { onNever } from '../senders';
 import { isEventSender, OnEvent__symbol } from './event-sender';

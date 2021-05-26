@@ -1,7 +1,8 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { Supply } from '@proc7ts/supply';
+import { Mock } from 'jest-mock';
 import { OnEvent__symbol } from '../base';
 import { EventEmitter } from './event-emitter';
-import Mock = jest.Mock;
 
 describe('EventEmitter', () => {
 
@@ -22,8 +23,8 @@ describe('EventEmitter', () => {
   });
 
   describe('[OnEvent__symbol]', () => {
-    it('refers to `on`', () => {
-      expect(emitter[OnEvent__symbol]()).toBe(emitter.on);
+    it('refers to `on`', async () => {
+      await expect(emitter[OnEvent__symbol]()).toBe(emitter.on);
     });
   });
 

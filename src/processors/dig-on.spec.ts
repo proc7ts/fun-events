@@ -1,5 +1,7 @@
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { asis } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
+import { Mock } from 'jest-mock';
 import { EventSender } from '../base';
 import { EventEmitter } from '../senders';
 import { digOn } from './dig-on';
@@ -9,8 +11,8 @@ describe('digOn', () => {
   let sender: EventEmitter<[EventEmitter<[string]>?]>;
   let nested1: EventEmitter<[string]>;
   let nested2: EventEmitter<[string]>;
-  let extract: jest.Mock<EventSender<[string]> | undefined, [EventEmitter<[string]>?]>;
-  let receiver: jest.Mock<void, [string]>;
+  let extract: Mock<EventSender<[string]> | undefined, [EventEmitter<[string]>?]>;
+  let receiver: Mock<void, [string]>;
   let supply: Supply;
 
   beforeEach(() => {

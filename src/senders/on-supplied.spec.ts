@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { Supply } from '@proc7ts/supply';
 import { AfterEvent__symbol, EventKeeper, EventReceiver, EventSender, OnEvent__symbol } from '../base';
 import { OnEvent } from '../on-event';
@@ -43,16 +44,16 @@ describe('onSupplied', () => {
   });
 
   describe('from event sender with registrar implementing `OnEvent`', () => {
-    it('returns the sender\'s registrar', () => {
+    it('returns the sender\'s registrar', async () => {
 
       const sender = new EventEmitter<[string]>();
 
-      expect(onSupplied(sender)).toBe(sender[OnEvent__symbol]());
+      await expect(onSupplied(sender)).toBe(sender[OnEvent__symbol]());
     });
   });
 
   describe('from event keeper', () => {
-    it('returns the keeper\'s registrar', () => {
+    it('returns the keeper\'s registrar', async () => {
 
       const tracker = trackValue(1);
       const keeper: EventKeeper<[number]> = {
@@ -61,7 +62,7 @@ describe('onSupplied', () => {
         },
       };
 
-      expect(onSupplied(keeper)).toBe(keeper[AfterEvent__symbol]());
+      await expect(onSupplied(keeper)).toBe(keeper[AfterEvent__symbol]());
     });
   });
 });
