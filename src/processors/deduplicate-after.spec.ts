@@ -1,5 +1,7 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { asis, valueProvider } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
+import { Mock } from 'jest-mock';
 import { AfterEvent } from '../after-event';
 import { afterSent } from '../keepers';
 import { EventEmitter } from '../senders';
@@ -9,7 +11,7 @@ describe('deduplicateAfter', () => {
 
   let source: EventEmitter<[string, string?]>;
   let dedup: AfterEvent<[string?]>;
-  let receiver: jest.Mock<void, [string?]>;
+  let receiver: Mock<void, [string?]>;
   let supply: Supply;
 
   beforeEach(() => {

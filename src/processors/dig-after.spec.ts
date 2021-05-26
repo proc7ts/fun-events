@@ -1,5 +1,7 @@
+import { afterEach, beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { asis } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
+import { Mock } from 'jest-mock';
 import { AfterEvent } from '../after-event';
 import { isEventKeeper } from '../base';
 import { EventEmitter } from '../senders';
@@ -11,9 +13,9 @@ describe('digAfter', () => {
   let tracker: ValueTracker<ValueTracker<string>>;
   let nested1: ValueTracker<string>;
   let nested2: ValueTracker<string>;
-  let extract: jest.Mock<ValueTracker<string>, [ValueTracker<string>]>;
+  let extract: Mock<ValueTracker<string>, [ValueTracker<string>]>;
   let result: AfterEvent<[string]>;
-  let receiver: jest.Mock<void, [string]>;
+  let receiver: Mock<void, [string]>;
   let supply: Supply;
 
   beforeEach(() => {

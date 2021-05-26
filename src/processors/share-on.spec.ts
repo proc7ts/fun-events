@@ -1,4 +1,7 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { asis } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
+import { Mock, SpyInstance } from 'jest-mock';
 import { AfterEvent, afterEventBy } from '../after-event';
 import { EventNotifier, EventReceiver } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
@@ -8,12 +11,12 @@ import { shareOn } from './share-on';
 describe('shareOn', () => {
   describe('OnEvent', () => {
 
-    let mockRegister: jest.Mock<void, [EventReceiver.Generic<[string, string]>]>;
-    let offSpy: jest.SpyInstance;
+    let mockRegister: Mock<void, [EventReceiver.Generic<[string, string]>]>;
+    let offSpy: SpyInstance<Supply, [unknown?]>;
     let emitter: EventNotifier<[string, string]>;
     let onEvent: OnEvent<[string, string]>;
-    let mockReceiver: jest.Mock<void, [string, string]>;
-    let mockReceiver2: jest.Mock<void, [string, string]>;
+    let mockReceiver: Mock<void, [string, string]>;
+    let mockReceiver2: Mock<void, [string, string]>;
 
     beforeEach(() => {
       emitter = new EventNotifier();
@@ -134,11 +137,11 @@ describe('shareOn', () => {
   describe('AfterEvent', () => {
 
     let fallback: [string, string];
-    let mockRegister: jest.Mock<void, [EventReceiver.Generic<[string, string]>]>;
+    let mockRegister: Mock<void, [EventReceiver.Generic<[string, string]>]>;
     let emitter: EventNotifier<[string, string]>;
     let afterEvent: AfterEvent<[string, string]>;
-    let mockReceiver: jest.Mock<void, [string, string]>;
-    let mockReceiver2: jest.Mock<void, [string, string]>;
+    let mockReceiver: Mock<void, [string, string]>;
+    let mockReceiver2: Mock<void, [string, string]>;
 
     beforeEach(() => {
       fallback = ['init1', 'init2'];

@@ -1,3 +1,5 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
+import { Mock } from 'jest-mock';
 import { OnEvent } from '../on-event';
 import { EventEmitter } from '../senders';
 import { filterOn } from './filter-on';
@@ -5,7 +7,7 @@ import { filterOn } from './filter-on';
 describe('filterOn', () => {
 
   let emitter: EventEmitter<[string]>;
-  let mockReceiver: jest.Mock<void, [string]>;
+  let mockReceiver: Mock<void, [string]>;
 
   beforeEach(() => {
     emitter = new EventEmitter();

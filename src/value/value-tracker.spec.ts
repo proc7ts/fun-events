@@ -1,11 +1,12 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { noop } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
+import { Mock } from 'jest-mock';
 import { AfterEvent__symbol, EventKeeper, EventSender, OnEvent__symbol } from '../base';
 import { onceOn } from '../processors';
 import { EventEmitter } from '../senders';
 import { trackValue, trackValueBy } from './track-value';
 import { ValueTracker } from './value-tracker';
-import Mock = jest.Mock;
 
 describe('ValueTracker', () => {
 
@@ -33,14 +34,14 @@ describe('ValueTracker', () => {
   });
 
   describe('[OnEvent__symbol]', () => {
-    it('refers to `on`', () => {
-      expect(v1[OnEvent__symbol]()).toBe(v1.on);
+    it('refers to `on`', async () => {
+      await expect(v1[OnEvent__symbol]()).toBe(v1.on);
     });
   });
 
   describe('[AfterEvent__symbol]', () => {
-    it('refers to `read`', () => {
-      expect(v1[AfterEvent__symbol]()).toBe(v1.read);
+    it('refers to `read`', async () => {
+      await expect(v1[AfterEvent__symbol]()).toBe(v1.read);
     });
   });
 

@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { AfterEvent } from '../after-event';
 import { trackValue, ValueTracker } from '../value';
 import { afterThe } from './after-the';
@@ -10,11 +11,11 @@ describe('afterValue', () => {
 
     expect(await result).toBe(13);
   });
-  it('returns the value itself if it is an `AfterEvent` keeper already', () => {
+  it('returns the value itself if it is an `AfterEvent` keeper already', async () => {
 
     const value = afterThe(13);
 
-    expect(afterValue(value)).toBe(value);
+    await expect(afterValue(value)).toBe(value);
   });
   it('returns an `AfterEvent` keeper of the given `EventKeeper`', async () => {
 

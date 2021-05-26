@@ -1,3 +1,4 @@
+import { describe, expect, it, jest } from '@jest/globals';
 import { neverSupply, Supply } from '@proc7ts/supply';
 import { sendEventsTo } from './send-events-to';
 

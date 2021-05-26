@@ -1,14 +1,15 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { noop } from '@proc7ts/primitives';
+import { Mock } from 'jest-mock';
 import { OnEvent__symbol } from '../base';
 import { onSupplied } from '../senders';
 import { StateTracker } from './state-tracker';
 import { StateUpdateReceiver } from './state-update-receiver';
-import Mock = jest.Mock;
 
 describe('StateTracker', () => {
 
   let tracker: StateTracker;
-  let mockReceiver: Mock<StateUpdateReceiver>;
+  let mockReceiver: Mock<ReturnType<StateUpdateReceiver.Function>, Parameters<StateUpdateReceiver.Function>>;
 
   beforeEach(() => {
     tracker = new StateTracker();
@@ -16,8 +17,8 @@ describe('StateTracker', () => {
   });
 
   describe('[OnEvent__symbol]', () => {
-    it('refers `onUpdate`', () => {
-      expect(tracker[OnEvent__symbol]()).toBe(tracker.onUpdate);
+    it('refers `onUpdate`', async () => {
+      await expect(tracker[OnEvent__symbol]()).toBe(tracker.onUpdate);
     });
   });
 
@@ -86,8 +87,8 @@ describe('StateTracker', () => {
     });
 
     describe('[OnEvent__symbol]', () => {
-      it('refers `onUpdate`', () => {
-        expect(onSupplied(part)).toBe(part.onUpdate);
+      it('refers `onUpdate`', async () => {
+        await expect(onSupplied(part)).toBe(part.onUpdate);
       });
     });
     it('refers itself', () => {

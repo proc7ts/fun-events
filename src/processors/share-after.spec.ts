@@ -1,4 +1,6 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { asis } from '@proc7ts/primitives';
+import { Mock } from 'jest-mock';
 import { AfterEvent, afterEventBy } from '../after-event';
 import { EventNotifier, EventReceiver } from '../base';
 import { onceOn } from './once-on';
@@ -7,11 +9,11 @@ import { shareAfter } from './share-after';
 describe('shareAfter', () => {
 
   let fallback: [string, string];
-  let mockRegister: jest.Mock<void, [EventReceiver.Generic<[string, string]>]>;
+  let mockRegister: Mock<void, [EventReceiver.Generic<[string, string]>]>;
   let emitter: EventNotifier<[string, string]>;
   let afterEvent: AfterEvent<[string, string]>;
-  let mockReceiver: jest.Mock<void, [string, string]>;
-  let mockReceiver2: jest.Mock<void, [string, string]>;
+  let mockReceiver: Mock<void, [string, string]>;
+  let mockReceiver2: Mock<void, [string, string]>;
 
   beforeEach(() => {
     fallback = ['init1', 'init2'];

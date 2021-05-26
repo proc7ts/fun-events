@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { asis, noop } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
 import { AfterEvent } from '../after-event';
@@ -45,11 +46,11 @@ describe('afterSupplied', () => {
   });
 
   describe('from event keeper with registrar implementing `AfterEvent`', () => {
-    it('returns the keeper\'s registrar', () => {
+    it('returns the keeper\'s registrar', async () => {
 
       const keeper = trackValue('initial');
 
-      expect(afterSupplied(keeper)).toBe(keeper[AfterEvent__symbol]());
+      await expect(afterSupplied(keeper)).toBe(keeper[AfterEvent__symbol]());
     });
   });
 

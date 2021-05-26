@@ -1,3 +1,4 @@
+import { describe, expect, it, jest } from '@jest/globals';
 import { EventEmitter } from '../senders';
 import { trackValue } from '../value';
 import { nextAfterEvent } from './next-after-event';

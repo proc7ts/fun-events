@@ -1,8 +1,9 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { asis } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
+import { Mock } from 'jest-mock';
 import { EventEmitter } from '../senders';
 import { resolveOn } from './resolve-on';
-import Mock = jest.Mock;
 
 describe('resolveOn', () => {
 

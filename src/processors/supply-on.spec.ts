@@ -1,17 +1,19 @@
+import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { noop } from '@proc7ts/primitives';
 import { alwaysSupply, neverSupply, Supply } from '@proc7ts/supply';
+import { Mock } from 'jest-mock';
 import { EventNotifier, EventReceiver } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
 import { supplyOn } from './supply-on';
 
-describe('letInEvents', () => {
+describe('supplyOn', () => {
 
-  let mockRegister: jest.Mock<void, [EventReceiver.Generic<[string]>]>;
+  let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
   let onEvent: OnEvent<[string]>;
   let supply: Supply;
-  let offSpy: jest.Mock;
+  let offSpy: Mock<void, [unknown?]>;
   let emitter: EventNotifier<[string]>;
-  let mockReceiver: jest.Mock<void, [string]>;
+  let mockReceiver: Mock<void, [string]>;
   let requiredSupply: Supply;
 
   beforeEach(() => {
@@ -43,8 +45,8 @@ describe('letInEvents', () => {
     expect(mockReceiver).not.toHaveBeenCalled();
     expect(whenOff).toHaveBeenCalled();
   });
-  it('does not modify the input supply when `alwaysSupply()` specified', () => {
-    expect(onEvent.do(supplyOn(alwaysSupply()))).toBe(onEvent);
+  it('does not modify the input supply when `alwaysSupply()` specified', async () => {
+    await expect(onEvent.do(supplyOn(alwaysSupply()))).toBe(onEvent);
   });
   it('no longer sends events after original supply is cut off', () => {
 
@@ -77,12 +79,12 @@ describe('letInEvents', () => {
 
   describe('with dependent supply', () => {
 
-    let mockRegister: jest.Mock<void, [EventReceiver.Generic<[string]>]>;
+    let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
     let onEvent: OnEvent<[string]>;
     let supply: Supply;
-    let offSpy: jest.Mock;
+    let offSpy: Mock<void, [unknown?]>;
     let emitter: EventNotifier<[string]>;
-    let mockReceiver: jest.Mock<void, [string]>;
+    let mockReceiver: Mock<void, [string]>;
     let requiredSupply: Supply;
     let dependentSupply: Supply;
 
