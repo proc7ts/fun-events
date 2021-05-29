@@ -73,7 +73,7 @@
     "doc": "run-z +z --then typedoc",
     "doc:publish": "run-z doc --then gh-pages --dist target/typedoc --dotfiles",
     "lint": "run-z +z --then eslint . --ext .js,.ts",
-    "test": "run-z +z --then jest",
-    "z": "run-z +build,+doc,+lint,+test"
+    "test": "run-z +z env:NODE_OPTIONS='--experimental-vm-modules --no-warnings' --then jest",
+    "z": "run-z +cmd:rollup,+cmd:typedoc,+cmd:eslint,+cmd:jest"
   }
 }
