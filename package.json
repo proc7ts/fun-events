@@ -54,6 +54,8 @@
     "jest": "^27.0.3",
     "jest-junit": "^12.1.0",
     "jest-mock": "^27.0.3",
+    "remark-cli": "^9.0.0",
+    "remark-preset-lint-recommended": "^5.0.0",
     "rollup": "^2.50.5",
     "rollup-plugin-flat-dts": "^1.2.2",
     "rollup-plugin-sourcemaps": "^0.6.3",
@@ -72,8 +74,9 @@
     "clean": "run-z +z --then shx rm -rf 'index.d.ts?(.map)' '*/index.d.ts?(.map)' dist target",
     "doc": "run-z +z --then typedoc",
     "doc:publish": "run-z doc --then gh-pages --dist target/typedoc --dotfiles",
-    "lint": "run-z +z --then eslint . --ext .js,.ts",
+    "lint": "run-z + lint:md --and eslint .",
+    "lint:md": "run-z +z --then remark .",
     "test": "run-z +z env:NODE_OPTIONS='--experimental-vm-modules --no-warnings' --then jest",
-    "z": "run-z +cmd:rollup,+cmd:typedoc,+cmd:eslint,+cmd:jest"
+    "z": "run-z +cmd:rollup,+cmd:typedoc,+cmd:eslint,+cmd:remark,+cmd:jest"
   }
 }

@@ -192,6 +192,7 @@ The `...On` processors produce an `OnEvent` senders, while `...After` ones produ
 [resolveOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#resolveOn
 [resolveOnOrdered]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#resolveOnOrdered
 [shareOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#shareOn
+[shareAfter]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#shareAfter
 [supplyAfter]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#supplyAfter
 [supplyOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#supplyOn
 [translateAfter]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#translateAfter
