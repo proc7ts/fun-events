@@ -119,4 +119,3 @@ interface SharedEventDispatcher<TEvent extends any[]> {
   dispatch(...event: TEvent): void;
 
 }
-
