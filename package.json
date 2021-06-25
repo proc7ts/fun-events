@@ -69,7 +69,8 @@
   },
   "scripts": {
     "all": "run-z build,lint,test",
-    "build": "run-z +z --then rollup -c",
+    "bootstrap": "--then rollup -c",
+    "build": "run-z +z bootstrap",
     "ci:all": "run-z all +test/--ci/--runInBand",
     "clean": "run-z +z --then shx rm -rf 'index.d.ts?(.map)' '*/index.d.ts?(.map)' dist target",
     "doc": "run-z +z --then typedoc",
