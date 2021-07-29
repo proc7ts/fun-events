@@ -55,10 +55,10 @@
 					<a href="../modules.html">Functional Event Processor</a>
 				</li>
 				<li>
-					<a href="../modules/module__proc7ts_fun_events.html">Module @proc7ts/fun-events</a>
+					<a href="../modules/Module__proc7ts_fun_events.html">Module @proc7ts/fun-events</a>
 				</li>
 				<li>
-					<a href="module__proc7ts_fun_events.noeventserror.html">NoEventsError</a>
+					<a href="Module__proc7ts_fun_events.NoEventsError.html">NoEventsError</a>
 				</li>
 			</ul>
 			<h1>Class NoEventsError</h1>
@@ -73,8 +73,8 @@
 					<div class="lead">
 						<p>An error indicating a failure to receive an expected event.</p>
 					</div>
-					<p>This happens e.g. when receiver registered in <a href="../modules/module__proc7ts_fun_events.eventkeeper.html">event keeper</a>, but the latter has no events to send.
-						This may happen when no fallback passed to <a href="../modules/module__proc7ts_fun_events.html#aftereventby">afterEventBy</a> function, while the given supplier did not send
+					<p>This happens e.g. when receiver registered in <a href="../modules/Module__proc7ts_fun_events.EventKeeper.html">event keeper</a>, but the latter has no events to send.
+						This may happen when no fallback passed to <a href="../modules/Module__proc7ts_fun_events.html#afterEventBy">afterEventBy</a> function, while the given supplier did not send
 					any events.</p>
 				</div>
 			</section>
@@ -98,15 +98,15 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="module__proc7ts_fun_events.noeventserror.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="Module__proc7ts_fun_events.NoEventsError.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-inherited tsd-is-external">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="module__proc7ts_fun_events.noeventserror.html#message" class="tsd-kind-icon">message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="module__proc7ts_fun_events.noeventserror.html#name" class="tsd-kind-icon">name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="module__proc7ts_fun_events.noeventserror.html#stack" class="tsd-kind-icon">stack</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="Module__proc7ts_fun_events.NoEventsError.html#message" class="tsd-kind-icon">message</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="Module__proc7ts_fun_events.NoEventsError.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="Module__proc7ts_fun_events.NoEventsError.html#stack" class="tsd-kind-icon">stack</a></li>
 							</ul>
 						</section>
 					</div>
@@ -118,14 +118,14 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>NoEvents<wbr>Error<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.noeventserror.html" class="tsd-signature-type" data-tsd-kind="Class">NoEventsError</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>NoEvents<wbr>Error<span class="tsd-signature-symbol">(</span>message<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="Module__proc7ts_fun_events.NoEventsError.html" class="tsd-signature-type" data-tsd-kind="Class">NoEventsError</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Overrides TypeError.constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/080fc4a/src/base/no-events-error.ts#L10">proc7ts/fun-events/src/base/no-events-error.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/8f83084/src/base/no-events-error.ts#L17">proc7ts/fun-events/src/base/no-events-error.ts:17</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -138,11 +138,13 @@
 								<li>
 									<h5>message: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &#x27;No events to send&#x27;</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Error message.</p>
+										<div class="lead">
+											<p>Error message.</p>
+										</div>
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="module__proc7ts_fun_events.noeventserror.html" class="tsd-signature-type" data-tsd-kind="Class">NoEventsError</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="Module__proc7ts_fun_events.NoEventsError.html" class="tsd-signature-type" data-tsd-kind="Class">NoEventsError</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -156,7 +158,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from TypeError.message</p>
 						<ul>
-							<li>Defined in node_modules/.pnpm/typescript@4.3.4/node_modules/typescript/lib/lib.es5.d.ts:974</li>
+							<li>Defined in node_modules/.pnpm/typescript@4.3.5/node_modules/typescript/lib/lib.es5.d.ts:974</li>
 						</ul>
 					</aside>
 				</section>
@@ -167,7 +169,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from TypeError.name</p>
 						<ul>
-							<li>Defined in node_modules/.pnpm/typescript@4.3.4/node_modules/typescript/lib/lib.es5.d.ts:973</li>
+							<li>Defined in node_modules/.pnpm/typescript@4.3.5/node_modules/typescript/lib/lib.es5.d.ts:973</li>
 						</ul>
 					</aside>
 				</section>
@@ -178,7 +180,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from TypeError.stack</p>
 						<ul>
-							<li>Defined in node_modules/.pnpm/typescript@4.3.4/node_modules/typescript/lib/lib.es5.d.ts:975</li>
+							<li>Defined in node_modules/.pnpm/typescript@4.3.5/node_modules/typescript/lib/lib.es5.d.ts:975</li>
 						</ul>
 					</aside>
 				</section>
@@ -191,10 +193,10 @@
 						<a href="../modules.html">Modules</a>
 					</li>
 					<li class="current tsd-kind-module">
-						<a href="../modules/module__proc7ts_fun_events.html">Module @proc7ts/fun-<wbr>events</a>
+						<a href="../modules/Module__proc7ts_fun_events.html">Module @proc7ts/fun-<wbr>events</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="../modules/module__proc7ts_fun_events_call_thru.html">Module @proc7ts/fun-<wbr>events/call-<wbr>thru</a>
+						<a href="../modules/Module__proc7ts_fun_events_call_thru.html">Module @proc7ts/fun-<wbr>events/call-<wbr>thru</a>
 					</li>
 				</ul>
 			</nav>
@@ -203,19 +205,19 @@
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="module__proc7ts_fun_events.noeventserror.html" class="tsd-kind-icon">No<wbr>Events<wbr>Error</a>
+						<a href="Module__proc7ts_fun_events.NoEventsError.html" class="tsd-kind-icon">No<wbr>Events<wbr>Error</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
-								<a href="module__proc7ts_fun_events.noeventserror.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="Module__proc7ts_fun_events.NoEventsError.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="module__proc7ts_fun_events.noeventserror.html#message" class="tsd-kind-icon">message</a>
+								<a href="Module__proc7ts_fun_events.NoEventsError.html#message" class="tsd-kind-icon">message</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="module__proc7ts_fun_events.noeventserror.html#name" class="tsd-kind-icon">name</a>
+								<a href="Module__proc7ts_fun_events.NoEventsError.html#name" class="tsd-kind-icon">name</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
-								<a href="module__proc7ts_fun_events.noeventserror.html#stack" class="tsd-kind-icon">stack</a>
+								<a href="Module__proc7ts_fun_events.NoEventsError.html#stack" class="tsd-kind-icon">stack</a>
 							</li>
 						</ul>
 					</li>

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>EventKeeper | Functional Event Processor</title>
+	<title>Object | Functional Event Processor</title>
 	<meta name="description" content="Documentation for Functional Event Processor">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,13 +55,16 @@
 					<a href="../modules.html">Functional Event Processor</a>
 				</li>
 				<li>
-					<a href="../modules/module__proc7ts_fun_events.html">Module @proc7ts/fun-events</a>
+					<a href="../modules/Module__proc7ts_fun_events.html">Module @proc7ts/fun-events</a>
 				</li>
 				<li>
-					<a href="module__proc7ts_fun_events.eventkeeper-1.html">EventKeeper</a>
+					<a href="../modules/Module__proc7ts_fun_events.EventReceiver.html">EventReceiver</a>
+				</li>
+				<li>
+					<a href="Module__proc7ts_fun_events.EventReceiver.Object.html">Object</a>
 				</li>
 			</ul>
-			<h1>Interface EventKeeper&lt;TEvent&gt;</h1>
+			<h1>Interface Object&lt;TEvent&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -71,10 +74,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>An event supplier that keeps the last event sent.</p>
+						<p>Event receiver object.</p>
 					</div>
-					<p>The registered event receiver would receive the kept event immediately upon registration, and all upcoming events
-					after that.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -84,7 +85,7 @@
 						<h4>TEvent<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
-								<p>An event type. This is a list of event receiver parameter types.</p>
+								<p>An event type. This is a tuple of event receiver parameter types.</p>
 							</div>
 						</div>
 					</li>
@@ -94,19 +95,16 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">EventKeeper</span>
+						<span class="target">Object</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<a href="module__proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a>
+								<a href="Module__proc7ts_fun_events.EventReceiver.Generic.html" class="tsd-signature-type" data-tsd-kind="Interface">Generic</a>
+							</li>
+							<li>
+								<a href="Module__proc7ts_fun_events.StateUpdateReceiver.Object.html" class="tsd-signature-type" data-tsd-kind="Interface">Object</a>
 							</li>
 						</ul>
 					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel">
-				<h3>Implemented by</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../classes/module__proc7ts_fun_events.valuetracker.html" class="tsd-signature-type" data-tsd-kind="Class">ValueTracker</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -114,36 +112,76 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="Module__proc7ts_fun_events.EventReceiver.Object.html#supply" class="tsd-kind-icon">supply</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="module__proc7ts_fun_events.eventkeeper-1.html#_afterevent__symbol_" class="tsd-kind-icon">[<wbr>After<wbr>Event__symbol]</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="Module__proc7ts_fun_events.EventReceiver.Object.html#receive" class="tsd-kind-icon">receive</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="supply" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> supply</h3>
+					<div class="tsd-signature tsd-kind-icon">supply<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Supply</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/8f83084/src/base/event-receiver.ts#L55">proc7ts/fun-events/src/base/event-receiver.ts:55</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Event supply to this receiver.</p>
+						</div>
+						<p>Events will be supplied to this receiver until this supply is {@link Supply.off cut off}.</p>
+						<p>When omitted a new supply will be created per receiver registration within event supplier.</p>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="_afterevent__symbol_" class="tsd-anchor"></a>
-					<h3>[<wbr>After<wbr>Event__symbol]</h3>
+					<a name="receive" class="tsd-anchor"></a>
+					<h3>receive</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">[<wbr>After<wbr>Event__symbol]<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="module__proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">receive<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="Module__proc7ts_fun_events.EventReceiver.Context.html" class="tsd-signature-type" data-tsd-kind="Interface">Context</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span>, <span class="tsd-signature-symbol">...</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/080fc4a/src/base/event-keeper.ts#L26">proc7ts/fun-events/src/base/event-keeper.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/fun-events/blob/8f83084/src/base/event-receiver.ts#L63">proc7ts/fun-events/src/base/event-receiver.ts:63</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Returns an <a href="module__proc7ts_fun_events.afterevent.html">AfterEvent</a> instance of this event keeper.</p>
+									<p>Receives an event.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <a href="module__proc7ts_fun_events.afterevent.html" class="tsd-signature-type" data-tsd-kind="Interface">AfterEvent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p><a href="module__proc7ts_fun_events.afterevent.html">AfterEvent</a> instance registering event receivers sent by this keeper.</p>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>context: <a href="Module__proc7ts_fun_events.EventReceiver.Context.html" class="tsd-signature-type" data-tsd-kind="Interface">Context</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TEvent</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>An event processing context.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>event: <span class="tsd-signature-type">TEvent</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>An event represented as the rest of arguments.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -155,28 +193,34 @@
 					<li class=" ">
 						<a href="../modules.html">Modules</a>
 					</li>
-					<li class="current tsd-kind-module">
-						<a href="../modules/module__proc7ts_fun_events.html">Module @proc7ts/fun-<wbr>events</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="../modules/module__proc7ts_fun_events_call_thru.html">Module @proc7ts/fun-<wbr>events/call-<wbr>thru</a>
-					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="Module__proc7ts_fun_events.EventReceiver.Context.html" class="tsd-kind-icon">Context</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="Module__proc7ts_fun_events.EventReceiver.Generic.html" class="tsd-kind-icon">Generic</a>
+					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="module__proc7ts_fun_events.eventkeeper-1.html" class="tsd-kind-icon">Event<wbr>Keeper</a>
+					<li class="current tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="Module__proc7ts_fun_events.EventReceiver.Object.html" class="tsd-kind-icon">Object</a>
 						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="Module__proc7ts_fun_events.EventReceiver.Object.html#supply" class="tsd-kind-icon">supply</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="module__proc7ts_fun_events.eventkeeper-1.html#_afterevent__symbol_" class="tsd-kind-icon">[<wbr>After<wbr>Event__symbol]</a>
+								<a href="Module__proc7ts_fun_events.EventReceiver.Object.html#receive" class="tsd-kind-icon">receive</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="../modules/Module__proc7ts_fun_events.EventReceiver.html#Function" class="tsd-kind-icon">Function</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
@@ -196,6 +240,7 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
