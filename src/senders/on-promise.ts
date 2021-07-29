@@ -12,17 +12,18 @@ import { OnEvent, onEventBy } from '../on-event';
  *
  * @category Core
  * @typeParam T - A type of value the promise is resolved to.
- * @param promise - The promise to represent as event sender.
+ * @param promise - A promise-like instance or raw value to represent as event sender.
  *
  * @returns An {@link OnEvent} sender of the given `promise` settlement event.
  */
-export function onPromise<T>(promise: Promise<T>): OnEvent<[T]> {
+export function onPromise<T>(promise: PromiseLike<T> | T): OnEvent<[T]> {
 
+  const whenResolved = Promise.resolve(promise);
   let receive = (receiver: EventReceiver.Generic<[T]>): void => {
-    promise.then(() => receive(receiver), () => receive(receiver));
+    whenResolved.then(() => receive(receiver), () => receive(receiver));
   };
 
-  promise.then(value => {
+  whenResolved.then(value => {
     receive = alwaysReceiveValue(value);
   }).catch(e => {
     receive = neverReceiveBecause(e);
