@@ -52,7 +52,7 @@ export namespace EventReceiver {
      *
      * When omitted a new supply will be created per receiver registration within event supplier.
      */
-    readonly supply?: Supply;
+    readonly supply?: Supply | undefined;
 
     /**
      * Receives an event.

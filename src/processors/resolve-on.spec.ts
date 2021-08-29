@@ -80,7 +80,7 @@ describe('resolveOn', () => {
   });
   it('cuts off supply when incoming event resolution failed', async () => {
 
-    let rejectFirst!: (reason?: any) => void;
+    let rejectFirst!: (reason?: unknown) => void;
 
     origin.send(new Promise<string>((_resolve, reject) => rejectFirst = reject));
     origin.send('2');

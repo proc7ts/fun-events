@@ -18,7 +18,7 @@ export class EventNotifier<TEvent extends any[]> implements SupplyPeer {
   /**
    * @internal
    */
-  private _rcs?: Set<EventReceiver.Generic<TEvent>>;
+  private _rcs?: Set<EventReceiver.Generic<TEvent>> | undefined;
 
   readonly supply: Supply;
 

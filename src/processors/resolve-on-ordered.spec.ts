@@ -68,7 +68,7 @@ describe('resolveOnOrdered', () => {
 
     supply.whenOff(whenOff);
 
-    let rejectFirst!: (reason?: any) => void;
+    let rejectFirst!: (reason?: unknown) => void;
 
     origin.send(new Promise<string>((_resolve, reject) => rejectFirst = reject));
     origin.send('2');
