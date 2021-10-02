@@ -35,6 +35,7 @@ export function resolveOnOrdered<TEvent>(
         supplyOn(supply, sourceSupply),
         mapOn(event => {
           ++numInProcess;
+
           return event;
         }),
     );

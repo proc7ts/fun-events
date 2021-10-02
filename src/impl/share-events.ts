@@ -25,6 +25,7 @@ class EventSharer<TEvent extends any[]> extends EventNotifier<TEvent> {
 
   on(receiver: EventReceiver.Generic<TEvent>): Supply {
     this._on.on(receiver);
+
     return receiver.supply;
   }
 

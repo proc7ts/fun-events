@@ -161,6 +161,7 @@ class SubStateTracker implements StateTracker {
     if (!path.length) {
       return this; // Path to itself.
     }
+
     return new SubStateTracker(this._trackers, [...this._path, ...path]);
   }
 

@@ -32,6 +32,7 @@ export default defineConfig({
     if (id.startsWith(path.resolve('src', 'impl') + path.sep)) {
       return 'fun-events.base';
     }
+
     return 'fun-events';
   },
   output: {

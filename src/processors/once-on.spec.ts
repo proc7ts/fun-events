@@ -40,6 +40,7 @@ describe('onceOn', () => {
   it('unregisters immediately notified event receiver', () => {
 
     let offSpy!: SpyInstance<Supply, [unknown?]>;
+
     mockRegister.mockImplementation(receiver => {
       emitter.on(receiver);
       supply = receiver.supply;
