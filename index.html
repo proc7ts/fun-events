@@ -1,351 +1,128 @@
-<!doctype html>
-<html class="default no-js">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Functional Event Processor</title>
-	<meta name="description" content="Documentation for Functional Event Processor">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="assets/css/main.css">
-	<script async src="assets/js/search.js" id="search-script"></script>
-</head>
-<body>
-<header>
-	<div class="tsd-page-toolbar">
-		<div class="container">
-			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
-					<div class="field">
-						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
-						<input id="tsd-search-field" type="text" />
-					</div>
-					<ul class="results">
-						<li class="state loading">Preparing search index...</li>
-						<li class="state failure">The search index is not available</li>
-					</ul>
-					<a href="index.html" class="title">Functional Event Processor</a>
-				</div>
-				<div class="table-cell" id="tsd-widgets">
-					<div id="tsd-filter">
-						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
-						<div class="tsd-filter-group">
-							<div class="tsd-select" id="tsd-filter-visibility">
-								<span class="tsd-select-label">All</span>
-								<ul class="tsd-select-list">
-									<li data-value="public">Public</li>
-									<li data-value="protected">Public/Protected</li>
-									<li data-value="private" class="selected">All</li>
-								</ul>
-							</div>
-							<input type="checkbox" id="tsd-filter-inherited" checked />
-							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
-							<input type="checkbox" id="tsd-filter-externals" checked />
-							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
-						</div>
-					</div>
-					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="tsd-page-title">
-		<div class="container">
-			<h1>Functional Event Processor</h1>
-		</div>
-	</div>
-</header>
-<div class="container container-main">
-	<div class="row">
-		<div class="col-8 col-content">
-			<div class="tsd-panel tsd-typography">
-				<a href="#functional-event-processor" id="functional-event-processor" style="color: inherit; text-decoration: none;">
-					<h1>Functional Event Processor</h1>
-				</a>
-				<p><a href="https://www.npmjs.com/package/@proc7ts/fun-events"><img src="https://img.shields.io/npm/v/@proc7ts/fun-events.svg?logo=npm" alt="NPM"></a>
-					<a href="https://github.com/proc7ts/fun-events/actions?query=workflow:Build"><img src="https://github.com/proc7ts/fun-events/workflows/Build/badge.svg" alt="Build Status"></a>
-					<a href="https://www.codacy.com/gh/proc7ts/fun-events/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=proc7ts/fun-events&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/034eb48fba8d4ceab75f14ae09570fc0" alt="Code Quality"></a>
-					<a href="https://www.codacy.com/gh/proc7ts/fun-events/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=proc7ts/fun-events&amp;utm_campaign=Badge_Coverage"><img src="https://app.codacy.com/project/badge/Coverage/034eb48fba8d4ceab75f14ae09570fc0" alt="Coverage"></a>
-					<a href="https://github.com/proc7ts/fun-events"><img src="https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational" alt="GitHub Project"></a>
-				<a href="https://proc7ts.github.io/fun-events/"><img src="https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational" alt="API Documentation"></a></p>
-				<p>A simple protocol for sending events to receivers registered in senders:</p>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">OnEvent</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/fun-events&#039;</span><span style="color: #000000">;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Supply</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/primitives&#039;</span><span style="color: #000000">;</span>
-
-<span style="color: #008000">// API supports arbitrary event receiver signatures.</span>
-<span style="color: #008000">// An event is a receiver&#039;s parameters.</span>
-<span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">eventReceiver</span><span style="color: #000000">(</span><span style="color: #001080">type</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">: </span><span style="color: #267F99">Event</span><span style="color: #000000">) { </span>
-<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Event of type &#039;</span><span style="color: #000000">, </span><span style="color: #001080">type</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">);</span>
-<span style="color: #000000">}</span>
-
-<span style="color: #008000">// An `OnEvent` event sender accepts event receivers with compatible event signature </span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">onEvent</span><span style="color: #000000">: </span><span style="color: #267F99">OnEvent</span><span style="color: #000000">&lt;[</span><span style="color: #267F99">string</span><span style="color: #000000">, </span><span style="color: #267F99">Event</span><span style="color: #000000">]&gt;;</span>
-
-<span style="color: #008000">// An `OnEvent` sender is a function that registers a receiver.</span>
-<span style="color: #008000">// An event supply returned can be cut off to unregister the receiver.</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">supply</span><span style="color: #000000">: </span><span style="color: #267F99">Supply</span><span style="color: #000000"> = </span><span style="color: #795E26">onEvent</span><span style="color: #000000">(</span><span style="color: #001080">eventReceiver</span><span style="color: #000000">);</span>
-
-<span style="color: #008000">// ...generate some events...</span>
-
-<span style="color: #001080">supply</span><span style="color: #000000">.</span><span style="color: #795E26">off</span><span style="color: #000000">(); </span><span style="color: #008000">// The `eventReceiver` will no longer receive events after this call.</span>
+<!DOCTYPE html><html class="default no-js"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Functional Event Processor</title><meta name="description" content="Documentation for Functional Event Processor"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">Functional Event Processor</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1> Functional Event Processor</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#functional-event-processor" id="functional-event-processor" style="color: inherit; text-decoration: none;">
+  <h1>Functional Event Processor</h1>
+</a>
+<p><a href="https://www.npmjs.com/package/@proc7ts/fun-events"><img src="https://img.shields.io/npm/v/@proc7ts/fun-events.svg?logo=npm" alt="NPM"></a>
+<a href="https://github.com/proc7ts/fun-events/actions?query=workflow:Build"><img src="https://github.com/proc7ts/fun-events/workflows/Build/badge.svg" alt="Build Status"></a>
+<a href="https://www.codacy.com/gh/proc7ts/fun-events/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=proc7ts/fun-events&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/034eb48fba8d4ceab75f14ae09570fc0" alt="Code Quality"></a>
+<a href="https://www.codacy.com/gh/proc7ts/fun-events/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=proc7ts/fun-events&amp;utm_campaign=Badge_Coverage"><img src="https://app.codacy.com/project/badge/Coverage/034eb48fba8d4ceab75f14ae09570fc0" alt="Coverage"></a>
+<a href="https://github.com/proc7ts/fun-events"><img src="https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational" alt="GitHub Project"></a>
+<a href="https://proc7ts.github.io/fun-events/"><img src="https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational" alt="API Documentation"></a></p>
+<p>A simple protocol for sending events to receivers registered in senders:</p>
+<pre><code class="language-typescript"><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">OnEvent</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@proc7ts/fun-events&#39;</span><span class="hl-1">;</span><br/><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">Supply</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@proc7ts/primitives&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-4">// API supports arbitrary event receiver signatures.</span><br/><span class="hl-4">// An event is a receiver&#39;s parameters.</span><br/><span class="hl-5">function</span><span class="hl-1"> </span><span class="hl-6">eventReceiver</span><span class="hl-1">(</span><span class="hl-2">type</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">event</span><span class="hl-1">: </span><span class="hl-7">Event</span><span class="hl-1">) { </span><br/><span class="hl-1">  </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-3">&#39;Event of type &#39;</span><span class="hl-1">, </span><span class="hl-2">type</span><span class="hl-1">, </span><span class="hl-2">event</span><span class="hl-1">);</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-4">// An `OnEvent` event sender accepts event receivers with compatible event signature </span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-8">onEvent</span><span class="hl-1">: </span><span class="hl-7">OnEvent</span><span class="hl-1">&lt;[</span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-7">Event</span><span class="hl-1">]&gt;;</span><br/><br/><span class="hl-4">// An `OnEvent` sender is a function that registers a receiver.</span><br/><span class="hl-4">// An event supply returned can be cut off to unregister the receiver.</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-8">supply</span><span class="hl-1">: </span><span class="hl-7">Supply</span><span class="hl-1"> = </span><span class="hl-6">onEvent</span><span class="hl-1">(</span><span class="hl-2">eventReceiver</span><span class="hl-1">);</span><br/><br/><span class="hl-4">// ...generate some events...</span><br/><br/><span class="hl-2">supply</span><span class="hl-1">.</span><span class="hl-6">off</span><span class="hl-1">(); </span><span class="hl-4">// The `eventReceiver` will no longer receive events after this call.</span>
 </code></pre>
-				<a href="#eventreceiver" id="eventreceiver" style="color: inherit; text-decoration: none;">
-					<h2><code>EventReceiver</code></h2>
-				</a>
-				<p>An event receiver is a function that is called on each event sent by event supplier when registered.</p>
-				<p>To register an event receiver in event supplier just call the supplier function with this receiver as argument.</p>
-				<p>An event receiver can also be in object form:</p>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">EventReceiver</span><span style="color: #000000">, </span><span style="color: #001080">OnEvent</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/fun-events&#039;</span><span style="color: #000000">;</span>
-<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Supply</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/primitives&#039;</span><span style="color: #000000">;</span>
 
-<span style="color: #008000">// API supports arbitrary event receiver signatures.</span>
-<span style="color: #008000">// An event is a receiver&#039;s `receive` method parameters following revent processing context.</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">eventReceiver</span><span style="color: #000000">: </span><span style="color: #267F99">EventReceiver</span><span style="color: #000000">&lt;[</span><span style="color: #267F99">string</span><span style="color: #000000">, </span><span style="color: #267F99">Event</span><span style="color: #000000">]&gt; = {</span>
-<span style="color: #000000">  </span><span style="color: #795E26">receive</span><span style="color: #000000">(</span><span style="color: #001080">context</span><span style="color: #000000">, </span><span style="color: #001080">type</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">) {</span>
-<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Event of type &#039;</span><span style="color: #000000">, </span><span style="color: #001080">type</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">);</span>
-<span style="color: #000000">  }</span>
-<span style="color: #000000">};</span>
-
-<span style="color: #008000">// An `OnEvent` event sender accepts event receivers with compatible event signature </span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">onEvent</span><span style="color: #000000">: </span><span style="color: #267F99">OnEvent</span><span style="color: #000000">&lt;[</span><span style="color: #267F99">string</span><span style="color: #000000">, </span><span style="color: #267F99">Event</span><span style="color: #000000">]&gt;;</span>
-
-<span style="color: #008000">// An `OnEvent` sender is a function that registers a receiver.</span>
-<span style="color: #008000">// An event supply returned can be cut off to unregister the receiver.</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">supply</span><span style="color: #000000">: </span><span style="color: #267F99">EventSupply</span><span style="color: #000000"> = </span><span style="color: #001080">onEvent</span><span style="color: #000000">.</span><span style="color: #795E26">to</span><span style="color: #000000">(</span><span style="color: #001080">eventReceiver</span><span style="color: #000000">);</span>
-
-<span style="color: #008000">// ...generate some events...</span>
-
-<span style="color: #001080">supply</span><span style="color: #000000">.</span><span style="color: #795E26">off</span><span style="color: #000000">(); </span><span style="color: #008000">// The `eventReceiver` will no longer receive events after this call.</span>
+<a href="#eventreceiver" id="eventreceiver" style="color: inherit; text-decoration: none;">
+  <h2><code>EventReceiver</code></h2>
+</a>
+<p>An event receiver is a function that is called on each event sent by event supplier when registered.</p>
+<p>To register an event receiver in event supplier just call the supplier function with this receiver as argument.</p>
+<p>An event receiver can also be in object form:</p>
+<pre><code class="language-typescript"><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">EventReceiver</span><span class="hl-1">, </span><span class="hl-2">OnEvent</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@proc7ts/fun-events&#39;</span><span class="hl-1">;</span><br/><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">Supply</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@proc7ts/primitives&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-4">// API supports arbitrary event receiver signatures.</span><br/><span class="hl-4">// An event is a receiver&#39;s `receive` method parameters following revent processing context.</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-8">eventReceiver</span><span class="hl-1">: </span><span class="hl-7">EventReceiver</span><span class="hl-1">&lt;[</span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-7">Event</span><span class="hl-1">]&gt; = {</span><br/><span class="hl-1">  </span><span class="hl-6">receive</span><span class="hl-1">(</span><span class="hl-2">context</span><span class="hl-1">, </span><span class="hl-2">type</span><span class="hl-1">, </span><span class="hl-2">event</span><span class="hl-1">) {</span><br/><span class="hl-1">    </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-3">&#39;Event of type &#39;</span><span class="hl-1">, </span><span class="hl-2">type</span><span class="hl-1">, </span><span class="hl-2">event</span><span class="hl-1">);</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">};</span><br/><br/><span class="hl-4">// An `OnEvent` event sender accepts event receivers with compatible event signature </span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-8">onEvent</span><span class="hl-1">: </span><span class="hl-7">OnEvent</span><span class="hl-1">&lt;[</span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-7">Event</span><span class="hl-1">]&gt;;</span><br/><br/><span class="hl-4">// An `OnEvent` sender is a function that registers a receiver.</span><br/><span class="hl-4">// An event supply returned can be cut off to unregister the receiver.</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-8">supply</span><span class="hl-1">: </span><span class="hl-7">EventSupply</span><span class="hl-1"> = </span><span class="hl-2">onEvent</span><span class="hl-1">.</span><span class="hl-6">to</span><span class="hl-1">(</span><span class="hl-2">eventReceiver</span><span class="hl-1">);</span><br/><br/><span class="hl-4">// ...generate some events...</span><br/><br/><span class="hl-2">supply</span><span class="hl-1">.</span><span class="hl-6">off</span><span class="hl-1">(); </span><span class="hl-4">// The `eventReceiver` will no longer receive events after this call.</span>
 </code></pre>
-				<p>In this form the event receiver&#39;s <code>receive</code> method accepts <em>event processing context</em> as the first parameter.</p>
-				<a href="#recurrent-events" id="recurrent-events" style="color: inherit; text-decoration: none;">
-					<h3>Recurrent Events</h3>
-				</a>
-				<p>A <em>recurrent event</em> is an event sent from inside event receiver and targeted the same receiver. Recurrent event
-					processing is scheduled until after the current event processing finishes. To handle recurrent events in a specific
-					way the event receiver may utilize an <em>event processing context</em> available as first parameter of event receiver&#39;s
-				<code>receive</code> method.</p>
-				<p>This context has an <code>onRecurrent()</code> method. It schedules the given event receiver function to be called to process
-					recurrent events. If this method is called during event processing, the recurrent events will be sent to the given
-				<code>receiver</code> after current event processed instead of original one:</p>
-				<p>The event receiver then can look like this:</p>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">EventReceiver</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/fun-events&#039;</span><span style="color: #000000">;</span>
+<p>In this form the event receiver&#39;s <code>receive</code> method accepts <em>event processing context</em> as the first parameter.</p>
 
-<span style="color: #008000">// API supports arbitrary event receiver signatures</span>
-<span style="color: #008000">// An event is a tuple of event receiver arguments</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">eventReceiver</span><span style="color: #000000">: </span><span style="color: #267F99">EventReceiver</span><span style="color: #000000">&lt;[</span><span style="color: #267F99">string</span><span style="color: #000000">, </span><span style="color: #267F99">Event</span><span style="color: #000000">]&gt; = {</span>
-<span style="color: #000000">  </span><span style="color: #795E26">receive</span><span style="color: #000000">(</span><span style="color: #001080">context</span><span style="color: #000000">, </span><span style="color: #001080">type</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">) { </span>
-<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Event of type &#039;</span><span style="color: #000000">, </span><span style="color: #001080">type</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">);</span>
-<span style="color: #000000">    </span><span style="color: #001080">context</span><span style="color: #000000">.</span><span style="color: #795E26">onRecurrent</span><span style="color: #000000">((</span><span style="color: #001080">recurrentType</span><span style="color: #000000">, </span><span style="color: #001080">recurrentEvent</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #000000">      </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Recurrent event of type &#039;</span><span style="color: #000000">, </span><span style="color: #001080">recurrentType</span><span style="color: #000000">, </span><span style="color: #001080">recurrentEvent</span><span style="color: #000000">);</span>
-<span style="color: #000000">    });</span>
-<span style="color: #000000">    </span>
-<span style="color: #000000">    </span><span style="color: #008000">// ...event processing potentially leading to sending event to this receiver again...</span>
-<span style="color: #000000">    </span>
-<span style="color: #000000">  }</span>
-<span style="color: #000000">};</span>
+<a href="#recurrent-events" id="recurrent-events" style="color: inherit; text-decoration: none;">
+  <h3>Recurrent Events</h3>
+</a>
+<p>A <em>recurrent event</em> is an event sent from inside event receiver and targeted the same receiver. Recurrent event
+processing is scheduled until after the current event processing finishes. To handle recurrent events in a specific
+way the event receiver may utilize an <em>event processing context</em> available as first parameter of event receiver&#39;s
+<code>receive</code> method.</p>
+<p>This context has an <code>onRecurrent()</code> method. It schedules the given event receiver function to be called to process
+recurrent events. If this method is called during event processing, the recurrent events will be sent to the given
+<code>receiver</code> after current event processed instead of original one:</p>
+<p>The event receiver then can look like this:</p>
+<pre><code class="language-typescript"><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">EventReceiver</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@proc7ts/fun-events&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-4">// API supports arbitrary event receiver signatures</span><br/><span class="hl-4">// An event is a tuple of event receiver arguments</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-8">eventReceiver</span><span class="hl-1">: </span><span class="hl-7">EventReceiver</span><span class="hl-1">&lt;[</span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-7">Event</span><span class="hl-1">]&gt; = {</span><br/><span class="hl-1">  </span><span class="hl-6">receive</span><span class="hl-1">(</span><span class="hl-2">context</span><span class="hl-1">, </span><span class="hl-2">type</span><span class="hl-1">, </span><span class="hl-2">event</span><span class="hl-1">) { </span><br/><span class="hl-1">    </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-3">&#39;Event of type &#39;</span><span class="hl-1">, </span><span class="hl-2">type</span><span class="hl-1">, </span><span class="hl-2">event</span><span class="hl-1">);</span><br/><span class="hl-1">    </span><span class="hl-2">context</span><span class="hl-1">.</span><span class="hl-6">onRecurrent</span><span class="hl-1">((</span><span class="hl-2">recurrentType</span><span class="hl-1">, </span><span class="hl-2">recurrentEvent</span><span class="hl-1">) </span><span class="hl-5">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">      </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-3">&#39;Recurrent event of type &#39;</span><span class="hl-1">, </span><span class="hl-2">recurrentType</span><span class="hl-1">, </span><span class="hl-2">recurrentEvent</span><span class="hl-1">);</span><br/><span class="hl-1">    });</span><br/><span class="hl-1">    </span><br/><span class="hl-1">    </span><span class="hl-4">// ...event processing potentially leading to sending event to this receiver again...</span><br/><span class="hl-1">    </span><br/><span class="hl-1">  }</span><br/><span class="hl-1">};</span>
 </code></pre>
-				<a href="#eventsender" id="eventsender" style="color: inherit; text-decoration: none;">
-					<h2><code>EventSender</code></h2>
-				</a>
-				<p>An event sender interface has only one method returning an <code>OnEvent</code> instance. The latter can be used to register
-					an event receiver. The registered event receiver starts receiving upcoming events until the returned event supply
-				is cut off.</p>
-				<p>The <code>OnEvent</code> is a function implementing <code>EventSender</code> interface. It has additional event processing methods.
-				To convert a plain event receiver registration function to <code>OnEvent</code>, an <code>onEventBy()</code> function can be used.</p>
-				<a href="#oneventdo" id="oneventdo" style="color: inherit; text-decoration: none;">
-					<h3><code>OnEvent.do()</code></h3>
-				</a>
-				<p>Processes events with the given <a href="#event-processors">event processors</a>. The first processor receives an <code>OnEvent</code> supplier instance as its
-					only parameter. The next one receives the result of the first processor, etc. The result of the last processor
-				is returned from the <code>.do()</code> method call.</p>
-				<p>This method is handy for chaining multiple processors.</p>
-				<a href="#eventkeeper" id="eventkeeper" style="color: inherit; text-decoration: none;">
-					<h2><code>EventKeeper</code></h2>
-				</a>
-				<p>An event supplier that keeps the last event sent.</p>
-				<p>It has only one method that returns an <code>AfterEvent</code> instance. The latter can be used to register an event receiver.
-					The registered event receiver receives the kept event immediately upon registration, and all upcoming events after that
-				until the returned event supply is cut off.</p>
-				<p>The event keeper <em>always</em> has an event to send, unless it is closed. This is handy when tracking some state: the
-				registered receiver receives current state, and all updates to it after that.</p>
-				<p>The <code>AfterEvent</code> is s function implementing <code>EventKeeper</code> interface. To convert a plain event receiver registration
-				function to <code>AfterEvent</code>, an <code>afterEventBy()</code> function can be used.</p>
-				<a href="#event-supply" id="event-supply" style="color: inherit; text-decoration: none;">
-					<h2>Event Supply</h2>
-				</a>
-				<p>A supply of events from event supplier to event receiver is returned from event receiver registration call.</p>
-				<p>When events are no longer needed (or just exhausted) the supply may be cut off by calling its <code>off()</code> method.</p>
-				<p>It also notifies on supply cut off by calling callback functions registered by its <code>whenOff()</code> method. </p>
-				<a href="#event-processors" id="event-processors" style="color: inherit; text-decoration: none;">
-					<h2>Event Processors</h2>
-				</a>
-				<p>Event processors are functions specifically designed to be passed to <a href="#oneventdo">OnEvent.do()</a> method. These are functions
-				that may transform event suppliers or their events.</p>
-				<p>The following event processors implemented:</p>
-				<ul>
-					<li><a href="https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#consumeEvents">consumeEvents</a> - Creates an event processor that consumes incoming events.</li>
-					<li><a href="https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#digOn">digOn</a>/<a href="https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#digAfter">digAfter</a> - Creates an event processor that extracts event suppliers from incoming events.</li>
-					<li><a href="https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#filterOn">filterOn</a> - Creates an event processor that passes incoming events matching the given condition only.</li>
-					<li><a href="https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#mapOn">mapOn</a>/<a href="https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#mapAfter">mapAfter</a> - Creates an event processor that converts incoming events with the given converter function.</li>
-					<li><a href="https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#onceOn">onceOn</a>/<a href="https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#onceAfter">onceAfter</a> - A processor of the first incoming event only.</li>
-					<li><a href="https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#resolveOn">resolveOn</a> - A processor that asynchronously resolves incoming events and sends then in the order of their
-					resolution.</li>
-					<li><a href="https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#resolveOnOrdered">resolveOnOrdered</a> - A processor that asynchronously resolves incoming events and sends them in the order they
-					are received.</li>
-					<li><a href="https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#shareOn">shareOn</a>/<a href="https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#shareAfter">shareAfter</a> - A processor of incoming events that shares events supply among all registered receivers.</li>
-					<li><a href="https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#supplyOn">supplyOn</a>/<a href="https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#supplyAfter">supplyAfter</a> - Creates an event processor that passes incoming events until the required supply is cut
-					off.</li>
-					<li><a href="https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#translateOn">translateOn</a>/<a href="https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#translateAfter">translateAfter</a> - Creates an event processor that translates incoming events.</li>
-					<li><a href="https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#valueOn">valueOn</a>/<a href="https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#valueAfter">valueAfter</a> - Creates an event processor that sends the values of incoming events.</li>
-				</ul>
-				<p>The <code>...On</code> processors produce an <code>OnEvent</code> senders, while <code>...After</code> ones produce an <code>AfterEvent</code> keepers.</p>
-				<a href="#eventemitter" id="eventemitter" style="color: inherit; text-decoration: none;">
-					<h2><code>EventEmitter</code></h2>
-				</a>
-				<p>Event emitter is a handy implementation of <code>EventSender</code>.</p>
-				<p>It manages a list of registered event receivers, and removes them from the list once their supplies are cut off.</p>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">EventEmitter</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/fun-events&#039;</span><span style="color: #000000">;</span>
 
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">emitter</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">EventEmitter</span><span style="color: #000000">&lt;[</span><span style="color: #267F99">string</span><span style="color: #000000">]&gt;();</span>
+<a href="#eventsender" id="eventsender" style="color: inherit; text-decoration: none;">
+  <h2><code>EventSender</code></h2>
+</a>
+<p>An event sender interface has only one method returning an <code>OnEvent</code> instance. The latter can be used to register
+an event receiver. The registered event receiver starts receiving upcoming events until the returned event supply
+is cut off.</p>
+<p>The <code>OnEvent</code> is a function implementing <code>EventSender</code> interface. It has additional event processing methods.
+To convert a plain event receiver registration function to <code>OnEvent</code>, an <code>onEventBy()</code> function can be used.</p>
 
-<span style="color: #008000">// Register receivers</span>
-<span style="color: #001080">emitter</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #001080">event</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">event</span><span style="color: #0000FF">}</span><span style="color: #A31515">-`</span><span style="color: #000000">));</span>
-<span style="color: #001080">emitter</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #001080">event</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`-</span><span style="color: #0000FF">${</span><span style="color: #001080">event</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">));</span>
+<a href="#oneventdo" id="oneventdo" style="color: inherit; text-decoration: none;">
+  <h3><code>OnEvent.do()</code></h3>
+</a>
+<p>Processes events with the given <a href="#event-processors">event processors</a>. The first processor receives an <code>OnEvent</code> supplier instance as its
+only parameter. The next one receives the result of the first processor, etc. The result of the last processor
+is returned from the <code>.do()</code> method call.</p>
+<p>This method is handy for chaining multiple processors.</p>
 
-<span style="color: #008000">// Send an event</span>
-<span style="color: #001080">emitter</span><span style="color: #000000">.</span><span style="color: #795E26">send</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;listen&#039;</span><span style="color: #000000">);</span>
+<a href="#eventkeeper" id="eventkeeper" style="color: inherit; text-decoration: none;">
+  <h2><code>EventKeeper</code></h2>
+</a>
+<p>An event supplier that keeps the last event sent.</p>
+<p>It has only one method that returns an <code>AfterEvent</code> instance. The latter can be used to register an event receiver.
+The registered event receiver receives the kept event immediately upon registration, and all upcoming events after that
+until the returned event supply is cut off.</p>
+<p>The event keeper <em>always</em> has an event to send, unless it is closed. This is handy when tracking some state: the
+registered receiver receives current state, and all updates to it after that.</p>
+<p>The <code>AfterEvent</code> is s function implementing <code>EventKeeper</code> interface. To convert a plain event receiver registration
+function to <code>AfterEvent</code>, an <code>afterEventBy()</code> function can be used.</p>
+
+<a href="#event-supply" id="event-supply" style="color: inherit; text-decoration: none;">
+  <h2>Event Supply</h2>
+</a>
+<p>A supply of events from event supplier to event receiver is returned from event receiver registration call.</p>
+<p>When events are no longer needed (or just exhausted) the supply may be cut off by calling its <code>off()</code> method.</p>
+<p>It also notifies on supply cut off by calling callback functions registered by its <code>whenOff()</code> method. </p>
+
+<a href="#event-processors" id="event-processors" style="color: inherit; text-decoration: none;">
+  <h2>Event Processors</h2>
+</a>
+<p>Event processors are functions specifically designed to be passed to <a href="#oneventdo">OnEvent.do()</a> method. These are functions
+that may transform event suppliers or their events.</p>
+<p>The following event processors implemented:</p>
+<ul>
+<li><a href="https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#consumeEvents">consumeEvents</a> - Creates an event processor that consumes incoming events.</li>
+<li><a href="https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#digOn">digOn</a>/<a href="https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#digAfter">digAfter</a> - Creates an event processor that extracts event suppliers from incoming events.</li>
+<li><a href="https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#filterOn">filterOn</a> - Creates an event processor that passes incoming events matching the given condition only.</li>
+<li><a href="https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#mapOn">mapOn</a>/<a href="https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#mapAfter">mapAfter</a> - Creates an event processor that converts incoming events with the given converter function.</li>
+<li><a href="https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#onceOn">onceOn</a>/<a href="https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#onceAfter">onceAfter</a> - A processor of the first incoming event only.</li>
+<li><a href="https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#resolveOn">resolveOn</a> - A processor that asynchronously resolves incoming events and sends then in the order of their
+resolution.</li>
+<li><a href="https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#resolveOnOrdered">resolveOnOrdered</a> - A processor that asynchronously resolves incoming events and sends them in the order they
+are received.</li>
+<li><a href="https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#shareOn">shareOn</a>/<a href="https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#shareAfter">shareAfter</a> - A processor of incoming events that shares events supply among all registered receivers.</li>
+<li><a href="https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#supplyOn">supplyOn</a>/<a href="https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#supplyAfter">supplyAfter</a> - Creates an event processor that passes incoming events until the required supply is cut
+off.</li>
+<li><a href="https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#translateOn">translateOn</a>/<a href="https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#translateAfter">translateAfter</a> - Creates an event processor that translates incoming events.</li>
+<li><a href="https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#valueOn">valueOn</a>/<a href="https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#valueAfter">valueAfter</a> - Creates an event processor that sends the values of incoming events.</li>
+</ul>
+<p>The <code>...On</code> processors produce an <code>OnEvent</code> senders, while <code>...After</code> ones produce an <code>AfterEvent</code> keepers.</p>
+
+<a href="#eventemitter" id="eventemitter" style="color: inherit; text-decoration: none;">
+  <h2><code>EventEmitter</code></h2>
+</a>
+<p>Event emitter is a handy implementation of <code>EventSender</code>.</p>
+<p>It manages a list of registered event receivers, and removes them from the list once their supplies are cut off.</p>
+<pre><code class="language-typescript"><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">EventEmitter</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@proc7ts/fun-events&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-8">emitter</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-6">EventEmitter</span><span class="hl-1">&lt;[</span><span class="hl-7">string</span><span class="hl-1">]&gt;();</span><br/><br/><span class="hl-4">// Register receivers</span><br/><span class="hl-2">emitter</span><span class="hl-1">.</span><span class="hl-6">on</span><span class="hl-1">(</span><span class="hl-2">event</span><span class="hl-1"> </span><span class="hl-5">=&gt;</span><span class="hl-1"> </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-3">`</span><span class="hl-5">${</span><span class="hl-2">event</span><span class="hl-5">}</span><span class="hl-3">-`</span><span class="hl-1">));</span><br/><span class="hl-2">emitter</span><span class="hl-1">.</span><span class="hl-6">on</span><span class="hl-1">(</span><span class="hl-2">event</span><span class="hl-1"> </span><span class="hl-5">=&gt;</span><span class="hl-1"> </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-3">`-</span><span class="hl-5">${</span><span class="hl-2">event</span><span class="hl-5">}</span><span class="hl-3">`</span><span class="hl-1">));</span><br/><br/><span class="hl-4">// Send an event</span><br/><span class="hl-2">emitter</span><span class="hl-1">.</span><span class="hl-6">send</span><span class="hl-1">(</span><span class="hl-3">&#39;listen&#39;</span><span class="hl-1">);</span>
 </code></pre>
-				<a href="#value-tracking" id="value-tracking" style="color: inherit; text-decoration: none;">
-					<h2>Value Tracking</h2>
-				</a>
-				<p>A <code>ValueTracker</code> class represents an accessor to some value which changes can be tracked.</p>
-				<p>A simple <code>ValueTracker</code> can be constructed using a <code>trackValue()</code> function:</p>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">trackValue</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/fun-events&#039;</span><span style="color: #000000">;</span>
 
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">value</span><span style="color: #000000"> = </span><span style="color: #795E26">trackValue</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">);</span>
-
-<span style="color: #001080">value</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">((</span><span style="color: #001080">newValue</span><span style="color: #000000">, </span><span style="color: #001080">oldValue</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Value changed from&#039;</span><span style="color: #000000">, </span><span style="color: #001080">oldValue</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;to&#039;</span><span style="color: #000000">, </span><span style="color: #001080">newValue</span><span style="color: #000000">));</span>
-
-<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">); </span><span style="color: #008000">// 1</span>
-<span style="color: #001080">value</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> = </span><span style="color: #098658">2</span><span style="color: #000000">; </span><span style="color: #008000">// Value changed from 1 to 2</span>
-<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">); </span><span style="color: #008000">// 2 </span>
+<a href="#value-tracking" id="value-tracking" style="color: inherit; text-decoration: none;">
+  <h2>Value Tracking</h2>
+</a>
+<p>A <code>ValueTracker</code> class represents an accessor to some value which changes can be tracked.</p>
+<p>A simple <code>ValueTracker</code> can be constructed using a <code>trackValue()</code> function:</p>
+<pre><code class="language-typescript"><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">trackValue</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@proc7ts/fun-events&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-8">value</span><span class="hl-1"> = </span><span class="hl-6">trackValue</span><span class="hl-1">(</span><span class="hl-9">1</span><span class="hl-1">);</span><br/><br/><span class="hl-2">value</span><span class="hl-1">.</span><span class="hl-6">on</span><span class="hl-1">((</span><span class="hl-2">newValue</span><span class="hl-1">, </span><span class="hl-2">oldValue</span><span class="hl-1">) </span><span class="hl-5">=&gt;</span><span class="hl-1"> </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-3">&#39;Value changed from&#39;</span><span class="hl-1">, </span><span class="hl-2">oldValue</span><span class="hl-1">, </span><span class="hl-3">&#39;to&#39;</span><span class="hl-1">, </span><span class="hl-2">newValue</span><span class="hl-1">));</span><br/><br/><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-2">value</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1">); </span><span class="hl-4">// 1</span><br/><span class="hl-2">value</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1"> = </span><span class="hl-9">2</span><span class="hl-1">; </span><span class="hl-4">// Value changed from 1 to 2</span><br/><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-2">value</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1">); </span><span class="hl-4">// 2 </span>
 </code></pre>
-				<p>It is also possible to bind one value to another:</p>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">trackValue</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/fun-events&#039;</span><span style="color: #000000">;</span>
-
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">value1</span><span style="color: #000000"> = </span><span style="color: #795E26">trackValue</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">);</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">value2</span><span style="color: #000000"> = </span><span style="color: #795E26">trackValue</span><span style="color: #000000">(</span><span style="color: #098658">0</span><span style="color: #000000">).</span><span style="color: #795E26">by</span><span style="color: #000000">(</span><span style="color: #001080">value1</span><span style="color: #000000">);</span>
-
-<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value2</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">); </span><span style="color: #008000">// 1</span>
-<span style="color: #001080">value1</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> = </span><span style="color: #098658">2</span><span style="color: #000000">;</span>
-<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value2</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">); </span><span style="color: #008000">// 2</span>
+<p>It is also possible to bind one value to another:</p>
+<pre><code class="language-typescript"><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">trackValue</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@proc7ts/fun-events&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-8">value1</span><span class="hl-1"> = </span><span class="hl-6">trackValue</span><span class="hl-1">(</span><span class="hl-9">1</span><span class="hl-1">);</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-8">value2</span><span class="hl-1"> = </span><span class="hl-6">trackValue</span><span class="hl-1">(</span><span class="hl-9">0</span><span class="hl-1">).</span><span class="hl-6">by</span><span class="hl-1">(</span><span class="hl-2">value1</span><span class="hl-1">);</span><br/><br/><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-2">value2</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1">); </span><span class="hl-4">// 1</span><br/><span class="hl-2">value1</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1"> = </span><span class="hl-9">2</span><span class="hl-1">;</span><br/><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-2">value2</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1">); </span><span class="hl-4">// 2</span>
 </code></pre>
-				<p>To synchronize multiple values with each other a <code>ValueSync</code> can be used:</p>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">trackValue</span><span style="color: #000000">, </span><span style="color: #001080">ValueSync</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/fun-events&#039;</span><span style="color: #000000">;</span>
-
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">v1</span><span style="color: #000000"> = </span><span style="color: #795E26">trackValue</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">);</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">v2</span><span style="color: #000000"> = </span><span style="color: #795E26">trackValue</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">);</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">v3</span><span style="color: #000000"> = </span><span style="color: #795E26">trackValue</span><span style="color: #000000">(</span><span style="color: #098658">3</span><span style="color: #000000">);</span>
-
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">sync</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">ValueSync</span><span style="color: #000000">(</span><span style="color: #098658">0</span><span style="color: #000000">);</span>
-
-<span style="color: #001080">sync</span><span style="color: #000000">.</span><span style="color: #795E26">sync</span><span style="color: #000000">(</span><span style="color: #001080">v1</span><span style="color: #000000">);</span>
-<span style="color: #001080">sync</span><span style="color: #000000">.</span><span style="color: #795E26">sync</span><span style="color: #000000">(</span><span style="color: #001080">v2</span><span style="color: #000000">);</span>
-<span style="color: #001080">sync</span><span style="color: #000000">.</span><span style="color: #795E26">sync</span><span style="color: #000000">(</span><span style="color: #001080">v3</span><span style="color: #000000">);</span>
-
-<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">sync</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">, </span><span style="color: #001080">v1</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> === </span><span style="color: #001080">v2</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">, </span><span style="color: #001080">v2</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> === </span><span style="color: #001080">v3</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">, </span><span style="color: #001080">v3</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> === </span><span style="color: #001080">sync</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">); </span><span style="color: #008000">// 0 true true true</span>
-
-<span style="color: #001080">v2</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> = </span><span style="color: #098658">11</span><span style="color: #000000">;</span>
-<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">sync</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">, </span><span style="color: #001080">v1</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> === </span><span style="color: #001080">v2</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">, </span><span style="color: #001080">v2</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> === </span><span style="color: #001080">v3</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">, </span><span style="color: #001080">v3</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> === </span><span style="color: #001080">sync</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">); </span><span style="color: #008000">// 11 true true true</span>
-
-<span style="color: #001080">sync</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> = </span><span style="color: #098658">22</span><span style="color: #000000">;</span>
-<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">sync</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">, </span><span style="color: #001080">v1</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> === </span><span style="color: #001080">v2</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">, </span><span style="color: #001080">v2</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> === </span><span style="color: #001080">v3</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">, </span><span style="color: #001080">v3</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000"> === </span><span style="color: #001080">sync</span><span style="color: #000000">.</span><span style="color: #001080">it</span><span style="color: #000000">); </span><span style="color: #008000">// 22 true true true</span>
+<p>To synchronize multiple values with each other a <code>ValueSync</code> can be used:</p>
+<pre><code class="language-typescript"><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">trackValue</span><span class="hl-1">, </span><span class="hl-2">ValueSync</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@proc7ts/fun-events&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-8">v1</span><span class="hl-1"> = </span><span class="hl-6">trackValue</span><span class="hl-1">(</span><span class="hl-9">1</span><span class="hl-1">);</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-8">v2</span><span class="hl-1"> = </span><span class="hl-6">trackValue</span><span class="hl-1">(</span><span class="hl-9">2</span><span class="hl-1">);</span><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-8">v3</span><span class="hl-1"> = </span><span class="hl-6">trackValue</span><span class="hl-1">(</span><span class="hl-9">3</span><span class="hl-1">);</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-8">sync</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-6">ValueSync</span><span class="hl-1">(</span><span class="hl-9">0</span><span class="hl-1">);</span><br/><br/><span class="hl-2">sync</span><span class="hl-1">.</span><span class="hl-6">sync</span><span class="hl-1">(</span><span class="hl-2">v1</span><span class="hl-1">);</span><br/><span class="hl-2">sync</span><span class="hl-1">.</span><span class="hl-6">sync</span><span class="hl-1">(</span><span class="hl-2">v2</span><span class="hl-1">);</span><br/><span class="hl-2">sync</span><span class="hl-1">.</span><span class="hl-6">sync</span><span class="hl-1">(</span><span class="hl-2">v3</span><span class="hl-1">);</span><br/><br/><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-2">sync</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1">, </span><span class="hl-2">v1</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1"> === </span><span class="hl-2">v2</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1">, </span><span class="hl-2">v2</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1"> === </span><span class="hl-2">v3</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1">, </span><span class="hl-2">v3</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1"> === </span><span class="hl-2">sync</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1">); </span><span class="hl-4">// 0 true true true</span><br/><br/><span class="hl-2">v2</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1"> = </span><span class="hl-9">11</span><span class="hl-1">;</span><br/><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-2">sync</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1">, </span><span class="hl-2">v1</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1"> === </span><span class="hl-2">v2</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1">, </span><span class="hl-2">v2</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1"> === </span><span class="hl-2">v3</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1">, </span><span class="hl-2">v3</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1"> === </span><span class="hl-2">sync</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1">); </span><span class="hl-4">// 11 true true true</span><br/><br/><span class="hl-2">sync</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1"> = </span><span class="hl-9">22</span><span class="hl-1">;</span><br/><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-2">sync</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1">, </span><span class="hl-2">v1</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1"> === </span><span class="hl-2">v2</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1">, </span><span class="hl-2">v2</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1"> === </span><span class="hl-2">v3</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1">, </span><span class="hl-2">v3</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1"> === </span><span class="hl-2">sync</span><span class="hl-1">.</span><span class="hl-2">it</span><span class="hl-1">); </span><span class="hl-4">// 22 true true true</span>
 </code></pre>
-				<a href="#state-tracking" id="state-tracking" style="color: inherit; text-decoration: none;">
-					<h2>State Tracking</h2>
-				</a>
-				<p>A state is a tree-like structure of sub-states (nodes) available under <code>StatePath</code>.</p>
-				<p>A <code>StateTracker</code> can be used to notify on state changes of particular node and its sub-tree.</p>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">StatePath</span><span style="color: #000000">, </span><span style="color: #001080">StateTracker</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/fun-events&#039;</span><span style="color: #000000">;</span>
 
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">tracker</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">StateTracker</span><span style="color: #000000">();</span>
-
-<span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">stateChanged</span><span style="color: #000000">(</span><span style="color: #001080">path</span><span style="color: #000000">: </span><span style="color: #267F99">StatePath</span><span style="color: #000000">) {</span>
-<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;State path changed:&#039;</span><span style="color: #000000">, </span><span style="color: #001080">path</span><span style="color: #000000">);</span>
-<span style="color: #000000">}</span>
-
-<span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">property1Changed</span><span style="color: #000000">(</span><span style="color: #001080">path</span><span style="color: #000000">: </span><span style="color: #267F99">StatePath</span><span style="color: #000000">, </span><span style="color: #001080">newValue</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">, </span><span style="color: #001080">oldValue</span><span style="color: #000000">: </span><span style="color: #267F99">string</span><span style="color: #000000">) {</span>
-<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Property 1 changed from&#039;</span><span style="color: #000000">, </span><span style="color: #001080">oldValue</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;to&#039;</span><span style="color: #000000">, </span><span style="color: #001080">newValue</span><span style="color: #000000">);  </span>
-<span style="color: #000000">}</span>
-
-<span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">property2Changed</span><span style="color: #000000">(</span><span style="color: #001080">path</span><span style="color: #000000">: </span><span style="color: #267F99">StatePath</span><span style="color: #000000">, </span><span style="color: #001080">newValue</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000">, </span><span style="color: #001080">oldValue</span><span style="color: #000000">: </span><span style="color: #267F99">number</span><span style="color: #000000">) {</span>
-<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Property 2 changed from&#039;</span><span style="color: #000000">, </span><span style="color: #001080">oldValue</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;to&#039;</span><span style="color: #000000">, </span><span style="color: #001080">newValue</span><span style="color: #000000">);  </span>
-<span style="color: #000000">}</span>
-
-<span style="color: #001080">tracker</span><span style="color: #000000">.</span><span style="color: #795E26">onUpdate</span><span style="color: #000000">(</span><span style="color: #001080">stateChanged</span><span style="color: #000000">); </span><span style="color: #008000">// Will be notified on all changes</span>
-<span style="color: #001080">tracker</span><span style="color: #000000">.</span><span style="color: #795E26">track</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;property1&#039;</span><span style="color: #000000">).</span><span style="color: #795E26">to</span><span style="color: #000000">(</span><span style="color: #001080">property1Changed</span><span style="color: #000000">); </span><span style="color: #008000">// Will be notified on `property1` changes</span>
-<span style="color: #001080">tracker</span><span style="color: #000000">.</span><span style="color: #795E26">track</span><span style="color: #000000">([</span><span style="color: #A31515">&#039;property2&#039;</span><span style="color: #000000">]).</span><span style="color: #795E26">to</span><span style="color: #000000">(</span><span style="color: #001080">property2Changed</span><span style="color: #000000">); </span><span style="color: #008000">// The path can be long</span>
-
-<span style="color: #001080">tracker</span><span style="color: #000000">.</span><span style="color: #795E26">update</span><span style="color: #000000">([</span><span style="color: #A31515">&#039;some&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;path&#039;</span><span style="color: #000000">], </span><span style="color: #A31515">&#039;new&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;old&#039;</span><span style="color: #000000">);</span>
-<span style="color: #008000">// State path changed: [&#039;some&#039;, &#039;path&#039;] </span>
-
-<span style="color: #001080">tracker</span><span style="color: #000000">.</span><span style="color: #795E26">update</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;property1&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;new&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;old&#039;</span><span style="color: #000000">);</span>
-<span style="color: #008000">// State path changed: [&#039;property1&#039;]</span>
-<span style="color: #008000">// Property 1 changed from old to new</span>
-
-<span style="color: #001080">tracker</span><span style="color: #000000">.</span><span style="color: #795E26">update</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;property2&#039;</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">);</span>
-<span style="color: #008000">// State path changed: [&#039;property1&#039;]</span>
-<span style="color: #008000">// Property 2 changed from 2 to 1</span>
+<a href="#state-tracking" id="state-tracking" style="color: inherit; text-decoration: none;">
+  <h2>State Tracking</h2>
+</a>
+<p>A state is a tree-like structure of sub-states (nodes) available under <code>StatePath</code>.</p>
+<p>A <code>StateTracker</code> can be used to notify on state changes of particular node and its sub-tree.</p>
+<pre><code class="language-typescript"><span class="hl-0">import</span><span class="hl-1"> { </span><span class="hl-2">StatePath</span><span class="hl-1">, </span><span class="hl-2">StateTracker</span><span class="hl-1"> } </span><span class="hl-0">from</span><span class="hl-1"> </span><span class="hl-3">&#39;@proc7ts/fun-events&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-5">const</span><span class="hl-1"> </span><span class="hl-8">tracker</span><span class="hl-1"> = </span><span class="hl-5">new</span><span class="hl-1"> </span><span class="hl-6">StateTracker</span><span class="hl-1">();</span><br/><br/><span class="hl-5">function</span><span class="hl-1"> </span><span class="hl-6">stateChanged</span><span class="hl-1">(</span><span class="hl-2">path</span><span class="hl-1">: </span><span class="hl-7">StatePath</span><span class="hl-1">) {</span><br/><span class="hl-1">  </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-3">&#39;State path changed:&#39;</span><span class="hl-1">, </span><span class="hl-2">path</span><span class="hl-1">);</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-5">function</span><span class="hl-1"> </span><span class="hl-6">property1Changed</span><span class="hl-1">(</span><span class="hl-2">path</span><span class="hl-1">: </span><span class="hl-7">StatePath</span><span class="hl-1">, </span><span class="hl-2">newValue</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">, </span><span class="hl-2">oldValue</span><span class="hl-1">: </span><span class="hl-7">string</span><span class="hl-1">) {</span><br/><span class="hl-1">  </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-3">&#39;Property 1 changed from&#39;</span><span class="hl-1">, </span><span class="hl-2">oldValue</span><span class="hl-1">, </span><span class="hl-3">&#39;to&#39;</span><span class="hl-1">, </span><span class="hl-2">newValue</span><span class="hl-1">);  </span><br/><span class="hl-1">}</span><br/><br/><span class="hl-5">function</span><span class="hl-1"> </span><span class="hl-6">property2Changed</span><span class="hl-1">(</span><span class="hl-2">path</span><span class="hl-1">: </span><span class="hl-7">StatePath</span><span class="hl-1">, </span><span class="hl-2">newValue</span><span class="hl-1">: </span><span class="hl-7">number</span><span class="hl-1">, </span><span class="hl-2">oldValue</span><span class="hl-1">: </span><span class="hl-7">number</span><span class="hl-1">) {</span><br/><span class="hl-1">  </span><span class="hl-2">console</span><span class="hl-1">.</span><span class="hl-6">log</span><span class="hl-1">(</span><span class="hl-3">&#39;Property 2 changed from&#39;</span><span class="hl-1">, </span><span class="hl-2">oldValue</span><span class="hl-1">, </span><span class="hl-3">&#39;to&#39;</span><span class="hl-1">, </span><span class="hl-2">newValue</span><span class="hl-1">);  </span><br/><span class="hl-1">}</span><br/><br/><span class="hl-2">tracker</span><span class="hl-1">.</span><span class="hl-6">onUpdate</span><span class="hl-1">(</span><span class="hl-2">stateChanged</span><span class="hl-1">); </span><span class="hl-4">// Will be notified on all changes</span><br/><span class="hl-2">tracker</span><span class="hl-1">.</span><span class="hl-6">track</span><span class="hl-1">(</span><span class="hl-3">&#39;property1&#39;</span><span class="hl-1">).</span><span class="hl-6">to</span><span class="hl-1">(</span><span class="hl-2">property1Changed</span><span class="hl-1">); </span><span class="hl-4">// Will be notified on `property1` changes</span><br/><span class="hl-2">tracker</span><span class="hl-1">.</span><span class="hl-6">track</span><span class="hl-1">([</span><span class="hl-3">&#39;property2&#39;</span><span class="hl-1">]).</span><span class="hl-6">to</span><span class="hl-1">(</span><span class="hl-2">property2Changed</span><span class="hl-1">); </span><span class="hl-4">// The path can be long</span><br/><br/><span class="hl-2">tracker</span><span class="hl-1">.</span><span class="hl-6">update</span><span class="hl-1">([</span><span class="hl-3">&#39;some&#39;</span><span class="hl-1">, </span><span class="hl-3">&#39;path&#39;</span><span class="hl-1">], </span><span class="hl-3">&#39;new&#39;</span><span class="hl-1">, </span><span class="hl-3">&#39;old&#39;</span><span class="hl-1">);</span><br/><span class="hl-4">// State path changed: [&#39;some&#39;, &#39;path&#39;] </span><br/><br/><span class="hl-2">tracker</span><span class="hl-1">.</span><span class="hl-6">update</span><span class="hl-1">(</span><span class="hl-3">&#39;property1&#39;</span><span class="hl-1">, </span><span class="hl-3">&#39;new&#39;</span><span class="hl-1">, </span><span class="hl-3">&#39;old&#39;</span><span class="hl-1">);</span><br/><span class="hl-4">// State path changed: [&#39;property1&#39;]</span><br/><span class="hl-4">// Property 1 changed from old to new</span><br/><br/><span class="hl-2">tracker</span><span class="hl-1">.</span><span class="hl-6">update</span><span class="hl-1">(</span><span class="hl-3">&#39;property2&#39;</span><span class="hl-1">, </span><span class="hl-9">1</span><span class="hl-1">, </span><span class="hl-9">2</span><span class="hl-1">);</span><br/><span class="hl-4">// State path changed: [&#39;property1&#39;]</span><br/><span class="hl-4">// Property 2 changed from 2 to 1</span>
 </code></pre>
-			</div>
-		</div>
-		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
-			<nav class="tsd-navigation primary">
-				<ul>
-					<li class=" ">
-						<a href="modules.html">Modules</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/Module__proc7ts_fun_events.html">Module @proc7ts/fun-<wbr>events</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/Module__proc7ts_fun_events_call_thru.html">Module @proc7ts/fun-<wbr>events/call-<wbr>thru</a>
-					</li>
-				</ul>
-			</nav>
-			<nav class="tsd-navigation secondary menu-sticky">
-				<ul class="before-current">
-				</ul>
-			</nav>
-		</div>
-	</div>
-</div>
-<footer class="with-border-bottom">
-	<div class="container">
-		<h2>Legend</h2>
-		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
-			</ul>
-		</div>
-	</div>
-</footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
-</div>
-<div class="overlay"></div>
-<script src="assets/js/main.js"></script>
-</body>
-</html>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/_proc7ts_fun_events.html">@proc7ts/fun-<wbr/>events</a></li><li class=" tsd-kind-module"><a href="modules/_proc7ts_fun_events_call_thru.html">@proc7ts/fun-<wbr/>events/call-<wbr/>thru</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-namespace"><span class="tsd-kind-icon">Namespace</span></li><li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li><li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li><li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li><li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li><li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li><li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
