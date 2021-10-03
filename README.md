@@ -187,24 +187,24 @@ The following event processors implemented:
 
 The `...On` processors produce an `OnEvent` senders, while `...After` ones produce an `AfterEvent` keepers.
 
-[consumeEvents]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#consumeEvents
-[digAfter]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#digAfter
-[digOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#digOn
-[filterOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#filterOn
-[mapAfter]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#mapAfter
-[mapOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#mapOn
-[onceAfter]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#onceAfter
-[onceOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#onceOn
-[resolveOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#resolveOn
-[resolveOnOrdered]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#resolveOnOrdered
-[shareOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#shareOn
-[shareAfter]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#shareAfter
-[supplyAfter]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#supplyAfter
-[supplyOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#supplyOn
-[translateAfter]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#translateAfter
-[translateOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#translateOn
-[valueAfter]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#valueAfter
-[valueOn]: https://proc7ts.github.io/fun-events/modules/@proc7ts_fun-events.html#valueOn
+[consumeEvents]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#consumeEvents
+[digAfter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#digAfter
+[digOn]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#digOn
+[filterOn]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#filterOn
+[mapAfter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#mapAfter
+[mapOn]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#mapOn
+[onceAfter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#onceAfter
+[onceOn]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#onceOn
+[resolveOn]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#resolveOn
+[resolveOnOrdered]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#resolveOnOrdered
+[shareOn]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#shareOn
+[shareAfter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#shareAfter
+[supplyAfter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#supplyAfter
+[supplyOn]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#supplyOn
+[translateAfter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#translateAfter
+[translateOn]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#translateOn
+[valueAfter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#valueAfter
+[valueOn]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun-events.html#valueOn
 
 
 `EventEmitter`
