@@ -44,7 +44,7 @@
     "@jest/globals": "^27.2.4",
     "@proc7ts/call-thru": "^4.4.0",
     "@rollup/plugin-node-resolve": "^13.0.5",
-    "@run-z/eslint-config": "^1.4.0",
+    "@run-z/eslint-config": "^1.4.1",
     "@run-z/rollup-helpers": "^1.1.1",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",

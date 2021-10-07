@@ -123,7 +123,7 @@ const deduplicateAfter$noPrior = {/* magic value meaning there is no cue */};
 
 function deduplicateAfter_$create<// eslint-disable-line @typescript-eslint/naming-convention
     TEvent extends any[],
-    TCue
+    TCue,
     >(
     isSimilar = deduplicateAfter$isDuplicate as (this: void, prior: TCue, next: TCue) => boolean,
     getCue = asis as (this: void, value: TEvent) => TCue,
