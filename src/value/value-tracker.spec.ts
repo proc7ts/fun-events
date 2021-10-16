@@ -34,14 +34,14 @@ describe('ValueTracker', () => {
   });
 
   describe('[OnEvent__symbol]', () => {
-    it('refers to `on`', async () => {
-      await expect(v1[OnEvent__symbol]()).toBe(v1.on);
+    it('refers to `on`', () => {
+      expect(v1[OnEvent__symbol]()).toBe(v1.on);
     });
   });
 
   describe('[AfterEvent__symbol]', () => {
-    it('refers to `read`', async () => {
-      await expect(v1[AfterEvent__symbol]()).toBe(v1.read);
+    it('refers to `read`', () => {
+      expect(v1[AfterEvent__symbol]()).toBe(v1.read);
     });
   });
 

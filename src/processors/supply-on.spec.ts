@@ -45,8 +45,8 @@ describe('supplyOn', () => {
     expect(mockReceiver).not.toHaveBeenCalled();
     expect(whenOff).toHaveBeenCalled();
   });
-  it('does not modify the input supply when `alwaysSupply()` specified', async () => {
-    await expect(onEvent.do(supplyOn(alwaysSupply()))).toBe(onEvent);
+  it('does not modify the input supply when `alwaysSupply()` specified', () => {
+    expect(onEvent.do(supplyOn(alwaysSupply()))).toBe(onEvent);
   });
   it('no longer sends events after original supply is cut off', () => {
 

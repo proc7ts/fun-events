@@ -28,8 +28,8 @@ describe('onAny', () => {
     source1.send('2');
     expect(mockReceiver).toHaveBeenCalledWith('2');
   });
-  it('does not send any events without sources', async () => {
-    await expect(onAny()).toBe(onNever);
+  it('does not send any events without sources', () => {
+    expect(onAny()).toBe(onNever);
   });
   it('stops sending events once their supply is cut off', () => {
     supply.off();

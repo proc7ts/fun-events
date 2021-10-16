@@ -50,7 +50,7 @@ describe('EventReceiver', () => {
       const { supply, receive } = eventReceiver<[string, string]>(receiver);
 
       supply.off();
-      receive({} as any, 'test', 'test');
+      receive({} as EventReceiver.Context<[string, string]>, 'test', 'test');
       expect(receiver).not.toHaveBeenCalled();
     });
     it('prevents event reception during event supply cut off', () => {

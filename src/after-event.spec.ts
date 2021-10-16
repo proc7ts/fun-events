@@ -8,20 +8,20 @@ import { onEventBy } from './on-event';
 
 describe('AfterEvent', () => {
   describe('[OnEvent__symbol]', () => {
-    it('refers to itself', async () => {
+    it('refers to itself', () => {
 
       const afterEvent = afterEventBy(noop);
 
-      await expect(afterEvent[OnEvent__symbol]()).toBe(afterEvent);
+      expect(afterEvent[OnEvent__symbol]()).toBe(afterEvent);
     });
   });
 
   describe('[AfterEvent__symbol]', () => {
-    it('refers to itself', async () => {
+    it('refers to itself', () => {
 
       const afterEvent = afterEventBy(noop);
 
-      await expect(afterEvent[AfterEvent__symbol]()).toBe(afterEvent);
+      expect(afterEvent[AfterEvent__symbol]()).toBe(afterEvent);
     });
   });
 });

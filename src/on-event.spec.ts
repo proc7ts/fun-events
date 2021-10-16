@@ -7,11 +7,11 @@ import { EventEmitter } from './senders';
 
 describe('OnEvent', () => {
   describe('[OnEvent__symbol]', () => {
-    it('refers to itself', async () => {
+    it('refers to itself', () => {
 
       const onEvent = onEventBy(({ supply }) => supply.off());
 
-      await expect(onEvent[OnEvent__symbol]()).toBe(onEvent);
+      expect(onEvent[OnEvent__symbol]()).toBe(onEvent);
     });
   });
 

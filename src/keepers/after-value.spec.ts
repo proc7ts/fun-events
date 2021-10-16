@@ -11,11 +11,11 @@ describe('afterValue', () => {
 
     expect(await result).toBe(13);
   });
-  it('returns the value itself if it is an `AfterEvent` keeper already', async () => {
+  it('returns the value itself if it is an `AfterEvent` keeper already', () => {
 
     const value = afterThe(13);
 
-    await expect(afterValue(value)).toBe(value);
+    expect(afterValue(value)).toBe(value);
   });
   it('returns an `AfterEvent` keeper of the given `EventKeeper`', async () => {
 

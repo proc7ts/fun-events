@@ -79,8 +79,8 @@ export function thru<TEvent extends any[]>(
           return [entry.chain, neverSupply()];
 
           function handleResult(
-              callResult: any,
-              args: any[],
+              callResult: unknown,
+              args: unknown[],
               parentSupply = entry.supply,
           ): void {
 

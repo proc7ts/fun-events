@@ -46,11 +46,11 @@ describe('afterSupplied', () => {
   });
 
   describe('from event keeper with registrar implementing `AfterEvent`', () => {
-    it('returns the keeper\'s registrar', async () => {
+    it('returns the keeper\'s registrar', () => {
 
       const keeper = trackValue('initial');
 
-      await expect(afterSupplied(keeper)).toBe(keeper[AfterEvent__symbol]());
+      expect(afterSupplied(keeper)).toBe(keeper[AfterEvent__symbol]());
     });
   });
 
@@ -83,7 +83,7 @@ describe('afterSupplied', () => {
 
       sender.send('other');
       expect(mockReceiver).not.toHaveBeenCalledWith('other');
-      afterEvent.do(onceOn)(event => expect(event).toEqual('initial'));
+      afterEvent.do(onceOn)(event => expect(event).toBe('initial'));
     });
   });
 

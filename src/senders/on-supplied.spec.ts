@@ -44,16 +44,16 @@ describe('onSupplied', () => {
   });
 
   describe('from event sender with registrar implementing `OnEvent`', () => {
-    it('returns the sender\'s registrar', async () => {
+    it('returns the sender\'s registrar', () => {
 
       const sender = new EventEmitter<[string]>();
 
-      await expect(onSupplied(sender)).toBe(sender[OnEvent__symbol]());
+      expect(onSupplied(sender)).toBe(sender[OnEvent__symbol]());
     });
   });
 
   describe('from event keeper', () => {
-    it('returns the keeper\'s registrar', async () => {
+    it('returns the keeper\'s registrar', () => {
 
       const tracker = trackValue(1);
       const keeper: EventKeeper<[number]> = {
@@ -62,7 +62,7 @@ describe('onSupplied', () => {
         },
       };
 
-      await expect(onSupplied(keeper)).toBe(keeper[AfterEvent__symbol]());
+      expect(onSupplied(keeper)).toBe(keeper[AfterEvent__symbol]());
     });
   });
 });
