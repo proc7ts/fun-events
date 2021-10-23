@@ -12,7 +12,7 @@ describe('afterThe', () => {
     afterEvent(mockReceiver1);
     afterEvent(mockReceiver2);
 
-    expect(mockReceiver1).toHaveBeenCalledWith(...event);
-    expect(mockReceiver2).toHaveBeenCalledWith(...event);
+    expect(mockReceiver1).toHaveBeenCalledWith(...event as [unknown, ...unknown[]]);
+    expect(mockReceiver2).toHaveBeenCalledWith(...event as [unknown, ...unknown[]]);
   });
 });

@@ -29,7 +29,7 @@ describe('afterEach', () => {
     const receiver = jest.fn();
 
     afterEach()(receiver);
-    expect(receiver).toHaveBeenCalledWith();
+    expect(receiver).toHaveBeenCalledWith(...([] as unknown[] as [unknown, ...unknown[]]));
     expect(receiver).toHaveBeenCalledTimes(1);
   });
   it('sends updates', () => {

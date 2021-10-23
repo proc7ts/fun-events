@@ -26,7 +26,7 @@ describe('deduplicateAfter', () => {
   });
 
   it('reports the initial event', async () => {
-    expect(receiver).toHaveBeenCalledWith();
+    expect(receiver).toHaveBeenCalledWith(...([] as unknown[] as [unknown, ...unknown[]]));
     expect(receiver).toHaveBeenCalledTimes(1);
     expect(await dedup).toBeUndefined();
   });
@@ -76,7 +76,7 @@ describe('deduplicateAfter', () => {
     const receiver2 = jest.fn();
 
     dedup(receiver2);
-    expect(receiver2).toHaveBeenCalledWith();
+    expect(receiver2).toHaveBeenCalledWith(...([] as unknown[] as [unknown, ...unknown[]]));
 
     source.send('update2');
     expect(receiver2).toHaveBeenLastCalledWith('update2');
