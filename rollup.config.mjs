@@ -1,6 +1,6 @@
 import nodeResolve from '@rollup/plugin-node-resolve';
 import { externalModules } from '@run-z/rollup-helpers';
-import path from 'path';
+import path from 'node:path';
 import { defineConfig } from 'rollup';
 import flatDts from 'rollup-plugin-flat-dts';
 import sourcemaps from 'rollup-plugin-sourcemaps';
