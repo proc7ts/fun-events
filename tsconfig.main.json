@@ -1,8 +1,5 @@
 {
   "extends": "./tsconfig.json",
-  "files": [
-    "./src/index.ts",
-    "./src/call-thru/index.ts"
-  ],
+  "files": ["./src/index.ts", "./src/call-thru/index.ts"],
   "include": []
 }

@@ -1,5 +1,4 @@
-Functional Event Processor
-==========================
+# Functional Event Processor
 
 [![NPM][npm-image]][npm-url]
 [![Build Status][build-status-img]][build-status-link]
@@ -16,11 +15,11 @@ import { Supply } from '@proc7ts/primitives';
 
 // API supports arbitrary event receiver signatures.
 // An event is a receiver's parameters.
-function eventReceiver(type: string, event: Event) { 
+function eventReceiver(type: string, event: Event) {
   console.log('Event of type ', type, event);
 }
 
-// An `OnEvent` event sender accepts event receivers with compatible event signature 
+// An `OnEvent` event sender accepts event receivers with compatible event signature
 const onEvent: OnEvent<[string, Event]>;
 
 // An `OnEvent` sender is a function that registers a receiver.
@@ -31,7 +30,6 @@ const supply: Supply = onEvent(eventReceiver);
 
 supply.off(); // The `eventReceiver` will no longer receive events after this call.
 ```
-
 
 [npm-image]: https://img.shields.io/npm/v/@proc7ts/fun-events.svg?logo=npm
 [npm-url]: https://www.npmjs.com/package/@proc7ts/fun-events
@@ -46,15 +44,14 @@ supply.off(); // The `eventReceiver` will no longer receive events after this ca
 [api-docs-image]: https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational
 [api-docs-url]: https://proc7ts.github.io/fun-events/
 
-
-`EventReceiver`
----------------
+## `EventReceiver`
 
 An event receiver is a function that is called on each event sent by event supplier when registered.
 
 To register an event receiver in event supplier just call the supplier function with this receiver as argument.
 
 An event receiver can also be in object form:
+
 ```typescript
 import { EventReceiver, OnEvent } from '@proc7ts/fun-events';
 import { Supply } from '@proc7ts/primitives';
@@ -64,10 +61,10 @@ import { Supply } from '@proc7ts/primitives';
 const eventReceiver: EventReceiver<[string, Event]> = {
   receive(context, type, event) {
     console.log('Event of type ', type, event);
-  }
+  },
 };
 
-// An `OnEvent` event sender accepts event receivers with compatible event signature 
+// An `OnEvent` event sender accepts event receivers with compatible event signature
 const onEvent: OnEvent<[string, Event]>;
 
 // An `OnEvent` sender is a function that registers a receiver.
@@ -78,8 +75,8 @@ const supply: EventSupply = onEvent.to(eventReceiver);
 
 supply.off(); // The `eventReceiver` will no longer receive events after this call.
 ```
-In this form the event receiver's `receive` method accepts _event processing context_ as the first parameter.
 
+In this form the event receiver's `receive` method accepts _event processing context_ as the first parameter.
 
 ### Recurrent Events
 
@@ -93,27 +90,25 @@ recurrent events. If this method is called during event processing, the recurren
 `receiver` after current event processed instead of original one:
 
 The event receiver then can look like this:
+
 ```typescript
 import { EventReceiver } from '@proc7ts/fun-events';
 
 // API supports arbitrary event receiver signatures
 // An event is a tuple of event receiver arguments
 const eventReceiver: EventReceiver<[string, Event]> = {
-  receive(context, type, event) { 
+  receive(context, type, event) {
     console.log('Event of type ', type, event);
     context.onRecurrent((recurrentType, recurrentEvent) => {
       console.log('Recurrent event of type ', recurrentType, recurrentEvent);
     });
-    
+
     // ...event processing potentially leading to sending event to this receiver again...
-    
-  }
+  },
 };
-``` 
+```
 
-
-`EventSender`
--------------
+## `EventSender`
 
 An event sender interface has only one method returning an `OnEvent` instance. The latter can be used to register
 an event receiver. The registered event receiver starts receiving upcoming events until the returned event supply
@@ -122,10 +117,9 @@ is cut off.
 The `OnEvent` is a function implementing `EventSender` interface. It has additional event processing methods.
 To convert a plain event receiver registration function to `OnEvent`, an `onEventBy()` function can be used.
 
-
 ### `OnEvent.do()`
 
-[OnEvent.do()]: #oneventdo
+[onevent.do()]: #oneventdo
 
 Processes events with the given [event processors]. The first processor receives an `OnEvent` supplier instance as its
 only parameter. The next one receives the result of the first processor, etc. The result of the last processor
@@ -133,9 +127,7 @@ is returned from the `.do()` method call.
 
 This method is handy for chaining multiple processors.
 
-
-`EventKeeper`
--------------
+## `EventKeeper`
 
 An event supplier that keeps the last event sent.
 
@@ -149,19 +141,15 @@ registered receiver receives current state, and all updates to it after that.
 The `AfterEvent` is s function implementing `EventKeeper` interface. To convert a plain event receiver registration
 function to `AfterEvent`, an `afterEventBy()` function can be used.
 
-
-Event Supply
-------------
+## Event Supply
 
 A supply of events from event supplier to event receiver is returned from event receiver registration call.
 
 When events are no longer needed (or just exhausted) the supply may be cut off by calling its `off()` method.
 
-It also notifies on supply cut off by calling callback functions registered by its `whenOff()` method. 
+It also notifies on supply cut off by calling callback functions registered by its `whenOff()` method.
 
-
-Event Processors
-----------------
+## Event Processors
 
 [event processors]: #event-processors
 
@@ -187,28 +175,26 @@ The following event processors implemented:
 
 The `...On` processors produce an `OnEvent` senders, while `...After` ones produce an `AfterEvent` keepers.
 
-[consumeEvents]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#consumeEvents
-[digAfter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#digAfter
-[digOn]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#digOn
-[filterOn]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#filterOn
-[mapAfter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#mapAfter
-[mapOn]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#mapOn
-[onceAfter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#onceAfter
-[onceOn]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#onceOn
-[resolveOn]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#resolveOn
-[resolveOnOrdered]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#resolveOnOrdered
-[shareOn]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#shareOn
-[shareAfter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#shareAfter
-[supplyAfter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#supplyAfter
-[supplyOn]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#supplyOn
-[translateAfter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#translateAfter
-[translateOn]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#translateOn
-[valueAfter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#valueAfter
-[valueOn]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#valueOn
+[consumeevents]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#consumeEvents
+[digafter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#digAfter
+[digon]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#digOn
+[filteron]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#filterOn
+[mapafter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#mapAfter
+[mapon]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#mapOn
+[onceafter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#onceAfter
+[onceon]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#onceOn
+[resolveon]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#resolveOn
+[resolveonordered]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#resolveOnOrdered
+[shareon]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#shareOn
+[shareafter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#shareAfter
+[supplyafter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#supplyAfter
+[supplyon]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#supplyOn
+[translateafter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#translateAfter
+[translateon]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#translateOn
+[valueafter]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#valueAfter
+[valueon]: https://proc7ts.github.io/fun-events/modules/_proc7ts_fun_events.html#valueOn
 
-
-`EventEmitter`
---------------
+## `EventEmitter`
 
 Event emitter is a handy implementation of `EventSender`.
 
@@ -226,10 +212,8 @@ emitter.on(event => console.log(`-${event}`));
 // Send an event
 emitter.send('listen');
 ```
-         
 
-Value Tracking
---------------
+## Value Tracking
 
 A `ValueTracker` class represents an accessor to some value which changes can be tracked.
 
@@ -244,10 +228,11 @@ value.on((newValue, oldValue) => console.log('Value changed from', oldValue, 'to
 
 console.log(value.it); // 1
 value.it = 2; // Value changed from 1 to 2
-console.log(value.it); // 2 
+console.log(value.it); // 2
 ```
 
 It is also possible to bind one value to another:
+
 ```typescript
 import { trackValue } from '@proc7ts/fun-events';
 
@@ -260,6 +245,7 @@ console.log(value2.it); // 2
 ```
 
 To synchronize multiple values with each other a `ValueSync` can be used:
+
 ```typescript
 import { trackValue, ValueSync } from '@proc7ts/fun-events';
 
@@ -282,9 +268,7 @@ sync.it = 22;
 console.log(sync.it, v1.it === v2.it, v2.it === v3.it, v3.it === sync.it); // 22 true true true
 ```
 
-
-State Tracking
---------------
+## State Tracking
 
 A state is a tree-like structure of sub-states (nodes) available under `StatePath`.
 
@@ -300,11 +284,11 @@ function stateChanged(path: StatePath) {
 }
 
 function property1Changed(path: StatePath, newValue: string, oldValue: string) {
-  console.log('Property 1 changed from', oldValue, 'to', newValue);  
+  console.log('Property 1 changed from', oldValue, 'to', newValue);
 }
 
 function property2Changed(path: StatePath, newValue: number, oldValue: number) {
-  console.log('Property 2 changed from', oldValue, 'to', newValue);  
+  console.log('Property 2 changed from', oldValue, 'to', newValue);
 }
 
 tracker.onUpdate(stateChanged); // Will be notified on all changes
@@ -312,7 +296,7 @@ tracker.track('property1').to(property1Changed); // Will be notified on `propert
 tracker.track(['property2']).to(property2Changed); // The path can be long
 
 tracker.update(['some', 'path'], 'new', 'old');
-// State path changed: ['some', 'path'] 
+// State path changed: ['some', 'path']
 
 tracker.update('property1', 'new', 'old');
 // State path changed: ['property1']
