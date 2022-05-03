@@ -43,7 +43,7 @@
   "devDependencies": {
     "@jest/globals": "^28.0.3",
     "@proc7ts/call-thru": "^4.4.0",
-    "@run-z/eslint-config": "^3.0.0",
+    "@run-z/eslint-config": "^3.0.1",
     "@run-z/rollup-helpers": "^2.0.0",
     "@typescript-eslint/eslint-plugin": "^5.22.0",
     "@typescript-eslint/parser": "^5.22.0",
