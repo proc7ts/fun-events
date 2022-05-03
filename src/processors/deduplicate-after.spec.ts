@@ -11,7 +11,7 @@ describe('deduplicateAfter', () => {
 
   let source: EventEmitter<[string, string?]>;
   let dedup: AfterEvent<[string?]>;
-  let receiver: Mock<void, [string?]>;
+  let receiver: Mock<(arg?: string) => void>;
   let supply: Supply;
 
   beforeEach(() => {

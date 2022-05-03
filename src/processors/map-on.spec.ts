@@ -7,7 +7,7 @@ describe('mapOn', () => {
 
     const emitter = new EventEmitter<[number, number]>();
     const onEvent = emitter.on.do(mapOn((a: number, b: number) => a + b));
-    const receiver = jest.fn<void, [number]>();
+    const receiver = jest.fn<(arg: number) => void>();
 
     onEvent(receiver);
 

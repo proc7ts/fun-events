@@ -7,7 +7,7 @@ describe('valueOn', () => {
 
     const emitter = new EventEmitter<[number, number]>();
     const onEvent = emitter.on.do(valueOn((a: number, b: number) => a + b));
-    const receiver = jest.fn<void, [number]>();
+    const receiver = jest.fn<(arg: number) => void>();
 
     onEvent(receiver);
 
@@ -20,7 +20,7 @@ describe('valueOn', () => {
     const onEvent = emitter.on.do(valueOn(
         str => str && !str.startsWith('-') && (str.startsWith('+') ? str : `+${str}`),
     ));
-    const receiver = jest.fn<void, [string]>();
+    const receiver = jest.fn<(arg: string) => void>();
 
     onEvent(receiver);
     emitter.send();

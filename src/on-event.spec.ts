@@ -18,7 +18,7 @@ describe('OnEvent', () => {
   describe('then', () => {
 
     let emitter: EventNotifier<[string]>;
-    let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
+    let mockRegister: Mock<(receiver: EventReceiver.Generic<[string]>) => void>;
     let onEvent: OnEvent<[string]>;
 
     beforeEach(() => {

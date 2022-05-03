@@ -7,12 +7,12 @@ import { onceOn } from './once-on';
 
 describe('onceOn', () => {
 
-  let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
+  let mockRegister: Mock<(receiver: EventReceiver.Generic<[string]>) => void>;
   let onEvent: OnEvent<[string]>;
   let supply: Supply;
-  let whenOff: Mock<void, [unknown?]>;
+  let whenOff: Mock<(arg?: unknown) => void>;
   let emitter: EventNotifier<[string]>;
-  let mockReceiver: Mock<void, [string]>;
+  let mockReceiver: Mock<(arg: string) => void>;
 
   beforeEach(() => {
     emitter = new EventNotifier();
@@ -39,7 +39,7 @@ describe('onceOn', () => {
   });
   it('unregisters immediately notified event receiver', () => {
 
-    let offSpy!: SpyInstance<Supply, [unknown?]>;
+    let offSpy!: SpyInstance<(arg?: unknown) => Supply>;
 
     mockRegister.mockImplementation(receiver => {
       emitter.on(receiver);

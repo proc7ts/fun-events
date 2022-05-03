@@ -9,7 +9,7 @@ import { StateUpdateReceiver } from './state-update-receiver';
 describe('StateTracker', () => {
 
   let tracker: StateTracker;
-  let mockReceiver: Mock<ReturnType<StateUpdateReceiver.Function>, Parameters<StateUpdateReceiver.Function>>;
+  let mockReceiver: Mock<StateUpdateReceiver.Function>;
 
   beforeEach(() => {
     tracker = new StateTracker();
@@ -79,7 +79,7 @@ describe('StateTracker', () => {
 
     const partPath = ['path', 2, 'part'];
     let part: StateTracker;
-    let mockPartReceiver: Mock<StateUpdateReceiver>;
+    let mockPartReceiver: Mock<() => StateUpdateReceiver>;
 
     beforeEach(() => {
       part = tracker.track(partPath);

@@ -8,12 +8,12 @@ import { supplyOn } from './supply-on';
 
 describe('supplyOn', () => {
 
-  let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
+  let mockRegister: Mock<(receiver: EventReceiver.Generic<[string]>) => void>;
   let onEvent: OnEvent<[string]>;
   let supply: Supply;
-  let offSpy: Mock<void, [unknown?]>;
+  let offSpy: Mock<(arg?: unknown) => void>;
   let emitter: EventNotifier<[string]>;
-  let mockReceiver: Mock<void, [string]>;
+  let mockReceiver: Mock<(arg: string) => void>;
   let requiredSupply: Supply;
 
   beforeEach(() => {
@@ -79,12 +79,12 @@ describe('supplyOn', () => {
 
   describe('with dependent supply', () => {
 
-    let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
+    let mockRegister: Mock<(receiver: EventReceiver.Generic<[string]>) => void>;
     let onEvent: OnEvent<[string]>;
     let supply: Supply;
-    let offSpy: Mock<void, [unknown?]>;
+    let offSpy: Mock<(arg?: unknown) => void>;
     let emitter: EventNotifier<[string]>;
-    let mockReceiver: Mock<void, [string]>;
+    let mockReceiver: Mock<(arg: string) => void>;
     let requiredSupply: Supply;
     let dependentSupply: Supply;
 

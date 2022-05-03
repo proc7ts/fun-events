@@ -7,8 +7,8 @@ import { EventEmitter } from './event-emitter';
 describe('EventEmitter', () => {
 
   let emitter: EventEmitter<[string]>;
-  let mockReceiver: Mock<void, [string]>;
-  let mockReceiver2: Mock<void, [string]>;
+  let mockReceiver: Mock<(arg: string) => void>;
+  let mockReceiver2: Mock<(arg: string) => void>;
 
   beforeEach(() => {
     emitter = new EventEmitter();

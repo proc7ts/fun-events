@@ -10,7 +10,7 @@ describe('mapAfter', () => {
 
     const tracker = trackValue(1);
     const afterEvent: AfterEvent<[number]> = tracker.read.do(mapAfter(a => a + 100));
-    const receiver = jest.fn<void, [number]>();
+    const receiver = jest.fn<(arg: number) => void>();
 
     afterEvent(receiver);
 
@@ -23,7 +23,7 @@ describe('mapAfter', () => {
 
     const emitter = new EventEmitter<[number, number]>();
     const afterEvent: AfterEvent<[number]> = emitter.on.do(mapAfter((a: number, b: number) => a + b, valueProvider(0)));
-    const receiver = jest.fn<void, [number]>();
+    const receiver = jest.fn<(arg: number) => void>();
 
     afterEvent(receiver);
 

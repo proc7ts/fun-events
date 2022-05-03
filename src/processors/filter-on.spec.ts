@@ -7,7 +7,7 @@ import { filterOn } from './filter-on';
 describe('filterOn', () => {
 
   let emitter: EventEmitter<[string]>;
-  let mockReceiver: Mock<void, [string]>;
+  let mockReceiver: Mock<(arg: string) => void>;
 
   beforeEach(() => {
     emitter = new EventEmitter();

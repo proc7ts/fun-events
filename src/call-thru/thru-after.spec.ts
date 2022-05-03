@@ -7,11 +7,11 @@ import { thruAfter } from './thru-after';
 
 describe('thruAfter', () => {
 
-  let mockRegister: Mock<void, [EventReceiver.Generic<[string, string]>]>;
-  let mockOff: Mock<void, [any?]>;
+  let mockRegister: Mock<(receiver: EventReceiver.Generic<[string, string]>) => void>;
+  let mockOff: Mock<(reason?: unknown) => void>;
   let emitter: EventNotifier<[string, string]>;
   let afterEvent: AfterEvent<[string, string]>;
-  let mockReceiver: Mock<void, [string]>;
+  let mockReceiver: Mock<(arg: string) => void>;
 
   beforeEach(() => {
     emitter = new EventNotifier();

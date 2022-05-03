@@ -11,7 +11,7 @@ describe('onAny', () => {
   let source1: EventEmitter<[string]>;
   let source2: EventEmitter<[string]>;
   let fromAny: OnEvent<[string]>;
-  let mockReceiver: Mock<void, [string]>;
+  let mockReceiver: Mock<(arg: string) => void>;
   let supply: Supply;
 
   beforeEach(() => {

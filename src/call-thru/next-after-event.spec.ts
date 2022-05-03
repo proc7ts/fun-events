@@ -8,7 +8,7 @@ describe('nextAfterEvent', () => {
   it('prefers `EventKeeper` over `EventSender`', () => {
 
     const sender = new EventEmitter<[string]>();
-    const receiver = jest.fn<void, [string]>();
+    const receiver = jest.fn<(arg: string) => void>();
 
     sender.on.do(thruOn(
         str => trackValue(str + '!'),

@@ -29,10 +29,10 @@ describe('AfterEvent', () => {
 describe('afterEventBy', () => {
 
   let emitter: EventNotifier<[string]>;
-  let mockFallback: Mock<[string], []>;
-  let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
+  let mockFallback: Mock<() => [string]>;
+  let mockRegister: Mock<(receiver: EventReceiver.Generic<[string]>) => void>;
   let afterEvent: AfterEvent<[string]>;
-  let mockReceiver: Mock<void, [string]>;
+  let mockReceiver: Mock<(...args: unknown[]) => [string]>;
 
   beforeEach(() => {
     emitter = new EventNotifier();

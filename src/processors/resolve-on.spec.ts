@@ -8,7 +8,7 @@ import { resolveOn } from './resolve-on';
 describe('resolveOn', () => {
 
   let origin: EventEmitter<[(string | Promise<string>)]>;
-  let receiver: Mock<void, [string, number]>;
+  let receiver: Mock<(arg1: string, arg2: number) => void>;
   let received: Promise<[string, number]>[];
   let resolvers: ((resolved: [string, number] | PromiseLike<[string, number]>) => void)[];
   let supply: Supply;

@@ -9,11 +9,11 @@ import { thruOn } from './thru-on';
 
 describe('thruOn', () => {
 
-  let mockRegister: Mock<void, [EventReceiver.Generic<[string, string]>]>;
-  let offSpy: SpyInstance<Supply, [unknown?]>;
+  let mockRegister: Mock<(receiver: EventReceiver.Generic<[string, string]>) => void>;
+  let offSpy: SpyInstance<(arg?: unknown) => Supply>;
   let emitter: EventNotifier<[string, string]>;
   let onEvent: OnEvent<[string, string]>;
-  let mockReceiver: Mock<void, [string]>;
+  let mockReceiver: Mock<(arg: string) => void>;
 
   beforeEach(() => {
     emitter = new EventNotifier();

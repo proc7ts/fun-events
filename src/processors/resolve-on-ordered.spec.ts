@@ -8,7 +8,7 @@ import { resolveOnOrdered } from './resolve-on-ordered';
 describe('resolveOnOrdered', () => {
 
   let origin: EventEmitter<[(string | Promise<string>)]>;
-  let receiver: Mock<void, string[]>;
+  let receiver: Mock<(...args: string[]) => void>;
   let received: Promise<string[]>[];
   let resolvers: ((resolved: string[] | PromiseLike<string[]>) => void)[];
   let supply: Supply;

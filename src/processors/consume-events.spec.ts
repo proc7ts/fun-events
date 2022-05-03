@@ -10,8 +10,8 @@ describe('consumeEvents', () => {
   let sender: EventEmitter<[EventNotifier<[string]>?]>;
   let nested1: EventNotifier<[string]>;
   let nested2: EventNotifier<[string]>;
-  let consume: Mock<Supply | undefined, [EventNotifier<[string]>?]>;
-  let receiver: Mock<void, [string]>;
+  let consume: Mock<(notifier?: EventNotifier<[string]>) => Supply | undefined>;
+  let receiver: Mock<(arg: string) => void>;
   let supply: Supply;
 
   beforeEach(() => {

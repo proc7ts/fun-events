@@ -10,7 +10,7 @@ describe('afterAll', () => {
   let source1: ValueTracker<string>;
   let source2: ValueTracker<number>;
   let fromAll: AfterEvent<[{ source1: [string]; source2: [number] }]>;
-  let mockReceiver: Mock<void, [{ source1: [string]; source2: [number] }]>;
+  let mockReceiver: Mock<(arg: { source1: [string]; source2: [number] }) => void>;
 
   beforeEach(() => {
     source1 = trackValue('init');

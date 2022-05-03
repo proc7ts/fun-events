@@ -7,7 +7,7 @@ describe('translateOn', () => {
 
     const emitter = new EventEmitter<[number, number]>();
     const onEvent = emitter.on.do(translateOn((send, a: number, b: number) => send(b, a)));
-    const receiver = jest.fn<void, [number, number]>();
+    const receiver = jest.fn<(arg1: number, arg2: number) => void>();
 
     onEvent(receiver);
 
@@ -21,7 +21,7 @@ describe('translateOn', () => {
     const onEvent = emitter.on.do(translateOn(
         (send, str) => str && !str.startsWith('-') && send(str.startsWith('+') ? str : `+${str}`),
     ));
-    const receiver = jest.fn<void, [string]>();
+    const receiver = jest.fn<(arg: string) => void>();
 
     onEvent(receiver);
     emitter.send();

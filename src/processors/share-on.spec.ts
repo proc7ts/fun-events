@@ -11,12 +11,12 @@ import { shareOn } from './share-on';
 describe('shareOn', () => {
   describe('OnEvent', () => {
 
-    let mockRegister: Mock<void, [EventReceiver.Generic<[string, string]>]>;
-    let offSpy: SpyInstance<Supply, [unknown?]>;
+    let mockRegister: Mock<(receiver: EventReceiver.Generic<[string, string]>) => void>;
+    let offSpy: SpyInstance<(arg?: unknown) => Supply>;
     let emitter: EventNotifier<[string, string]>;
     let onEvent: OnEvent<[string, string]>;
-    let mockReceiver: Mock<void, [string, string]>;
-    let mockReceiver2: Mock<void, [string, string]>;
+    let mockReceiver: Mock<(arg1: string, arg2: string) => void>;
+    let mockReceiver2: Mock<(arg1: string, arg2: string) => void>;
 
     beforeEach(() => {
       emitter = new EventNotifier();
@@ -137,11 +137,11 @@ describe('shareOn', () => {
   describe('AfterEvent', () => {
 
     let fallback: [string, string];
-    let mockRegister: Mock<void, [EventReceiver.Generic<[string, string]>]>;
+    let mockRegister: Mock<(receiver: EventReceiver.Generic<[string, string]>) => void>;
     let emitter: EventNotifier<[string, string]>;
     let afterEvent: AfterEvent<[string, string]>;
-    let mockReceiver: Mock<void, [string, string]>;
-    let mockReceiver2: Mock<void, [string, string]>;
+    let mockReceiver: Mock<(arg1: string, arg2: string) => void>;
+    let mockReceiver2: Mock<(arg1: string, arg2: string) => void>;
 
     beforeEach(() => {
       fallback = ['init1', 'init2'];

@@ -11,8 +11,8 @@ describe('digOn', () => {
   let sender: EventEmitter<[EventEmitter<[string]>?]>;
   let nested1: EventEmitter<[string]>;
   let nested2: EventEmitter<[string]>;
-  let extract: Mock<EventSender<[string]> | undefined, [EventEmitter<[string]>?]>;
-  let receiver: Mock<void, [string]>;
+  let extract: Mock<(emitter?: EventEmitter<[string]>) => EventSender<[string]> | undefined>;
+  let receiver: Mock<(arg: string) => void>;
   let supply: Supply;
 
   beforeEach(() => {

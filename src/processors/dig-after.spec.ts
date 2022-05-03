@@ -13,9 +13,9 @@ describe('digAfter', () => {
   let tracker: ValueTracker<ValueTracker<string>>;
   let nested1: ValueTracker<string>;
   let nested2: ValueTracker<string>;
-  let extract: Mock<ValueTracker<string>, [ValueTracker<string>]>;
+  let extract: Mock<(tracker: ValueTracker<string>) => ValueTracker<string>>;
   let result: AfterEvent<[string]>;
-  let receiver: Mock<void, [string]>;
+  let receiver: Mock<(arg: string) => void>;
   let supply: Supply;
 
   beforeEach(() => {

@@ -47,7 +47,7 @@ describe('ValueTracker', () => {
 
   describe('read', () => {
 
-    let mockReceiver: Mock<void, [string]>;
+    let mockReceiver: Mock<(arg: string) => void>;
     let supply: Supply;
 
     beforeEach(() => {
@@ -95,7 +95,7 @@ describe('ValueTracker', () => {
   describe('by value sender', () => {
 
     let src: EventEmitter<[string]>;
-    let mockReceiver: Mock<void, [string | undefined, string | undefined]>;
+    let mockReceiver: Mock<(arg1: string | undefined, arg2: string | undefined) => void>;
 
     beforeEach(() => {
       src = new EventEmitter();
@@ -115,7 +115,7 @@ describe('ValueTracker', () => {
 
   describe('by value keeper', () => {
 
-    let mockReceiver: Mock<void, [string | undefined, string | undefined]>;
+    let mockReceiver: Mock<(arg1: string | undefined, arg2: string | undefined) => void>;
 
     beforeEach(() => {
       mockReceiver = jest.fn();

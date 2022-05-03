@@ -12,7 +12,7 @@ describe('translateAfter', () => {
     const afterEvent: AfterEvent<[number, number]> = tracker.read.do(
         translateAfter((send, [a, b]: [number, number]) => send(b, a)),
     );
-    const receiver = jest.fn<void, [number, number]>();
+    const receiver = jest.fn<(arg1: number, arg2: number) => void>();
 
     afterEvent(receiver);
     expect(receiver).toHaveBeenLastCalledWith(11, 1);
@@ -26,7 +26,7 @@ describe('translateAfter', () => {
 
     const emitter = new EventEmitter<[number, number]>();
     const onEvent = emitter.on.do(translateAfter((send, a: number, b: number) => send(b, a), valuesProvider(0, -1)));
-    const receiver = jest.fn<void, [number, number]>();
+    const receiver = jest.fn<(arg1: number, arg2: number) => void>();
 
     onEvent(receiver);
 
@@ -42,7 +42,7 @@ describe('translateAfter', () => {
         (send, str) => str && !str.startsWith('-') && send(str.startsWith('+') ? str : `+${str}`),
         valuesProvider('NONE!'),
     ));
-    const receiver = jest.fn<void, [string]>();
+    const receiver = jest.fn<(arg: string) => void>();
 
     afterEvent(receiver);
     expect(receiver).toHaveBeenCalledWith('NONE!');

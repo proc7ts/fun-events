@@ -7,12 +7,12 @@ import { supplyAfter } from './supply-after';
 
 describe('supplyAfter', () => {
 
-  let mockRegister: Mock<void, [EventReceiver.Generic<[string]>]>;
+  let mockRegister: Mock<(receiver: EventReceiver.Generic<[string]>) => void>;
   let afterEvent: AfterEvent<[string]>;
   let supply: Supply;
-  let offSpy: Mock<Supply, [unknown?]>;
+  let offSpy: Mock<(reason?: unknown) => Supply>;
   let emitter: EventNotifier<[string]>;
-  let mockReceiver: Mock<void, [string]>;
+  let mockReceiver: Mock<(arg: string) => void>;
   let requiredSupply: Supply;
 
   beforeEach(() => {

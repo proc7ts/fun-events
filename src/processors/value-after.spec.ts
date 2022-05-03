@@ -9,7 +9,7 @@ describe('valueAfter', () => {
 
     const tracker = trackValue(1);
     const afterEvent = tracker.read.do(valueAfter(a => a + 100));
-    const receiver = jest.fn<void, [number]>();
+    const receiver = jest.fn<(arg: number) => void>();
 
     afterEvent(receiver);
 
@@ -22,7 +22,7 @@ describe('valueAfter', () => {
 
     const emitter = new EventEmitter<[number, number]>();
     const afterEvent = emitter.on.do(valueAfter((a: number, b: number) => a + b, valueProvider(0)));
-    const receiver = jest.fn<void, [number]>();
+    const receiver = jest.fn<(arg: number) => void>();
 
     afterEvent(receiver);
 
@@ -38,7 +38,7 @@ describe('valueAfter', () => {
         str => str && !str.startsWith('-') && (str.startsWith('+') ? str : `+${str}`),
         valueProvider('-'),
     ));
-    const receiver = jest.fn<void, [string]>();
+    const receiver = jest.fn<(arg: string) => void>();
 
     afterEvent(receiver);
     emitter.send();
