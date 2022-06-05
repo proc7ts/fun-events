@@ -1,5 +1,4 @@
 import { describe, expect, it, jest } from '@jest/globals';
-import { valuesProvider } from '@proc7ts/primitives';
 import { AfterEvent } from '../after-event';
 import { EventEmitter } from '../senders';
 import { trackValue } from '../value';
@@ -25,7 +24,7 @@ describe('translateAfter', () => {
   it('translates events with fallback', () => {
 
     const emitter = new EventEmitter<[number, number]>();
-    const onEvent = emitter.on.do(translateAfter((send, a: number, b: number) => send(b, a), valuesProvider(0, -1)));
+    const onEvent = emitter.on.do(translateAfter((send, a: number, b: number) => send(b, a), () => [0, -1]));
     const receiver = jest.fn<(arg1: number, arg2: number) => void>();
 
     onEvent(receiver);
@@ -40,7 +39,7 @@ describe('translateAfter', () => {
     const tracker = trackValue('');
     const afterEvent: AfterEvent<[string]> = tracker.read.do(translateAfter(
         (send, str) => str && !str.startsWith('-') && send(str.startsWith('+') ? str : `+${str}`),
-        valuesProvider('NONE!'),
+        () => ['NONE!'],
     ));
     const receiver = jest.fn<(arg: string) => void>();
 
