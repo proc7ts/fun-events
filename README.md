@@ -11,7 +11,7 @@ A simple protocol for sending events to receivers registered in senders:
 
 ```typescript
 import { OnEvent } from '@proc7ts/fun-events';
-import { Supply } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 
 // API supports arbitrary event receiver signatures.
 // An event is a receiver's parameters.
@@ -54,7 +54,7 @@ An event receiver can also be in object form:
 
 ```typescript
 import { EventReceiver, OnEvent } from '@proc7ts/fun-events';
-import { Supply } from '@proc7ts/primitives';
+import { Supply } from '@proc7ts/supply';
 
 // API supports arbitrary event receiver signatures.
 // An event is a receiver's `receive` method parameters following revent processing context.
