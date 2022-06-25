@@ -267,13 +267,13 @@ export function thruAfter<
     pass13: (this: void, ...args: TArgs13) => TReturn13,
 ): (this: void, input: AfterEvent<TEvent>) => AfterEvent<Out<TReturn3>>;
 
-export function thruAfter<TEvent extends any[], TReturn extends any[]>(
-    ...passes: ((...args: any[]) => any)[]
+export function thruAfter<TEvent extends unknown[], TReturn extends unknown[]>(
+    ...passes: ((...args: unknown[]) => unknown)[]
 ): (this: void, supplier: AfterEvent<TEvent>) => AfterEvent<TReturn> {
 
   const map = (
       thruAfter_ as unknown as (
-          ...passes: ((...args: any[]) => any)[]
+          ...passes: ((...args: unknown[]) => unknown)[]
       ) => (
           supplier: AfterEvent<TEvent>,
       ) => AfterEvent<TReturn>
@@ -549,7 +549,7 @@ export function thruAfter_<// eslint-disable-line @typescript-eslint/naming-conv
     TEvent extends any[],
     TReturn extends any[],
     >(
-    ...passes: ((...args: any[]) => any)[]
+    ...passes: ((...args: unknown[]) => unknown)[]
 ): (this: void, supplier: AfterEvent<TEvent>) => AfterEvent<TReturn> {
   return (input): AfterEvent<any> => afterEventBy(thru(input, passes));
 }

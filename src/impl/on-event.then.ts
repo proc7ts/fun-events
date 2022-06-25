@@ -9,7 +9,7 @@ import { onceEvent } from './once-event';
 export function OnEvent$then<TEvent extends any[], TResult1 = TEvent[0], TResult2 = never>(
     this: OnEvent<TEvent>,
     onEvent?: ((...value: TEvent) => TResult1 | PromiseLike<TResult1>) | undefined | null,
-    onCutOff?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null,
+    onCutOff?: ((reason: unknown) => TResult2 | PromiseLike<TResult2>) | undefined | null,
 ): Promise<TResult1 | TResult2> {
   return new Promise((resolve, reject) => {
     onceEvent(this)({

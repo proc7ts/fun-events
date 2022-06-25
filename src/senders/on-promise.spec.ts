@@ -54,7 +54,7 @@ describe('onPromise', () => {
 
     await promise.catch(noop);
 
-    let reported: any;
+    let reported: unknown;
 
     on(noop).whenOff(reason => reported = reason);
     expect(reported).toBe(error);

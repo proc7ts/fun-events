@@ -264,12 +264,12 @@ export function thruOn<
 ): (this: void, input: OnEvent<TEvent>) => OnEvent<Out<TReturn3>>;
 
 export function thruOn<TEvent extends any[], TReturn extends any[]>(
-    ...passes: ((...args: any[]) => any)[]
+    ...passes: ((...args: unknown[]) => unknown)[]
 ): (this: void, supplier: OnEvent<TEvent>) => OnEvent<TReturn> {
 
   const map = (
       thruOn_ as unknown as (
-          ...passes: ((...args: any[]) => any)[]
+          ...passes: ((...args: unknown[]) => unknown)[]
       ) => (
           supplier: OnEvent<TEvent>,
       ) => OnEvent<TReturn>
@@ -540,7 +540,7 @@ export function thruOn_<// eslint-disable-line @typescript-eslint/naming-convent
     TEvent extends any[],
     TReturn extends any[],
     >(
-    ...passes: ((...args: any[]) => any)[]
+    ...passes: ((...args: unknown[]) => unknown)[]
 ): (this: void, supplier: OnEvent<TEvent>) => OnEvent<TReturn> {
   return (input): OnEvent<any> => onEventBy(thru(input, passes));
 }

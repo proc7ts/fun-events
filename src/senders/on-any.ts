@@ -24,7 +24,7 @@ export function onAny<TEvent extends any[]>(...suppliers: EventSupplier<TEvent>[
   return onEventBy(shareEvents(onEventBy<TEvent>(({ supply, receive }) => {
 
     let remained = suppliers.length;
-    const removeSupplier = (reason?: any): void => {
+    const removeSupplier = (reason?: unknown): void => {
       if (!--remained) {
         supply.off(reason);
       }

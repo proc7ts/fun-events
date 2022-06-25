@@ -8,9 +8,9 @@ import { OnEventCallChain } from './index';
 /**
  * @internal
  */
-export function thru<TEvent extends any[]>(
+export function thru<TEvent extends unknown[]>(
     supplier: OnEvent<TEvent>,
-    passes: ((...args: any[]) => any)[],
+    passes: ((...args: unknown[]) => unknown)[],
 ): (receiver: EventReceiver.Generic<TEvent>) => void {
 
   interface ChainEntry {

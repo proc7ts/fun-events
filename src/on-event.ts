@@ -296,7 +296,7 @@ export interface OnEvent<TEvent extends any[]> extends EventSender<TEvent> {
    */
   then<TResult1 = TEvent extends [infer F, ...any[]] ? F : undefined, TResult2 = never>(
       onEvent?: ((...event: TEvent) => TResult1 | PromiseLike<TResult1>) | undefined | null,
-      onCutOff?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null,
+      onCutOff?: ((reason: unknown) => TResult2 | PromiseLike<TResult2>) | undefined | null,
   ): Promise<TResult1 | TResult2>;
 
 }
