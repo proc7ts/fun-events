@@ -154,7 +154,7 @@ export abstract class ValueTracker<T> implements EventSender<[T, T]>, EventKeepe
    *
    * @returns `this` instance.
    */
-  byNone(reason?: any): this {
+  byNone(reason?: unknown): this {
     this._by.off(reason);
 
     return this;
