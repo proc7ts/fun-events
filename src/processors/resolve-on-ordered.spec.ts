@@ -6,8 +6,7 @@ import { EventEmitter } from '../senders';
 import { resolveOnOrdered } from './resolve-on-ordered';
 
 describe('resolveOnOrdered', () => {
-
-  let origin: EventEmitter<[(string | Promise<string>)]>;
+  let origin: EventEmitter<[string | Promise<string>]>;
   let receiver: Mock<(...args: string[]) => void>;
   let received: Promise<string[]>[];
   let resolvers: ((resolved: string[] | PromiseLike<string[]>) => void)[];
@@ -18,7 +17,6 @@ describe('resolveOnOrdered', () => {
     received = [];
     resolvers = [];
     receiver = jest.fn((...event) => {
-
       const resolver = resolvers.shift();
 
       if (resolver) {
@@ -27,16 +25,17 @@ describe('resolveOnOrdered', () => {
         received.push(Promise.resolve(event));
       }
     });
-    supply = origin.on.do(resolveOnOrdered)(receiver).whenOff(reason => {
+    supply = origin.on
+      .do(resolveOnOrdered)(receiver)
+      .whenOff(reason => {
+        const resolver = resolvers.shift();
 
-      const resolver = resolvers.shift();
-
-      if (resolver) {
-        resolver(Promise.reject(reason));
-      } else {
-        received.push(Promise.reject(reason));
-      }
-    });
+        if (resolver) {
+          resolver(Promise.reject(reason));
+        } else {
+          received.push(Promise.reject(reason));
+        }
+      });
   });
 
   it('resolves original events asynchronously', async () => {
@@ -48,12 +47,11 @@ describe('resolveOnOrdered', () => {
     expect(supply.isOff).toBe(false);
   });
   it('sends events in original order in batches', async () => {
-
     let sendFirst!: (event: string) => void;
     let sendSecond!: (event: string) => void;
 
-    origin.send(new Promise<string>(resolve => sendFirst = resolve));
-    origin.send(new Promise<string>(resolve => sendSecond = resolve));
+    origin.send(new Promise<string>(resolve => (sendFirst = resolve)));
+    origin.send(new Promise<string>(resolve => (sendSecond = resolve)));
     origin.send('3');
 
     sendSecond('2');
@@ -63,14 +61,13 @@ describe('resolveOnOrdered', () => {
     expect(supply.isOff).toBe(false);
   });
   it('cuts off supply when incoming event resolution failed', async () => {
-
     const whenOff = jest.fn();
 
     supply.whenOff(whenOff);
 
     let rejectFirst!: (reason?: unknown) => void;
 
-    origin.send(new Promise<string>((_resolve, reject) => rejectFirst = reject));
+    origin.send(new Promise<string>((_resolve, reject) => (rejectFirst = reject)));
     origin.send('2');
 
     const reason = 'test';
@@ -80,7 +77,6 @@ describe('resolveOnOrdered', () => {
     expect(whenOff).toHaveBeenCalledWith(reason);
   });
   it('cuts off supply when incoming supply cut off and all events resolved', async () => {
-
     const whenOff = jest.fn();
 
     supply.whenOff(whenOff);
@@ -88,7 +84,7 @@ describe('resolveOnOrdered', () => {
     let sendSecond!: (event: string) => void;
 
     origin.send('1');
-    origin.send(new Promise<string>(resolve => sendSecond = resolve));
+    origin.send(new Promise<string>(resolve => (sendSecond = resolve)));
     origin.send('3');
 
     expect(await next()).toEqual(['1']);
@@ -104,7 +100,6 @@ describe('resolveOnOrdered', () => {
     expect(whenOff).toHaveBeenCalledWith(reason);
   });
   it('cuts off supply when incoming supply cut off and no incoming events', async () => {
-
     const whenOff = jest.fn();
 
     supply.whenOff(whenOff);
@@ -120,7 +115,6 @@ describe('resolveOnOrdered', () => {
     expect(received).toHaveLength(0);
   });
   it('sends resolved events if incoming supply already cut off', async () => {
-
     const whenOff = jest.fn();
 
     supply.whenOff(whenOff);
@@ -142,7 +136,6 @@ describe('resolveOnOrdered', () => {
 
   async function next(): Promise<string[]> {
     return new Promise(resolve => {
-
       const r = received.shift();
 
       if (r) {

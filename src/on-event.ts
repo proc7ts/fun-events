@@ -15,7 +15,6 @@ import { OnEvent$do, OnEvent$supplier, OnEvent$then } from './impl';
  * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
  */
 export interface OnEvent<TEvent extends any[]> extends EventSender<TEvent> {
-
   /**
    * Starts sending events to the given `receiver`.
    *
@@ -36,9 +35,7 @@ export interface OnEvent<TEvent extends any[]> extends EventSender<TEvent> {
    *
    * @returns Processing result.
    */
-  do<TResult>(
-      processor: (this: void, supplier: this) => TResult,
-  ): TResult;
+  do<TResult>(processor: (this: void, supplier: this) => TResult): TResult;
 
   /**
    * Applies the given processors to events.
@@ -55,232 +52,180 @@ export interface OnEvent<TEvent extends any[]> extends EventSender<TEvent> {
    *
    * @returns The last processor application result.
    */
-  do<
-      TResult1,
-      TResult2,
-      >(
-      processor1: (this: void, supplier: this) => TResult1,
-      processor2: (this: void, arg: TResult1) => TResult2,
+  do<TResult1, TResult2>(
+    processor1: (this: void, supplier: this) => TResult1,
+    processor2: (this: void, arg: TResult1) => TResult2,
   ): TResult2;
 
-  do<
-      TResult1,
-      TResult2,
-      TResult3,
-      >(
-      processor1: (this: void, supplier: this) => TResult1,
-      processor2: (this: void, arg: TResult1) => TResult2,
-      processor3: (this: void, arg: TResult2) => TResult3,
+  do<TResult1, TResult2, TResult3>(
+    processor1: (this: void, supplier: this) => TResult1,
+    processor2: (this: void, arg: TResult1) => TResult2,
+    processor3: (this: void, arg: TResult2) => TResult3,
   ): TResult3;
 
-  do<
-      TResult1,
-      TResult2,
-      TResult3,
-      TResult4,
-      >(
-      processor1: (this: void, supplier: this) => TResult1,
-      processor2: (this: void, arg: TResult1) => TResult2,
-      processor3: (this: void, arg: TResult2) => TResult3,
-      processor4: (this: void, arg: TResult3) => TResult4,
+  do<TResult1, TResult2, TResult3, TResult4>(
+    processor1: (this: void, supplier: this) => TResult1,
+    processor2: (this: void, arg: TResult1) => TResult2,
+    processor3: (this: void, arg: TResult2) => TResult3,
+    processor4: (this: void, arg: TResult3) => TResult4,
   ): TResult4;
 
-  do<
-      TResult1,
-      TResult2,
-      TResult3,
-      TResult4,
-      TResult5,
-      >(
-      processor1: (this: void, supplier: this) => TResult1,
-      processor2: (this: void, arg: TResult1) => TResult2,
-      processor3: (this: void, arg: TResult2) => TResult3,
-      processor4: (this: void, arg: TResult3) => TResult4,
-      processor5: (this: void, arg: TResult4) => TResult5,
+  do<TResult1, TResult2, TResult3, TResult4, TResult5>(
+    processor1: (this: void, supplier: this) => TResult1,
+    processor2: (this: void, arg: TResult1) => TResult2,
+    processor3: (this: void, arg: TResult2) => TResult3,
+    processor4: (this: void, arg: TResult3) => TResult4,
+    processor5: (this: void, arg: TResult4) => TResult5,
   ): TResult5;
 
-  do<
-      TResult1,
-      TResult2,
-      TResult3,
-      TResult4,
-      TResult5,
-      TResult6,
-      >(
-      processor1: (this: void, supplier: this) => TResult1,
-      processor2: (this: void, arg: TResult1) => TResult2,
-      processor3: (this: void, arg: TResult2) => TResult3,
-      processor4: (this: void, arg: TResult3) => TResult4,
-      processor5: (this: void, arg: TResult4) => TResult5,
-      processor6: (this: void, arg: TResult5) => TResult6,
+  do<TResult1, TResult2, TResult3, TResult4, TResult5, TResult6>(
+    processor1: (this: void, supplier: this) => TResult1,
+    processor2: (this: void, arg: TResult1) => TResult2,
+    processor3: (this: void, arg: TResult2) => TResult3,
+    processor4: (this: void, arg: TResult3) => TResult4,
+    processor5: (this: void, arg: TResult4) => TResult5,
+    processor6: (this: void, arg: TResult5) => TResult6,
   ): TResult6;
 
-  do<
-      TResult1,
-      TResult2,
-      TResult3,
-      TResult4,
-      TResult5,
-      TResult6,
-      TResult7,
-      >(
-      processor1: (this: void, supplier: this) => TResult1,
-      processor2: (this: void, arg: TResult1) => TResult2,
-      processor3: (this: void, arg: TResult2) => TResult3,
-      processor4: (this: void, arg: TResult3) => TResult4,
-      processor5: (this: void, arg: TResult4) => TResult5,
-      processor6: (this: void, arg: TResult5) => TResult6,
-      processor7: (this: void, arg: TResult6) => TResult7,
+  do<TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7>(
+    processor1: (this: void, supplier: this) => TResult1,
+    processor2: (this: void, arg: TResult1) => TResult2,
+    processor3: (this: void, arg: TResult2) => TResult3,
+    processor4: (this: void, arg: TResult3) => TResult4,
+    processor5: (this: void, arg: TResult4) => TResult5,
+    processor6: (this: void, arg: TResult5) => TResult6,
+    processor7: (this: void, arg: TResult6) => TResult7,
   ): TResult7;
 
-  do<
-      TResult1,
-      TResult2,
-      TResult3,
-      TResult4,
-      TResult5,
-      TResult6,
-      TResult7,
-      TResult8,
-      >(
-      processor1: (this: void, supplier: this) => TResult1,
-      processor2: (this: void, arg: TResult1) => TResult2,
-      processor3: (this: void, arg: TResult2) => TResult3,
-      processor4: (this: void, arg: TResult3) => TResult4,
-      processor5: (this: void, arg: TResult4) => TResult5,
-      processor6: (this: void, arg: TResult5) => TResult6,
-      processor7: (this: void, arg: TResult6) => TResult7,
-      processor8: (this: void, arg: TResult7) => TResult8,
+  do<TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7, TResult8>(
+    processor1: (this: void, supplier: this) => TResult1,
+    processor2: (this: void, arg: TResult1) => TResult2,
+    processor3: (this: void, arg: TResult2) => TResult3,
+    processor4: (this: void, arg: TResult3) => TResult4,
+    processor5: (this: void, arg: TResult4) => TResult5,
+    processor6: (this: void, arg: TResult5) => TResult6,
+    processor7: (this: void, arg: TResult6) => TResult7,
+    processor8: (this: void, arg: TResult7) => TResult8,
   ): TResult8;
 
-  do<
-      TResult1,
-      TResult2,
-      TResult3,
-      TResult4,
-      TResult5,
-      TResult6,
-      TResult7,
-      TResult8,
-      TResult9,
-      >(
-      processor1: (this: void, supplier: this) => TResult1,
-      processor2: (this: void, arg: TResult1) => TResult2,
-      processor3: (this: void, arg: TResult2) => TResult3,
-      processor4: (this: void, arg: TResult3) => TResult4,
-      processor5: (this: void, arg: TResult4) => TResult5,
-      processor6: (this: void, arg: TResult5) => TResult6,
-      processor7: (this: void, arg: TResult6) => TResult7,
-      processor8: (this: void, arg: TResult7) => TResult8,
-      processor9: (this: void, arg: TResult8) => TResult9,
+  do<TResult1, TResult2, TResult3, TResult4, TResult5, TResult6, TResult7, TResult8, TResult9>(
+    processor1: (this: void, supplier: this) => TResult1,
+    processor2: (this: void, arg: TResult1) => TResult2,
+    processor3: (this: void, arg: TResult2) => TResult3,
+    processor4: (this: void, arg: TResult3) => TResult4,
+    processor5: (this: void, arg: TResult4) => TResult5,
+    processor6: (this: void, arg: TResult5) => TResult6,
+    processor7: (this: void, arg: TResult6) => TResult7,
+    processor8: (this: void, arg: TResult7) => TResult8,
+    processor9: (this: void, arg: TResult8) => TResult9,
   ): TResult9;
 
   do<
-      TResult1,
-      TResult2,
-      TResult3,
-      TResult4,
-      TResult5,
-      TResult6,
-      TResult7,
-      TResult8,
-      TResult9,
-      TResult10,
-      >(
-      processor1: (this: void, supplier: this) => TResult1,
-      processor2: (this: void, arg: TResult1) => TResult2,
-      processor3: (this: void, arg: TResult2) => TResult3,
-      processor4: (this: void, arg: TResult3) => TResult4,
-      processor5: (this: void, arg: TResult4) => TResult5,
-      processor6: (this: void, arg: TResult5) => TResult6,
-      processor7: (this: void, arg: TResult6) => TResult7,
-      processor8: (this: void, arg: TResult7) => TResult8,
-      processor9: (this: void, arg: TResult8) => TResult9,
-      processor10: (this: void, arg: TResult9) => TResult10,
+    TResult1,
+    TResult2,
+    TResult3,
+    TResult4,
+    TResult5,
+    TResult6,
+    TResult7,
+    TResult8,
+    TResult9,
+    TResult10,
+  >(
+    processor1: (this: void, supplier: this) => TResult1,
+    processor2: (this: void, arg: TResult1) => TResult2,
+    processor3: (this: void, arg: TResult2) => TResult3,
+    processor4: (this: void, arg: TResult3) => TResult4,
+    processor5: (this: void, arg: TResult4) => TResult5,
+    processor6: (this: void, arg: TResult5) => TResult6,
+    processor7: (this: void, arg: TResult6) => TResult7,
+    processor8: (this: void, arg: TResult7) => TResult8,
+    processor9: (this: void, arg: TResult8) => TResult9,
+    processor10: (this: void, arg: TResult9) => TResult10,
   ): TResult10;
 
   do<
-      TResult1,
-      TResult2,
-      TResult3,
-      TResult4,
-      TResult5,
-      TResult6,
-      TResult7,
-      TResult8,
-      TResult9,
-      TResult10,
-      TResult11,
-      >(
-      processor1: (this: void, supplier: this) => TResult1,
-      processor2: (this: void, arg: TResult1) => TResult2,
-      processor3: (this: void, arg: TResult2) => TResult3,
-      processor4: (this: void, arg: TResult3) => TResult4,
-      processor5: (this: void, arg: TResult4) => TResult5,
-      processor6: (this: void, arg: TResult5) => TResult6,
-      processor7: (this: void, arg: TResult6) => TResult7,
-      processor8: (this: void, arg: TResult7) => TResult8,
-      processor9: (this: void, arg: TResult8) => TResult9,
-      processor10: (this: void, arg: TResult9) => TResult10,
-      processor11: (this: void, arg: TResult10) => TResult11,
+    TResult1,
+    TResult2,
+    TResult3,
+    TResult4,
+    TResult5,
+    TResult6,
+    TResult7,
+    TResult8,
+    TResult9,
+    TResult10,
+    TResult11,
+  >(
+    processor1: (this: void, supplier: this) => TResult1,
+    processor2: (this: void, arg: TResult1) => TResult2,
+    processor3: (this: void, arg: TResult2) => TResult3,
+    processor4: (this: void, arg: TResult3) => TResult4,
+    processor5: (this: void, arg: TResult4) => TResult5,
+    processor6: (this: void, arg: TResult5) => TResult6,
+    processor7: (this: void, arg: TResult6) => TResult7,
+    processor8: (this: void, arg: TResult7) => TResult8,
+    processor9: (this: void, arg: TResult8) => TResult9,
+    processor10: (this: void, arg: TResult9) => TResult10,
+    processor11: (this: void, arg: TResult10) => TResult11,
   ): TResult11;
 
   do<
-      TResult1,
-      TResult2,
-      TResult3,
-      TResult4,
-      TResult5,
-      TResult6,
-      TResult7,
-      TResult8,
-      TResult9,
-      TResult10,
-      TResult11,
-      TResult12,
-      >(
-      processor1: (this: void, supplier: this) => TResult1,
-      processor2: (this: void, arg: TResult1) => TResult2,
-      processor3: (this: void, arg: TResult2) => TResult3,
-      processor4: (this: void, arg: TResult3) => TResult4,
-      processor5: (this: void, arg: TResult4) => TResult5,
-      processor6: (this: void, arg: TResult5) => TResult6,
-      processor7: (this: void, arg: TResult6) => TResult7,
-      processor8: (this: void, arg: TResult7) => TResult8,
-      processor9: (this: void, arg: TResult8) => TResult9,
-      processor10: (this: void, arg: TResult9) => TResult10,
-      processor11: (this: void, arg: TResult10) => TResult11,
-      processor12: (this: void, arg: TResult11) => TResult12,
+    TResult1,
+    TResult2,
+    TResult3,
+    TResult4,
+    TResult5,
+    TResult6,
+    TResult7,
+    TResult8,
+    TResult9,
+    TResult10,
+    TResult11,
+    TResult12,
+  >(
+    processor1: (this: void, supplier: this) => TResult1,
+    processor2: (this: void, arg: TResult1) => TResult2,
+    processor3: (this: void, arg: TResult2) => TResult3,
+    processor4: (this: void, arg: TResult3) => TResult4,
+    processor5: (this: void, arg: TResult4) => TResult5,
+    processor6: (this: void, arg: TResult5) => TResult6,
+    processor7: (this: void, arg: TResult6) => TResult7,
+    processor8: (this: void, arg: TResult7) => TResult8,
+    processor9: (this: void, arg: TResult8) => TResult9,
+    processor10: (this: void, arg: TResult9) => TResult10,
+    processor11: (this: void, arg: TResult10) => TResult11,
+    processor12: (this: void, arg: TResult11) => TResult12,
   ): TResult12;
 
   do<
-      TResult1,
-      TResult2,
-      TResult3,
-      TResult4,
-      TResult5,
-      TResult6,
-      TResult7,
-      TResult8,
-      TResult9,
-      TResult10,
-      TResult11,
-      TResult12,
-      TResult13,
-      >(
-      processor1: (this: void, supplier: this) => TResult1,
-      processor2: (this: void, arg: TResult1) => TResult2,
-      processor3: (this: void, arg: TResult2) => TResult3,
-      processor4: (this: void, arg: TResult3) => TResult4,
-      processor5: (this: void, arg: TResult4) => TResult5,
-      processor6: (this: void, arg: TResult5) => TResult6,
-      processor7: (this: void, arg: TResult6) => TResult7,
-      processor8: (this: void, arg: TResult7) => TResult8,
-      processor9: (this: void, arg: TResult8) => TResult9,
-      processor10: (this: void, arg: TResult9) => TResult10,
-      processor11: (this: void, arg: TResult10) => TResult11,
-      processor12: (this: void, arg: TResult11) => TResult12,
-      processor13: (this: void, arg: TResult12) => TResult13,
+    TResult1,
+    TResult2,
+    TResult3,
+    TResult4,
+    TResult5,
+    TResult6,
+    TResult7,
+    TResult8,
+    TResult9,
+    TResult10,
+    TResult11,
+    TResult12,
+    TResult13,
+  >(
+    processor1: (this: void, supplier: this) => TResult1,
+    processor2: (this: void, arg: TResult1) => TResult2,
+    processor3: (this: void, arg: TResult2) => TResult3,
+    processor4: (this: void, arg: TResult3) => TResult4,
+    processor5: (this: void, arg: TResult4) => TResult5,
+    processor6: (this: void, arg: TResult5) => TResult6,
+    processor7: (this: void, arg: TResult6) => TResult7,
+    processor8: (this: void, arg: TResult7) => TResult8,
+    processor9: (this: void, arg: TResult8) => TResult9,
+    processor10: (this: void, arg: TResult9) => TResult10,
+    processor11: (this: void, arg: TResult10) => TResult11,
+    processor12: (this: void, arg: TResult11) => TResult12,
+    processor13: (this: void, arg: TResult12) => TResult13,
   ): TResult13;
 
   /**
@@ -295,10 +240,9 @@ export interface OnEvent<TEvent extends any[]> extends EventSender<TEvent> {
    * @returns A Promise for the next event.
    */
   then<TResult1 = TEvent extends [infer F, ...any[]] ? F : undefined, TResult2 = never>(
-      onEvent?: ((...event: TEvent) => TResult1 | PromiseLike<TResult1>) | undefined | null,
-      onCutOff?: ((reason: unknown) => TResult2 | PromiseLike<TResult2>) | undefined | null,
+    onEvent?: ((...event: TEvent) => TResult1 | PromiseLike<TResult1>) | undefined | null,
+    onCutOff?: ((reason: unknown) => TResult2 | PromiseLike<TResult2>) | undefined | null,
   ): Promise<TResult1 | TResult2>;
-
 }
 
 /**
@@ -312,11 +256,9 @@ export interface OnEvent<TEvent extends any[]> extends EventSender<TEvent> {
  * @returns An {@link OnEvent} sender registering event receivers with the given `register` function.
  */
 export function onEventBy<TEvent extends any[]>(
-    register: (this: void, receiver: EventReceiver.Generic<TEvent>) => void,
+  register: (this: void, receiver: EventReceiver.Generic<TEvent>) => void,
 ): OnEvent<TEvent> {
-
   const onEvent = ((receiver: EventReceiver<TEvent>): Supply => {
-
     const generic = eventReceiver(receiver);
     const { supply } = generic;
 
@@ -350,10 +292,12 @@ export function onEventBy<TEvent extends any[]>(
  * or `false` otherwise.
  */
 export function isOnEvent<TEvent extends any[], TOther = unknown>(
-    value: OnEvent<TEvent> | TOther,
+  value: OnEvent<TEvent> | TOther,
 ): value is OnEvent<TEvent> {
-  return typeof value === 'function'
-      && (value as Partial<OnEvent<TEvent>>)[OnEvent__symbol] === OnEvent$supplier
-      && (value as Partial<OnEvent<TEvent>>).do === OnEvent$do
-      && (value as Partial<OnEvent<TEvent>>).then === OnEvent$then;
+  return (
+    typeof value === 'function'
+    && (value as Partial<OnEvent<TEvent>>)[OnEvent__symbol] === OnEvent$supplier
+    && (value as Partial<OnEvent<TEvent>>).do === OnEvent$do
+    && (value as Partial<OnEvent<TEvent>>).then === OnEvent$then
+  );
 }

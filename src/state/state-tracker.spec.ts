@@ -7,7 +7,6 @@ import { StateTracker } from './state-tracker';
 import { StateUpdateReceiver } from './state-update-receiver';
 
 describe('StateTracker', () => {
-
   let tracker: StateTracker;
   let mockReceiver: Mock<StateUpdateReceiver.Function>;
 
@@ -23,7 +22,6 @@ describe('StateTracker', () => {
   });
 
   it('notifies on state update', () => {
-
     const supply = tracker.onUpdate(mockReceiver);
 
     const path = ['some', 'path'];
@@ -42,7 +40,6 @@ describe('StateTracker', () => {
 
   describe('done', () => {
     it('cuts off update supplies', () => {
-
       const mockOff = jest.fn();
       const reason = 'some reason';
 
@@ -52,7 +49,6 @@ describe('StateTracker', () => {
       expect(mockOff).toHaveBeenCalledWith(reason);
     });
     it('does not cut off the supplies already cut off', () => {
-
       const mockOff = jest.fn();
       const reason1 = 'first reason';
       const reason2 = 'second reason';
@@ -64,7 +60,6 @@ describe('StateTracker', () => {
       expect(mockOff).not.toHaveBeenCalledWith(reason2);
     });
     it('stops nested state tracking', () => {
-
       const nested = tracker.track('some');
       const mockOff = jest.fn();
       const reason = 'some reason';
@@ -76,7 +71,6 @@ describe('StateTracker', () => {
   });
 
   describe('part', () => {
-
     const partPath = ['path', 2, 'part'];
     let part: StateTracker;
     let mockPartReceiver: Mock<() => StateUpdateReceiver>;
@@ -187,7 +181,6 @@ describe('StateTracker', () => {
 
     describe('done', () => {
       it('cuts off update supplies', () => {
-
         const mockOff = jest.fn();
         const reason = 'some reason';
 
@@ -197,7 +190,6 @@ describe('StateTracker', () => {
         expect(mockOff).toHaveBeenCalledWith(reason);
       });
       it('does not cut off the supplies already cut off', () => {
-
         const mockOff = jest.fn();
         const reason1 = 'first reason';
         const reason2 = 'second reason';

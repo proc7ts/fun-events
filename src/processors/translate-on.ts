@@ -15,13 +15,9 @@ import { shareOn } from './share-on';
  *
  * @returns A mapping function of incoming event sender to another one.
  */
-export function translateOn<
-    TInEvent extends any[],
-    TOutEvent extends any[],
-    >(
-    translate: (this: void, send: (...event: TOutEvent) => void, ...event: TInEvent) => void,
+export function translateOn<TInEvent extends any[], TOutEvent extends any[]>(
+  translate: (this: void, send: (...event: TOutEvent) => void, ...event: TInEvent) => void,
 ): (this: void, input: OnEvent<TInEvent>) => OnEvent<TOutEvent> {
-
   const mapper = translateOn_(translate);
 
   return input => shareOn(mapper(input));
@@ -41,11 +37,9 @@ export function translateOn<
  *
  * @returns A mapping function of incoming event sender to another one.
  */
-export function translateOn_<// eslint-disable-line @typescript-eslint/naming-convention
-    TInEvent extends any[],
-    TOutEvent extends any[],
-    >(
-    translate: (this: void, send: (...event: TOutEvent) => void, ...event: TInEvent) => void,
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export function translateOn_<TInEvent extends any[], TOutEvent extends any[]>(
+  translate: (this: void, send: (...event: TOutEvent) => void, ...event: TInEvent) => void,
 ): (this: void, input: OnEvent<TInEvent>) => OnEvent<TOutEvent> {
   return input => onEventBy(translateEvents(input, translate));
 }

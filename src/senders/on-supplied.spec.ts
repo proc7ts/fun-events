@@ -1,6 +1,12 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { Supply } from '@proc7ts/supply';
-import { AfterEvent__symbol, EventKeeper, EventReceiver, EventSender, OnEvent__symbol } from '../base';
+import {
+  AfterEvent__symbol,
+  EventKeeper,
+  EventReceiver,
+  EventSender,
+  OnEvent__symbol,
+} from '../base';
 import { OnEvent } from '../on-event';
 import { trackValue } from '../value';
 import { EventEmitter } from './event-emitter';
@@ -8,7 +14,6 @@ import { onSupplied } from './on-supplied';
 
 describe('onSupplied', () => {
   describe('from event sender', () => {
-
     let sender: EventEmitter<[string]>;
     let onEvent: OnEvent<[string]>;
     let mockReceiver: EventReceiver<[string]>;
@@ -29,7 +34,6 @@ describe('onSupplied', () => {
     });
 
     it('reports events sent by the given sender', () => {
-
       const event = 'event';
 
       sender.send(event);
@@ -44,8 +48,7 @@ describe('onSupplied', () => {
   });
 
   describe('from event sender with registrar implementing `OnEvent`', () => {
-    it('returns the sender\'s registrar', () => {
-
+    it("returns the sender's registrar", () => {
       const sender = new EventEmitter<[string]>();
 
       expect(onSupplied(sender)).toBe(sender[OnEvent__symbol]());
@@ -53,8 +56,7 @@ describe('onSupplied', () => {
   });
 
   describe('from event keeper', () => {
-    it('returns the keeper\'s registrar', () => {
-
+    it("returns the keeper's registrar", () => {
       const tracker = trackValue(1);
       const keeper: EventKeeper<[number]> = {
         [AfterEvent__symbol]() {

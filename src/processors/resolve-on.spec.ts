@@ -6,8 +6,7 @@ import { EventEmitter } from '../senders';
 import { resolveOn } from './resolve-on';
 
 describe('resolveOn', () => {
-
-  let origin: EventEmitter<[(string | Promise<string>)]>;
+  let origin: EventEmitter<[string | Promise<string>]>;
   let receiver: Mock<(arg1: string, arg2: number) => void>;
   let received: Promise<[string, number]>[];
   let resolvers: ((resolved: [string, number] | PromiseLike<[string, number]>) => void)[];
@@ -18,7 +17,6 @@ describe('resolveOn', () => {
     received = [];
     resolvers = [];
     receiver = jest.fn((...event) => {
-
       const resolver = resolvers.shift();
 
       if (resolver) {
@@ -27,16 +25,17 @@ describe('resolveOn', () => {
         received.push(Promise.resolve(event));
       }
     });
-    supply = origin.on.do(resolveOn)(receiver).whenOff(reason => {
+    supply = origin.on
+      .do(resolveOn)(receiver)
+      .whenOff(reason => {
+        const resolver = resolvers.shift();
 
-      const resolver = resolvers.shift();
-
-      if (resolver) {
-        resolver(Promise.reject(reason));
-      } else {
-        received.push(Promise.reject(reason));
-      }
-    });
+        if (resolver) {
+          resolver(Promise.reject(reason));
+        } else {
+          received.push(Promise.reject(reason));
+        }
+      });
   });
 
   it('resolves original events asynchronously', async () => {
@@ -48,10 +47,9 @@ describe('resolveOn', () => {
     expect(await next()).toEqual(['2', 2]);
   });
   it('sends events in order of their resolution', async () => {
-
     let sendFirst!: (event: string) => void;
 
-    origin.send(new Promise<string>(resolve => sendFirst = resolve));
+    origin.send(new Promise<string>(resolve => (sendFirst = resolve)));
     origin.send('2');
 
     expect(await next()).toEqual(['2', 2]);
@@ -59,10 +57,9 @@ describe('resolveOn', () => {
     expect(await next()).toEqual(['1', 1]);
   });
   it('cuts off supply once incoming supply cut off', async () => {
-
     let sendFirst!: (event: string) => void;
 
-    origin.send(new Promise<string>(resolve => sendFirst = resolve));
+    origin.send(new Promise<string>(resolve => (sendFirst = resolve)));
     origin.send('2');
 
     expect(await next()).toEqual(['2', 2]);
@@ -79,10 +76,9 @@ describe('resolveOn', () => {
     expect(whenOff).toHaveBeenCalledWith(reason);
   });
   it('cuts off supply when incoming event resolution failed', async () => {
-
     let rejectFirst!: (reason?: unknown) => void;
 
-    origin.send(new Promise<string>((_resolve, reject) => rejectFirst = reject));
+    origin.send(new Promise<string>((_resolve, reject) => (rejectFirst = reject)));
     origin.send('2');
 
     expect(await next()).toEqual(['2', 2]);
@@ -97,7 +93,6 @@ describe('resolveOn', () => {
 
   async function next(): Promise<[string, number]> {
     return new Promise(resolve => {
-
       const r = received.shift();
 
       if (r) {
@@ -107,5 +102,4 @@ describe('resolveOn', () => {
       }
     });
   }
-
 });

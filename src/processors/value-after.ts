@@ -17,7 +17,7 @@ import { translateAfter_ } from './translate-after';
  * @returns New event processor.
  */
 export function valueAfter<TEvent extends any[], TValue>(
-    valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
+  valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
 ): (this: void, input: AfterEvent<TEvent>) => AfterEvent<[TValue]>;
 
 /**
@@ -35,15 +35,14 @@ export function valueAfter<TEvent extends any[], TValue>(
  * @returns New event processor.
  */
 export function valueAfter<TEvent extends any[], TValue>(
-    valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
-    fallback: (this: void) => TValue,
+  valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
+  fallback: (this: void) => TValue,
 ): (this: void, input: OnEvent<TEvent>) => AfterEvent<[TValue]>;
 
 export function valueAfter<TEvent extends any[], TValue>(
-    valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
-    fallback?: (this: void) => TValue,
+  valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
+  fallback?: (this: void) => TValue,
 ): (this: void, input: OnEvent<TEvent>) => AfterEvent<[TValue]> {
-
   const mapper = valueAfter_(valueOf, fallback!);
 
   return input => shareAfter(mapper(input));
@@ -61,8 +60,8 @@ export function valueAfter<TEvent extends any[], TValue>(
  *
  * @returns New event processor.
  */
-export function valueAfter_<TEvent extends any[], TValue>(// eslint-disable-line @typescript-eslint/naming-convention
-    valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
+export function valueAfter_<TEvent extends any[], TValue>( // eslint-disable-line @typescript-eslint/naming-convention
+  valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
 ): (this: void, input: AfterEvent<TEvent>) => AfterEvent<[TValue]>;
 
 /**
@@ -78,24 +77,20 @@ export function valueAfter_<TEvent extends any[], TValue>(// eslint-disable-line
  *
  * @returns New event processor.
  */
-export function valueAfter_<TEvent extends any[], TValue>(// eslint-disable-line @typescript-eslint/naming-convention
-    valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
-    fallback: (this: void) => TValue,
+export function valueAfter_<TEvent extends any[], TValue>( // eslint-disable-line @typescript-eslint/naming-convention
+  valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
+  fallback: (this: void) => TValue,
 ): (this: void, input: OnEvent<TEvent>) => AfterEvent<[TValue]>;
 
-export function valueAfter_<TEvent extends any[], TValue>(// eslint-disable-line @typescript-eslint/naming-convention
-    valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
-    fallback?: (this: void) => TValue,
+export function valueAfter_<TEvent extends any[], TValue>( // eslint-disable-line @typescript-eslint/naming-convention
+  valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
+  fallback?: (this: void) => TValue,
 ): (this: void, input: OnEvent<TEvent>) => AfterEvent<[TValue]> {
-  return translateAfter_(
-      (send, ...event) => {
+  return translateAfter_((send, ...event) => {
+    const value = valueOf(...event);
 
-        const value = valueOf(...event);
-
-        if (value != null && value !== false) {
-          send(value);
-        }
-      },
-      (fallback && (() => [fallback()]))!,
-  );
+    if (value != null && value !== false) {
+      send(value);
+    }
+  }, (fallback && (() => [fallback()]))!);
 }

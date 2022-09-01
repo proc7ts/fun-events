@@ -6,7 +6,6 @@ import { OnEvent, onEventBy } from '../on-event';
 import { onceOn } from './once-on';
 
 describe('onceOn', () => {
-
   let mockRegister: Mock<(receiver: EventReceiver.Generic<[string]>) => void>;
   let onEvent: OnEvent<[string]>;
   let supply: Supply;
@@ -19,7 +18,7 @@ describe('onceOn', () => {
     mockRegister = jest.fn(receiver => {
       emitter.on(receiver);
       supply = receiver.supply;
-      supply.whenOff(whenOff = jest.fn());
+      supply.whenOff((whenOff = jest.fn()));
     });
     onEvent = onEventBy(mockRegister);
     mockReceiver = jest.fn();
@@ -38,7 +37,6 @@ describe('onceOn', () => {
     expect(whenOff).toHaveBeenCalled();
   });
   it('unregisters immediately notified event receiver', () => {
-
     let offSpy!: SpyInstance<(arg?: unknown) => Supply>;
 
     mockRegister.mockImplementation(receiver => {

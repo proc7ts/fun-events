@@ -43,7 +43,6 @@ export class ValueSync<T> extends ValueTracker<T> {
   }
 
   set it(value: T) {
-
     const old = this.it;
 
     if (old !== value) {
@@ -89,8 +88,8 @@ export class ValueSync<T> extends ValueTracker<T> {
    * @returns An event supply. {@link Supply.off Cut it off} to break synchronization.
    */
   sync<TSrcEvent extends any[]>(
-      supplier: EventSupplier<TSrcEvent>,
-      extract: (this: void, ...event: TSrcEvent) => ValueTracker<T> | undefined,
+    supplier: EventSupplier<TSrcEvent>,
+    extract: (this: void, ...event: TSrcEvent) => ValueTracker<T> | undefined,
   ): Supply;
 
   /**
@@ -109,20 +108,20 @@ export class ValueSync<T> extends ValueTracker<T> {
    * @returns An event supply. {@link Supply.off Cut it off} to break synchronization.
    */
   sync<TSrcEvent extends any[]>(
-      direction: 'in' | 'out',
-      supplier: EventSupplier<TSrcEvent>,
-      extract: (this: void, ...event: TSrcEvent) => ValueTracker<T> | undefined,
+    direction: 'in' | 'out',
+    supplier: EventSupplier<TSrcEvent>,
+    extract: (this: void, ...event: TSrcEvent) => ValueTracker<T> | undefined,
   ): Supply;
 
   sync<TSrcEvent extends any[]>(
-      first: 'in' | 'out' | ValueTracker<T> | EventSupplier<TSrcEvent>,
-      second?: ValueTracker<T>
-          | EventSender<TSrcEvent>
-          | EventKeeper<TSrcEvent>
-          | ((this: void, ...event: TSrcEvent) => ValueTracker<T> | undefined),
-      third?: (this: void, ...event: TSrcEvent) => ValueTracker<T> | undefined,
+    first: 'in' | 'out' | ValueTracker<T> | EventSupplier<TSrcEvent>,
+    second?:
+      | ValueTracker<T>
+      | EventSender<TSrcEvent>
+      | EventKeeper<TSrcEvent>
+      | ((this: void, ...event: TSrcEvent) => ValueTracker<T> | undefined),
+    third?: (this: void, ...event: TSrcEvent) => ValueTracker<T> | undefined,
   ): Supply {
-
     let syncWithTracker = (tracker: ValueTracker<T>): Supply => syncTrackers(this, tracker);
     let source: ValueTracker<T> | EventSupplier<TSrcEvent>;
     let extract: ((this: void, ...event: TSrcEvent) => ValueTracker<T> | undefined) | undefined;
@@ -146,17 +145,15 @@ export class ValueSync<T> extends ValueTracker<T> {
 
     const supplier = source as EventSupplier<TSrcEvent>;
 
-    return (isEventKeeper(supplier) ? afterSupplied(supplier) : onSupplied(supplier)).do(consumeEvents(
-        (...event) => {
+    return (isEventKeeper(supplier) ? afterSupplied(supplier) : onSupplied(supplier)).do(
+      consumeEvents((...event) => {
+        const tracker = extractTracker(...event);
 
-          const tracker = extractTracker(...event);
-
-          return tracker && syncWithTracker(tracker);
-        },
-    ));
+        return tracker && syncWithTracker(tracker);
+      }),
+    );
 
     function syncTrackers(tracker1: ValueTracker<T>, tracker2: ValueTracker<T>): Supply {
-
       const supply1 = tracker1.read(value => {
         tracker2.it = value;
       });
@@ -167,7 +164,9 @@ export class ValueSync<T> extends ValueTracker<T> {
       return new Supply(reason => {
         supply2.off(reason);
         supply1.off(reason);
-      }).needs(supply1).needs(supply2);
+      })
+        .needs(supply1)
+        .needs(supply2);
     }
   }
 

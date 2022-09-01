@@ -14,7 +14,7 @@ import { translateOn_ } from './translate-on';
  * @returns {@link OnEvent} sender mapper function.
  */
 export function filterOn<TValue, TMatch extends TValue>(
-    test: (this: void, event: TValue) => event is TMatch,
+  test: (this: void, event: TValue) => event is TMatch,
 ): (this: void, supplier: OnEvent<[TValue]>) => OnEvent<[TMatch]>;
 
 /**
@@ -28,13 +28,12 @@ export function filterOn<TValue, TMatch extends TValue>(
  * @returns {@link OnEvent} sender mapper function.
  */
 export function filterOn<TEvent extends any[]>(
-    test: (this: void, ...event: TEvent) => boolean,
+  test: (this: void, ...event: TEvent) => boolean,
 ): (this: void, supplier: OnEvent<TEvent>) => OnEvent<TEvent>;
 
 export function filterOn<TEvent extends any[]>(
-    test: (this: void, ...event: TEvent) => boolean,
+  test: (this: void, ...event: TEvent) => boolean,
 ): (this: void, supplier: OnEvent<TEvent>) => OnEvent<TEvent> {
-
   const map = filterOn_(test);
 
   return supplier => shareOn(map(supplier));
@@ -52,8 +51,8 @@ export function filterOn<TEvent extends any[]>(
  *
  * @returns {@link OnEvent} sender mapper function.
  */
-export function filterOn_<TValue, TMatch extends TValue>(// eslint-disable-line @typescript-eslint/naming-convention
-    test: (this: void, event: TValue) => event is TMatch,
+export function filterOn_<TValue, TMatch extends TValue>( // eslint-disable-line @typescript-eslint/naming-convention
+  test: (this: void, event: TValue) => event is TMatch,
 ): (this: void, supplier: OnEvent<[TValue]>) => OnEvent<[TMatch]>;
 
 /**
@@ -67,12 +66,12 @@ export function filterOn_<TValue, TMatch extends TValue>(// eslint-disable-line 
  *
  * @returns {@link OnEvent} sender mapper function.
  */
-export function filterOn_<TEvent extends any[]>(// eslint-disable-line @typescript-eslint/naming-convention
-    test: (this: void, ...event: TEvent) => boolean,
+export function filterOn_<TEvent extends any[]>( // eslint-disable-line @typescript-eslint/naming-convention
+  test: (this: void, ...event: TEvent) => boolean,
 ): (this: void, supplier: OnEvent<TEvent>) => OnEvent<TEvent>;
 
-export function filterOn_<TEvent extends any[]>(// eslint-disable-line @typescript-eslint/naming-convention
-    test: (this: void, ...event: TEvent) => boolean,
+export function filterOn_<TEvent extends any[]>( // eslint-disable-line @typescript-eslint/naming-convention
+  test: (this: void, ...event: TEvent) => boolean,
 ): (this: void, supplier: OnEvent<TEvent>) => OnEvent<TEvent> {
   return translateOn_((send, ...event) => test(...event) && send(...event));
 }

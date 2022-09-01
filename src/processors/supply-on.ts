@@ -19,10 +19,10 @@ import { OnEvent, onEventBy } from '../on-event';
  * @returns New event mapper.
  */
 export function supplyOn<TEvent extends any[]>(
-    required: SupplyPeer,
-    dependentSupply?: Supply,
+  required: SupplyPeer,
+  dependentSupply?: Supply,
 ): (this: void, input: OnEvent<TEvent>) => OnEvent<TEvent> {
   return isAlwaysSupply(required.supply)
-      ? asis
-      : (input: OnEvent<TEvent>) => onEventBy(supplyEvents(input, required, dependentSupply));
+    ? asis
+    : (input: OnEvent<TEvent>) => onEventBy(supplyEvents(input, required, dependentSupply));
 }

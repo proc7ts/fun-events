@@ -9,25 +9,21 @@ import { OnEventCallChain } from './index';
  * @internal
  */
 export function thru<TEvent extends unknown[]>(
-    supplier: OnEvent<TEvent>,
-    passes: ((...args: unknown[]) => unknown)[],
+  supplier: OnEvent<TEvent>,
+  passes: ((...args: unknown[]) => unknown)[],
 ): (receiver: EventReceiver.Generic<TEvent>) => void {
-
   interface ChainEntry {
     readonly chain: OnEventCallChain;
     supply: Supply;
   }
 
   return (receiver: EventReceiver.Generic<any>): void => {
-
     const chains: ChainEntry[] = [];
 
     supplier({
       supply: receiver.supply,
       receive(context, ...event) {
-
         const chain = (index: number, chainSupply: Supply): [OnEventCallChain, Supply] => {
-
           const lastPass = index >= passes.length;
 
           ++index;
@@ -35,7 +31,6 @@ export function thru<TEvent extends unknown[]>(
           const existing = chains[index];
 
           if (existing) {
-
             const prevSupply = existing.supply;
 
             existing.supply = chainSupply;
@@ -57,10 +52,9 @@ export function thru<TEvent extends unknown[]>(
                 entry.supply.off();
               },
               onEvent<TEvent extends any[]>(
-                  pass: (this: void, ...event: TEvent) => void,
-                  sender: EventSender<TEvent>,
+                pass: (this: void, ...event: TEvent) => void,
+                sender: EventSender<TEvent>,
               ): void {
-
                 const supply = new Supply().needs(entry.supply);
 
                 sender[OnEvent__symbol]()({
@@ -79,11 +73,10 @@ export function thru<TEvent extends unknown[]>(
           return [entry.chain, neverSupply()];
 
           function handleResult(
-              callResult: unknown,
-              args: unknown[],
-              parentSupply = entry.supply,
+            callResult: unknown,
+            args: unknown[],
+            parentSupply = entry.supply,
           ): void {
-
             const [nextChain, prevSupply] = chain(index, new Supply(noop).needs(parentSupply));
 
             try {

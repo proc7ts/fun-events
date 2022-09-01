@@ -13,10 +13,9 @@ import { OnEvent } from '../on-event';
  * cut off.
  */
 export function consumeEvents<TEvent extends any[]>(
-    consume: (this: void, ...event: TEvent) => SupplyPeer | void | undefined,
+  consume: (this: void, ...event: TEvent) => SupplyPeer | void | undefined,
 ): (this: void, input: OnEvent<TEvent>) => Supply {
   return input => {
-
     let consumerSupply = neverSupply();
 
     // Do not use `.cuts()` here as `consumerSupply` is mutable
@@ -25,7 +24,6 @@ export function consumeEvents<TEvent extends any[]>(
     input({
       supply,
       receive(_ctx, ...event: TEvent) {
-
         const prevSupply = consumerSupply;
 
         try {

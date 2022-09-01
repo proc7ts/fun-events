@@ -4,7 +4,6 @@ import { valueOn } from './value-on';
 
 describe('valueOn', () => {
   it('values event', () => {
-
     const emitter = new EventEmitter<[number, number]>();
     const onEvent = emitter.on.do(valueOn((a: number, b: number) => a + b));
     const receiver = jest.fn<(arg: number) => void>();
@@ -15,11 +14,10 @@ describe('valueOn', () => {
     expect(receiver).toHaveBeenCalledWith(13);
   });
   it('filters out non-valued matching events', () => {
-
     const emitter = new EventEmitter<[string?]>();
-    const onEvent = emitter.on.do(valueOn(
-        str => str && !str.startsWith('-') && (str.startsWith('+') ? str : `+${str}`),
-    ));
+    const onEvent = emitter.on.do(
+      valueOn(str => str && !str.startsWith('-') && (str.startsWith('+') ? str : `+${str}`)),
+    );
     const receiver = jest.fn<(arg: string) => void>();
 
     onEvent(receiver);

@@ -6,9 +6,9 @@ import { OnEvent } from '../on-event';
  * @internal
  */
 export function supplyEvents<TEvent extends any[]>(
-    supplier: OnEvent<TEvent>,
-    required: SupplyPeer,
-    dependentSupply?: Supply,
+  supplier: OnEvent<TEvent>,
+  required: SupplyPeer,
+  dependentSupply?: Supply,
 ): (receiver: EventReceiver.Generic<TEvent>) => void {
   return (receiver: EventReceiver.Generic<TEvent>): void => {
     if (dependentSupply) {

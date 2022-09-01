@@ -14,9 +14,8 @@ import { shareOn } from './share-on';
  * @returns New event mapper.
  */
 export function mapOn<TEvent extends any[], TResult>(
-    convert: (this: void, ...event: TEvent) => TResult,
+  convert: (this: void, ...event: TEvent) => TResult,
 ): (this: void, input: OnEvent<TEvent>) => OnEvent<[TResult]> {
-
   const mapper = mapOn_(convert);
 
   return input => shareOn(mapper(input));
@@ -33,11 +32,8 @@ export function mapOn<TEvent extends any[], TResult>(
  *
  * @returns New event mapper.
  */
-export function mapOn_<TEvent extends any[], TResult>(// eslint-disable-line @typescript-eslint/naming-convention
-    convert: (this: void, ...event: TEvent) => TResult,
+export function mapOn_<TEvent extends any[], TResult>( // eslint-disable-line @typescript-eslint/naming-convention
+  convert: (this: void, ...event: TEvent) => TResult,
 ): (this: void, input: OnEvent<TEvent>) => OnEvent<[TResult]> {
-  return input => onEventBy(translateEvents(
-      input,
-      (send, ...event) => send(convert(...event)),
-  ));
+  return input => onEventBy(translateEvents(input, (send, ...event) => send(convert(...event))));
 }

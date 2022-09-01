@@ -6,4 +6,4 @@ import { neverReceive } from '../base/impl';
  *
  * @category Core
  */
-export const afterNever: AfterEvent<any> = (/*#__PURE__*/ afterEventBy(neverReceive));
+export const afterNever: AfterEvent<any> = /*#__PURE__*/ afterEventBy(neverReceive);

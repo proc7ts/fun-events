@@ -17,17 +17,21 @@ import { OnEvent, onEventBy } from '../on-event';
  * @returns An {@link OnEvent} sender of the given `promise` settlement event.
  */
 export function onPromise<T>(promise: PromiseLike<T> | T): OnEvent<[T]> {
-
   const whenResolved = Promise.resolve(promise);
   let receive = (receiver: EventReceiver.Generic<[T]>): void => {
-    whenResolved.then(() => receive(receiver), () => receive(receiver));
+    whenResolved.then(
+      () => receive(receiver),
+      () => receive(receiver),
+    );
   };
 
-  whenResolved.then(value => {
-    receive = alwaysReceiveValue(value);
-  }).catch(e => {
-    receive = neverReceiveBecause(e);
-  });
+  whenResolved
+    .then(value => {
+      receive = alwaysReceiveValue(value);
+    })
+    .catch(e => {
+      receive = neverReceiveBecause(e);
+    });
 
   return onEventBy(receiver => receive(receiver));
 }

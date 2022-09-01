@@ -17,7 +17,6 @@ class PathEntry {
 
   constructor(private readonly _drop: () => void) {
     this.emitter.on((path, newValue, oldValue) => {
-
       const key = path[0];
       const nested = this._nested.get(key);
 
@@ -28,7 +27,6 @@ class PathEntry {
   }
 
   on(receiver: StateUpdateReceiver): Supply {
-
     const supply = this.emitter.on(receiver);
 
     return new Supply(reason => {
@@ -44,7 +42,6 @@ class PathEntry {
   nest(key: PropertyKey, dontCreateMissing?: true): PathEntry | undefined;
 
   nest(key: PropertyKey, dontCreateMissing?: true): PathEntry | undefined {
-
     const found = this._nested.get(key);
 
     if (found || dontCreateMissing) {
@@ -94,7 +91,6 @@ class Trackers {
   }
 
   done(path: StatePath.Normalized, reason?: unknown): void {
-
     const entry = this._entry(path, true);
 
     if (entry) {
@@ -107,11 +103,9 @@ class Trackers {
   private _entry(path: StatePath.Normalized, dontCreateMissing: true): PathEntry | undefined;
 
   private _entry(path: StatePath.Normalized, dontCreateMissing?: true): PathEntry | undefined {
-
     let entry = this._root;
 
     for (const key of path) {
-
       const nested = entry.nest(key, dontCreateMissing);
 
       if (!nested) {
@@ -131,16 +125,9 @@ class Trackers {
  */
 class SubStateTracker implements StateTracker {
 
-  readonly update: <T>(
-      this: void,
-      path: StatePath,
-      newValue: T,
-      oldValue: T,
-  ) => void;
+  readonly update: <T>(this: void, path: StatePath, newValue: T, oldValue: T) => void;
 
-  readonly onUpdate: OnStateUpdate = onEventBy<[StatePath.Normalized, any, any]>(
-      receiver => this._trackers.on(this._path, receiver),
-  );
+  readonly onUpdate: OnStateUpdate = onEventBy(receiver => this._trackers.on(this._path, receiver));
 
   constructor(private readonly _trackers: Trackers, private readonly _path: StatePath.Normalized) {
     this.update = <T>(path: StatePath, newValue: T, oldValue: T) => {
@@ -216,12 +203,7 @@ export class StateTracker implements EventSender<[StatePath.Normalized, any, any
    * @param newValue - New value.
    * @param oldValue - Previous value.
    */
-  get update(): <T>(
-      this: void,
-      path: StatePath,
-      newValue: T,
-      oldValue: T,
-  ) => void {
+  get update(): <T>(this: void, path: StatePath, newValue: T, oldValue: T) => void {
     return this._tracker.update;
   }
 
@@ -233,7 +215,6 @@ export class StateTracker implements EventSender<[StatePath.Normalized, any, any
    * @return New partial state tracker.
    */
   track(path: StatePath): StateTracker {
-
     const subTracker = this._tracker.track(path);
 
     return subTracker === this._tracker ? this : subTracker;

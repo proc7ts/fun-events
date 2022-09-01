@@ -14,14 +14,11 @@ export type StateUpdateReceiver = StateUpdateReceiver.Function | StateUpdateRece
  * @category State Tracking
  */
 export namespace StateUpdateReceiver {
-
   /**
    * State update processing context.
    */
   export interface Context extends EventReceiver.Context<[StatePath.Normalized, any, any]> {
-
     onRecurrent(receiver: StateUpdateReceiver.Function): void;
-
   }
 
   /**
@@ -32,19 +29,17 @@ export namespace StateUpdateReceiver {
    * @param newValue - New value.
    * @param oldValue - Previous value.
    */
-  export type Function =
-      <T>(
-          this: void,
-          path: StatePath.Normalized,
-          newValue: T,
-          oldValue: T,
-      ) => void;
+  export type Function = <T>(
+    this: void,
+    path: StatePath.Normalized,
+    newValue: T,
+    oldValue: T,
+  ) => void;
 
   /**
    * State updates receiver object.
    */
   export interface Object extends EventReceiver.Object<[StatePath.Normalized, any, any]> {
-
     /**
      * Receives a state update.
      *
@@ -55,7 +50,5 @@ export namespace StateUpdateReceiver {
      * @param oldValue - Previous value.
      */
     receive<T>(context: Context, path: StatePath.Normalized, newValue: T, oldValue: T): void;
-
   }
-
 }

@@ -16,8 +16,8 @@ import { EventSender, OnEvent__symbol } from '../base';
  * @returns An {@link AfterEvent} keeper of events either originated from the given `sender`, or `initial` one.
  */
 export function afterSent<TEvent extends any[]>(
-    sender: EventSender<TEvent>,
-    fallback?: (this: void) => TEvent,
+  sender: EventSender<TEvent>,
+  fallback?: (this: void) => TEvent,
 ): AfterEvent<TEvent> {
   return afterEventBy(receiver => sender[OnEvent__symbol]()(receiver), fallback);
 }

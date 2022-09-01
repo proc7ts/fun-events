@@ -7,7 +7,6 @@ import { onceOn } from './once-on';
 import { shareAfter } from './share-after';
 
 describe('shareAfter', () => {
-
   let fallback: [string, string];
   let mockRegister: Mock<(receiver: EventReceiver.Generic<[string, string]>) => void>;
   let emitter: EventNotifier<[string, string]>;
@@ -27,7 +26,6 @@ describe('shareAfter', () => {
   });
 
   it('sends fallback event from the source', () => {
-
     const shared = afterEvent.do(shareAfter);
 
     shared(mockReceiver);
@@ -36,13 +34,11 @@ describe('shareAfter', () => {
     expect(mockReceiver2).toHaveBeenCalledWith(...fallback);
   });
   it('keeps initial event from the source', () => {
-
     const shared = afterEvent.do(shareAfter);
 
     shared.do(onceOn)((...received) => expect(received).toEqual(fallback));
   });
   it('sends events from the source', () => {
-
     const shared = afterEvent.do(shareAfter);
 
     shared(mockReceiver);

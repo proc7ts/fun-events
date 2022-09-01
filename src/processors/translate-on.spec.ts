@@ -4,7 +4,6 @@ import { translateOn } from './translate-on';
 
 describe('translateOn', () => {
   it('translates event', () => {
-
     const emitter = new EventEmitter<[number, number]>();
     const onEvent = emitter.on.do(translateOn((send, a: number, b: number) => send(b, a)));
     const receiver = jest.fn<(arg1: number, arg2: number) => void>();
@@ -16,11 +15,12 @@ describe('translateOn', () => {
     expect(receiver).toHaveBeenCalledTimes(1);
   });
   it('translates some events', () => {
-
     const emitter = new EventEmitter<[string?]>();
-    const onEvent = emitter.on.do(translateOn(
+    const onEvent = emitter.on.do(
+      translateOn(
         (send, str) => str && !str.startsWith('-') && send(str.startsWith('+') ? str : `+${str}`),
-    ));
+      ),
+    );
     const receiver = jest.fn<(arg: string) => void>();
 
     onEvent(receiver);

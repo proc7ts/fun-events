@@ -5,7 +5,6 @@ import { EventReceiver, eventReceiver } from './event-receiver';
 
 describe('EventReceiver', () => {
   describe('eventReceiver', () => {
-
     let context: EventReceiver.Context<[string, string]>;
 
     beforeEach(() => {
@@ -13,7 +12,6 @@ describe('EventReceiver', () => {
     });
 
     it('converts function to generic form', () => {
-
       const receiver = jest.fn();
       const generic = eventReceiver<[string, string]>(receiver);
 
@@ -22,7 +20,6 @@ describe('EventReceiver', () => {
       expect(receiver).toHaveBeenCalledWith('a', 'b');
     });
     it('fulfills object with event supply', () => {
-
       const receiver = {
         receive: jest.fn(),
       };
@@ -33,7 +30,6 @@ describe('EventReceiver', () => {
       expect(receiver.receive).toHaveBeenCalledWith(context, 'a', 'b');
     });
     it('reuses provided event supply', () => {
-
       const receiver = {
         supply: new Supply(),
         receive: jest.fn(),
@@ -45,7 +41,6 @@ describe('EventReceiver', () => {
       expect(receiver.receive).toHaveBeenCalledWith(context, 'a', 'b');
     });
     it('disables event reception when event supply cut off', () => {
-
       const receiver = jest.fn();
       const { supply, receive } = eventReceiver<[string, string]>(receiver);
 
@@ -54,7 +49,6 @@ describe('EventReceiver', () => {
       expect(receiver).not.toHaveBeenCalled();
     });
     it('prevents event reception during event supply cut off', () => {
-
       // eslint-disable-next-line prefer-const
       let generic: EventReceiver.Generic<[string, string]>;
       const receiver = {
@@ -67,7 +61,6 @@ describe('EventReceiver', () => {
       expect(receiver.receive).not.toHaveBeenCalled();
     });
     it('prevents receiver call during event supply cut off', () => {
-
       const receiver = jest.fn();
       const { supply, receive } = eventReceiver(receiver);
 

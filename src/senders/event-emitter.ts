@@ -9,7 +9,9 @@ import { OnEvent, onEventBy } from '../on-event';
  * @category Core
  * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
  */
-export class EventEmitter<TEvent extends any[]> extends EventNotifier<TEvent> implements EventSender<TEvent> {
+export class EventEmitter<TEvent extends any[]>
+  extends EventNotifier<TEvent>
+  implements EventSender<TEvent> {
 
   /**
    * {@link OnEvent} sender of {@link send emitted} events.

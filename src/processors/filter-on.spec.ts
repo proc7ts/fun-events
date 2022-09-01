@@ -5,7 +5,6 @@ import { EventEmitter } from '../senders';
 import { filterOn } from './filter-on';
 
 describe('filterOn', () => {
-
   let emitter: EventEmitter<[string]>;
   let mockReceiver: Mock<(arg: string) => void>;
 
@@ -32,7 +31,6 @@ describe('filterOn', () => {
     expect(mockReceiver).toHaveBeenLastCalledWith('event2');
   });
   it('sends values implementing the given type', () => {
-
     type TargetType = `+${string}`;
 
     const filtered: OnEvent<[TargetType]> = emitter.on.do(filterOn(isOfTargetType));

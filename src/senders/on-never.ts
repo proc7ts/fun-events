@@ -6,4 +6,4 @@ import { OnEvent, onEventBy } from '../on-event';
  *
  * @category Core
  */
-export const onNever: OnEvent<any> = (/*#__PURE__*/ onEventBy(neverReceive));
+export const onNever: OnEvent<any> = /*#__PURE__*/ onEventBy(neverReceive);

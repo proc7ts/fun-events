@@ -7,7 +7,6 @@ import { onAny } from './on-any';
 import { onNever } from './on-never';
 
 describe('onAny', () => {
-
   let source1: EventEmitter<[string]>;
   let source2: EventEmitter<[string]>;
   let fromAny: OnEvent<[string]>;
@@ -42,7 +41,6 @@ describe('onAny', () => {
     expect(mockReceiver).toHaveBeenCalledWith('2');
   });
   it('cuts off events supply when all source supplies are cut off', () => {
-
     const mockOff = jest.fn();
 
     supply.whenOff(mockOff);

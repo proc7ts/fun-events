@@ -15,25 +15,27 @@ import { onceEvent, shareEvents } from '../impl';
  * same key as its source keeper in `sources`.
  */
 export function afterAll<TSrcMap extends { readonly [key: string]: EventKeeper<any> }>(
-    sources: TSrcMap,
+  sources: TSrcMap,
 ): AfterEvent<[{ readonly [K in keyof TSrcMap]: EventKeeper.Event<TSrcMap[K]> }]> {
-
   const keys = Object.keys(sources);
 
   const registerReceiver = (
-      receiver: EventReceiver.Generic<[{ readonly [K in keyof TSrcMap]: EventKeeper.Event<TSrcMap[K]> }]>,
+    receiver: EventReceiver.Generic<
+      [{ readonly [K in keyof TSrcMap]: EventKeeper.Event<TSrcMap[K]> }]
+    >,
   ): void => {
-
     const { supply } = receiver;
     const dispatch = sendEventsTo(receiver);
     let send: () => void = noop;
     const result = {} as { [K in keyof TSrcMap]: EventKeeper.Event<TSrcMap[K]> };
 
     keys.forEach(<TSrcKey extends keyof TSrcMap>(key: TSrcKey) => {
-      supply.needs(sources[key][AfterEvent__symbol]()((...event: EventKeeper.Event<TSrcMap[TSrcKey]>) => {
-        result[key] = event;
-        send();
-      }).needs(supply));
+      supply.needs(
+        sources[key][AfterEvent__symbol]()((...event: EventKeeper.Event<TSrcMap[TSrcKey]>) => {
+          result[key] = event;
+          send();
+        }).needs(supply),
+      );
     });
 
     if (!supply.isOff) {
@@ -42,15 +44,12 @@ export function afterAll<TSrcMap extends { readonly [key: string]: EventKeeper<a
   };
 
   const latestEvent = (): [{ readonly [K in keyof TSrcMap]: EventKeeper.Event<TSrcMap[K]> }] => {
-
     const result = {} as { [K in keyof TSrcMap]: EventKeeper.Event<TSrcMap[K]> };
 
-    keys.forEach(
-        <TSrcKey extends keyof TSrcMap>(key: TSrcKey) => onceEvent(sources[key][AfterEvent__symbol]())({
-          supply: new Supply(),
-          receive: (_ctx, ...event: EventKeeper.Event<TSrcMap[TSrcKey]>) => result[key as keyof TSrcMap] = event,
-        }),
-    );
+    keys.forEach(<TSrcKey extends keyof TSrcMap>(key: TSrcKey) => onceEvent(sources[key][AfterEvent__symbol]())({
+        supply: new Supply(),
+        receive: (_ctx, ...event: EventKeeper.Event<TSrcMap[TSrcKey]>) => (result[key as keyof TSrcMap] = event),
+      }));
 
     return [result];
   };

@@ -9,7 +9,6 @@ import { trackValue, trackValueBy } from './track-value';
 import { ValueTracker } from './value-tracker';
 
 describe('ValueTracker', () => {
-
   let v1: ValueTracker<string>;
   let v2: ValueTracker<string | undefined>;
 
@@ -23,7 +22,6 @@ describe('ValueTracker', () => {
     expect(v1.it).toBe('old');
   });
   it('does not report unchanged value', () => {
-
     const listener = jest.fn();
 
     v1.on(listener);
@@ -46,7 +44,6 @@ describe('ValueTracker', () => {
   });
 
   describe('read', () => {
-
     let mockReceiver: Mock<(arg: string) => void>;
     let supply: Supply;
 
@@ -93,7 +90,6 @@ describe('ValueTracker', () => {
   });
 
   describe('by value sender', () => {
-
     let src: EventEmitter<[string]>;
     let mockReceiver: Mock<(arg1: string | undefined, arg2: string | undefined) => void>;
 
@@ -114,7 +110,6 @@ describe('ValueTracker', () => {
   });
 
   describe('by value keeper', () => {
-
     let mockReceiver: Mock<(arg1: string | undefined, arg2: string | undefined) => void>;
 
     beforeEach(() => {
@@ -133,7 +128,6 @@ describe('ValueTracker', () => {
       expect(mockReceiver).toHaveBeenCalledWith('new', 'old');
     });
     it('rebinds to another tracker', () => {
-
       const v3 = trackValue('another');
 
       v2.by(v3);
@@ -141,7 +135,6 @@ describe('ValueTracker', () => {
       expect(mockReceiver).toHaveBeenCalledWith(v3.it, 'old');
     });
     it('ignores changes in previous tracker', () => {
-
       const v3 = trackValue('another');
 
       v2.by(v3);
@@ -171,7 +164,6 @@ describe('ValueTracker', () => {
 
     describe('trackValueBy', () => {
       it('mirrors another value', () => {
-
         const v3 = trackValueBy(v1);
         const mockReceiver2 = jest.fn();
 
@@ -187,7 +179,6 @@ describe('ValueTracker', () => {
   });
 
   describe('by nested value sender or keeper', () => {
-
     let sender: EventEmitter<[EventKeeper<[string]> | EventSender<[string]> | undefined]>;
 
     beforeEach(() => {
@@ -196,7 +187,6 @@ describe('ValueTracker', () => {
     });
 
     it('binds to value sent by extracted keeper', () => {
-
       const v3 = trackValue('3');
 
       sender.send(v3);
@@ -206,7 +196,6 @@ describe('ValueTracker', () => {
       expect(v1.it).toBe('4');
     });
     it('rebinds to value sent by extracted keeper', () => {
-
       const v3 = trackValue('3');
       const v4 = trackValue('4');
 
@@ -222,7 +211,6 @@ describe('ValueTracker', () => {
       expect(v1.it).toBe('old');
     });
     it('binds to value sent by extracted sender', () => {
-
       const v3 = new EventEmitter<[string]>();
 
       sender.send(v3);
@@ -232,7 +220,6 @@ describe('ValueTracker', () => {
       expect(v1.it).toBe('new');
     });
     it('is unbound with `byNone()`', () => {
-
       const v3 = trackValue('3');
 
       v1.byNone();

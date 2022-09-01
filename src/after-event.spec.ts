@@ -9,7 +9,6 @@ import { onEventBy } from './on-event';
 describe('AfterEvent', () => {
   describe('[OnEvent__symbol]', () => {
     it('refers to itself', () => {
-
       const afterEvent = afterEventBy(noop);
 
       expect(afterEvent[OnEvent__symbol]()).toBe(afterEvent);
@@ -18,7 +17,6 @@ describe('AfterEvent', () => {
 
   describe('[AfterEvent__symbol]', () => {
     it('refers to itself', () => {
-
       const afterEvent = afterEventBy(noop);
 
       expect(afterEvent[AfterEvent__symbol]()).toBe(afterEvent);
@@ -27,7 +25,6 @@ describe('AfterEvent', () => {
 });
 
 describe('afterEventBy', () => {
-
   let emitter: EventNotifier<[string]>;
   let mockFallback: Mock<() => [string]>;
   let mockRegister: Mock<(receiver: EventReceiver.Generic<[string]>) => void>;
@@ -81,7 +78,6 @@ describe('afterEventBy', () => {
     expect(mockReceiver).not.toHaveBeenCalled();
   });
   it('sends recurrent event sent during registration to recurrent receiver', () => {
-
     const recurrentReceiver = jest.fn();
 
     afterEvent({
@@ -96,23 +92,24 @@ describe('afterEventBy', () => {
     expect(recurrentReceiver).toHaveBeenCalledWith('recurrent');
   });
   it('cuts off event supply on receiver registration failure', async () => {
-
     const error = new Error('!!!');
     const onEvent = afterEventBy(() => {
       throw error;
     });
 
-    expect(await onEvent({ supply: new Supply(noop), receive: noop }).whenDone().catch(asis)).toBe(error);
+    expect(
+      await onEvent({ supply: new Supply(noop), receive: noop })
+        .whenDone()
+        .catch(asis),
+    ).toBe(error);
   });
 });
 
 describe('isAfterEvent', () => {
-
   it('returns `true` for `afterEventBy()` result', () => {
     expect(isAfterEvent(afterEventBy(noop))).toBe(true);
   });
   it('returns `false` for incompatible `AfterEvent` implementation', () => {
-
     const afterEvent = afterEventBy(noop);
 
     afterEvent[AfterEvent__symbol] = noop as any;
@@ -122,5 +119,4 @@ describe('isAfterEvent', () => {
   it('returns `false` for `onEventBy()` result', () => {
     expect(isAfterEvent(onEventBy(noop))).toBe(false);
   });
-
 });

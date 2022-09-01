@@ -8,7 +8,6 @@ import { OnEvent, onEventBy } from '../on-event';
 import { thruOn } from './thru-on';
 
 describe('thruOn', () => {
-
   let mockRegister: Mock<(receiver: EventReceiver.Generic<[string, string]>) => void>;
   let offSpy: SpyInstance<(arg?: unknown) => Supply>;
   let emitter: EventNotifier<[string, string]>;
@@ -26,19 +25,17 @@ describe('thruOn', () => {
   });
 
   it('registers event receiver', () => {
-
-    const transforming = onEvent.do(thruOn(
-        (event1: string, event2: string): string => `${event1}, ${event2}`,
-    ));
+    const transforming = onEvent.do(
+      thruOn((event1: string, event2: string): string => `${event1}, ${event2}`),
+    );
 
     transforming(mockReceiver);
     expect(mockRegister).toHaveBeenCalled();
   });
   it('unregisters event receiver once events supply cut off', () => {
-
-    const transforming = onEvent.do(thruOn(
-        (event1: string, event2: string) => `${event1}, ${event2}`,
-    ));
+    const transforming = onEvent.do(
+      thruOn((event1: string, event2: string) => `${event1}, ${event2}`),
+    );
 
     const supply1 = transforming(mockReceiver);
     const supply2 = transforming(noop);
@@ -49,10 +46,9 @@ describe('thruOn', () => {
     expect(offSpy).toHaveBeenCalled();
   });
   it('transforms original event', () => {
-
-    const transforming = onEvent.do(thruOn(
-        (event1: string, event2: string) => `${event1}, ${event2}`,
-    ));
+    const transforming = onEvent.do(
+      thruOn((event1: string, event2: string) => `${event1}, ${event2}`),
+    );
 
     transforming(mockReceiver);
 
@@ -61,11 +57,12 @@ describe('thruOn', () => {
     expect(mockReceiver).toHaveBeenCalledWith('a, bb');
   });
   it('skips original event', () => {
-
-    const transforming = onEvent.do(thruOn(
-        (event1: string, event2: string) => event1 < event2 ? nextArgs(event1, event2) : nextSkip,
+    const transforming = onEvent.do(
+      thruOn(
+        (event1: string, event2: string) => (event1 < event2 ? nextArgs(event1, event2) : nextSkip),
         (event1: string, event2: string) => `${event1}, ${event2}`,
-    ));
+      ),
+    );
 
     transforming(mockReceiver);
 
@@ -77,11 +74,10 @@ describe('thruOn', () => {
     expect(mockReceiver).not.toHaveBeenCalled();
   });
   it('cuts off transformed events supply once original events supply cut off', () => {
-
     const mockOff = jest.fn();
-    const transforming = onEvent.do(thruOn(
-        (event1: string, event2: string) => `${event1}, ${event2}`,
-    ));
+    const transforming = onEvent.do(
+      thruOn((event1: string, event2: string) => `${event1}, ${event2}`),
+    );
 
     transforming(mockReceiver).whenOff(mockOff);
 

@@ -6,7 +6,6 @@ import { trackValue, ValueTracker } from '../value';
 import { afterEach } from './after-each';
 
 describe('afterEach', () => {
-
   let source1: ValueTracker<string>;
   let source2: ValueTracker<string>;
   let fromEach: AfterEvent<[string][]>;
@@ -25,7 +24,6 @@ describe('afterEach', () => {
     expect(mockReceiver).toHaveBeenCalledTimes(1);
   });
   it('sends empty tuple without sources', () => {
-
     const receiver = jest.fn();
 
     afterEach()(receiver);
@@ -41,7 +39,6 @@ describe('afterEach', () => {
     expect(mockReceiver).toHaveBeenCalledWith(['update1'], ['update2']);
   });
   it('stops sending updates once their supply is cut off', () => {
-
     const supply = fromEach(mockReceiver);
 
     mockReceiver.mockClear();
@@ -50,7 +47,6 @@ describe('afterEach', () => {
     expect(mockReceiver).not.toHaveBeenCalled();
   });
   it('stops sending updates when their supply is cut off during registration', () => {
-
     const reason = 'some reason';
     const stopper = afterEventBy<[string]>(({ supply }) => supply.off(reason));
     const mockOff = jest.fn();
@@ -62,7 +58,6 @@ describe('afterEach', () => {
     expect(mockOff).toHaveBeenCalledWith(reason);
   });
   it('sends recurrent event sent during registration to recurrent receiver', () => {
-
     const recurrentReceiver = jest.fn();
     const receiver: EventReceiver.Object<[string][]> = {
       receive: jest.fn((context: EventReceiver.Context<[string][]>) => {

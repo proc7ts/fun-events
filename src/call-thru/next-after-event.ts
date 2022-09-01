@@ -19,7 +19,7 @@ import { OnEventCallChain } from './on-event-call-chain';
  * @returns Next call passing events from the given `keeper`.
  */
 export function nextAfterEvent<TEvent extends any[]>(
-    keeper: EventKeeper<TEvent>,
+  keeper: EventKeeper<TEvent>,
 ): NextCall<OnEventCallChain, TEvent> {
   return nextCall((chain, pass) => chain.onEvent(pass, afterSupplied(keeper)));
 }

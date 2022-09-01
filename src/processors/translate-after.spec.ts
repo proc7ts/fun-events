@@ -6,10 +6,9 @@ import { translateAfter } from './translate-after';
 
 describe('translateAfter', () => {
   it('translates event', () => {
-
     const tracker = trackValue<[number, number]>([1, 11]);
     const afterEvent: AfterEvent<[number, number]> = tracker.read.do(
-        translateAfter((send, [a, b]: [number, number]) => send(b, a)),
+      translateAfter((send, [a, b]: [number, number]) => send(b, a)),
     );
     const receiver = jest.fn<(arg1: number, arg2: number) => void>();
 
@@ -22,9 +21,13 @@ describe('translateAfter', () => {
     expect(receiver).toHaveBeenCalledTimes(2);
   });
   it('translates events with fallback', () => {
-
     const emitter = new EventEmitter<[number, number]>();
-    const onEvent = emitter.on.do(translateAfter((send, a: number, b: number) => send(b, a), () => [0, -1]));
+    const onEvent = emitter.on.do(
+      translateAfter(
+        (send, a: number, b: number) => send(b, a),
+        () => [0, -1],
+      ),
+    );
     const receiver = jest.fn<(arg1: number, arg2: number) => void>();
 
     onEvent(receiver);
@@ -35,12 +38,13 @@ describe('translateAfter', () => {
     expect(receiver).toHaveBeenCalledTimes(2);
   });
   it('translates some events', () => {
-
     const tracker = trackValue('');
-    const afterEvent: AfterEvent<[string]> = tracker.read.do(translateAfter(
+    const afterEvent: AfterEvent<[string]> = tracker.read.do(
+      translateAfter(
         (send, str) => str && !str.startsWith('-') && send(str.startsWith('+') ? str : `+${str}`),
         () => ['NONE!'],
-    ));
+      ),
+    );
     const receiver = jest.fn<(arg: string) => void>();
 
     afterEvent(receiver);

@@ -13,13 +13,12 @@ import { eventReceiver, EventReceiver } from './event-receiver';
  * @returns A function accepting events and sending them to target `receiver`.
  */
 export function sendEventsTo<TEvent extends any[]>(
-    receiver: EventReceiver<TEvent>,
+  receiver: EventReceiver<TEvent>,
 ): (this: void, ...event: TEvent) => void {
-
   const generic = eventReceiver(receiver);
   let send: (...event: TEvent) => void = receiveByEach([generic]);
 
-  generic.supply.whenOff(() => send = noop);
+  generic.supply.whenOff(() => (send = noop));
 
   return (...event) => send(...event);
 }

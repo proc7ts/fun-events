@@ -48,8 +48,8 @@ export abstract class ValueTracker<T> implements EventSender<[T, T]>, EventKeepe
    * @returns Current value keeper.
    */
   readonly read: AfterEvent<[T]> = afterEventBy(
-      receiver => this.on(receiveNewValue(receiver)),
-      () => [this.it],
+    receiver => this.on(receiveNewValue(receiver)),
+    () => [this.it],
   );
 
   [OnEvent__symbol](): OnEvent<[T, T]> {
@@ -102,45 +102,44 @@ export abstract class ValueTracker<T> implements EventSender<[T, T]>, EventKeepe
    * @returns `this` instance.
    */
   by<TSrcEvent extends any[]>(
-      supplier: EventSupplier<TSrcEvent>,
-      extract: (this: void, ...event: TSrcEvent) => EventSupplier<[T]> | undefined,
+    supplier: EventSupplier<TSrcEvent>,
+    extract: (this: void, ...event: TSrcEvent) => EventSupplier<[T]> | undefined,
   ): this;
 
   by<TSrcEvent extends any[]>(
-      supplier: EventSupplier<TSrcEvent> | EventSupplier<[T]>,
-      extract?: (this: void, ...event: TSrcEvent) => EventSupplier<[T]> | undefined,
+    supplier: EventSupplier<TSrcEvent> | EventSupplier<[T]>,
+    extract?: (this: void, ...event: TSrcEvent) => EventSupplier<[T]> | undefined,
   ): this {
-
     const acceptValuesFrom = (sender: EventSupplier<[T]>): Supply => {
+      const onValue = isEventKeeper(sender)
+        ? sender[AfterEvent__symbol]()
+        : sender[OnEvent__symbol]();
 
-      const onValue = isEventKeeper(sender) ? sender[AfterEvent__symbol]() : sender[OnEvent__symbol]();
-
-      return onValue(value => this.it = value);
+      return onValue(value => (this.it = value));
     };
 
     this.byNone();
     if (!extract) {
-
       const sender = supplier as EventSupplier<[T]>;
 
       this._by = acceptValuesFrom(sender);
     } else {
-
       const container = supplier as EventSupplier<TSrcEvent>;
 
-      this._by = onSupplied(container).do(consumeEvents((...event) => {
+      this._by = onSupplied(container).do(
+        consumeEvents((...event) => {
+          const sender = extract(...event);
 
-        const sender = extract(...event);
+          if (sender) {
+            return acceptValuesFrom(sender);
+          }
 
-        if (sender) {
-          return acceptValuesFrom(sender);
-        }
-
-        return;
-      }));
+          return;
+        }),
+      );
     }
 
-    this._by.whenOff(() => this._by = neverSupply());
+    this._by.whenOff(() => (this._by = neverSupply()));
 
     return this;
   }
@@ -166,18 +165,18 @@ export abstract class ValueTracker<T> implements EventSender<[T, T]>, EventKeepe
  * @internal
  */
 function receiveNewValue<T>(
-    valueReceiver: EventReceiver.Generic<[T]>,
+  valueReceiver: EventReceiver.Generic<[T]>,
 ): EventReceiver.Generic<[T, T]> {
   return {
     supply: valueReceiver.supply,
     receive(context, newValue) {
       valueReceiver.receive(
-          {
-            onRecurrent(recurrentReceiver) {
-              context.onRecurrent(recurrentValue => recurrentReceiver(recurrentValue));
-            },
+        {
+          onRecurrent(recurrentReceiver) {
+            context.onRecurrent(recurrentValue => recurrentReceiver(recurrentValue));
           },
-          newValue,
+        },
+        newValue,
       );
     },
   };

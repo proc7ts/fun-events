@@ -1,6 +1,12 @@
 import { noop } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
-import { AfterEvent__symbol, EventKeeper, eventReceiver, EventReceiver, OnEvent__symbol } from './base';
+import {
+  AfterEvent__symbol,
+  EventKeeper,
+  eventReceiver,
+  EventReceiver,
+  OnEvent__symbol,
+} from './base';
 import { AfterEvent$noFallback, OnEvent$do, OnEvent$supplier, OnEvent$then } from './impl';
 import { isOnEvent, OnEvent } from './on-event';
 
@@ -19,7 +25,6 @@ import { isOnEvent, OnEvent } from './on-event';
  * @typeParam TEvent - An event type. This is a list of event receiver parameter types.
  */
 export interface AfterEvent<TEvent extends any[]> extends OnEvent<TEvent>, EventKeeper<TEvent> {
-
   /**
    * Starts sending events to the given `receiver`.
    *
@@ -30,7 +35,6 @@ export interface AfterEvent<TEvent extends any[]> extends OnEvent<TEvent>, Event
   (receiver: EventReceiver<TEvent>): Supply;
 
   [AfterEvent__symbol](): this;
-
 }
 
 /**
@@ -50,16 +54,14 @@ export interface AfterEvent<TEvent extends any[]> extends OnEvent<TEvent>, Event
  * @returns An {@link AfterEvent} keeper registering event receivers with the given `register` function.
  */
 export function afterEventBy<TEvent extends any[]>(
-    register: (this: void, receiver: EventReceiver.Generic<TEvent>) => void,
-    fallback: (this: void) => TEvent = AfterEvent$noFallback,
-    cleanup: (this: void, reason?: unknown) => void = AfterEvent$noCleanup,
+  register: (this: void, receiver: EventReceiver.Generic<TEvent>) => void,
+  fallback: (this: void) => TEvent = AfterEvent$noFallback,
+  cleanup: (this: void, reason?: unknown) => void = AfterEvent$noCleanup,
 ): AfterEvent<TEvent> {
-
   let lastEvent: TEvent | undefined;
   let numReceivers = 0;
 
   const afterEvent = ((receiver: EventReceiver<TEvent>): Supply => {
-
     let dest: (context: EventReceiver.Context<TEvent>, ...event: TEvent) => void = noop;
     const generic = eventReceiver(receiver);
 
@@ -94,12 +96,12 @@ export function afterEventBy<TEvent extends any[]>(
       }
       if (lastEvent) {
         generic.receive(
-            {
-              onRecurrent(recurrent) {
-                dest = (_context, ...event) => recurrent(...event);
-              },
+          {
+            onRecurrent(recurrent) {
+              dest = (_context, ...event) => recurrent(...event);
             },
-            ...lastEvent,
+          },
+          ...lastEvent,
         );
         dest = (context, ...event) => generic.receive(context, ...event);
       }
@@ -140,7 +142,10 @@ function AfterEvent$noCleanup(_reason: unknown): void {
  * or `false` otherwise.
  */
 export function isAfterEvent<TEvent extends any[], TOther = unknown>(
-    value: AfterEvent<TEvent> | TOther,
+  value: AfterEvent<TEvent> | TOther,
 ): value is AfterEvent<TEvent> {
-  return isOnEvent(value) && (value as Partial<AfterEvent<TEvent>>)[AfterEvent__symbol] === OnEvent$supplier;
+  return (
+    isOnEvent(value)
+    && (value as Partial<AfterEvent<TEvent>>)[AfterEvent__symbol] === OnEvent$supplier
+  );
 }

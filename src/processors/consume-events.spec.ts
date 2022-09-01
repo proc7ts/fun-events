@@ -6,7 +6,6 @@ import { EventEmitter } from '../senders';
 import { consumeEvents } from './consume-events';
 
 describe('consumeEvents', () => {
-
   let sender: EventEmitter<[EventNotifier<[string]>?]>;
   let nested1: EventNotifier<[string]>;
   let nested2: EventNotifier<[string]>;
@@ -29,20 +28,20 @@ describe('consumeEvents', () => {
     expect(receiver).toHaveBeenCalledWith('value');
   });
   it('cuts off previous supply on new event', () => {
-
     const source = new EventEmitter<[]>();
     const supply1 = new Supply();
     const supply2 = new Supply();
     let calls = 0;
 
-    source.on.do(consumeEvents(() => {
+    source.on.do(
+      consumeEvents(() => {
+        const result = !calls ? supply1 : calls === 1 ? supply2 : undefined;
 
-      const result = !calls ? supply1 : calls === 1 ? supply2 : undefined;
+        ++calls;
 
-      ++calls;
-
-      return result;
-    }));
+        return result;
+      }),
+    );
 
     source.send();
     expect(supply1.isOff).toBe(false);
@@ -57,19 +56,19 @@ describe('consumeEvents', () => {
     expect(supply2.isOff).toBe(true);
   });
   it('does not cut off previous supply on new event returning the same supply', () => {
-
     const source = new EventEmitter<[]>();
     const supply1 = new Supply();
     let calls = 0;
 
-    source.on.do(consumeEvents(() => {
+    source.on.do(
+      consumeEvents(() => {
+        const result = !calls || calls === 1 ? supply1 : undefined;
 
-      const result = !calls || calls === 1 ? supply1 : undefined;
+        ++calls;
 
-      ++calls;
-
-      return result;
-    }));
+        return result;
+      }),
+    );
 
     source.send();
     expect(supply1.isOff).toBe(false);
@@ -115,7 +114,6 @@ describe('consumeEvents', () => {
     expect(sender.size).toBe(0);
   });
   it('stops consumption when original events supply is cut off', () => {
-
     const mockOff = jest.fn();
 
     supply.whenOff(mockOff);
@@ -132,7 +130,6 @@ describe('consumeEvents', () => {
     expect(consume).not.toHaveBeenCalled();
   });
   it('does not stop consumption when nested events supply is cut off', () => {
-
     const mockOff = jest.fn();
 
     supply.whenOff(mockOff);

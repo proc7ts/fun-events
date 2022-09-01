@@ -6,7 +6,6 @@ import { EventNotifier, EventReceiver } from '../base';
 import { onceAfter } from './once-after';
 
 describe('onceAfter', () => {
-
   let mockRegister: Mock<(receiver: EventReceiver.Generic<[string]>) => void>;
   let afterEvent: AfterEvent<[string]>;
   let supply: Supply;
@@ -18,7 +17,7 @@ describe('onceAfter', () => {
     emitter = new EventNotifier();
     mockRegister = jest.fn(receiver => {
       supply = receiver.supply;
-      supply.whenOff(whenOff = jest.fn());
+      supply.whenOff((whenOff = jest.fn()));
       emitter.on(receiver);
       emitter.send('init');
     });
@@ -35,7 +34,6 @@ describe('onceAfter', () => {
     expect(mockReceiver).toHaveBeenCalledWith('init');
   });
   it('cuts off supply after event received', () => {
-
     const returnedSupply = afterEvent.do(onceAfter)(mockReceiver);
 
     expect(mockRegister).toHaveBeenCalled();

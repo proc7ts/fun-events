@@ -11,7 +11,9 @@ import { afterSent } from './after-sent';
  *
  * @returns An {@link AfterEvent} keeper of events originated from the given `keeper`.
  */
-export function afterSupplied<TEvent extends any[]>(keeper: EventKeeper<TEvent>): AfterEvent<TEvent>;
+export function afterSupplied<TEvent extends any[]>(
+  keeper: EventKeeper<TEvent>,
+): AfterEvent<TEvent>;
 
 /**
  * Builds an {@link AfterEvent} keeper of events sent by the given `supplier`.
@@ -28,13 +30,13 @@ export function afterSupplied<TEvent extends any[]>(keeper: EventKeeper<TEvent>)
  * @returns An {@link AfterEvent} keeper of events either originated from the given `supplier`, or `initial` one.
  */
 export function afterSupplied<TEvent extends any[]>(
-    supplier: EventSupplier<TEvent>,
-    fallback?: (this: void) => TEvent,
+  supplier: EventSupplier<TEvent>,
+  fallback?: (this: void) => TEvent,
 ): AfterEvent<TEvent>;
 
 export function afterSupplied<TEvent extends any[]>(
-    supplier: EventSupplier<TEvent>,
-    fallback?: (this: void) => TEvent,
+  supplier: EventSupplier<TEvent>,
+  fallback?: (this: void) => TEvent,
 ): AfterEvent<TEvent> {
   return isEventKeeper(supplier) ? supplier[AfterEvent__symbol]() : afterSent(supplier, fallback);
 }

@@ -10,7 +10,6 @@ import { nextOnEvent } from './next-on-event';
 import { thruOn } from './thru-on';
 
 describe('nextOnEvent', () => {
-
   let sender: EventEmitter<[EventEmitter<[string]>?]>;
   let nested1: EventEmitter<[string]>;
   let nested2: EventEmitter<[string]>;
@@ -27,12 +26,13 @@ describe('nextOnEvent', () => {
     nested2.supply.whenOff(noop);
     receiver = jest.fn();
     extract = jest.fn((nested?: EventEmitter<[string]>) => nested);
-    result = sender.on.do(thruOn(notifier => {
+    result = sender.on.do(
+      thruOn(notifier => {
+        const extracted = extract(notifier);
 
-      const extracted = extract(notifier);
-
-      return extracted ? nextOnEvent(extracted) : nextSkip;
-    }));
+        return extracted ? nextOnEvent(extracted) : nextSkip;
+      }),
+    );
     supply = result(receiver);
   });
 
@@ -75,7 +75,6 @@ describe('nextOnEvent', () => {
     expect(extract).not.toHaveBeenCalled();
   });
   it('cuts off events supply once original events supply does', () => {
-
     const mockOff = jest.fn();
 
     supply.whenOff(mockOff);
@@ -93,7 +92,6 @@ describe('nextOnEvent', () => {
     expect(sender.size).toBe(0);
   });
   it('does not cut off events supply when nested events supply cut off', () => {
-
     const mockOff = jest.fn();
 
     supply.whenOff(mockOff);
@@ -117,15 +115,16 @@ describe('nextOnEvent', () => {
   it('cuts off previous supply when next event skipped', () => {
     supply.off();
 
-    result = sender.on.do(thruOn(
-        notifier => notifier === nested1 ? nested1 : nextSkip,
+    result = sender.on.do(
+      thruOn(
+        notifier => (notifier === nested1 ? nested1 : nextSkip),
         notifier => {
-
           const extracted = extract(notifier);
 
           return extracted ? nextOnEvent(extracted) : nextSkip;
         },
-    ));
+      ),
+    );
     supply = result(receiver);
 
     sender.send(nested1);
@@ -140,15 +139,16 @@ describe('nextOnEvent', () => {
   it('allows to post-process events', () => {
     supply.off();
 
-    result = sender.on.do(thruOn(
+    result = sender.on.do(
+      thruOn(
         notifier => {
-
           const extracted = extract(notifier);
 
           return extracted ? nextOnEvent(extracted) : nextSkip;
         },
         value => value + '!',
-    ));
+      ),
+    );
     supply = result(receiver);
 
     sender.send(nested1);

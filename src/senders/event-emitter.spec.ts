@@ -5,7 +5,6 @@ import { OnEvent__symbol } from '../base';
 import { EventEmitter } from './event-emitter';
 
 describe('EventEmitter', () => {
-
   let emitter: EventEmitter<[string]>;
   let mockReceiver: Mock<(arg: string) => void>;
   let mockReceiver2: Mock<(arg: string) => void>;
@@ -29,7 +28,6 @@ describe('EventEmitter', () => {
   });
 
   describe('on', () => {
-
     let supply: Supply;
 
     beforeEach(() => {
@@ -56,7 +54,6 @@ describe('EventEmitter', () => {
       expect(mockReceiver2).toHaveBeenCalledWith('event');
     });
     it('registers event receiver again', () => {
-
       const supply2 = emitter.on(mockReceiver);
 
       expect(emitter.size).toBe(2);
@@ -79,7 +76,6 @@ describe('EventEmitter', () => {
   });
 
   describe('recurrent event', () => {
-
     let records: [string, number][];
 
     beforeEach(() => {
@@ -93,14 +89,21 @@ describe('EventEmitter', () => {
           });
         },
       });
-      emitter.on(mockReceiver2.mockImplementation(event => {
-        records.push([event, 2]);
-      }));
+      emitter.on(
+        mockReceiver2.mockImplementation(event => {
+          records.push([event, 2]);
+        }),
+      );
     });
 
     it('is handled after original one', () => {
       emitter.send('event');
-      expect(records).toEqual([['event', 1], ['event', 2], ['event!', 11], ['event!', 2]]);
+      expect(records).toEqual([
+        ['event', 1],
+        ['event', 2],
+        ['event!', 11],
+        ['event!', 2],
+      ]);
     });
   });
 
@@ -118,7 +121,6 @@ describe('EventEmitter', () => {
       expect(mockReceiver2).not.toHaveBeenCalled();
     });
     it('notifies cut off callbacks', () => {
-
       const reason = 'some reason';
       const whenOff1 = jest.fn();
       const whenOff2 = jest.fn();
@@ -131,7 +133,6 @@ describe('EventEmitter', () => {
       expect(whenOff2).toHaveBeenCalledWith(reason);
     });
     it('immediately cuts off new receiver supplies', () => {
-
       const reason = 'test';
 
       emitter.supply.off(reason);

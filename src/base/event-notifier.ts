@@ -30,8 +30,7 @@ export class EventNotifier<TEvent extends any[]> implements SupplyPeer {
   readonly send: (this: this, ...event: TEvent) => void;
 
   constructor() {
-
-    const rcs = this._rcs = new Set<EventReceiver.Generic<TEvent>>();
+    const rcs = (this._rcs = new Set<EventReceiver.Generic<TEvent>>());
 
     this.send = receiveByEach(rcs);
     this.supply = new Supply(() => {
@@ -57,7 +56,6 @@ export class EventNotifier<TEvent extends any[]> implements SupplyPeer {
    * @returns A supply of events to the given `receiver`.
    */
   on(receiver: EventReceiver<TEvent>): Supply {
-
     const generic = eventReceiver(receiver);
     const supply = generic.supply.needs(this);
     const receivers = this._rcs;

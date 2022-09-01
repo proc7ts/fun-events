@@ -8,7 +8,6 @@ import { EventEmitter } from '../senders';
 import { deduplicateAfter, deduplicateAfter_ } from './deduplicate-after';
 
 describe('deduplicateAfter', () => {
-
   let source: EventEmitter<[string, string?]>;
   let dedup: AfterEvent<[string?]>;
   let receiver: Mock<(arg?: string) => void>;
@@ -16,13 +15,8 @@ describe('deduplicateAfter', () => {
 
   beforeEach(() => {
     source = new EventEmitter();
-    dedup = afterSent<[string?, string?]>(
-        source,
-        () => [],
-    ).do(
-        deduplicateAfter(),
-    );
-    supply = dedup(receiver = jest.fn());
+    dedup = afterSent<[string?, string?]>(source, () => []).do(deduplicateAfter());
+    supply = dedup((receiver = jest.fn()));
   });
 
   it('reports the initial event', async () => {
@@ -51,13 +45,13 @@ describe('deduplicateAfter', () => {
     expect(receiver).toHaveBeenCalledTimes(3);
   });
   it('finds similarities by event cues', () => {
-    dedup = afterSent<[string?, string?]>(
-        source,
-        () => [],
-    ).do(
-        deduplicateAfter((a, b) => a === b, ([a]) => a),
+    dedup = afterSent<[string?, string?]>(source, () => []).do(
+      deduplicateAfter(
+        (a, b) => a === b,
+        ([a]) => a,
+      ),
     );
-    supply = dedup(receiver = jest.fn());
+    supply = dedup((receiver = jest.fn()));
 
     source.send('update', '1');
     source.send('update', '2');
@@ -93,12 +87,15 @@ describe('deduplicateAfter', () => {
     expect(deduplicateAfter_()).toBe(deduplicateAfter_());
   });
   it('does not cache non-default processors', () => {
-
     const isDuplicate = valueProvider(true);
 
     expect(deduplicateAfter(isDuplicate)).not.toBe(deduplicateAfter(isDuplicate));
     expect(deduplicateAfter_(isDuplicate)).not.toBe(deduplicateAfter_(isDuplicate));
-    expect(deduplicateAfter<[boolean], [boolean]>(undefined!, asis)).not.toBe(deduplicateAfter(isDuplicate));
-    expect(deduplicateAfter_<[boolean], [boolean]>(undefined!, asis)).not.toBe(deduplicateAfter_(isDuplicate));
+    expect(deduplicateAfter<[boolean], [boolean]>(undefined!, asis)).not.toBe(
+      deduplicateAfter(isDuplicate),
+    );
+    expect(deduplicateAfter_<[boolean], [boolean]>(undefined!, asis)).not.toBe(
+      deduplicateAfter_(isDuplicate),
+    );
   });
 });

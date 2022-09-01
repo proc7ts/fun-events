@@ -18,7 +18,6 @@ import { OnEvent, onEventBy } from '../on-event';
  */
 export function resolveOn<T>(from: OnEvent<[PromiseLike<T> | T]>): OnEvent<[T, number]> {
   return onEventBy(receiver => {
-
     const { supply } = receiver;
     const dispatch = sendEventsTo(receiver);
 
@@ -27,15 +26,14 @@ export function resolveOn<T>(from: OnEvent<[PromiseLike<T> | T]>): OnEvent<[T, n
     from({
       supply,
       receive(_ctx, promise) {
-
         const index = ++lastIndex;
 
         Promise.resolve()
-            .then(() => promise)
-            .then(
-                event => dispatch(event, index),
-                reason => supply.off(reason),
-            );
+          .then(() => promise)
+          .then(
+            event => dispatch(event, index),
+            reason => supply.off(reason),
+          );
       },
     });
   });

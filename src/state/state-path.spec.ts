@@ -11,7 +11,6 @@ describe('statePath', () => {
     expect(statePath(key)).toEqual([key]);
   });
   it('does not alter normalized value keys', () => {
-
     const path1 = ['key'];
     const path2 = ['key', 2];
 

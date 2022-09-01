@@ -15,14 +15,12 @@ export type StatePath = PropertyKey | StatePath.Normalized;
  * @category State Tracking
  */
 export namespace StatePath {
-
   /**
    * Normalized state path.
    *
    * This is always an array of property keys.
    */
   export type Normalized = readonly PropertyKey[];
-
 }
 
 /**

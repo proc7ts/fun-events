@@ -7,7 +7,6 @@ import { EventEmitter } from '../senders';
 import { digOn } from './dig-on';
 
 describe('digOn', () => {
-
   let sender: EventEmitter<[EventEmitter<[string]>?]>;
   let nested1: EventEmitter<[string]>;
   let nested2: EventEmitter<[string]>;
@@ -66,7 +65,6 @@ describe('digOn', () => {
     expect(extract).not.toHaveBeenCalled();
   });
   it('cuts off supply once incoming events supply cut off', () => {
-
     const whenOff = jest.fn();
 
     supply.whenOff(whenOff);
@@ -84,7 +82,6 @@ describe('digOn', () => {
     expect(sender.size).toBe(0);
   });
   it('cuts off supply when nested events supply cut off', () => {
-
     const whenOff = jest.fn();
 
     supply.whenOff(whenOff);

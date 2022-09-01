@@ -18,11 +18,8 @@ import { shareAfter } from './share-after';
  *
  * @returns New processor of events incoming from {@link @AfterEvent} keeper.
  */
-export function digAfter<
-    TInEvent extends any[],
-    TOutEvent extends any[],
-    >(
-    extract: (this: void, ...event: TInEvent) => EventKeeper<TOutEvent> | void | undefined,
+export function digAfter<TInEvent extends any[], TOutEvent extends any[]>(
+  extract: (this: void, ...event: TInEvent) => EventKeeper<TOutEvent> | void | undefined,
 ): (this: void, input: AfterEvent<TInEvent>) => AfterEvent<TOutEvent>;
 
 /**
@@ -39,22 +36,15 @@ export function digAfter<
  *
  * @returns New processor of events incoming from {@link @OnEvent} sender.
  */
-export function digAfter<
-    TInEvent extends any[],
-    TOutEvent extends any[],
-    >(
-    extract: (this: void, ...event: TInEvent) => EventKeeper<TOutEvent> | void | undefined,
-    fallback: (this: void) => TOutEvent,
+export function digAfter<TInEvent extends any[], TOutEvent extends any[]>(
+  extract: (this: void, ...event: TInEvent) => EventKeeper<TOutEvent> | void | undefined,
+  fallback: (this: void) => TOutEvent,
 ): (this: void, input: OnEvent<TInEvent>) => AfterEvent<TOutEvent>;
 
-export function digAfter<
-    TInEvent extends any[],
-    TOutEvent extends any[],
-    >(
-    extract: (this: void, ...event: TInEvent) => EventKeeper<TOutEvent> | void | undefined,
-    fallback?: (this: void) => TOutEvent,
+export function digAfter<TInEvent extends any[], TOutEvent extends any[]>(
+  extract: (this: void, ...event: TInEvent) => EventKeeper<TOutEvent> | void | undefined,
+  fallback?: (this: void) => TOutEvent,
 ): (this: void, input: OnEvent<TInEvent>) => AfterEvent<TOutEvent> {
-
   const processor = digAfter_(extract, fallback!);
 
   return input => shareAfter(processor(input));
@@ -74,11 +64,9 @@ export function digAfter<
  *
  * @returns New processor of events incoming from {@link @AfterEvent} keeper.
  */
-export function digAfter_<// eslint-disable-line @typescript-eslint/naming-convention
-    TInEvent extends any[],
-    TOutEvent extends any[],
-    >(
-    extract: (this: void, ...event: TInEvent) => EventKeeper<TOutEvent> | void | undefined,
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export function digAfter_<TInEvent extends any[], TOutEvent extends any[]>(
+  extract: (this: void, ...event: TInEvent) => EventKeeper<TOutEvent> | void | undefined,
 ): (this: void, input: AfterEvent<TInEvent>) => AfterEvent<TOutEvent>;
 
 /**
@@ -96,24 +84,18 @@ export function digAfter_<// eslint-disable-line @typescript-eslint/naming-conve
  *
  * @returns New processor of events incoming from {@link @OnEvent} sender.
  */
-export function digAfter_<// eslint-disable-line @typescript-eslint/naming-convention
-    TInEvent extends any[],
-    TOutEvent extends any[],
-    >(
-    extract: (this: void, ...event: TInEvent) => EventKeeper<TOutEvent> | void | undefined,
-    fallback: (this: void) => TOutEvent,
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export function digAfter_<TInEvent extends any[], TOutEvent extends any[]>(
+  extract: (this: void, ...event: TInEvent) => EventKeeper<TOutEvent> | void | undefined,
+  fallback: (this: void) => TOutEvent,
 ): (this: void, input: OnEvent<TInEvent>) => AfterEvent<TOutEvent>;
 
-export function digAfter_<// eslint-disable-line @typescript-eslint/naming-convention
-    TInEvent extends any[],
-    TOutEvent extends any[],
-    >(
-    extract: (this: void, ...event: TInEvent) => EventKeeper<TOutEvent> | void | undefined,
-    fallback?: (this: void) => TOutEvent,
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export function digAfter_<TInEvent extends any[], TOutEvent extends any[]>(
+  extract: (this: void, ...event: TInEvent) => EventKeeper<TOutEvent> | void | undefined,
+  fallback?: (this: void) => TOutEvent,
 ): (this: void, input: OnEvent<TInEvent>) => AfterEvent<TOutEvent> {
-
   const extractKeeper = (...events: TInEvent): AfterEvent<TOutEvent> | void => {
-
     const extracted = extract(...events);
 
     return extracted && afterSupplied(extracted);

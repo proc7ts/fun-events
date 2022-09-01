@@ -16,9 +16,8 @@ import { translateOn_ } from './translate-on';
  * @returns New event processor.
  */
 export function valueOn<TEvent extends any[], TValue>(
-    valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
+  valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
 ): (this: void, input: OnEvent<TEvent>) => OnEvent<[TValue]> {
-
   const mapper = valueOn_(valueOf);
 
   return input => shareOn(mapper(input));
@@ -35,11 +34,10 @@ export function valueOn<TEvent extends any[], TValue>(
  *
  * @returns New event processor.
  */
-export function valueOn_<TEvent extends any[], TValue>(// eslint-disable-line @typescript-eslint/naming-convention
-    valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
+export function valueOn_<TEvent extends any[], TValue>( // eslint-disable-line @typescript-eslint/naming-convention
+  valueOf: (this: void, ...event: TEvent) => TValue | false | null | undefined,
 ): (this: void, input: OnEvent<TEvent>) => OnEvent<[TValue]> {
   return translateOn_((send, ...event) => {
-
     const value = valueOf(...event);
 
     if (value != null && value !== false) {

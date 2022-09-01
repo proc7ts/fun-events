@@ -6,7 +6,6 @@ import { EventNotifier, EventReceiver } from '../base';
 import { supplyAfter } from './supply-after';
 
 describe('supplyAfter', () => {
-
   let mockRegister: Mock<(receiver: EventReceiver.Generic<[string]>) => void>;
   let afterEvent: AfterEvent<[string]>;
   let supply: Supply;
@@ -19,7 +18,7 @@ describe('supplyAfter', () => {
     emitter = new EventNotifier();
     mockRegister = jest.fn(receiver => {
       supply = receiver.supply;
-      supply.whenOff(offSpy = jest.fn());
+      supply.whenOff((offSpy = jest.fn()));
       emitter.on(receiver);
       emitter.send('init');
     });
@@ -38,7 +37,6 @@ describe('supplyAfter', () => {
     expect(mockReceiver).toHaveBeenLastCalledWith('event2');
   });
   it('does not send any events if required supply is initially cut off', () => {
-
     const whenOff = jest.fn();
 
     afterEvent.do(supplyAfter(neverSupply()))(mockReceiver).whenOff(whenOff);
@@ -50,7 +48,6 @@ describe('supplyAfter', () => {
     expect(afterEvent.do(supplyAfter(alwaysSupply()))).toBe(afterEvent);
   });
   it('no longer sends events after original supply is cut off', () => {
-
     const whenOff = jest.fn();
 
     afterEvent.do(supplyAfter(requiredSupply))(mockReceiver).whenOff(whenOff);
@@ -65,7 +62,6 @@ describe('supplyAfter', () => {
     expect(offSpy).toHaveBeenCalledWith('reason');
   });
   it('no longer sends events after required supply is cut off', () => {
-
     const whenOff = jest.fn();
 
     afterEvent.do(supplyAfter(requiredSupply))(mockReceiver).whenOff(whenOff);

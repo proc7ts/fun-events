@@ -8,7 +8,6 @@ import { EventEmitter } from './senders';
 describe('OnEvent', () => {
   describe('[OnEvent__symbol]', () => {
     it('refers to itself', () => {
-
       const onEvent = onEventBy(({ supply }) => supply.off());
 
       expect(onEvent[OnEvent__symbol]()).toBe(onEvent);
@@ -16,7 +15,6 @@ describe('OnEvent', () => {
   });
 
   describe('then', () => {
-
     let emitter: EventNotifier<[string]>;
     let mockRegister: Mock<(receiver: EventReceiver.Generic<[string]>) => void>;
     let onEvent: OnEvent<[string]>;
@@ -30,7 +28,6 @@ describe('OnEvent', () => {
     });
 
     it('resolves to next event', async () => {
-
       const next = onEvent.then();
 
       emitter.send('event');
@@ -45,14 +42,12 @@ describe('OnEvent', () => {
       expect(await onEvent).toBe('immediate');
     });
     it('executes resolution callback', async () => {
-
       const next = onEvent.then(event => `${event}!`);
 
       emitter.send('next event');
       expect(await next).toBe('next event!');
     });
     it('rejects when resolution callback fails', async () => {
-
       const error = new Error('test');
       const next = onEvent.then(() => {
         throw error;
@@ -62,7 +57,6 @@ describe('OnEvent', () => {
       expect(await next.catch(asis)).toBe(error);
     });
     it('rejects when supply is cut off', async () => {
-
       const reason = 'reason';
 
       emitter.supply.off(reason);
@@ -70,7 +64,6 @@ describe('OnEvent', () => {
       expect(await onEvent.then().catch(asis)).toBe(reason);
     });
     it('resolves to cut off callback result when supply is cut off', async () => {
-
       const reason = 'reason';
 
       emitter.supply.off(reason);
@@ -82,17 +75,19 @@ describe('OnEvent', () => {
 
       const error = new Error('test');
 
-      expect(await onEvent.then(noop, () => {
-        throw error;
-      }).catch(asis)).toBe(error);
+      expect(
+        await onEvent
+          .then(noop, () => {
+            throw error;
+          })
+          .catch(asis),
+      ).toBe(error);
     });
   });
 });
 
 describe('onEventBy', () => {
-
   it('cuts off event supply on receiver registration failure', async () => {
-
     const error = new Error('!!!');
     const onEvent = onEventBy(() => {
       throw error;
@@ -100,16 +95,13 @@ describe('onEventBy', () => {
 
     expect(await onEvent(noop).whenDone().catch(asis)).toBe(error);
   });
-
 });
 
 describe('isOnEvent', () => {
-
   it('returns `true` for `onEventBy()` result', () => {
     expect(isOnEvent(onEventBy(noop))).toBe(true);
   });
   it('returns `false` for incompatible `OnEvent` implementation', () => {
-
     const onEvent = onEventBy(noop);
 
     onEvent.then = noop as any;
@@ -122,5 +114,4 @@ describe('isOnEvent', () => {
   it('returns `false` for `null`', () => {
     expect(isOnEvent(null)).toBe(false);
   });
-
 });

@@ -9,22 +9,20 @@ import { eventReceiver, EventReceiver } from './event-receiver';
  * @returns An event receiver function that does not utilize event processing context an thus can be called directly.
  */
 export function receiveByEach<TEvent extends any[]>(
-    receivers: Iterable<EventReceiver.Generic<TEvent>>,
+  receivers: Iterable<EventReceiver.Generic<TEvent>>,
 ): (this: void, ...event: TEvent) => void {
-
   let send: (this: void, event: TEvent) => void = sendNonRecurrent;
 
   return (...event) => send(event);
 
   function sendNonRecurrent(event: TEvent): void {
-
     let actualReceivers = receivers;
     const received: TEvent[] = [];
 
     send = (recurrent: TEvent) => received.push(recurrent);
 
     try {
-      for (; ;) {
+      for (;;) {
         actualReceivers = processEvent(actualReceivers, event);
 
         const recurrent = received.shift();
@@ -45,14 +43,12 @@ export function receiveByEach<TEvent extends any[]>(
  * @internal
  */
 function processEvent<TEvent extends any[]>(
-    receivers: Iterable<EventReceiver.Generic<TEvent>>,
-    event: TEvent,
+  receivers: Iterable<EventReceiver.Generic<TEvent>>,
+  event: TEvent,
 ): EventReceiver.Generic<TEvent>[] {
-
   const recurrentReceivers: EventReceiver.Generic<TEvent>[] = [];
 
   for (const receiver of receivers) {
-
     const idx = recurrentReceivers.length;
 
     recurrentReceivers.push(receiver);

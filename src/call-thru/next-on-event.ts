@@ -15,7 +15,7 @@ import { OnEventCallChain } from './on-event-call-chain';
  * @returns Next call passing events from the given `supplier`.
  */
 export function nextOnEvent<TEvent extends any[]>(
-    supplier: EventSupplier<TEvent>,
+  supplier: EventSupplier<TEvent>,
 ): NextCall<OnEventCallChain, TEvent> {
   return nextCall((chain, pass) => chain.onEvent(pass, onSupplied(supplier)));
 }

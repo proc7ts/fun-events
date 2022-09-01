@@ -7,7 +7,6 @@ import { mapAfter } from './map-after';
 
 describe('mapAfter', () => {
   it('maps events', () => {
-
     const tracker = trackValue(1);
     const afterEvent: AfterEvent<[number]> = tracker.read.do(mapAfter(a => a + 100));
     const receiver = jest.fn<(arg: number) => void>();
@@ -20,9 +19,10 @@ describe('mapAfter', () => {
     expect(receiver).toHaveBeenCalledTimes(2);
   });
   it('maps events with fallback', () => {
-
     const emitter = new EventEmitter<[number, number]>();
-    const afterEvent: AfterEvent<[number]> = emitter.on.do(mapAfter((a: number, b: number) => a + b, valueProvider(0)));
+    const afterEvent: AfterEvent<[number]> = emitter.on.do(
+      mapAfter((a: number, b: number) => a + b, valueProvider(0)),
+    );
     const receiver = jest.fn<(arg: number) => void>();
 
     afterEvent(receiver);

@@ -10,7 +10,6 @@ import { afterSupplied } from './after-supplied';
 
 describe('afterSupplied', () => {
   describe('from event keeper', () => {
-
     let keeper: ValueTracker<string>;
     let afterEvent: AfterEvent<[string]>;
     let mockReceiver: EventReceiver<[string]>;
@@ -31,7 +30,6 @@ describe('afterSupplied', () => {
       expect(mockReceiver).toHaveBeenCalledWith('initial');
     });
     it('sends events from the given keeper', () => {
-
       const event = 'other';
 
       keeper.it = event;
@@ -46,8 +44,7 @@ describe('afterSupplied', () => {
   });
 
   describe('from event keeper with registrar implementing `AfterEvent`', () => {
-    it('returns the keeper\'s registrar', () => {
-
+    it("returns the keeper's registrar", () => {
       const keeper = trackValue('initial');
 
       expect(afterSupplied(keeper)).toBe(keeper[AfterEvent__symbol]());
@@ -55,7 +52,6 @@ describe('afterSupplied', () => {
   });
 
   describe('from event sender', () => {
-
     let sender: EventEmitter<[string]>;
     let afterEvent: AfterEvent<[string]>;
     let mockReceiver: EventReceiver<[string]>;
@@ -72,7 +68,6 @@ describe('afterSupplied', () => {
       expect(mockReceiver).toHaveBeenCalledWith('initial');
     });
     it('sends events from the given sender', () => {
-
       const event = 'other';
 
       sender.send(event);
@@ -88,7 +83,6 @@ describe('afterSupplied', () => {
   });
 
   describe('from event sender without initial value', () => {
-
     let sender: EventEmitter<[string]>;
     let afterEvent: AfterEvent<[string]>;
 

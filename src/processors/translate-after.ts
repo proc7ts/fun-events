@@ -20,11 +20,8 @@ import { shareAfter } from './share-after';
  *
  * @returns A mapping function of incoming event keeper to another one.
  */
-export function translateAfter<
-    TInEvent extends any[],
-    TOutEvent extends any[],
-    >(
-    translate: (this: void, send: (...event: TOutEvent) => void, ...event: TInEvent) => void,
+export function translateAfter<TInEvent extends any[], TOutEvent extends any[]>(
+  translate: (this: void, send: (...event: TOutEvent) => void, ...event: TInEvent) => void,
 ): (this: void, input: AfterEvent<TInEvent>) => AfterEvent<TOutEvent>;
 
 /**
@@ -45,22 +42,15 @@ export function translateAfter<
  *
  * @returns A mapping function of incoming event keeper to another one.
  */
-export function translateAfter<
-    TInEvent extends any[],
-    TOutEvent extends any[],
-    >(
-    translate: (this: void, send: (...event: TOutEvent) => void, ...event: TInEvent) => void,
-    fallback: (this: void) => TOutEvent,
+export function translateAfter<TInEvent extends any[], TOutEvent extends any[]>(
+  translate: (this: void, send: (...event: TOutEvent) => void, ...event: TInEvent) => void,
+  fallback: (this: void) => TOutEvent,
 ): (this: void, input: OnEvent<TInEvent>) => AfterEvent<TOutEvent>;
 
-export function translateAfter<
-    TInEvent extends any[],
-    TOutEvent extends any[],
-    >(
-    translate: (this: void, send: (...event: TOutEvent) => void, ...event: TInEvent) => void,
-    fallback?: (this: void) => TOutEvent,
+export function translateAfter<TInEvent extends any[], TOutEvent extends any[]>(
+  translate: (this: void, send: (...event: TOutEvent) => void, ...event: TInEvent) => void,
+  fallback?: (this: void) => TOutEvent,
 ): (this: void, input: OnEvent<TInEvent>) => AfterEvent<TOutEvent> {
-
   const mapper = translateAfter_(translate, fallback!);
 
   return input => shareAfter(mapper(input));
@@ -84,11 +74,9 @@ export function translateAfter<
  *
  * @returns A mapping function of incoming event keeper to another one.
  */
-export function translateAfter_<// eslint-disable-line @typescript-eslint/naming-convention
-    TInEvent extends any[],
-    TOutEvent extends any[],
-    >(
-    translate: (this: void, send: (...event: TOutEvent) => void, ...event: TInEvent) => void,
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export function translateAfter_<TInEvent extends any[], TOutEvent extends any[]>(
+  translate: (this: void, send: (...event: TOutEvent) => void, ...event: TInEvent) => void,
 ): (this: void, input: AfterEvent<TInEvent>) => AfterEvent<TOutEvent>;
 
 /**
@@ -110,12 +98,10 @@ export function translateAfter_<// eslint-disable-line @typescript-eslint/naming
  *
  * @returns A mapping function of incoming event keeper to another one.
  */
-export function translateAfter_<// eslint-disable-line @typescript-eslint/naming-convention
-    TInEvent extends any[],
-    TOutEvent extends any[],
-    >(
-    translate: (this: void, send: (...event: TOutEvent) => void, ...event: TInEvent) => void,
-    fallback: (this: void) => TOutEvent,
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export function translateAfter_<TInEvent extends any[], TOutEvent extends any[]>(
+  translate: (this: void, send: (...event: TOutEvent) => void, ...event: TInEvent) => void,
+  fallback: (this: void) => TOutEvent,
 ): (this: void, input: OnEvent<TInEvent>) => AfterEvent<TOutEvent>;
 
 /**
@@ -138,12 +124,10 @@ export function translateAfter_<// eslint-disable-line @typescript-eslint/naming
  *
  * @returns A mapping function of incoming event keeper to another one.
  */
-export function translateAfter_<// eslint-disable-line @typescript-eslint/naming-convention
-    TInEvent extends any[],
-    TOutEvent extends any[],
-    >(
-    translate: (this: void, send: (...event: TOutEvent) => void, ...event: TInEvent) => void,
-    fallback?: (this: void) => TOutEvent,
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export function translateAfter_<TInEvent extends any[], TOutEvent extends any[]>(
+  translate: (this: void, send: (...event: TOutEvent) => void, ...event: TInEvent) => void,
+  fallback?: (this: void) => TOutEvent,
 ): (this: void, input: OnEvent<TInEvent>) => AfterEvent<TOutEvent> {
   return input => afterEventBy(translateEvents(input, translate), fallback);
 }

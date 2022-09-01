@@ -9,7 +9,6 @@ import { StateUpdateReceiver } from './state-update-receiver';
  * @category State Tracking
  */
 export interface OnStateUpdate extends OnEvent<[StatePath.Normalized, any, any]> {
-
   /**
    * Starts sending state updates to the given `receiver`.
    *
@@ -18,5 +17,4 @@ export interface OnStateUpdate extends OnEvent<[StatePath.Normalized, any, any]>
    * @returns A supply of state updates from this sender to the given `receiver`.
    */
   (receiver: StateUpdateReceiver): Supply;
-
 }

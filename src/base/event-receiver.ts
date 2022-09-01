@@ -18,13 +18,14 @@ import { Supply } from '@proc7ts/supply';
  * @category Core
  * @typeParam TEvent - An event type. This is a tuple of event receiver parameter types.
  */
-export type EventReceiver<TEvent extends any[]> = EventReceiver.Function<TEvent> | EventReceiver.Object<TEvent>;
+export type EventReceiver<TEvent extends any[]> =
+  | EventReceiver.Function<TEvent>
+  | EventReceiver.Object<TEvent>;
 
 /**
  * @category Core
  */
 export namespace EventReceiver {
-
   /**
    * Event receiver function signature.
    *
@@ -33,10 +34,10 @@ export namespace EventReceiver {
    * @typeParam TEvent - An event type. This is a tuple of event receiver parameter types.
    */
   export type Function<TEvent extends any[]> =
-  /**
-   * @param event - An event represented by function call arguments.
-   */
-      (this: void, ...event: TEvent) => void;
+    /**
+     * @param event - An event represented by function call arguments.
+     */
+    (this: void, ...event: TEvent) => void;
 
   /**
    * Event receiver object.
@@ -44,7 +45,6 @@ export namespace EventReceiver {
    * @typeParam TEvent - An event type. This is a tuple of event receiver parameter types.
    */
   export interface Object<TEvent extends any[]> {
-
     /**
      * Event supply to this receiver.
      *
@@ -61,7 +61,6 @@ export namespace EventReceiver {
      * @param event - An event represented as the rest of arguments.
      */
     receive(context: Context<TEvent>, ...event: TEvent): void;
-
   }
 
   /**
@@ -74,7 +73,6 @@ export namespace EventReceiver {
    * @typeParam TEvent - An event type. This is a tuple of event receiver parameter types.
    */
   export interface Generic<TEvent extends any[]> extends Object<TEvent> {
-
     /**
      * Event supply to this receiver.
      *
@@ -94,7 +92,6 @@ export namespace EventReceiver {
      * @param event - An event represented as the rest of arguments.
      */
     receive(this: void, context: Context<TEvent>, ...event: TEvent): void;
-
   }
 
   /**
@@ -105,7 +102,6 @@ export namespace EventReceiver {
    * @typeParam TEvent - An event type. This is a tuple of event receiver parameter types.
    */
   export interface Context<TEvent extends any[]> {
-
     /**
      * Schedules the given event receiver to be called to process recurrent event(s).
      *
@@ -122,9 +118,7 @@ export namespace EventReceiver {
      * @param receiver - Recurrent events receiver function.
      */
     onRecurrent(receiver: EventReceiver.Function<TEvent>): void;
-
   }
-
 }
 
 /**
@@ -138,8 +132,9 @@ export namespace EventReceiver {
  *
  * @returns Event `receiver` in most generic form.
  */
-export function eventReceiver<TEvent extends any[]>(receiver: EventReceiver<TEvent>): EventReceiver.Generic<TEvent> {
-
+export function eventReceiver<TEvent extends any[]>(
+  receiver: EventReceiver<TEvent>,
+): EventReceiver.Generic<TEvent> {
   let supply: Supply;
   let receive: (context: EventReceiver.Context<TEvent>, ...event: TEvent) => void;
 
@@ -159,7 +154,7 @@ export function eventReceiver<TEvent extends any[]>(receiver: EventReceiver<TEve
 
   // Disable receiver when event supply is cut off. But see the comment above.
   // For function receiver this callback is always the first one.
-  supply.whenOff(() => receive = EventReceiver$doDonReceive);
+  supply.whenOff(() => (receive = EventReceiver$doDonReceive));
 
   return {
     supply,
@@ -168,8 +163,8 @@ export function eventReceiver<TEvent extends any[]>(receiver: EventReceiver<TEve
 }
 
 function EventReceiver$doDonReceive<TEvent extends any[]>(
-    _context: EventReceiver.Context<TEvent>,
-    ..._event: TEvent
+  _context: EventReceiver.Context<TEvent>,
+  ..._event: TEvent
 ): void {
   // Do not receive event.
 }

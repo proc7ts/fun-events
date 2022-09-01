@@ -4,7 +4,6 @@ import { sendEventsTo } from './send-events-to';
 
 describe('sendEventsTo', () => {
   it('sends events to receiver', () => {
-
     const receiver = jest.fn();
     const sender = sendEventsTo(receiver);
 
@@ -17,7 +16,6 @@ describe('sendEventsTo', () => {
     expect(receiver).toHaveBeenCalledTimes(3);
   });
   it('stops sending events when receiver supply is cut off', () => {
-
     const receive = jest.fn();
     const supply = new Supply();
     const sender = sendEventsTo({ supply, receive });
@@ -32,7 +30,6 @@ describe('sendEventsTo', () => {
     expect(receive).toHaveBeenCalledTimes(2);
   });
   it('does not send any events when receiver supply is initially cut off', () => {
-
     const receive = jest.fn();
     const supply = neverSupply();
     const sender = sendEventsTo({ supply, receive });

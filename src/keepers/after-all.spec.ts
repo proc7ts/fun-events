@@ -6,7 +6,6 @@ import { trackValue, ValueTracker } from '../value';
 import { afterAll } from './after-all';
 
 describe('afterAll', () => {
-
   let source1: ValueTracker<string>;
   let source2: ValueTracker<number>;
   let fromAll: AfterEvent<[{ source1: [string]; source2: [number] }]>;
@@ -25,7 +24,6 @@ describe('afterAll', () => {
     expect(mockReceiver).toHaveBeenCalledTimes(1);
   });
   it('sends empty object without sources', () => {
-
     const receiver = jest.fn();
 
     afterAll({})(receiver);
@@ -41,7 +39,6 @@ describe('afterAll', () => {
     expect(mockReceiver).toHaveBeenCalledWith({ source1: ['update'], source2: [2] });
   });
   it('stops sending updates once their supply is cut off', () => {
-
     const supply = fromAll(mockReceiver);
 
     mockReceiver.mockClear();
@@ -50,7 +47,6 @@ describe('afterAll', () => {
     expect(mockReceiver).not.toHaveBeenCalled();
   });
   it('stops sending updates if their supply is cut off during registration', () => {
-
     const reason = 'some reason';
     const stopper = afterEventBy<[string]>(({ supply }) => supply.off(reason));
     const mockOff = jest.fn();
@@ -62,17 +58,19 @@ describe('afterAll', () => {
     expect(mockOff).toHaveBeenCalledWith(reason);
   });
   it('sends recurrent event sent during registration to recurrent receiver', () => {
-
     const recurrentReceiver = jest.fn();
     const receiver: EventReceiver.Object<[{ source1: [string]; source2: [number] }]> = {
-       receive: jest.fn(context => {
-         context.onRecurrent(recurrentReceiver);
-         source1.it = 'recurrent';
-       }),
+      receive: jest.fn(context => {
+        context.onRecurrent(recurrentReceiver);
+        source1.it = 'recurrent';
+      }),
     };
 
     fromAll(receiver);
-    expect(receiver.receive).toHaveBeenCalledWith(expect.anything(), { source1: ['init'], source2: [1] });
+    expect(receiver.receive).toHaveBeenCalledWith(expect.anything(), {
+      source1: ['init'],
+      source2: [1],
+    });
     expect(recurrentReceiver).toHaveBeenCalledWith({ source1: ['recurrent'], source2: [1] });
   });
 });

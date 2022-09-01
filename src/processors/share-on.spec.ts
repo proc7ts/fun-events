@@ -10,7 +10,6 @@ import { shareOn } from './share-on';
 
 describe('shareOn', () => {
   describe('OnEvent', () => {
-
     let mockRegister: Mock<(receiver: EventReceiver.Generic<[string, string]>) => void>;
     let offSpy: SpyInstance<(arg?: unknown) => Supply>;
     let emitter: EventNotifier<[string, string]>;
@@ -30,7 +29,6 @@ describe('shareOn', () => {
     });
 
     it('sends events from the source', () => {
-
       const shared = onEvent.do(shareOn);
 
       shared(mockReceiver);
@@ -40,7 +38,6 @@ describe('shareOn', () => {
       expect(mockReceiver2).toHaveBeenCalledWith('a', 'b');
     });
     it('registers exactly one source receiver', () => {
-
       const shared = onEvent.do(shareOn);
 
       shared(mockReceiver);
@@ -49,7 +46,6 @@ describe('shareOn', () => {
       expect(mockRegister).toHaveBeenCalledTimes(1);
     });
     it('cuts off events supply from the source when all event supplies do', () => {
-
       const shared = onEvent.do(shareOn);
       const supply1 = shared(mockReceiver);
       const supply2 = shared(mockReceiver2);
@@ -79,9 +75,7 @@ describe('shareOn', () => {
       expect(mockReceiver2).toHaveReturnedTimes(2);
     });
     it('replicates events sent during registration to receivers registered after all event supplies cut off', () => {
-
       mockRegister.mockImplementation(receiver => {
-
         const receiverEmitter = new EventNotifier<[string, string]>();
 
         receiverEmitter.on(receiver);
@@ -135,7 +129,6 @@ describe('shareOn', () => {
   });
 
   describe('AfterEvent', () => {
-
     let fallback: [string, string];
     let mockRegister: Mock<(receiver: EventReceiver.Generic<[string, string]>) => void>;
     let emitter: EventNotifier<[string, string]>;
@@ -155,7 +148,6 @@ describe('shareOn', () => {
     });
 
     it('sends fallback event from the source', () => {
-
       const shared = afterEvent.do(shareOn);
 
       shared(mockReceiver);
@@ -164,13 +156,11 @@ describe('shareOn', () => {
       expect(mockReceiver2).toHaveBeenCalledWith(...fallback);
     });
     it('keeps initial event from the source', () => {
-
       const shared = afterEvent.do(shareOn);
 
       shared.do(onceOn)((...received) => expect(received).toEqual(fallback));
     });
     it('sends events from the source', () => {
-
       const shared = afterEvent.do(shareOn);
 
       shared(mockReceiver);

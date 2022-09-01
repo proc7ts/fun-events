@@ -14,7 +14,7 @@ import { OnEvent, onEventBy } from '../on-event';
  * @returns New sender of the first event.
  */
 export function onceOn<TEvent extends any[]>(
-    supplier: OnEvent<TEvent>,
+  supplier: OnEvent<TEvent>,
 ): OnEvent<TEvent> | AfterEvent<TEvent> {
   return onEventBy(onceEvent(supplier));
 }

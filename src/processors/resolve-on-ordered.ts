@@ -22,22 +22,21 @@ import { supplyOn } from './supply-on';
  * @returns New `OnEvent` sender of resolved events.
  */
 export function resolveOnOrdered<TEvent>(
-    from: OnEvent<[PromiseLike<TEvent> | TEvent]>,
+  from: OnEvent<[PromiseLike<TEvent> | TEvent]>,
 ): OnEvent<[TEvent, ...TEvent[]]> {
   return onEventBy(receiver => {
-
     const { supply } = receiver;
     const dispatch = sendEventsTo(receiver);
 
     const sourceSupply = new Supply();
     let numInProcess = 0;
     const source = from.do(
-        supplyOn(supply, sourceSupply),
-        mapOn(event => {
-          ++numInProcess;
+      supplyOn(supply, sourceSupply),
+      mapOn(event => {
+        ++numInProcess;
 
-          return event;
-        }),
+        return event;
+      }),
     );
     let received: TEvent[] = [];
     let numSent = 1;
@@ -52,13 +51,11 @@ export function resolveOnOrdered<TEvent>(
     resolveOn(source)({
       supply,
       receive(_ctx, event, index) {
-
         const i = index - numSent;
 
         received[i] = event;
         ++numReceived;
         if (numReceived > i) {
-
           let toSend: TEvent[];
 
           if (numReceived === received.length) {

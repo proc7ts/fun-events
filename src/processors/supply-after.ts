@@ -19,14 +19,10 @@ import { supplyEvents } from '../impl';
  * @returns New event mapper.
  */
 export function supplyAfter<TEvent extends any[]>(
-    required: SupplyPeer,
-    dependentSupply?: Supply,
+  required: SupplyPeer,
+  dependentSupply?: Supply,
 ): (this: void, input: AfterEvent<TEvent>) => AfterEvent<TEvent> {
   return isAlwaysSupply(required.supply)
-      ? asis
-      : (input: AfterEvent<TEvent>) => afterEventBy(supplyEvents(
-          input,
-          required,
-          dependentSupply,
-      ));
+    ? asis
+    : (input: AfterEvent<TEvent>) => afterEventBy(supplyEvents(input, required, dependentSupply));
 }

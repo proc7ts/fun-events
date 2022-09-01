@@ -9,7 +9,6 @@ import { trackValue, ValueTracker } from '../value';
 import { digAfter } from './dig-after';
 
 describe('digAfter', () => {
-
   let tracker: ValueTracker<ValueTracker<string>>;
   let nested1: ValueTracker<string>;
   let nested2: ValueTracker<string>;
@@ -43,7 +42,6 @@ describe('digAfter', () => {
   });
 
   describe('from event sender', () => {
-
     let source: EventEmitter<[ValueTracker<string>]>;
 
     beforeEach(() => {

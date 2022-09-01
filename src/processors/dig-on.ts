@@ -17,13 +17,9 @@ import { shareOn } from './share-on';
  *
  * @returns New event processor.
  */
-export function digOn<
-    TInEvent extends any[],
-    TOutEvent extends any[],
-    >(
-    extract: (this: void, ...event: TInEvent) => EventSupplier<TOutEvent> | void | undefined,
+export function digOn<TInEvent extends any[], TOutEvent extends any[]>(
+  extract: (this: void, ...event: TInEvent) => EventSupplier<TOutEvent> | void | undefined,
 ): (this: void, input: OnEvent<TInEvent>) => OnEvent<TOutEvent> {
-
   const processor = digOn_(extract);
 
   return input => shareOn(processor(input));
@@ -43,15 +39,11 @@ export function digOn<
  *
  * @returns New event processor.
  */
-export function digOn_<// eslint-disable-line @typescript-eslint/naming-convention
-    TInEvent extends any[],
-    TOutEvent extends any[],
-    >(
-    extract: (this: void, ...event: TInEvent) => EventSupplier<TOutEvent> | void | undefined,
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export function digOn_<TInEvent extends any[], TOutEvent extends any[]>(
+  extract: (this: void, ...event: TInEvent) => EventSupplier<TOutEvent> | void | undefined,
 ): (this: void, input: OnEvent<TInEvent>) => OnEvent<TOutEvent> {
-
   const extractSender = (...event: TInEvent): OnEvent<TOutEvent> | void => {
-
     const extracted = extract(...event);
 
     return extracted && onSupplied(extracted);

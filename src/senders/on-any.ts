@@ -16,25 +16,28 @@ import { onSupplied } from './on-supplied';
  *
  * @returns An {@link OnEvent} sender of all supplied events.
  */
-export function onAny<TEvent extends any[]>(...suppliers: EventSupplier<TEvent>[]): OnEvent<TEvent> {
+export function onAny<TEvent extends any[]>(
+  ...suppliers: EventSupplier<TEvent>[]
+): OnEvent<TEvent> {
   if (!suppliers.length) {
     return onNever as OnEvent<TEvent>;
   }
 
-  return onEventBy(shareEvents(onEventBy<TEvent>(({ supply, receive }) => {
+  return onEventBy(
+    shareEvents(
+      onEventBy<TEvent>(({ supply, receive }) => {
+        let remained = suppliers.length;
+        const removeSupplier = (reason?: unknown): void => {
+          if (!--remained) {
+            supply.off(reason);
+          }
+        };
 
-    let remained = suppliers.length;
-    const removeSupplier = (reason?: unknown): void => {
-      if (!--remained) {
-        supply.off(reason);
-      }
-    };
-
-    suppliers.forEach(
-        supplier => onSupplied(supplier)({
-          supply: new Supply(removeSupplier).needs(supply),
-          receive,
-        }),
-    );
-  })));
+        suppliers.forEach(supplier => onSupplied(supplier)({
+            supply: new Supply(removeSupplier).needs(supply),
+            receive,
+          }));
+      }),
+    ),
+  );
 }

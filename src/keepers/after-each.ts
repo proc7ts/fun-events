@@ -14,20 +14,22 @@ import { onceEvent, shareEvents } from '../impl';
  * @returns An event keeper sending events received from each source keeper. Each event item is an event tuple
  * originated from source keeper under its index in `sources` array.
  */
-export function afterEach<TEvent extends any[]>(...sources: EventKeeper<TEvent>[]): AfterEvent<TEvent[]> {
-
+export function afterEach<TEvent extends any[]>(
+  ...sources: EventKeeper<TEvent>[]
+): AfterEvent<TEvent[]> {
   const registerReceiver = (receiver: EventReceiver.Generic<TEvent[]>): void => {
-
     const { supply } = receiver;
     const dispatch = sendEventsTo(receiver);
     let send: () => void = noop;
     const result: TEvent[] = [];
 
     sources.forEach((source, index) => {
-      supply.needs(source[AfterEvent__symbol]()((...event) => {
-        result[index] = event;
-        send();
-      }).needs(supply));
+      supply.needs(
+        source[AfterEvent__symbol]()((...event) => {
+          result[index] = event;
+          send();
+        }).needs(supply),
+      );
     });
 
     if (!supply.isOff) {
@@ -36,15 +38,12 @@ export function afterEach<TEvent extends any[]>(...sources: EventKeeper<TEvent>[
   };
 
   const latestEvent = (): TEvent[] => {
-
     const result: TEvent[] = [];
 
-    sources.forEach(
-        source => onceEvent(source[AfterEvent__symbol]())({
-          supply: new Supply(),
-          receive: (_ctx, ...event) => result.push(event),
-        }),
-    );
+    sources.forEach(source => onceEvent(source[AfterEvent__symbol]())({
+        supply: new Supply(),
+        receive: (_ctx, ...event) => result.push(event),
+      }));
 
     return result;
   };

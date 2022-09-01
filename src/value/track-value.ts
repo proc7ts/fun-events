@@ -28,7 +28,6 @@ class TrackedValue<T> extends ValueTracker<T> {
   }
 
   set it(value: T) {
-
     const oldValue = this._it;
 
     if (oldValue !== value) {
@@ -94,16 +93,16 @@ export function trackValueBy<T>(supplier: EventKeeper<[T]>): ValueTracker<T>;
  * @returns `this` instance.
  */
 export function trackValueBy<T, TSrc extends any[]>(
-    supplier: EventKeeper<TSrc>,
-    extract: (this: void, ...event: TSrc) => EventKeeper<[T]>,
+  supplier: EventKeeper<TSrc>,
+  extract: (this: void, ...event: TSrc) => EventKeeper<[T]>,
 ): ValueTracker<T>;
 
 export function trackValueBy<T, TSrc extends any[]>(
-    supplier: EventKeeper<TSrc> | EventKeeper<[T]>,
-    extract?: (this: void, ...event: TSrc) => EventKeeper<[T]>,
+  supplier: EventKeeper<TSrc> | EventKeeper<[T]>,
+  extract?: (this: void, ...event: TSrc) => EventKeeper<[T]>,
 ): ValueTracker<T> {
   return (trackValue() as ValueTracker<T>).by(
-      supplier as EventKeeper<TSrc>,
-      extract as (this: void, ...event: TSrc) => EventKeeper<[T]>,
+    supplier as EventKeeper<TSrc>,
+    extract as (this: void, ...event: TSrc) => EventKeeper<[T]>,
   );
 }

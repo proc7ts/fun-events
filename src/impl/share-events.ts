@@ -6,9 +6,8 @@ import { OnEvent } from '../on-event';
  * @internal
  */
 export function shareEvents<TEvent extends any[]>(
-    supplier: OnEvent<TEvent>,
+  supplier: OnEvent<TEvent>,
 ): (receiver: EventReceiver.Generic<TEvent>) => void {
-
   const sharer = new EventSharer<TEvent>(supplier);
 
   return sharer.on.bind(sharer);
@@ -35,10 +34,9 @@ class EventSharer<TEvent extends any[]> extends EventNotifier<TEvent> {
   private _onInit(): SharedEventDispatcher<TEvent> {
     return {
       on: receiver => {
-
         const initialEvents: TEvent[] = [];
-        const sharedSupply = new Supply(() => this._on = this._onInit());
-        const onFirst = this._on = this._onFirst(sharedSupply, initialEvents);
+        const sharedSupply = new Supply(() => (this._on = this._onInit()));
+        const onFirst = (this._on = this._onFirst(sharedSupply, initialEvents));
 
         try {
           onFirst.on(receiver);
@@ -90,9 +88,9 @@ class EventSharer<TEvent extends any[]> extends EventNotifier<TEvent> {
   }
 
   private _addReceiver(
-      receiver: EventReceiver.Generic<TEvent>,
-      sharedSupply: Supply,
-      initialEvents: TEvent[],
+    receiver: EventReceiver.Generic<TEvent>,
+    sharedSupply: Supply,
+    initialEvents: TEvent[],
   ): void {
     sharedSupply.cuts(receiver);
 
@@ -114,9 +112,7 @@ class EventSharer<TEvent extends any[]> extends EventNotifier<TEvent> {
 }
 
 interface SharedEventDispatcher<TEvent extends any[]> {
-
   on(this: void, receiver: EventReceiver.Generic<TEvent>): void;
 
   dispatch(...event: TEvent): void;
-
 }
