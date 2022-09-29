@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, jest } from '@jest/globals';
 import { asis } from '@proc7ts/primitives';
 import { Supply } from '@proc7ts/supply';
-import { Mock, SpyInstance } from 'jest-mock';
+import { Mock } from 'jest-mock';
 import { AfterEvent, afterEventBy } from '../after-event';
 import { EventNotifier, EventReceiver } from '../base';
 import { OnEvent, onEventBy } from '../on-event';
@@ -11,7 +11,7 @@ import { shareOn } from './share-on';
 describe('shareOn', () => {
   describe('OnEvent', () => {
     let mockRegister: Mock<(receiver: EventReceiver.Generic<[string, string]>) => void>;
-    let offSpy: SpyInstance<(arg?: unknown) => Supply>;
+    let offSpy: Mock<(arg?: unknown) => Supply>;
     let emitter: EventNotifier<[string, string]>;
     let onEvent: OnEvent<[string, string]>;
     let mockReceiver: Mock<(arg1: string, arg2: string) => void>;
@@ -21,7 +21,7 @@ describe('shareOn', () => {
       emitter = new EventNotifier();
       mockRegister = jest.fn(receiver => {
         emitter.on(receiver);
-        offSpy = jest.spyOn(receiver.supply, 'off');
+        offSpy = jest.spyOn(receiver.supply, 'off') as typeof offSpy;
       });
       onEvent = onEventBy(mockRegister);
       mockReceiver = jest.fn();
@@ -82,7 +82,7 @@ describe('shareOn', () => {
         receiverEmitter.send('init1', '1');
         receiverEmitter.send('init2', '2');
 
-        offSpy = jest.spyOn(receiver.supply, 'off');
+        offSpy = jest.spyOn(receiver.supply, 'off') as typeof offSpy;
       });
 
       const shared = onEvent.do(shareOn);

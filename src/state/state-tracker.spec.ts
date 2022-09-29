@@ -73,7 +73,7 @@ describe('StateTracker', () => {
   describe('part', () => {
     const partPath = ['path', 2, 'part'];
     let part: StateTracker;
-    let mockPartReceiver: Mock<() => StateUpdateReceiver>;
+    let mockPartReceiver: Mock<(...args: unknown[]) => StateUpdateReceiver>;
 
     beforeEach(() => {
       part = tracker.track(partPath);

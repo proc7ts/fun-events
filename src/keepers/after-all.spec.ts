@@ -67,10 +67,15 @@ describe('afterAll', () => {
     };
 
     fromAll(receiver);
-    expect(receiver.receive).toHaveBeenCalledWith(expect.anything(), {
-      source1: ['init'],
-      source2: [1],
-    });
+    expect(receiver.receive).toHaveBeenCalledWith(
+      expect.anything() as unknown as EventReceiver.Context<
+        [{ source1: [string]; source2: [number] }]
+      >,
+      {
+        source1: ['init'],
+        source2: [1],
+      },
+    );
     expect(recurrentReceiver).toHaveBeenCalledWith({ source1: ['recurrent'], source2: [1] });
   });
 });

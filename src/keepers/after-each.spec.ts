@@ -67,7 +67,11 @@ describe('afterEach', () => {
     };
 
     fromEach(receiver);
-    expect(receiver.receive).toHaveBeenCalledWith(expect.anything(), ['init1'], ['init2']);
+    expect(receiver.receive).toHaveBeenCalledWith(
+      expect.anything() as unknown as EventReceiver.Context<[string][]>,
+      ['init1'],
+      ['init2'],
+    );
     expect(recurrentReceiver).toHaveBeenCalledWith(['recurrent'], ['init2']);
   });
 });

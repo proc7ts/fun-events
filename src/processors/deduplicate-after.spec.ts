@@ -10,7 +10,7 @@ import { deduplicateAfter, deduplicateAfter_ } from './deduplicate-after';
 describe('deduplicateAfter', () => {
   let source: EventEmitter<[string, string?]>;
   let dedup: AfterEvent<[string?]>;
-  let receiver: Mock<(arg?: string) => void>;
+  let receiver: Mock<(arg1?: string, arg2?: string) => void>;
   let supply: Supply;
 
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe('deduplicateAfter', () => {
   });
 
   it('reports the initial event', async () => {
-    expect(receiver).toHaveBeenCalledWith(...([] as unknown[] as [unknown, ...unknown[]]));
+    expect(receiver).toHaveBeenCalledWith();
     expect(receiver).toHaveBeenCalledTimes(1);
     expect(await dedup).toBeUndefined();
   });
@@ -70,7 +70,7 @@ describe('deduplicateAfter', () => {
     const receiver2 = jest.fn();
 
     dedup(receiver2);
-    expect(receiver2).toHaveBeenCalledWith(...([] as unknown[] as [unknown, ...unknown[]]));
+    expect(receiver2).toHaveBeenCalledWith();
 
     source.send('update2');
     expect(receiver2).toHaveBeenLastCalledWith('update2');
