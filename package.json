@@ -45,7 +45,7 @@
     "@proc7ts/call-thru": "^4.4.0",
     "@run-z/eslint-config": "^3.2.2",
     "@run-z/rollup-helpers": "^2.0.0",
-    "@types/node": "^16.11.62",
+    "@types/node": "^16.11.63",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",
     "eslint": "^8.24.0",
