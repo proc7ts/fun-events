@@ -60,10 +60,12 @@ describe('afterAll', () => {
   it('sends recurrent event sent during registration to recurrent receiver', () => {
     const recurrentReceiver = jest.fn();
     const receiver: EventReceiver.Object<[{ source1: [string]; source2: [number] }]> = {
-      receive: jest.fn(context => {
-        context.onRecurrent(recurrentReceiver);
-        source1.it = 'recurrent';
-      }),
+      receive: jest.fn(
+        (context: EventReceiver.Context<[{ source1: [string]; source2: [number] }]>) => {
+          context.onRecurrent(recurrentReceiver);
+          source1.it = 'recurrent';
+        },
+      ),
     };
 
     fromAll(receiver);
