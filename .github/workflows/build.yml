@@ -40,6 +40,8 @@ jobs:
         run: pnpm install
 
       - name: Build the project
+        env:
+          RUNZ_TEST_RUNNER: ts-jest
         run: pnpm ci:all
 
       - name: Upload coverage report

@@ -1,4 +1,0 @@
-{
-  "main": "../dist/fun-events.call-thru.js",
-  "types": "./index.d.ts"
-}

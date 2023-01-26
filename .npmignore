@@ -1,12 +1,12 @@
 # Node.js modules
-node_modules
+node_modules/
 
 # IntelliJ IDEA files
 .idea
 *.iml
 
 # Intermediate files
-/target
+/target/
 
 # Logs
 *.log
@@ -15,7 +15,7 @@ node_modules
 *.tgz
 
 # Source files
-/src
+/src/
 
 # Build scripts
 /build
@@ -25,12 +25,15 @@ node_modules
 /*.cjs
 /*.js
 /*.json
+/*.mjs
 
 # Package lock
-/yarn.lock
+yarn.lock
+package-lock.json
+pnpm-lock.yaml
 
 # Include distribution dir
-!/dist
+!/dist/
 
 # Include type definitions
 !*.d.ts

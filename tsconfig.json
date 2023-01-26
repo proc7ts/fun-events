@@ -1,21 +1,12 @@
 {
+  "extends": "@run-z/project-config/tsconfig.lib.json",
   "compilerOptions": {
-    "moduleResolution": "Node",
+    "lib": ["DOM", "ES2019"],
     "module": "ES2015",
-    "target": "ES2019",
-    "strict": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "forceConsistentCasingInFileNames": true,
-    "importHelpers": true,
-    "noEmitHelpers": true,
-    "lib": ["ES2019"],
-    "types": [],
+    "moduleResolution": "Node",
     "outDir": "target/js",
-    "sourceMap": true,
-    "newLine": "LF"
+    "target": "ES2019",
+    "types": []
   },
   "include": ["src/**/*"]
 }
