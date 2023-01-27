@@ -1,7 +1,7 @@
 {
   "extends": "@run-z/project-config/tsconfig.lib.json",
   "compilerOptions": {
-    "lib": ["DOM", "ES2019"],
+    "lib": ["ES2019"],
     "module": "ES2015",
     "moduleResolution": "Node",
     "outDir": "target/js",
