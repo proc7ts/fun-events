@@ -70,7 +70,7 @@
     "jest-mock": "^29.4.3",
     "prettier": "^2.8.4",
     "prettier-eslint-cli": "^7.1.0",
-    "rollup": "^3.17.3",
+    "rollup": "^3.18.0",
     "run-z": "1.11.0-bootstrap",
     "ts-jest": "^29.0.5",
     "tslib": "^2.5.0",
