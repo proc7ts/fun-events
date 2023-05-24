@@ -42,7 +42,7 @@
   },
   "sideEffects": false,
   "peerDependencies": {
-    "@proc7ts/call-thru": "^4.4.0"
+    "@proc7ts/call-thru": "^4.4.1"
   },
   "peerDependenciesMeta": {
     "@proc7ts/call-thru": {
